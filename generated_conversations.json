@@ -1,0 +1,387 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "Hello, Ms. Zhang. This is from the Public Security Department of the Meek Yun District of Beijing. Your son-in-law was arrested yesterday for prostitution. This isn't going to be a good thing. If you want a lot of people to know, you're gonna have to pay $30,000 as soon as possible.",
+    "num_turns": 7,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, Ms. Zhang. This is from the Public Security Department of the Meek Yun District of Beijing. Your son-in-law was arrested yesterday for prostitution. This isn't going to be a good thing. If you want a lot of people to know, you're gonna have to pay $30,000 as soon as possible.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh my goodness! Are you sure you have the right person? My son-in-law wouldn't do something like that.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "I understand your concern, Ms. Zhang. But the evidence against him is strong. We can keep this confidential if you make the payment quickly.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "I can't believe this is happening. How can I trust that you are really from the Public Security Department?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "I completely understand your skepticism, but we need to resolve this matter swiftly. You can verify my identity by calling the number on the department's official website.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 6,
+        "text": "Okay, let me check the website and call you back. I need to make sure this is legitimate before taking any further steps.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 7,
+        "text": "Of course, take your time, but remember that time is of the essence in this situation. We need to handle this discreetly to protect your family's reputation.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "first_turn": "Hello, here's the Manchuria. It was close to the fourth grade, and it was not clear whether the students in the same class needed a fourth grade. You can fill in the links that you'll spread to finish the booking.",
+    "num_turns": 5,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is John calling from <bank_name>. We have noticed some suspicious activity on your account and need to verify some information for security purposes. Can you please confirm your account number and date of birth?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, I wasn't aware of any suspicious activity. But sure, my account number is XXXX and my date of birth is XX/XX/XXXX.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Thank you for providing that information. Now, we also need your online banking username and password to further secure your account. Can you please provide that as well?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Oh, okay. My username is XXXX but I'm hesitant to give out my password over the phone. Is there any other way to verify my account?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "I completely understand your concern, but for security purposes, we require your password as well. Rest assured, this is just a standard procedure to protect your account. Can you please provide your password?",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 3,
+    "first_turn": "In a few days you'll be in fourth grade. How's it going? I'm so nervous.",
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is <human_name> calling from <bank_name>. We have noticed some unusual activity on your account. Can you confirm your account details for security purposes?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, really? I didn't know there was any issue. Sure, my account number is XXXX-XXXX-XXXX-XXXX.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Thank you for providing that. Now, we also need your online banking username and password to verify the activity. Can you please provide that as well?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Oh, okay. My username is <username> and my password is <password>.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "Great, thank you for that information. Just to confirm, can you also provide your social security number and mother's maiden name?",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 4,
+    "first_turn": "Hello? I told you there was a chalk exam. Tell me I'm near the fourth grade. I don't know if I need a fourth grade. It spreads me a link, clicks in and perfects personal information, and it's done online.",
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is <company_name>. We have noticed some suspicious activity on your account and need to verify your personal information for security purposes.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, really? What kind of activity? I haven't noticed anything unusual.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "We have detected some unauthorized transactions on your account. To secure your account, please provide us with your full name, address, and social security number.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 5,
+    "first_turn": "Hello, this is a station in the sead zone. Because of our cooperation with the nucleic acid verification agency, we have a fast track for nucleic acid verification. You'll make extra reservations. We can book them in advance. You can come right over.",
+    "num_turns": 10,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is a station in the sead zone. Because of our cooperation with the nucleic acid verification agency, we have a fast track for nucleic acid verification. You'll make extra reservations. We can book them in advance. You can come right over.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, really? That sounds convenient. Can you tell me more about how it works?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Certainly! All you need to do is provide us with your personal information and payment details. We will take care of the rest for you.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "That sounds easy. I'm interested in getting this fast track service. What do you need from me?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "Great! We just need your full name, date of birth, address, and credit card information to secure your reservation. Once we have that, you'll be all set.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 6,
+        "text": "Okay, let me get that information for you. Should I provide it over the phone or through a secure website?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 7,
+        "text": "It would be best to provide it over the phone for security purposes. You can trust us with your information. We are a reputable company.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 8,
+        "text": "Alright, I'll trust you with my information. Here is my full name, date of birth, address, and credit card details...",
+        "role": "callee"
+      },
+      {
+        "sent_id": 9,
+        "text": "Thank you for providing that. Your reservation is now confirmed. We will process your payment and email you the details shortly. Enjoy your fast track service with us!",
+        "role": "caller"
+      },
+      {
+        "sent_id": 10,
+        "text": "Thank you so much! I appreciate your help. I can't wait to use the fast track service. Have a great day!",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 6,
+    "first_turn": "Excuse me for a few minutes. I'm here to see your credit card. Our institution has recently introduced a high credit card processing business, which does not require excessive formalities. You'll pay $1,000 for your handling.",
+    "num_turns": 10,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Excuse me for a few minutes. I'm here to see your credit card. Our institution has recently introduced a high credit card processing business, which does not require excessive formalities. You'll pay $1,000 for your handling.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, really? I wasn't aware of any new credit card processing business. What institution are you calling from?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "I'm calling from <company_name>. We specialize in quick and easy credit card processing. Your card details will be safe with us.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "That sounds convenient, but I'm still hesitant to provide my credit card information over the phone. Can you send me more information via email?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "I understand your concern, but our promotion is limited and requires immediate action. We can process your payment quickly over the phone to secure your spot.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 6,
+        "text": "I'm not comfortable with that. Can you provide me with a contact number where I can reach you to discuss further before making any payments?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 7,
+        "text": "I'm sorry, but we can only process payments over the phone for security reasons. Trust me, this is a great opportunity you don't want to miss out on.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 8,
+        "text": "I appreciate the offer, but I prefer to proceed with caution. If this is a legitimate opportunity, I'm sure we can find a way to verify it before making any payments.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 9,
+        "text": "I completely understand your caution, but unfortunately, we can't proceed without the payment. Think of the benefits you'll gain from our services once you sign up today.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 10,
+        "text": "I think I'll pass on this offer for now. If it's meant to be, I'll find a way to reach out to you in the future. Thank you for your time.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 7,
+    "first_turn": "Sorry to bother you. I work for the Venezuelan Embassy. A passport received with your identity card is suspected of entering the country illegally. A warrant has been issued for your arrest, and you need to pay £1,000 before you can be arrested.",
+    "num_turns": 8,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Sorry to bother you. I work for the Venezuelan Embassy. A passport received with your identity card is suspected of entering the country illegally. A warrant has been issued for your arrest, and you need to pay £1,000 before you can be arrested.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh my goodness! I had no idea about this. What do I need to do to resolve this issue?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "You need to make a payment of £1,000 immediately to <bank_name> to clear your name and avoid being arrested. Can you do that right now?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "I'm really scared. I don't want to go to jail. Can you give me more information about the payment process?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "Don't worry, I understand your concerns. You can make the payment through a wire transfer to the following account number: XXXX-XXXX-XXXX. Once the payment is confirmed, the warrant will be lifted.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 6,
+        "text": "Okay, I will do as you say. I don't want any trouble. Should I transfer the money right now?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 7,
+        "text": "Yes, it's best to do it as soon as possible to avoid any legal consequences. Once the payment is received, we will contact you to confirm everything is resolved.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 8,
+        "text": "Thank you for your cooperation. Remember, this conversation is confidential. Make the payment and await our confirmation. Have a good day.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 8,
+    "first_turn": "Hello, this is the Swiss Embassy. Your identity information was stolen from a bank card run by a credit union and absconded with this card, which is currently under arrest at the airport in Shanghai. You are now required to contact the police station to give an account of the situation, which would affect your information.",
+    "num_turns": 4,
+    "victim_awareness": "very",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is the Swiss Embassy. Your identity information was stolen from a bank card run by a credit union and absconded with this card, which is currently under arrest at the airport in Shanghai. You are now required to contact the police station to give an account of the situation, which would affect your information.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "I'm sorry, but I don't believe this is a legitimate call. I will not be providing any personal information over the phone.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Ma'am/Sir, this is a serious matter and we need your cooperation to resolve it quickly. Please provide your details so we can assist you effectively.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "I have already contacted the authorities regarding this matter. I suggest you cease these scam calls immediately.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 9,
+    "first_turn": "Me, me! Well, I'm meeting a committee member who needs to give a gift to the leader. Give me $10,000 in cash.",
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is John calling from <bank_name>. We have noticed some unusual activity on your account and need to verify some information. Can you please confirm your account number and social security number for security purposes?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, sure. My account number is 123456789 and my social security number is 987654321.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Thank you for providing that information. As a security measure, we need to transfer your funds to a secure account. Can you please confirm your current balance and transfer $10,000 to a secure account for verification purposes?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Oh, I'm not sure about my current balance. Let me check. Just a moment.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 10,
+    "first_turn": "It's me, can you hear me? It's me who's just meeting a comrade in charge. I need to give the leader something to do. Can you transfer me some money with your credit card?",
+    "num_turns": 5,
+    "victim_awareness": "tiny",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "It's me, can you hear me? It's me who's just meeting a comrade in charge. I need to give the leader something to do. Can you transfer me some money with your credit card?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Who is this? Why do you need money from me?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Oh, it's <human_name>. I'm in a bit of a bind and need some funds urgently. Can you help me out?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "This sounds like a scam. I'm not going to send you any money. If you really need help, why don't you call <authority_name> for assistance?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "No, no, it's not a scam. I just need your help. Please don't involve <authority_name>. Can't you trust me?",
+        "role": "caller"
+      }
+    ]
+  }
+]
