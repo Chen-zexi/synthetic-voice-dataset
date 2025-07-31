@@ -7,6 +7,8 @@ from elevenlabs import play
 import time
 from pydub import AudioSegment
 import glob
+from pydub import AudioSegment
+from pydub.effects import low_pass_filter, high_pass_filter
 
 load_dotenv()
 
@@ -56,6 +58,61 @@ def combine_audio_files(conversation_dir, conversation_id):
     print(f"Combined audio saved: {combined_filepath}")
     return combined_filepath
 
+def add_background_and_sound_effects(audio_file, background_audio_volume_reduction_in_db=18):
+    """Add background and sound effects to the audio file
+    Select a random background sound from the background_sounds folder
+    Select a random sound effect from the sound_effects folder
+    Add the background sound and sound effect to the audio file
+    Save the audio file
+    """
+    background_sounds = glob.glob(os.path.join("sound_effects/backgrounds", "*.mp3"))
+    print(f"Background sound: {background_sounds}")
+    call_end_sound_effects = glob.glob(os.path.join("sound_effects/call_effects", "call_end_*.mp3"))[0]
+    print(f"Call end sound effect: {call_end_sound_effects}")
+    # call_start_sound_effects = glob.glob(os.path.join("sound_effects/call_effects", "call_start_*.mp3"))[0]
+    background_sound = random.choice(background_sounds)
+    background_audio = AudioSegment.from_file(background_sound)
+    call_end_sound_effect_audio = AudioSegment.from_file(call_end_sound_effects)
+    call_audio = AudioSegment.from_file(audio_file)
+
+    # Handle length mismatch between call audio and background audio
+    call_duration = len(call_audio)
+    background_duration = len(background_audio)
+
+    if background_duration < call_duration:
+        # Repeat the background audio to match or exceed the call audio length
+        repeats = (call_duration // background_duration) + 1
+        extended_background = background_audio * repeats
+        # Trim to exact length
+        background_audio = extended_background[:call_duration]
+    elif background_duration > call_duration:
+        # Randomly sample a snippet from the background audio
+        start = random.randint(0, background_duration - call_duration)
+        background_audio = background_audio[start:start + call_duration]
+    # Now background_audio is the same length as call_audio
+
+    # Reduce background audio volume to be significantly lower than the call audio
+    background_audio_quiet = background_audio - background_audio_volume_reduction_in_db  # Lower by 18 dB (adjust as needed)
+    # Optionally, you can also reduce the sound effect volume if needed
+    # sound_effect_audio_quiet = sound_effect_audio - 10
+
+    # Overlay the quieter background audio with the call audio
+    combined_audio = call_audio.overlay(background_audio_quiet)
+
+    # Finish the call ending with the sound effect
+    # Append the call_end_sound_effect_audio to the end of the combined_audio (do NOT overlay)
+    combined_audio = combined_audio + call_end_sound_effect_audio
+
+    # save the combined audio file
+    combined_audio.export(audio_file.replace('.wav', '_background_and_sound_effects.wav'), format="wav")
+    
+
+def apply_phone_call_quality_bandpass_filter(audio_file):
+    audio = AudioSegment.from_file(audio_file)
+    audio = high_pass_filter(audio, 300)
+    audio = low_pass_filter(audio, 3400)
+    audio.export(audio_file.replace('.wav', '_bandpass_filtered.wav'), format="wav")
+
 def generate_audio_for_conversation(conversation, output_dir):
     """Generate audio files for a single conversation"""
     conversation_id = conversation["conversation_id"]
@@ -85,6 +142,11 @@ def generate_audio_for_conversation(conversation, output_dir):
         # Generate filename - use .mp3 extension since we're using MP3 format
         filename = f"turn_{sent_id:02d}_{role}.mp3"
         filepath = os.path.join(conv_dir, filename)
+
+        # Skip if file already exists
+        if os.path.exists(filepath):
+            print(f"  Skipping existing file: {filename}")
+            continue
         
         try:
             # Generate audio
@@ -120,6 +182,14 @@ def generate_audio_for_conversation(conversation, output_dir):
     
     # Combine all audio files into a single file
     combined_filepath = combine_audio_files(conv_dir, conversation_id)
+
+    # add post processing to the combined audio file
+    print(f"Adding background and sound effects to the combined audio file")
+    add_background_and_sound_effects(combined_filepath)
+
+    # apply bandpass filter to the combined audio file
+    print(f"Applying bandpass filter to the combined audio file")
+    apply_phone_call_quality_bandpass_filter(combined_filepath)
     
     # Save metadata for this conversation
     metadata = {
