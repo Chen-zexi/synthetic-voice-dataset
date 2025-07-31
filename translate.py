@@ -5,11 +5,16 @@ import numpy as np
 from tqdm import tqdm
 import argostranslate.package
 import argostranslate.translate
-base_dir = './'
-input_path = os.path.join(base_dir, "scamGen_combined_first_20k.txt")
-output_path = os.path.join(base_dir, "translation.txt")
-from_code = "zh"
-to_code = "en"
+from googletrans import Translator
+
+from config import scamGen_input_path, scamGen_output_path, scamGen_from_code, scamGento_code, translation_service, max_lines
+
+import asyncio
+
+async def google_translate_text(text, src, dest):
+    async with Translator() as translator:
+        result = await translator.translate(text, src=src, dest=dest)
+        return result.text
 
 # Initialize Argos Translate
 def setup_argos_translate():
@@ -19,20 +24,22 @@ def setup_argos_translate():
     available_packages = argostranslate.package.get_available_packages()
     package_to_install = next(
         filter(
-            lambda x: x.from_code == from_code and x.to_code == to_code, available_packages
+            lambda x: x.from_code == scamGen_from_code and x.to_code == scamGento_code, available_packages
         )
     )
     argostranslate.package.install_from_path(package_to_install.download())
 
-setup_argos_translate()
-
-def translate_text(text):
+def translate_text(text, from_code, to_code):
     """Translate a single text"""
     try:
-        # argo translation needs to convert the space into 。
-        text = text.replace(" ", "。")
-        translated_text = argostranslate.translate.translate(text, from_code, to_code)
-        return translated_text
+        if translation_service == "google":
+            return asyncio.run(google_translate_text(text, from_code, to_code))
+        elif translation_service == "argos":
+            if from_code == "zh":
+                # argo translation needs to convert the space into 。
+                text = text.replace(" ", "。")
+            translated_text = argostranslate.translate.translate(text, from_code, to_code)
+            return translated_text
     except Exception as e:
         return f"[Translation Error]: {text}"
 
@@ -46,29 +53,29 @@ def post_process_text_from_ch(text):
     text = re.sub(r'\s*CC BY-NC-ND 2\.0\s*$', '', text)
     return text
 
-# Count total lines to process
-max_lines = 1000
+if __name__ == "__main__":
+    if translation_service == "argos":
+        setup_argos_translate()
 
-# Read all lines from input file
-with open(input_path, "r", encoding="utf-8") as infile:
-    all_lines = infile.readlines()
+    # Read all lines from input file
+    with open(scamGen_input_path, "r", encoding="utf-8") as infile:
+        all_lines = infile.readlines()
 
-# Get texts to translate
-texts_to_translate = [line.strip() for line in all_lines[:min(max_lines, len(all_lines))] if line.strip()]
+    # Get texts to translate
+    texts_to_translate = [line.strip() for line in all_lines[:min(max_lines, len(all_lines))] if line.strip()]
 
-print(f"Processing {len(texts_to_translate)} texts")
+    print(f"Processing {len(texts_to_translate)} texts")
 
-translated_lines = []
+    translated_lines = []
 
-# Process each text individually
-for i, text in enumerate(tqdm(texts_to_translate, desc="Translating")):
-    translated_text = translate_text(text)
-    if from_code == "zh": # When translate from Chinese, it has some artifacts that needs to be removed
+    # Process each text individually
+    for i, text in enumerate(tqdm(texts_to_translate, desc="Translating")):
+        translated_text = translate_text(text, scamGen_from_code, scamGento_code)
         translated_text = post_process_text_from_ch(translated_text)
-    translated_lines.append(translated_text + "\n")
+        translated_lines.append(translated_text + "\n")
 
-# Save final results
-with open(output_path, "w", encoding="utf-8") as outfile:
-    outfile.writelines(translated_lines)
+    # Save final results
+    with open(scamGen_output_path, "w", encoding="utf-8") as outfile:
+        outfile.writelines(translated_lines)
 
-print(f"Translation completed. Total lines translated: {len(translated_lines)}")
+    print(f"Translation completed. Total lines translated: {len(translated_lines)}")

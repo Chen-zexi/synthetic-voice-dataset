@@ -9,20 +9,14 @@ from pydub import AudioSegment
 import glob
 from pydub import AudioSegment
 from pydub.effects import low_pass_filter, high_pass_filter
-
+from config import VOICE_IDS, voice_language, voice_input_file, voice_output_dir, voice_sample_limit
 load_dotenv()
-
-language = "Malay"
 
 # Initialize ElevenLabs client
 elevenlabs = ElevenLabs(
     api_key=os.getenv("ELEVENLABS_API_KEY"),
 )
 
-# List of voice IDs to choose from (you can add more or modify these)
-VOICE_IDS = {
-    "Malay": ["BeIxObt4dYBRJLYoe1hU","NpVSXJvYSdIbjOaMbShj", "Wc6X61hTD7yucJMheuLN", "UcqZLa941Kkt8ZhEEybf", "C1gMsiiE7sXAt59fmvYg"],
-}
 
 def combine_audio_files(conversation_dir, conversation_id):
     """Combine all audio files in a conversation directory into a single file"""
@@ -37,7 +31,6 @@ def combine_audio_files(conversation_dir, conversation_id):
     audio_files.sort(key=lambda x: int(x.split('turn_')[1].split('_')[0]))
     
     print(f"Combining {len(audio_files)} audio files for conversation {conversation_id}")
-    print(audio_files)
     
     # Load the first audio file
     combined_audio = AudioSegment.from_mp3(audio_files[0])
@@ -66,10 +59,8 @@ def add_background_and_sound_effects(audio_file, background_audio_volume_reducti
     Save the audio file
     """
     background_sounds = glob.glob(os.path.join("sound_effects/backgrounds", "*.mp3"))
-    print(f"Background sound: {background_sounds}")
     call_end_sound_effects = glob.glob(os.path.join("sound_effects/call_effects", "call_end_*.mp3"))[0]
-    print(f"Call end sound effect: {call_end_sound_effects}")
-    # call_start_sound_effects = glob.glob(os.path.join("sound_effects/call_effects", "call_start_*.mp3"))[0]
+    # call_start_sound_effects = glob.glob(os.path.join("sound_effects/call_effects", "call_start_*.mp3"))[0] # not used for now
     background_sound = random.choice(background_sounds)
     background_audio = AudioSegment.from_file(background_sound)
     call_end_sound_effect_audio = AudioSegment.from_file(call_end_sound_effects)
@@ -123,7 +114,7 @@ def generate_audio_for_conversation(conversation, output_dir):
     os.makedirs(conv_dir, exist_ok=True)
     
     # Randomly choose two different voice IDs
-    voice_ids = random.sample(VOICE_IDS[language], 2)
+    voice_ids = random.sample(VOICE_IDS[voice_language], 2)
     caller_voice = voice_ids[0]
     callee_voice = voice_ids[1]
     
@@ -184,11 +175,9 @@ def generate_audio_for_conversation(conversation, output_dir):
     combined_filepath = combine_audio_files(conv_dir, conversation_id)
 
     # add post processing to the combined audio file
-    print(f"Adding background and sound effects to the combined audio file")
     add_background_and_sound_effects(combined_filepath)
 
     # apply bandpass filter to the combined audio file
-    print(f"Applying bandpass filter to the combined audio file")
     apply_phone_call_quality_bandpass_filter(combined_filepath)
     
     # Save metadata for this conversation
@@ -207,30 +196,27 @@ def generate_audio_for_conversation(conversation, output_dir):
     return metadata
 
 def main():
-    # Load conversations from JSON file
-    input_file = "generated_conversations_malay.json"
-    output_dir = "audio_conversations"
-    
-    if not os.path.exists(input_file):
-        print(f"Error: {input_file} not found!")
+   
+    if not os.path.exists(voice_input_file):
+        print(f"Error: {voice_input_file} not found!")
         return
     
     # Create output directory
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(voice_output_dir, exist_ok=True)
     
     # Load conversations
-    with open(input_file, "r", encoding="utf-8") as f:
+    with open(voice_input_file, "r", encoding="utf-8") as f:
         conversations = json.load(f)
     
     print(f"Found {len(conversations)} conversations to process")
     
     all_metadata = []
     
-    for i, conversation in enumerate(conversations[:1]):
+    for i, conversation in enumerate(conversations[:voice_sample_limit]):
         print(f"\n--- Processing Conversation {i+1}/{len(conversations)} ---")
         
         try:
-            metadata = generate_audio_for_conversation(conversation, output_dir)
+            metadata = generate_audio_for_conversation(conversation, voice_output_dir)
             all_metadata.append(metadata)
             print(f"Successfully processed conversation {conversation['conversation_id']}")
             

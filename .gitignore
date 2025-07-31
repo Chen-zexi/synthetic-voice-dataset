@@ -1,0 +1,54 @@
+# Environment variables
+.env
+
+# API keys and secrets
+*.key
+*.pem
+secrets.json
+
+# Generated data files
+# *.wav
+# *.mp3
+# *.flac
+
+# Python cache
+__pycache__/
+
+# Input data files (large files)
+scamGen_combined_first_20k.txt
+*.json
+*.txt
+
+# output files
+audio_conversations/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Argos Translate cache
+.argos-translate/
+
+# ElevenLabs cache
+.elevenlabs/
+
+# OpenAI cache
+.openai/ 

@@ -1,12 +1,11 @@
-
 import os
 import random
 import json
 from openai import OpenAI
 from dotenv import load_dotenv
-
+from tqdm import tqdm
+from config import OPENAI_API_KEY, num_turns_lower_limit, num_turns_upper_limit, sample_limit, victim_awareness_levels, scamGen_output_path, multi_turn_output_path
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -18,7 +17,7 @@ def query(prompt, max_tokens=3000):
         response = client.chat.completions.create(
             model="gpt-3.5-turbo", 
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.9,
+            temperature=1,
             max_tokens=max_tokens,
             top_p=0.95,
             n=1
@@ -77,16 +76,15 @@ def parse_json_response(response_text):
         return None
 
 if __name__ == "__main__":
-    with open("translation.txt", "r", encoding="utf-8") as infile:
+    with open(scamGen_output_path, "r", encoding="utf-8") as infile:
         lines = [line.strip() for line in infile if line.strip()]
 
-    limit = 10
     all_conversations = []
     
-    for idx, first_turn in enumerate(lines[:limit]):
-        print(f"\n--- Conversation {idx+1} ---")
-        num_turns = random.randint(2, 10)
-        victim_aware = random.choice(["not","not","not","not","not", "tiny", "very"])
+
+    for idx, first_turn in enumerate(tqdm(lines[:sample_limit], desc="Generating conversations")):
+        num_turns = random.randint(num_turns_lower_limit, num_turns_upper_limit)
+        victim_aware = random.choice(victim_awareness_levels)
         followup_turns = generate_followup_turns(first_turn, num_turns, victim_aware)
         
         # Parse the JSON response
@@ -102,12 +100,10 @@ if __name__ == "__main__":
                 "dialogue": conversation_data
             }
             all_conversations.append(conversation_with_metadata)
-            print(f"Successfully parsed conversation {idx+1}")
         else:
             print(f"Failed to parse conversation {idx+1}")
-    
     # Save all conversations to a JSON file
-    output_file = "generated_conversations.json"
+    output_file = multi_turn_output_path
     with open(output_file, "w", encoding="utf-8") as outfile:
         json.dump(all_conversations, outfile, ensure_ascii=False, indent=2)
     
