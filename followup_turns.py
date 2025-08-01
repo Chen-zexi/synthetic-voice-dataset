@@ -4,7 +4,7 @@ import json
 from openai import OpenAI
 from dotenv import load_dotenv
 from tqdm import tqdm
-from config import OPENAI_API_KEY, num_turns_lower_limit, num_turns_upper_limit, sample_limit, victim_awareness_levels, scamGen_output_path, multi_turn_output_path
+from config_arabic import OPENAI_API_KEY, num_turns_lower_limit, num_turns_upper_limit, sample_limit, victim_awareness_levels, multi_turn_input_path, multi_turn_output_path, max_conversation
 load_dotenv()
 
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -15,7 +15,7 @@ def query(prompt, max_tokens=3000):
     """
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo", 
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             temperature=1,
             max_tokens=max_tokens,
@@ -36,25 +36,43 @@ def generate_followup_turns(first_turn, num_turns,victim_aware ):
 
     # print(" Generating English samples...")
 
-    scam_prompt = f"""Follow up the conversation to finish this scam phone call dialogues with {num_turns} turns between the caller and callee.  
-    Simulate the conversation where the caller is a scammer and the callee is a victim and the victim is {victim_aware} aware of the scam. 
-    - For names of any person and company, use placeholders like <human_name>, <bank_name>, <company_name>, <authority_name>.
-    - The dialogues are formatted in json format as follows: 
+    scam_prompt = f"""Continue the scam phone call dialogue between the caller (scammer) and callee (victim). The victim is {victim_aware} aware of the scam.
+
+    The total number of turns must be exactly {num_turns} individual turns (i.e., lines), alternating between caller and callee.
+
+    🛑 **STRICT RULE - FIRST SENTENCE**: 
+    The conversation must begin with the **exact first sentence below**, without **any changes, paraphrasing, or modifications** — including punctuation, spacing, and special codes.
+    💬 First sentence to use: "{first_turn}"
+
+    🛑 **STRICT RULE - SPECIAL CODE**: 
+    📌 Special codes (e.g., {{00001}}, {{00002}}, etc.) represent fixed values (e.g., names, organizations, or amounts).
+    If the first sentence includes special codes, you **must reuse** the exact same codes from the first sentence throughout the dialogue - but only in the same types of places where they were originally used, and they must appear in those places. 
+    If the first sentence does not include special codes, that's okay. Do **not** use any codes in this case.
+    Do **not** invent or introduce any new codes under any circumstances.
+    
+    
+    📄 Output format (must be valid JSON):
+    A list of {num_turns} objects, where:
+    - The first object must have `"text"` identical to the first sentence above.
+    - The `"role"` alternates between `"caller"` and `"callee"`.
+    - The `"sent_id"` starts at 1 and increments by 1.
+
+    Example format:
     [
         {{
             "sent_id": 1,
-            "text":  {first_turn}, 
-            "role": "caller",
+            "text": "{first_turn}",
+            "role": "caller"
         }},
         {{
             "sent_id": 2,
-            "text": ..., 
-            "role": "callee",
+            "text": "...",
+            "role": "callee"
         }},
-        ...,
+        ...
     ]
     """
-    
+
     scam_text = query(scam_prompt)
     return scam_text
 
@@ -76,20 +94,22 @@ def parse_json_response(response_text):
         return None
 
 if __name__ == "__main__":
-    with open(scamGen_output_path, "r", encoding="utf-8") as infile:
+    with open(multi_turn_input_path, "r", encoding="utf-8") as infile:
         lines = [line.strip() for line in infile if line.strip()]
 
     all_conversations = []
-    
+
 
     for idx, first_turn in enumerate(tqdm(lines[:sample_limit], desc="Generating conversations")):
+        if idx >= max_conversation:
+            break
         num_turns = random.randint(num_turns_lower_limit, num_turns_upper_limit)
         victim_aware = random.choice(victim_awareness_levels)
         followup_turns = generate_followup_turns(first_turn, num_turns, victim_aware)
-        
+
         # Parse the JSON response
         conversation_data = parse_json_response(followup_turns)
-        
+
         if conversation_data:
             # Add metadata to the conversation
             conversation_with_metadata = {
@@ -106,6 +126,5 @@ if __name__ == "__main__":
     output_file = multi_turn_output_path
     with open(output_file, "w", encoding="utf-8") as outfile:
         json.dump(all_conversations, outfile, ensure_ascii=False, indent=2)
-    
+
     print(f"\nSaved {len(all_conversations)} conversations to {output_file}")
-        

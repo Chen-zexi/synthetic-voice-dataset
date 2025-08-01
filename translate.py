@@ -7,7 +7,7 @@ import argostranslate.package
 import argostranslate.translate
 from googletrans import Translator
 
-from config import scamGen_input_path, scamGen_output_path, scamGen_from_code, scamGento_code, translation_service, max_lines
+from config_arabic import translation_input_path, translation_output_path, translation_from_code, translation_to_code, translation_service, max_lines
 
 import asyncio
 
@@ -24,7 +24,7 @@ def setup_argos_translate():
     available_packages = argostranslate.package.get_available_packages()
     package_to_install = next(
         filter(
-            lambda x: x.from_code == scamGen_from_code and x.to_code == scamGento_code, available_packages
+            lambda x: x.from_code == translation_from_code and x.to_code == translation_to_code, available_packages
         )
     )
     argostranslate.package.install_from_path(package_to_install.download())
@@ -45,7 +45,7 @@ def translate_text(text, from_code, to_code):
 
 def post_process_text_from_ch(text):
     """Post-process the translated text, using the argotranslate package it cause below artifacts which needs to be removed"""
-    
+
     import re
     # Remove trailing "One.", "Two.", "Three.", "Four." (with or without leading space)
     text = re.sub(r'\s*(One\.|Two\.|Three\.|Four\.)\s*$', '', text)
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         setup_argos_translate()
 
     # Read all lines from input file
-    with open(scamGen_input_path, "r", encoding="utf-8") as infile:
+    with open(translation_input_path, "r", encoding="utf-8") as infile:
         all_lines = infile.readlines()
 
     # Get texts to translate
@@ -70,12 +70,12 @@ if __name__ == "__main__":
 
     # Process each text individually
     for i, text in enumerate(tqdm(texts_to_translate, desc="Translating")):
-        translated_text = translate_text(text, scamGen_from_code, scamGento_code)
+        translated_text = translate_text(text, translation_from_code, translation_to_code)
         translated_text = post_process_text_from_ch(translated_text)
         translated_lines.append(translated_text + "\n")
 
     # Save final results
-    with open(scamGen_output_path, "w", encoding="utf-8") as outfile:
+    with open(translation_output_path, "w", encoding="utf-8") as outfile:
         outfile.writelines(translated_lines)
 
     print(f"Translation completed. Total lines translated: {len(translated_lines)}")
