@@ -1,0 +1,137 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "{00001}Hello, this is {00002}Police Department Your son-in-law was arrested by us yesterday for prostitution. This incident is not a good thing. If you want many people to know, pay {00003} bail as soon as possible",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "{00001}Hello, this is {00002}Police Department Your son-in-law was arrested by us yesterday for prostitution. This incident is not a good thing. If you want many people to know, pay {00003} bail as soon as possible",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh my, I can't believe this is happening. How do I go about paying {00003} bail?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "{00001}You need to provide your bank account details, and {00002}Police Department will arrange the transfer quickly.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Alright, I'll get my information ready. Thank you for notifying me.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "first_turn": "Hello, here is the manual customer service of {00004}. As the exam is approaching, I wonder if you need the exam questions. Can you fill in the link you sent you for a while and finish the reservation?",
+    "num_turns": 5,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, here is the manual customer service of {00004}. As the exam is approaching, I wonder if you need the exam questions. Can you fill in the link you sent you for a while and finish the reservation?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, that sounds really helpful! Can you tell me more about how this works?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Certainly! Once you fill in the link, we will send you the questions straight to your email associated with {00004}.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Great! Is there a fee for this service or is it included with my {00004} membership?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "There's just a small processing fee, but it's all handled through the link I mentioned earlier.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 3,
+    "first_turn": "The exam will be in a few days. How are you preparing? The exam will be in next week. I'm so nervous",
+    "num_turns": 2,
+    "victim_awareness": "tiny",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "The exam will be in a few days. How are you preparing? The exam will be in next week. I'm so nervous",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "I think you've dialed the wrong number, but nice try with your little act.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 4,
+    "first_turn": "Hello, it takes you a few minutes. This is the customer service of the {00005} agency center. Our agency recently launched a high-value credit card acceptance service. It does not require too many procedures. As long as you pay the {00006} handling fee, you can get it for you.",
+    "num_turns": 6,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, it takes you a few minutes. This is the customer service of the {00005} agency center. Our agency recently launched a high-value credit card acceptance service. It does not require too many procedures. As long as you pay the {00006} handling fee, you can get it for you.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, that sounds interesting. What exactly do I need to do to get started?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "All you need to do is provide your basic contact information and settle the {00006} handling fee. We can help you with the rest.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "That seems easy enough. How do I pay the {00006} fee?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 5,
+        "text": "You can pay through a secure link that I'll send you via email or text. Once we receive the payment, we'll process your application immediately.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 6,
+        "text": "Alright, please send me the link, and I'll have a look at it.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 5,
+    "first_turn": "Sorry to bother you, I am a staff member of the Venezuelan Embassy. The passport accepted with your ID is suspected of illegal entry. An arrest warrant has been issued to you. You need to pay £1,000 to avoid being arrested.",
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Sorry to bother you, I am a staff member of the Venezuelan Embassy. The passport accepted with your ID is suspected of illegal entry. An arrest warrant has been issued to you. You need to pay £1,000 to avoid being arrested.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh no, that's shocking! What do I need to do to resolve this?",
+        "role": "callee"
+      }
+    ]
+  }
+]

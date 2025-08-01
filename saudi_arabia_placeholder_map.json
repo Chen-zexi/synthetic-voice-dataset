@@ -1,0 +1,167 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": ["محمد", "عبدالله", "سارة"],
+    "translations": ["Muhammad", "Abdullah", "Sarah"]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": ["الرياض", "جدة", "الدمام"],
+    "translations": ["Riyadh", "Jeddah", "Dammam"]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "substitutions": ["١٠٠٠ ريال", "٢٠٠٠ ريال", "٣٠٠٠ ريال"],
+    "translations": ["1000 SAR", "2000 SAR", "3000 SAR"]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "substitutions": ["مركز تيمز التعليمي", "معلمات خصوصي بالرياض", "ياسارية"],
+    "translations": ["Teams Academy", "Mksa 123 network", "Yasariyah"]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": ["فيزا", "ماستر كارد"],
+    "translations": ["Visa", "MasterCard"]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "substitutions": ["٥٠ ريال", "١٠٠ ريال"],
+    "translations": ["50 SAR", "100 SAR"]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "substitutions": ["أمانة كريديت يونين", "اتحاد الائتمان القطري"],
+    "translations": ["Amanah Credit Union", "Qatar Credit Union"]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "substitutions": ["مطار الملك خالد الدولي", "مطار الملك عبدالعزيز الدولي"],
+    "translations": ["King Khalid Intl Airport", "King Abdulaziz Intl Airport"]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "substitutions": ["بطاقة الاتحاد الائتماني", "بطاقة الصراف (الاتحاد)"],
+    "translations": ["Credit Union Card", "Union ATM Card"]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "substitutions": ["الهيئة العامة للإسكان", "وزارة الإسكان والبلديات"],
+    "translations": ["General Housing Authority", "Ministry of Housing and Municipalities"]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": ["برنامج سكني", "دعم شراء المساكن"],
+    "translations": ["Sakani Program", "Home-Purchase Subsidy"]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "substitutions": ["هيئة الاتصالات وتقنية المعلومات", "الهيئة القطرية لتنظيم الاتصالات"],
+    "translations": ["Communications & IT Commission", "Qatar Communications Regulator"]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "substitutions": ["أرامكس", "دي إتش إل", "فيديكس"],
+    "translations": ["Aramex", "DHL", "FedEx"]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": ["تويتر", "فيسبوك", "إنستغرام"],
+    "translations": ["Twitter", "Facebook", "Instagram"]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "substitutions": ["وزارة الصحة", "الهيئة السعودية للتخصصات الصحية"],
+    "translations": ["Ministry of Health", "Saudi Commission for Health Specialties"]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "substitutions": ["سوق.كوم", "نون", "جوميا"],
+    "translations": ["Souq.com", "Noon", "Jumia"]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "substitutions": ["١٠ ريال", "٢٠ ريال"],
+    "translations": ["10 SAR", "20 SAR"]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": ["الراجحي المالية", "سامبا كابيتال"],
+    "translations": ["Al Rajhi Capital", "Samba Capital"]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "substitutions": ["شركة دار الأركان", "شركة إعمار"],
+    "translations": ["Dar Al-Arkan", "Emaar Properties"]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "substitutions": ["محمد عبده", "فيروز", "عمرو دياب"],
+    "translations": ["Mohammed Abdu", "Fairuz", "Amr Diab"]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "substitutions": ["0501234567", "0557654321", "+966501234567"],
+    "translations": ["050-123-4567", "055-765-4321", "+966501234567"]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "substitutions": ["البنك الأهلي", "بنك الراجحي", "بنك الرياض"],
+    "translations": ["National Commercial Bank", "Al Rajhi Bank", "Riyad Bank"]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "substitutions": ["STC", "زين", "موبايلي"],
+    "translations": ["STC", "Zain", "Mobily"]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "substitutions": ["هيئة الاتصالات وتقنية المعلومات", "الهيئة العامة لتنظيم الاتصالات"],
+    "translations": ["Communications & IT Commission", "General Authority for Communications Regulation"]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": ["ماك", "لوريال", "كلارنس"],
+    "translations": ["MAC", "L'Oréal", "Clarins"]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "substitutions": ["الهيئة العامة لحماية المستهلك", "وزارة التجارة"],
+    "translations": ["Consumer Protection Authority", "Ministry of Commerce"]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "substitutions": ["STC Pay", "Apple Pay", "Samsung Pay"],
+    "translations": ["STC Pay", "Apple Pay", "Samsung Pay"]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": ["نقاط الأهلي", "برنامج مكافآت ساب"],
+    "translations": ["NCB Points", "SAB Rewards"]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "substitutions": ["إدارة المرور السعودي", "الهيئة العامة للنقل"],
+    "translations": ["Saudi Traffic Department", "General Transport Authority"]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "substitutions": ["تويوتا", "هيونداي", "نيسان"],
+    "translations": ["Toyota", "Hyundai", "Nissan"]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "substitutions": ["مزارع الألبان", "الدانوب", "المراعي"],
+    "translations": ["Almarai Farms", "Danube", "Almarai"]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "substitutions": ["صندوق تنمية الموارد البشرية", "هيئة التعليم والتدريب"],
+    "translations": ["HRDF", "Technical and Vocational Training Corporation"]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": ["STC للإنترنت", "موبايلي للإنترنت"],
+    "translations": ["STC Internet", "Mobily Internet"]
+  }
+}
