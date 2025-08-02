@@ -31,8 +31,8 @@
   },
   "{00007}": {
     "tag": "<credit_union>",
-    "substitutions": ["أمانة كريديت يونين", "اتحاد الائتمان القطري"],
-    "translations": ["Amanah Credit Union", "Qatar Credit Union"]
+    "substitutions": ["مصرف الإنماء", "إمكان المالية"],
+    "translations": ["Alinma Bank", "Emkan Finance"]
   },
   "{00008}": {
     "tag": "<airport_name>",
@@ -41,23 +41,23 @@
   },
   "{00009}": {
     "tag": "<credit_union_card>",
-    "substitutions": ["بطاقة الاتحاد الائتماني", "بطاقة الصراف (الاتحاد)"],
-    "translations": ["Credit Union Card", "Union ATM Card"]
+    "substitutions": ["بطاقة الأهلي", "بطاقة الراجحي", "بطاقة الرياض"],
+    "translations": ["AlAhli card", "Al Rajhi card", "Riyad card"]
   },
   "{00010}": {
     "tag": "<gov_housing_agency>",
-    "substitutions": ["الهيئة العامة للإسكان", "وزارة الإسكان والبلديات"],
-    "translations": ["General Housing Authority", "Ministry of Housing and Municipalities"]
+    "substitutions": ["وزارة البلديات والإسكان"],
+    "translations": ["Ministry of Municipalities and Housing"]
   },
   "{00011}": {
     "tag": "<housing_purchase_benefit>",
-    "substitutions": ["برنامج سكني", "دعم شراء المساكن"],
-    "translations": ["Sakani Program", "Home-Purchase Subsidy"]
+    "substitutions": ["برنامج سكني", "صندوق التنمية العقارية"],
+    "translations": ["Sakani Program", "Real Estate Development Fund"]
   },
   "{00012}": {
     "tag": "<telecom_regulator>",
-    "substitutions": ["هيئة الاتصالات وتقنية المعلومات", "الهيئة القطرية لتنظيم الاتصالات"],
-    "translations": ["Communications & IT Commission", "Qatar Communications Regulator"]
+    "substitutions": ["هيئة الاتصالات والفضاء والتقنية"],
+    "translations": ["Communications, Space & Technology Commission (CST)"]
   },
   "{00013}": {
     "tag": "<courier_service>",
@@ -66,18 +66,18 @@
   },
   "{00014}": {
     "tag": "<social_media>",
-    "substitutions": ["تويتر", "فيسبوك", "إنستغرام"],
-    "translations": ["Twitter", "Facebook", "Instagram"]
+    "substitutions": ["تويتر", "سناب شات", "إنستغرام", "تيك توك"],
+    "translations": ["Twitter", "Snapchat", "Instagram", "TikTok"]
   },
   "{00015}": {
     "tag": "<gov_health_agency>",
-    "substitutions": ["وزارة الصحة", "الهيئة السعودية للتخصصات الصحية"],
-    "translations": ["Ministry of Health", "Saudi Commission for Health Specialties"]
+    "substitutions": ["وزارة الصحة", "مجلس الضمان الصحي"],
+    "translations": ["Ministry of Health", "Council of Cooperative Health Insurance"]
   },
   "{00016}": {
     "tag": "<marketplace>",
-    "substitutions": ["سوق.كوم", "نون", "جوميا"],
-    "translations": ["Souq.com", "Noon", "Jumia"]
+    "substitutions": ["كارفور", "نون", "لولو هايبرماركت", "بنده"],
+    "translations": ["Carrefour", "Noon", "LuLu Hypermarket", "Panda"]
   },
   "{00017}": {
     "tag": "<money_amount_very_small>",
@@ -86,43 +86,43 @@
   },
   "{00018}": {
     "tag": "<brokerage_firm>",
-    "substitutions": ["الراجحي المالية", "سامبا كابيتال"],
-    "translations": ["Al Rajhi Capital", "Samba Capital"]
+    "substitutions": ["الراجحي المالية", "سامبا كابيتال", "الأهلي كابيتال", "الجزيرة كابيتال"],
+    "translations": ["Al Rajhi Capital", "Samba Capital", "NCB Capital", "Aljazira Capital"]
   },
   "{00019}": {
     "tag": "<real_estate_company>",
-    "substitutions": ["شركة دار الأركان", "شركة إعمار"],
-    "translations": ["Dar Al-Arkan", "Emaar Properties"]
+    "substitutions": ["شركة دار الأركان", "شركة إعمار", "شركة جبل عمر للتطوير"],
+    "translations": ["Dar Al-Arkan", "Emaar Properties", "Jabal Omar Development Company"]
   },
   "{00020}": {
     "tag": "<singer_name>",
-    "substitutions": ["محمد عبده", "فيروز", "عمرو دياب"],
-    "translations": ["Mohammed Abdu", "Fairuz", "Amr Diab"]
+    "substitutions": ["محمد عبده", "عبادي الجوهر", "عبد المجيد عبد الله", "زينة عماد"],
+    "translations": ["Mohammed Abdu", "Abadi Al Johar", "Abdul Majeed Abdullah", "Zena Emad"]
   },
   "{00021}": {
     "tag": "<important_contact>",
-    "substitutions": ["0501234567", "0557654321", "+966501234567"],
-    "translations": ["050-123-4567", "055-765-4321", "+966501234567"]
+    "substitutions": ["المدير", "المسؤول", "الشيخ"],
+    "translations": ["the manager/boss", "the official/person in charge", "the sheikh (used for respected elders or leaders)"]
   },
   "{00022}": {
     "tag": "<bank_name>",
-    "substitutions": ["البنك الأهلي", "بنك الراجحي", "بنك الرياض"],
-    "translations": ["National Commercial Bank", "Al Rajhi Bank", "Riyad Bank"]
+    "substitutions": ["البنك الأهلي", "بنك الراجحي", "بنك الرياض", "البنك السعودي الفرنسي", "البنك العربي الوطني"],
+    "translations": ["National Commercial Bank", "Al Rajhi Bank", "Riyad Bank", "Banque Saudi Fransi", "Arab National Bank"]
   },
   "{00023}": {
     "tag": "<telecom_service_provider>",
-    "substitutions": ["STC", "زين", "موبايلي"],
-    "translations": ["STC", "Zain", "Mobily"]
+    "substitutions": ["إس تي سي", "موبايلي", "سلام"],
+    "translations": ["Saudi Telecom Company", "Mobily", "Salam"]
   },
   "{00024}": {
     "tag": "<telecom_authority>",
-    "substitutions": ["هيئة الاتصالات وتقنية المعلومات", "الهيئة العامة لتنظيم الاتصالات"],
-    "translations": ["Communications & IT Commission", "General Authority for Communications Regulation"]
+    "substitutions": ["هيئة الاتصالات والفضاء والتقنية"],
+    "translations": ["Communications, Space & Technology Commission (CST)"]
   },
   "{00025}": {
     "tag": "<cosmetic_brand>",
-    "substitutions": ["ماك", "لوريال", "كلارنس"],
-    "translations": ["MAC", "L'Oréal", "Clarins"]
+    "substitutions": ["ماك", "لوريال", "كلارنس", "إستي لودر"],
+    "translations": ["MAC", "L'Oréal", "Clarins", "Estée Lauder"]
   },
   "{00026}": {
     "tag": "<consumer_protection_agency>",
@@ -131,37 +131,37 @@
   },
   "{00027}": {
     "tag": "<payment_app>",
-    "substitutions": ["STC Pay", "Apple Pay", "Samsung Pay"],
-    "translations": ["STC Pay", "Apple Pay", "Samsung Pay"]
+    "substitutions": ["إس تي سي باي", "آبل باي أو مدى باي"],
+    "translations": ["STC Pay", "Apple Pay or mada Pay"]
   },
   "{00028}": {
     "tag": "<card_network_loyalty>",
-    "substitutions": ["نقاط الأهلي", "برنامج مكافآت ساب"],
-    "translations": ["NCB Points", "SAB Rewards"]
+    "substitutions": ["برنامج الولاء", "نقاط المكافآت", "برنامج النقاط", "برنامج العملاء المميزين", "بطاقة المكافآت"],
+    "translations": ["Loyalty Program", "Reward Points", "Points Program", "VIP Customer Program", "Rewards Card"]
   },
   "{00029}": {
     "tag": "<motor_vehicle_authority>",
-    "substitutions": ["إدارة المرور السعودي", "الهيئة العامة للنقل"],
-    "translations": ["Saudi Traffic Department", "General Transport Authority"]
+    "substitutions": ["إدارة المرور السعودي"],
+    "translations": ["Saudi Traffic Department"]
   },
   "{00030}": {
     "tag": "<car_brand>",
-    "substitutions": ["تويوتا", "هيونداي", "نيسان"],
-    "translations": ["Toyota", "Hyundai", "Nissan"]
+    "substitutions": ["تويوتا", "هيونداي", "نيسان", "فورد", "شيفروليه", "كيا", "هوندا"],
+    "translations": ["Toyota", "Hyundai", "Nissan", "Ford", "Chevrolet", "Kia", "Honda"]
   },
   "{00031}": {
     "tag": "<dairy_store>",
-    "substitutions": ["مزارع الألبان", "الدانوب", "المراعي"],
-    "translations": ["Almarai Farms", "Danube", "Almarai"]
+    "substitutions": ["المراعي", "الدانوب", "المراعي", "نادك"],
+    "translations": ["Almarai", "Danube", "Almarai", "NADEC"]
   },
   "{00032}": {
     "tag": "<student_loan_office>",
-    "substitutions": ["صندوق تنمية الموارد البشرية", "هيئة التعليم والتدريب"],
-    "translations": ["HRDF", "Technical and Vocational Training Corporation"]
+    "substitutions": ["صندوق تنمية الموارد البشرية", "عمادة شؤون الطلاب"],
+    "translations": ["Human Resources Development Fund (HRDF)", "Deanship of Student Affairs"]
   },
   "{00033}": {
     "tag": "<internet_service_provider>",
-    "substitutions": ["STC للإنترنت", "موبايلي للإنترنت"],
-    "translations": ["STC Internet", "Mobily Internet"]
+    "substitutions": ["إس تي سي للإنترنت", "موبايلي للإنترنت", "زين", "سلام"],
+    "translations": ["STC Internet", "Mobily Internet", "Zain", "Salam"]
   }
 }
