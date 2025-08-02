@@ -3,14 +3,26 @@ import os
 import random
 from dotenv import load_dotenv
 from elevenlabs.client import ElevenLabs
-from elevenlabs import play
+from elevenlabs import play, VoiceSettings
 import time
 from pydub import AudioSegment
 import glob
 from pydub import AudioSegment
 from pydub.effects import low_pass_filter, high_pass_filter
-from config_arabic import (VOICE_IDS, voice_language, voice_input_file, voice_output_dir, voice_sample_limit)
+from config_arabic import (VOICE_IDS, voice_language, voice_sample_limit,
+                           voice_input_file_scam, voice_output_dir_scam,
+                           voice_input_file_legit, voice_output_dir_legit,
+                           voice_is_scam)
 load_dotenv()
+
+if voice_is_scam:
+    voice_input_file = voice_input_file_scam
+    voice_output_dir = voice_output_dir_scam
+else:
+    voice_input_file = voice_input_file_legit
+    voice_output_dir = voice_output_dir_legit
+
+
 
 # Initialize ElevenLabs client
 elevenlabs = ElevenLabs(
@@ -83,7 +95,12 @@ def add_background_and_sound_effects(audio_file, background_audio_volume_reducti
     # Now background_audio is the same length as call_audio
 
     # Reduce background audio volume to be significantly lower than the call audio
-    background_audio_quiet = background_audio - background_audio_volume_reduction_in_db  # Lower by 18 dB (adjust as needed)
+    call_loudness = call_audio.dBFS
+    background_loudness = background_audio.dBFS
+    target_difference = 18
+    required_reduction = (background_loudness - call_loudness) + target_difference
+    background_audio_quiet = background_audio - required_reduction
+    # background_audio_quiet = background_audio - background_audio_volume_reduction_in_db  # Lower by 18 dB (adjust as needed)
     # Optionally, you can also reduce the sound effect volume if needed
     # sound_effect_audio_quiet = sound_effect_audio - 10
 
@@ -141,11 +158,13 @@ def generate_audio_for_conversation(conversation, output_dir):
 
         try:
             # Generate audio
+            voice_params = VoiceSettings(speed=1.08)
             audio = elevenlabs.text_to_speech.convert(
                 text=text,
                 voice_id=voice_id,
                 model_id="eleven_multilingual_v2",
                 output_format="mp3_44100_128",
+                voice_settings=voice_params
             )
 
             # Convert generator to bytes

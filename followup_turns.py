@@ -40,9 +40,11 @@ def generate_followup_turns(first_turn, num_turns,victim_aware ):
 
     The total number of turns must be exactly {num_turns} individual turns (i.e., lines), alternating between caller and callee.
 
-    🛑 **STRICT RULE - FIRST SENTENCE**: 
-    The conversation must begin with the **exact first sentence below**, without **any changes, paraphrasing, or modifications** — including punctuation, spacing, and special codes.
-    💬 First sentence to use: "{first_turn}"
+    🛑 **STRICT RULE – FIRST SENTENCE**:  
+    The conversation **must begin** with a **shortened version** of the first sentence below.  
+    This means using fewer words while preserving the original intent and **keeping all special codes unchanged and in the same position**.
+    💬 First sentence to shorten and use as Turn 1: "{first_turn}"
+
 
     🛑 **STRICT RULE - SPECIAL CODE**: 
     📌 Special codes (e.g., {{00001}}, {{00002}}, etc.) represent fixed values (e.g., names, organizations, or amounts).
@@ -50,10 +52,11 @@ def generate_followup_turns(first_turn, num_turns,victim_aware ):
     If the first sentence does not include special codes, that's okay. Do **not** use any codes in this case.
     Do **not** invent or introduce any new codes under any circumstances.
     
+    🛑Shorter sentences are preferred.
     
     📄 Output format (must be valid JSON):
     A list of {num_turns} objects, where:
-    - The first object must have `"text"` identical to the first sentence above.
+    - The first object must have `"text"` equal to the shortened version of the first sentence (as defined above).
     - The `"role"` alternates between `"caller"` and `"callee"`.
     - The `"sent_id"` starts at 1 and increments by 1.
 
@@ -61,7 +64,7 @@ def generate_followup_turns(first_turn, num_turns,victim_aware ):
     [
         {{
             "sent_id": 1,
-            "text": "{first_turn}",
+            "text": "...",
             "role": "caller"
         }},
         {{
