@@ -10,6 +10,7 @@ secrets.json
 # *.wav
 # *.mp3
 # *.flac
+*.zip
 
 # Python cache
 __pycache__/
@@ -21,6 +22,12 @@ scamGen_combined_first_20k.txt
 
 # output files
 audio_conversations/
+audio_conversations_arabic/
+audio_conversations_malay/
+legit_audio_conversations_arabic/
+legit_audio_conversations_malay/
+scam_audio_conversations_arabic/
+scam_audio_conversations_malay/
 
 # OS
 .DS_Store

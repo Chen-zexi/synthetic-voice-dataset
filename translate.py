@@ -7,7 +7,7 @@ import argostranslate.package
 import argostranslate.translate
 from googletrans import Translator
 
-from config_arabic import translation_input_path, translation_output_path, translation_from_code, translation_to_code, translation_service, max_lines
+from config_malay import translation_input_path, translation_output_path, translation_from_code, translation_to_code, translation_service, max_lines
 
 import asyncio
 

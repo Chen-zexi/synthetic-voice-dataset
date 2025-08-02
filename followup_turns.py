@@ -4,7 +4,7 @@ import json
 from openai import OpenAI
 from dotenv import load_dotenv
 from tqdm import tqdm
-from config_arabic import OPENAI_API_KEY, num_turns_lower_limit, num_turns_upper_limit, sample_limit, victim_awareness_levels, multi_turn_input_path, multi_turn_output_path, max_conversation
+from config_malay import OPENAI_API_KEY, num_turns_lower_limit, num_turns_upper_limit, sample_limit, victim_awareness_levels, multi_turn_input_path, multi_turn_output_path, max_conversation
 load_dotenv()
 
 client = OpenAI(api_key=OPENAI_API_KEY)
