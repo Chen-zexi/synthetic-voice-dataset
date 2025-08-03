@@ -1,0 +1,8 @@
+argostranslate
+python-dotenv
+openai>=1.0.0
+elevenlabs
+tqdm
+numpy
+deep-translator
+pydub

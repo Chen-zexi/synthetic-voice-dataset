@@ -1,6 +1,11 @@
 # Environment variables
 .env
 
+.venv/
+CLAUDE.md
+.claude
+
+
 # API keys and secrets
 *.key
 *.pem
@@ -17,8 +22,16 @@ __pycache__/
 
 # Input data files (large files)
 scamGen_combined_first_20k.txt
-*.json
 *.txt
+output/
+
+!archive/scam_first_line_chinese_mapped.txt
+!archive/scam_first_line_english_mapped.txt
+!archive/translation.txt
+
+!data/input/scam_first_line_chinese.txt
+
+!requirements.txt
 
 # output files
 audio_conversations/
@@ -28,6 +41,7 @@ legit_audio_conversations_arabic/
 legit_audio_conversations_malay/
 scam_audio_conversations_arabic/
 scam_audio_conversations_malay/
+output/
 
 # OS
 .DS_Store

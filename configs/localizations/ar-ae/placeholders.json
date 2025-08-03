@@ -1,0 +1,153 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "أحمد",
+      "فاطمة",
+      "خالد",
+      "عائشة"
+    ],
+    "translations": [
+      "Ahmed",
+      "Fatima",
+      "Khalid",
+      "Aisha"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "دبي",
+      "أبوظبي",
+      "الشارقة",
+      "عجمان"
+    ],
+    "translations": [
+      "Dubai",
+      "Abu Dhabi",
+      "Sharjah",
+      "Ajman"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "substitutions": [
+      "١٠٠٠ درهم",
+      "٢٠٠٠ درهم",
+      "٣٠٠٠ درهم",
+      "٥٠٠٠ درهم"
+    ],
+    "translations": [
+      "1000 AED",
+      "2000 AED",
+      "3000 AED",
+      "5000 AED"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "substitutions": [
+      "مركز النور التعليمي",
+      "أكاديمية الإمارات للتعليم",
+      "مركز التميز الأكاديمي"
+    ],
+    "translations": [
+      "Al Noor Educational Center",
+      "Emirates Academy for Education",
+      "Academic Excellence Center"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "فيزا",
+      "ماستركارد",
+      "أمريكان إكسبريس"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard",
+      "American Express"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "substitutions": [
+      "١٠٠ درهم",
+      "٢٠٠ درهم",
+      "٥٠٠ درهم"
+    ],
+    "translations": [
+      "100 AED",
+      "200 AED",
+      "500 AED"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "بنك الإمارات دبي الوطني",
+      "بنك أبوظبي الأول",
+      "بنك راك"
+    ],
+    "translations": [
+      "Emirates NBD",
+      "First Abu Dhabi Bank",
+      "RAK Bank"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "مطار دبي الدولي",
+      "مطار أبوظبي الدولي",
+      "مطار الشارقة الدولي"
+    ],
+    "translations": [
+      "Dubai International Airport",
+      "Abu Dhabi International Airport",
+      "Sharjah International Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "بطاقة الإمارات دبي الوطني",
+      "بطاقة أبوظبي الأول",
+      "بطاقة راك بنك"
+    ],
+    "translations": [
+      "Emirates NBD card",
+      "FAB card",
+      "RAK Bank card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "substitutions": [
+      "برنامج محمد بن راشد للإسكان",
+      "دائرة الأراضي والأملاك دبي"
+    ],
+    "translations": [
+      "Mohammed bin Rashid Housing Programme",
+      "Dubai Land Department"
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "بنك الإمارات دبي الوطني",
+      "بنك أبوظبي الأول",
+      "بنك راك",
+      "مصرف الإمارات الإسلامي",
+      "بنك دبي الإسلامي"
+    ],
+    "translations": [
+      "Emirates NBD",
+      "First Abu Dhabi Bank", 
+      "RAK Bank",
+      "Emirates Islamic Bank",
+      "Dubai Islamic Bank"
+    ]
+  }
+}

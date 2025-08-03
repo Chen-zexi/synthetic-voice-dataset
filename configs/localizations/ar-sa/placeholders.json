@@ -1,0 +1,425 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "محمد",
+      "عبدالله",
+      "سارة"
+    ],
+    "translations": [
+      "Muhammad",
+      "Abdullah",
+      "Sarah"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "الرياض",
+      "جدة",
+      "الدمام"
+    ],
+    "translations": [
+      "Riyadh",
+      "Jeddah",
+      "Dammam"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "substitutions": [
+      "١٠٠٠ ريال",
+      "٢٠٠٠ ريال",
+      "٣٠٠٠ ريال"
+    ],
+    "translations": [
+      "1000 SAR",
+      "2000 SAR",
+      "3000 SAR"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "substitutions": [
+      "مركز تيمز التعليمي",
+      "معلمات خصوصي بالرياض",
+      "ياسارية"
+    ],
+    "translations": [
+      "Teams Academy",
+      "Mksa 123 network",
+      "Yasariyah"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "فيزا",
+      "ماستر كارد"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "substitutions": [
+      "٥٠ ريال",
+      "١٠٠ ريال"
+    ],
+    "translations": [
+      "50 SAR",
+      "100 SAR"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "مصرف الإنماء",
+      "إمكان المالية"
+    ],
+    "translations": [
+      "Alinma Bank",
+      "Emkan Finance"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "مطار الملك خالد الدولي",
+      "مطار الملك عبدالعزيز الدولي"
+    ],
+    "translations": [
+      "King Khalid Intl Airport",
+      "King Abdulaziz Intl Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "بطاقة الأهلي",
+      "بطاقة الراجحي",
+      "بطاقة الرياض"
+    ],
+    "translations": [
+      "AlAhli card",
+      "Al Rajhi card",
+      "Riyad card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "substitutions": [
+      "وزارة البلديات والإسكان"
+    ],
+    "translations": [
+      "Ministry of Municipalities and Housing"
+    ]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "برنامج سكني",
+      "صندوق التنمية العقارية"
+    ],
+    "translations": [
+      "Sakani Program",
+      "Real Estate Development Fund"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "substitutions": [
+      "هيئة الاتصالات والفضاء والتقنية"
+    ],
+    "translations": [
+      "Communications, Space & Technology Commission (CST)"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "أرامكس",
+      "دي إتش إل",
+      "فيديكس"
+    ],
+    "translations": [
+      "Aramex",
+      "DHL",
+      "FedEx"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "تويتر",
+      "سناب شات",
+      "إنستغرام",
+      "تيك توك"
+    ],
+    "translations": [
+      "Twitter",
+      "Snapchat",
+      "Instagram",
+      "TikTok"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "substitutions": [
+      "وزارة الصحة",
+      "مجلس الضمان الصحي"
+    ],
+    "translations": [
+      "Ministry of Health",
+      "Council of Cooperative Health Insurance"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "كارفور",
+      "نون",
+      "لولو هايبرماركت",
+      "بنده"
+    ],
+    "translations": [
+      "Carrefour",
+      "Noon",
+      "LuLu Hypermarket",
+      "Panda"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "substitutions": [
+      "١٠ ريال",
+      "٢٠ ريال"
+    ],
+    "translations": [
+      "10 SAR",
+      "20 SAR"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "الراجحي المالية",
+      "سامبا كابيتال",
+      "الأهلي كابيتال",
+      "الجزيرة كابيتال"
+    ],
+    "translations": [
+      "Al Rajhi Capital",
+      "Samba Capital",
+      "NCB Capital",
+      "Aljazira Capital"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "substitutions": [
+      "شركة دار الأركان",
+      "شركة إعمار",
+      "شركة جبل عمر للتطوير"
+    ],
+    "translations": [
+      "Dar Al-Arkan",
+      "Emaar Properties",
+      "Jabal Omar Development Company"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "محمد عبده",
+      "عبادي الجوهر",
+      "عبد المجيد عبد الله",
+      "زينة عماد"
+    ],
+    "translations": [
+      "Mohammed Abdu",
+      "Abadi Al Johar",
+      "Abdul Majeed Abdullah",
+      "Zena Emad"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "substitutions": [
+      "المدير",
+      "المسؤول",
+      "الشيخ"
+    ],
+    "translations": [
+      "the manager/boss",
+      "the official/person in charge",
+      "the sheikh (used for respected elders or leaders)"
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "البنك الأهلي",
+      "بنك الراجحي",
+      "بنك الرياض",
+      "البنك السعودي الفرنسي",
+      "البنك العربي الوطني"
+    ],
+    "translations": [
+      "National Commercial Bank",
+      "Al Rajhi Bank",
+      "Riyad Bank",
+      "Banque Saudi Fransi",
+      "Arab National Bank"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "substitutions": [
+      "إس تي سي",
+      "موبايلي",
+      "سلام"
+    ],
+    "translations": [
+      "Saudi Telecom Company",
+      "Mobily",
+      "Salam"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "هيئة الاتصالات والفضاء والتقنية"
+    ],
+    "translations": [
+      "Communications, Space & Technology Commission (CST)"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "ماك",
+      "لوريال",
+      "كلارنس",
+      "إستي لودر"
+    ],
+    "translations": [
+      "MAC",
+      "L'Oréal",
+      "Clarins",
+      "Estée Lauder"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "substitutions": [
+      "الهيئة العامة لحماية المستهلك",
+      "وزارة التجارة"
+    ],
+    "translations": [
+      "Consumer Protection Authority",
+      "Ministry of Commerce"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "إس تي سي باي",
+      "آبل باي أو مدى باي"
+    ],
+    "translations": [
+      "STC Pay",
+      "Apple Pay or mada Pay"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "برنامج الولاء",
+      "نقاط المكافآت",
+      "برنامج النقاط",
+      "برنامج العملاء المميزين",
+      "بطاقة المكافآت"
+    ],
+    "translations": [
+      "Loyalty Program",
+      "Reward Points",
+      "Points Program",
+      "VIP Customer Program",
+      "Rewards Card"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "substitutions": [
+      "إدارة المرور السعودي"
+    ],
+    "translations": [
+      "Saudi Traffic Department"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "تويوتا",
+      "هيونداي",
+      "نيسان",
+      "فورد",
+      "شيفروليه",
+      "كيا",
+      "هوندا"
+    ],
+    "translations": [
+      "Toyota",
+      "Hyundai",
+      "Nissan",
+      "Ford",
+      "Chevrolet",
+      "Kia",
+      "Honda"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "المراعي",
+      "الدانوب",
+      "المراعي",
+      "نادك"
+    ],
+    "translations": [
+      "Almarai",
+      "Danube",
+      "Almarai",
+      "NADEC"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "substitutions": [
+      "صندوق تنمية الموارد البشرية",
+      "عمادة شؤون الطلاب"
+    ],
+    "translations": [
+      "Human Resources Development Fund (HRDF)",
+      "Deanship of Student Affairs"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "إس تي سي للإنترنت",
+      "موبايلي للإنترنت",
+      "زين",
+      "سلام"
+    ],
+    "translations": [
+      "STC Internet",
+      "Mobily Internet",
+      "Zain",
+      "Salam"
+    ]
+  }
+}

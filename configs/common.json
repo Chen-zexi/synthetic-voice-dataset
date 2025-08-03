@@ -1,0 +1,45 @@
+{
+  "followup_turns": {
+    "num_turns_lower_limit": 2,
+    "num_turns_upper_limit": 4,
+    "sample_limit": 25,
+    "victim_awareness_levels": ["not", "not", "not", "not", "not", "tiny", "very"]
+  },
+  "preprocessing": {
+    "input_file": "scam_first_line_chinese.txt",
+    "mapped_suffix": "_mapped.txt"
+  },
+  "translation": {
+    "service": "google",
+    "max_lines": 25,
+    "english_output": "scam_first_line_english_mapped.txt",
+    "chinese_code": "zh-CN"
+  },
+  "multi_turn": {
+    "english_output": "scam_conversation_english.json",
+    "max_conversation": 25
+  },
+  "legit_call": {
+    "num_conversations": 25
+  },
+  "voice_generation": {
+    "sample_limit": 25,
+    "model_id": "eleven_multilingual_v2",
+    "output_format": "mp3_44100_128",
+    "voice_speed": 1.08,
+    "silence_duration_ms": 500,
+    "background_volume_reduction_db": 18,
+    "bandpass_filter": {
+      "low_freq": 300,
+      "high_freq": 3400
+    }
+  },
+  "post_processing": {
+    "scam_label": 1,
+    "legit_label": 0,
+    "audio_zip_names": {
+      "scam": "scam_conversation_audio.zip",
+      "legit": "legit_conversation_audio.zip"
+    }
+  }
+}
