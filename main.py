@@ -23,6 +23,7 @@ from cli.commands import (
     show_pipeline_steps
 )
 from cli.utils import setup_logging, print_banner
+from cli.ui import InteractiveUI
 
 
 def main():
@@ -32,6 +33,8 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
+  %(prog)s                                      # Run in interactive mode
+  %(prog)s --interactive                        # Run in interactive mode
   %(prog)s --language arabic                    # Run full pipeline for Arabic
   %(prog)s --language malay --steps preprocess  # Run only preprocessing for Malay
   %(prog)s --list-languages                     # Show available languages
@@ -113,6 +116,13 @@ Examples:
         help='Limit the number of samples to process (for testing)'
     )
     
+    # Interface mode
+    parser.add_argument(
+        '--interactive', '-i',
+        action='store_true',
+        help='Run in interactive menu mode'
+    )
+    
     # Logging
     parser.add_argument(
         '--verbose', '-v',
@@ -131,6 +141,14 @@ Examples:
     # Setup logging
     log_level = 'DEBUG' if args.verbose else 'WARNING' if args.quiet else 'INFO'
     setup_logging(level=log_level)
+    
+    # Handle interactive mode first
+    if args.interactive or len(sys.argv) == 1:
+        if not args.quiet:
+            print_banner()
+        ui = InteractiveUI(config_dir=args.config_dir, output_dir=args.output_dir)
+        ui.run()
+        return 0
     
     # Print banner unless quiet mode
     if not args.quiet:

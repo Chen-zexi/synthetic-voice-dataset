@@ -20,6 +20,10 @@ def setup_logging(level: str = 'INFO'):
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S'
     )
+    
+    # Set httpx logger to DEBUG level to prevent INFO logs from interfering with tqdm
+    httpx_logger = logging.getLogger('httpx')
+    httpx_logger.setLevel(logging.WARNING)
 
 
 def print_banner():
@@ -76,18 +80,25 @@ def format_file_size(size_bytes: int) -> str:
     return f"{size_bytes:.1f} TB"
 
 
-def confirm_action(message: str) -> bool:
+def confirm_action(message: str, default_yes: bool = False) -> bool:
     """
     Ask user for confirmation.
     
     Args:
         message: Confirmation message
+        default_yes: If True, 'y' is the default (Y/n), otherwise 'n' is default (y/N)
         
     Returns:
         True if user confirms, False otherwise
     """
-    response = input(f"{message} (y/N): ").strip().lower()
-    return response == 'y'
+    if default_yes:
+        prompt = f"{message} (Y/n): "
+        response = input(prompt).strip().lower()
+        return response != 'n'
+    else:
+        prompt = f"{message} (y/N): "
+        response = input(prompt).strip().lower()
+        return response == 'y'
 
 
 def create_timestamp() -> str:

@@ -30,7 +30,7 @@ class LegitGenerator:
         """
         self.config = config
         self.client = OpenAI(api_key=config.openai_api_key)
-        self.model = "gpt-4o"
+        self.model = "gpt-4.1"
     
     def generate_conversations(self) -> List[Dict]:
         """
