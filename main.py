@@ -18,6 +18,7 @@ sys.path.insert(0, src_path)
 from cli.commands import (
     run_pipeline,
     list_languages,
+    list_locales,
     validate_config,
     show_pipeline_steps
 )
@@ -42,7 +43,13 @@ Examples:
     parser.add_argument(
         '--language', '-l',
         type=str,
-        help='Language to process (e.g., arabic, malay)'
+        help='Language to process (e.g., arabic, malay) - for backward compatibility'
+    )
+    
+    parser.add_argument(
+        '--locale',
+        type=str,
+        help='Locale to process (e.g., ar-sa, ms-my, ar-ae)'
     )
     
     parser.add_argument(
@@ -64,7 +71,13 @@ Examples:
     parser.add_argument(
         '--list-languages',
         action='store_true',
-        help='List all available language configurations'
+        help='List all available language configurations (legacy)'
+    )
+    
+    parser.add_argument(
+        '--list-locales',
+        action='store_true',
+        help='List all available locale configurations'
     )
     
     parser.add_argument(
@@ -127,20 +140,28 @@ Examples:
     if args.list_languages:
         return list_languages(args.config_dir)
     
+    if args.list_locales:
+        return list_locales(args.config_dir)
+    
     if args.validate_config:
         return validate_config(args.validate_config, args.config_dir)
     
     if args.show_steps:
         return show_pipeline_steps()
     
-    # Check if language is specified for pipeline execution
-    if not args.language:
-        parser.error("--language is required to run the pipeline. Use --help for more information.")
+    # Determine which identifier to use
+    identifier = None
+    if args.locale:
+        identifier = args.locale
+    elif args.language:
+        identifier = args.language
+    else:
+        parser.error("Either --locale or --language is required to run the pipeline. Use --help for more information.")
     
     # Run the pipeline
     try:
         run_pipeline(
-            language=args.language,
+            language=identifier,  # ConfigLoader will handle both languages and locales
             steps=args.steps,
             config_dir=args.config_dir,
             output_dir=args.output_dir,

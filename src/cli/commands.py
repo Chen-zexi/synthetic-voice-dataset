@@ -106,7 +106,7 @@ def list_languages(config_dir: str = "./configs") -> int:
             print_warning("No language configurations found")
             return 1
         
-        print_step_header("Available Languages")
+        print_step_header("Available Languages (Legacy)")
         
         for lang in languages:
             # Try to load and display info for each language
@@ -120,10 +120,56 @@ def list_languages(config_dir: str = "./configs") -> int:
                 print(f"\n{lang}: ERROR - {e}")
         
         print(f"\nTotal: {len(languages)} languages")
+        print("\nNote: Use --list-locales for the new localization-based configurations")
         return 0
         
     except Exception as e:
         print_error(f"Failed to list languages: {e}")
+        return 1
+
+
+def list_locales(config_dir: str = "./configs") -> int:
+    """
+    List all available locale configurations.
+    
+    Args:
+        config_dir: Configuration directory
+        
+    Returns:
+        Exit code (0 for success)
+    """
+    try:
+        config_loader = ConfigLoader(config_dir)
+        localizations = config_loader.list_localizations()
+        
+        if not localizations:
+            print_warning("No locale configurations found")
+            return 1
+        
+        print_step_header("Available Locales")
+        
+        # Group by language
+        by_language = {}
+        for locale_id, description in localizations.items():
+            lang_code = locale_id.split('-')[0] if '-' in locale_id else locale_id
+            if lang_code not in by_language:
+                by_language[lang_code] = []
+            by_language[lang_code].append((locale_id, description))
+        
+        # Display grouped by language
+        for lang_code in sorted(by_language.keys()):
+            print(f"\n{lang_code.upper()}:")
+            for locale_id, description in sorted(by_language[lang_code]):
+                print(f"  {locale_id:<10} - {description}")
+        
+        print(f"\nTotal: {len(localizations)} locales")
+        print("\nExamples:")
+        print("  python main.py --locale ar-sa    # Run pipeline for Saudi Arabia (Arabic)")
+        print("  python main.py --locale ms-my    # Run pipeline for Malaysia (Malay)")
+        return 0
+        
+    except Exception as e:
+        print_error(f"Failed to list locales: {e}")
         return 1
 
 

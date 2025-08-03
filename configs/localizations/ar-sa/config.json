@@ -1,0 +1,77 @@
+{
+  "locale": {
+    "id": "ar-sa",
+    "language_code": "ar",
+    "country_code": "SA",
+    "language_name": "Arabic",
+    "region_name": "Saudi Arabia",
+    "currency": "SAR",
+    "currency_symbol": "ريال"
+  },
+  "translation": {
+    "from_code": "zh-CN",
+    "to_code": "ar",
+    "intermediate_code": "en"
+  },
+  "voices": {
+    "ids": [
+      "u0TsaWvt0v8migutHM3M",
+      "A9ATTqUUQ6GHu0coCz8t",
+      "R6nda3uM038xEEKi7GFl",
+      "VwC51uc4PUblWEJSPzeo"
+    ],
+    "names": [
+      "Ghizlane",
+      "Hamid",
+      "Anas",
+      "Abrar Sabbah"
+    ]
+  },
+  "conversation": {
+    "legit_categories": [
+      "family_checkin",
+      "friend_chat",
+      "relationship_talk",
+      "holiday_greeting",
+      "emergency_help_request",
+      "doctor_appointment_confirmation",
+      "clinic_test_results",
+      "delivery_confirmation",
+      "utility_service_followup",
+      "repair_scheduling",
+      "bank_verification_call",
+      "visa_status_update",
+      "tax_inquiry",
+      "insurance_claim_followup",
+      "civil_services_scheduling",
+      "job_interview_scheduling",
+      "coworker_sync",
+      "project_status_update",
+      "freelance_client_call",
+      "work_meeting_reminder",
+      "school_event_reminder",
+      "tutoring_session",
+      "academic_advising",
+      "exam_results_notification",
+      "class_schedule_change",
+      "restaurant_reservation",
+      "hairdresser_booking",
+      "hotel_booking_confirmation",
+      "volunteering_coordination",
+      "language_exchange_call",
+      "customer_support_callback",
+      "subscription_renewal_notice",
+      "product_feedback_survey",
+      "account_security_verification",
+      "appointment_cancellation_notice"
+    ]
+  },
+  "output": {
+    "scam_conversation": "scam_conversation.json",
+    "legit_conversation": "legit_conversation.json",
+    "scam_audio_dir": "scam",
+    "legit_audio_dir": "legit",
+    "scam_formatted": "scam_conversation_formatted.json",
+    "legit_formatted": "legit_conversation_formatted.json"
+  }
+}
