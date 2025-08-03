@@ -25,7 +25,11 @@ scamGen_combined_first_20k.txt
 *.txt
 output/
 
+!archive/scam_first_line_chinese_mapped.txt
+!archive/scam_first_line_english_mapped.txt
+!archive/translation.txt
 
+!data/input/scam_first_line_chinese.txt
 
 !requirements.txt
 
