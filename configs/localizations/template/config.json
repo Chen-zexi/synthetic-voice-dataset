@@ -1,0 +1,77 @@
+{
+  "locale_code": "XX-YY",
+  "locale_name": "Language Name - Country/Region",
+  "language_code": "XX",
+  "language_name": "Language Name",
+  "region": "Country/Region Name",
+  "translation": {
+    "from_code": "zh",
+    "to_code": "XX",
+    "intermediate_code": "en"
+  },
+  "voices": {
+    "ids": [
+      "elevenlabs_voice_id_1",
+      "elevenlabs_voice_id_2",
+      "elevenlabs_voice_id_3"
+    ],
+    "names": [
+      "Voice Name 1 (Gender/Age)",
+      "Voice Name 2 (Gender/Age)",
+      "Voice Name 3 (Gender/Age)"
+    ]
+  },
+  "legit_call_categories": [
+    "family_checkin",
+    "friend_chat",
+    "relationship_talk",
+    "holiday_greeting",
+    "emergency_help_request",
+    "doctor_appointment_confirmation",
+    "clinic_test_results",
+    "delivery_confirmation",
+    "utility_service_followup",
+    "repair_scheduling",
+    "bank_verification_call",
+    "visa_status_update",
+    "tax_inquiry",
+    "insurance_claim_followup",
+    "civil_services_scheduling",
+    "job_interview_scheduling",
+    "coworker_sync",
+    "project_status_update",
+    "freelance_client_call",
+    "work_meeting_reminder",
+    "school_event_reminder",
+    "tutoring_session",
+    "academic_advising",
+    "exam_results_notification",
+    "class_schedule_change",
+    "restaurant_reservation",
+    "hairdresser_booking",
+    "hotel_booking_confirmation",
+    "volunteering_coordination",
+    "language_exchange_call",
+    "customer_support_callback",
+    "subscription_renewal_notice",
+    "product_feedback_survey",
+    "account_security_verification",
+    "appointment_cancellation_notice"
+  ],
+  "output_paths": {
+    "scam_conversation": "scam_conversation_XX-YY.json",
+    "legit_conversation": "legit_conversation_XX-YY.json",
+    "scam_audio_dir": "scam",
+    "legit_audio_dir": "legit",
+    "scam_formatted": "scam_conversation_XX-YY_formatted.json",
+    "legit_formatted": "legit_conversation_XX-YY_formatted.json"
+  },
+  "cultural_notes": {
+    "currency": "Local currency code and symbol",
+    "phone_greeting": "Common phone greeting phrases",
+    "formality_level": "Formal/Informal/Mixed",
+    "common_scam_themes": [
+      "List region-specific common scam themes"
+    ]
+  }
+}
