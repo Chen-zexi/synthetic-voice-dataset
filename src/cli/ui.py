@@ -14,7 +14,9 @@ from cli.commands import (
     list_languages,
     list_locales, 
     validate_config,
-    show_pipeline_steps
+    show_pipeline_steps,
+    cache_translation,
+    list_cached_translations
 )
 from cli.utils import (
     setup_logging,
@@ -291,6 +293,7 @@ class InteractiveUI:
         print("  2. Validate current locale configuration")
         print("  3. Show pipeline steps")
         print("  4. View configuration details")
+        print("  5. Manage translation cache")
         print("  0. Back to main menu")
         
         choice = input("\nEnter your choice: ").strip()
@@ -308,6 +311,8 @@ class InteractiveUI:
             show_pipeline_steps()
         elif choice == '4':
             self._view_config_details()
+        elif choice == '5':
+            self._translation_cache_menu()
         else:
             print_warning("Invalid choice.")
     
@@ -351,6 +356,113 @@ class InteractiveUI:
             
         except Exception as e:
             print_error(f"Error loading configuration: {e}")
+    
+    def _translation_cache_menu(self):
+        """Show translation cache management menu."""
+        print_step_header("Translation Cache Management")
+        
+        print("Cache Options:")
+        print("  1. Generate cached translation")
+        print("  2. List cached translations")
+        print("  3. Clear cache")
+        print("  0. Back to configuration menu")
+        
+        choice = input("\nEnter your choice: ").strip()
+        
+        if choice == '0':
+            return
+        elif choice == '1':
+            self._generate_cached_translation()
+        elif choice == '2':
+            list_cached_translations()
+        elif choice == '3':
+            self._clear_translation_cache()
+        else:
+            print_warning("Invalid choice.")
+    
+    def _generate_cached_translation(self):
+        """Generate cached Chinese to English translation."""
+        print_step_header("Generate Cached Translation")
+        
+        # Get available translation services
+        services = ["google", "argos", "qwen"]
+        
+        print("Available translation services:")
+        for i, service in enumerate(services, 1):
+            print(f"  {i}. {service}")
+        
+        service_choice = input("\nSelect translation service (1): ").strip() or "1"
+        
+        try:
+            service_idx = int(service_choice) - 1
+            if 0 <= service_idx < len(services):
+                selected_service = services[service_idx]
+                
+                # If Qwen is selected, ask for model
+                if selected_service == "qwen":
+                    self._select_qwen_model_and_generate(selected_service)
+                else:
+                    self._execute_cache_generation(selected_service)
+            else:
+                print_warning("Invalid service selection.")
+        except ValueError:
+            print_warning("Please enter a valid number.")
+    
+    def _select_qwen_model_and_generate(self, service: str):
+        """Select Qwen model and generate cache."""
+        models = ["qwen-mt-turbo", "qwen-mt-plus"]
+        
+        print("\nAvailable Qwen models:")
+        for i, model in enumerate(models, 1):
+            print(f"  {i}. {model}")
+        
+        model_choice = input("\nSelect model (1): ").strip() or "1"
+        
+        try:
+            model_idx = int(model_choice) - 1
+            if 0 <= model_idx < len(models):
+                selected_model = models[model_idx]
+                self._execute_cache_generation(service, model=selected_model)
+            else:
+                print_warning("Invalid model selection.")
+        except ValueError:
+            print_warning("Please enter a valid number.")
+    
+    def _execute_cache_generation(self, service: str, model: Optional[str] = None):
+        """Execute cache generation with selected service and model."""
+        print_info(f"Generating cached translation using {service}")
+        if model:
+            print_info(f"Model: {model}")
+        
+        # Ask for force refresh
+        force_refresh = confirm_action("Force refresh existing cache?", default_yes=False)
+        
+        # Execute cache generation
+        try:
+            cache_translation(
+                service=service,
+                model=model,
+                force_refresh=force_refresh,
+                config_dir=self.config_dir,
+                verbose=True
+            )
+            print_info("Cache generation completed successfully.")
+        except Exception as e:
+            print_error(f"Error generating cache: {e}")
+    
+    def _clear_translation_cache(self):
+        """Clear translation cache."""
+        if confirm_action("Clear all translation cache files? This cannot be undone."):
+            try:
+                import shutil
+                cache_dir = Path(self.config_dir).parent / "data" / "translation_cache"
+                if cache_dir.exists():
+                    shutil.rmtree(cache_dir)
+                    print_info("Translation cache cleared successfully.")
+                else:
+                    print_info("No cache directory found.")
+            except Exception as e:
+                print_error(f"Error clearing cache: {e}")
     
     def _monitoring_menu(self):
         """Show monitoring and status menu."""

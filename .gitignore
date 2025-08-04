@@ -21,8 +21,7 @@ secrets.json
 __pycache__/
 
 # Input data files (large files)
-scamGen_combined_first_20k.txt
-*.txt
+#scamGen_combined_first_20k.txt
 output/
 
 !archive/scam_first_line_chinese_mapped.txt

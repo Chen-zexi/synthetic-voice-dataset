@@ -36,6 +36,7 @@ class Config:
     translation_to_code: str
     translation_intermediate_code: str
     translation_service: str
+    qwen_model: Optional[str]
     max_lines: int
     
     # Followup turns settings
@@ -44,12 +45,14 @@ class Config:
     sample_limit: int
     victim_awareness_levels: list
     
-    # Preprocessing paths
+    # Preprocessing settings
+    preprocessing_input_file: str
     preprocessing_input_path: Path
     preprocessing_output_path: Path
     preprocessing_map_path: Path
     
-    # Translation paths
+    # Translation settings
+    translation_english_output: str
     translation_input_path: Path
     translation_output_path: Path
     
@@ -108,6 +111,13 @@ class Config:
     llm_max_tokens: Optional[int] = None
     llm_top_p: float = 0.95
     llm_n: int = 1
+    
+    # Translation cache settings
+    use_translation_cache: bool = False
+    translation_cache_enabled: bool = True
+    translation_cache_dir: str = "data/translation_cache"
+    translation_cache_service: str = "google"
+    force_translation_refresh: bool = False
     
     # Output control
     verbose: bool = False
@@ -290,6 +300,7 @@ class ConfigLoader:
             translation_to_code=lang_config["translation"]["to_code"],
             translation_intermediate_code=lang_config["translation"]["intermediate_code"],
             translation_service=self.common_config["translation"]["service"],
+            qwen_model=self.common_config["translation"].get("qwen_model"),
             max_lines=self.common_config["translation"]["max_lines"],
             
             # Followup turns settings
@@ -298,12 +309,14 @@ class ConfigLoader:
             sample_limit=self.common_config["followup_turns"]["sample_limit"],
             victim_awareness_levels=self.common_config["followup_turns"]["victim_awareness_levels"],
             
-            # Preprocessing paths
+            # Preprocessing settings
+            preprocessing_input_file=self.common_config["preprocessing"]["input_file"],
             preprocessing_input_path=preprocessing_input,
             preprocessing_output_path=preprocessing_output,
             preprocessing_map_path=preprocessing_map,
             
-            # Translation paths
+            # Translation settings
+            translation_english_output=self.common_config["translation"]["english_output"],
             translation_input_path=preprocessing_output,
             translation_output_path=translation_output,
             
@@ -340,6 +353,13 @@ class ConfigLoader:
             background_volume_reduction_db=self.common_config["voice_generation"]["background_volume_reduction_db"],
             bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
             bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
+            
+            # Translation cache configuration
+            use_translation_cache=self.common_config.get("translation_cache", {}).get("use_cache", False),
+            translation_cache_enabled=self.common_config.get("translation_cache", {}).get("enabled", True),
+            translation_cache_dir=self.common_config.get("translation_cache", {}).get("cache_dir", "data/translation_cache"),
+            translation_cache_service=self.common_config.get("translation_cache", {}).get("cache_service", "google"),
+            force_translation_refresh=self.common_config.get("translation_cache", {}).get("force_refresh", False),
             
             # Post-processing settings
             post_processing_scam_json_input=scam_conversation,
@@ -449,6 +469,7 @@ class ConfigLoader:
             translation_to_code=locale_config["translation"]["to_code"],
             translation_intermediate_code=locale_config["translation"]["intermediate_code"],
             translation_service=self.common_config["translation"]["service"],
+            qwen_model=self.common_config["translation"].get("qwen_model"),
             max_lines=self.common_config["translation"]["max_lines"],
             
             # Followup turns settings
@@ -457,12 +478,14 @@ class ConfigLoader:
             sample_limit=self.common_config["followup_turns"]["sample_limit"],
             victim_awareness_levels=self.common_config["followup_turns"]["victim_awareness_levels"],
             
-            # Preprocessing paths
+            # Preprocessing settings
+            preprocessing_input_file=self.common_config["preprocessing"]["input_file"],
             preprocessing_input_path=preprocessing_input,
             preprocessing_output_path=preprocessing_output,
             preprocessing_map_path=placeholders_path,  # Use co-located placeholders
             
-            # Translation paths
+            # Translation settings
+            translation_english_output=self.common_config["translation"]["english_output"],
             translation_input_path=preprocessing_output,
             translation_output_path=translation_output,
             
@@ -499,6 +522,13 @@ class ConfigLoader:
             background_volume_reduction_db=self.common_config["voice_generation"]["background_volume_reduction_db"],
             bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
             bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
+            
+            # Translation cache configuration
+            use_translation_cache=self.common_config.get("translation_cache", {}).get("use_cache", False),
+            translation_cache_enabled=self.common_config.get("translation_cache", {}).get("enabled", True),
+            translation_cache_dir=self.common_config.get("translation_cache", {}).get("cache_dir", "data/translation_cache"),
+            translation_cache_service=self.common_config.get("translation_cache", {}).get("cache_service", "google"),
+            force_translation_refresh=self.common_config.get("translation_cache", {}).get("force_refresh", False),
             
             # Post-processing settings
             post_processing_scam_json_input=scam_conversation,

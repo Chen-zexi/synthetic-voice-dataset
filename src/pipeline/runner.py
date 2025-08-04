@@ -5,6 +5,7 @@ Pipeline runner for orchestrating the voice scam dataset generation process.
 import logging
 import time
 import asyncio
+import warnings
 from typing import List, Optional, Dict, Callable
 from pathlib import Path
 
@@ -13,6 +14,10 @@ from cli.utils import (
     print_step_header, print_step_complete,
     ensure_directory, ProgressTracker
 )
+
+# Suppress the non-fatal "Event loop is closed" error from asyncio
+warnings.filterwarnings("ignore", message=".*Event loop is closed.*")
+logging.getLogger("asyncio").setLevel(logging.CRITICAL)
 
 # Import modules (to be implemented)
 from preprocessing.tag_extractor import TagExtractor
@@ -142,10 +147,51 @@ class PipelineRunner:
     
     def run_translation(self):
         """Run initial translation: Chinese to English."""
+        # Check if translation cache is enabled
+        use_cache = getattr(self.config, 'use_translation_cache', False)
+        cache_service = getattr(self.config, 'translation_cache_service', 'google')
+        
+        if use_cache and not getattr(self.config, 'force_translation_refresh', False):
+            # Try to use cached translation
+            from translation.cache_translator import CacheTranslator
+            
+            logger.info(f"Checking for cached Chinese to English translation from {cache_service}")
+            
+            # Check if cache exists and is valid
+            # For Qwen, get the model from config
+            cache_model = None
+            if cache_service == "qwen":
+                cache_model = getattr(self.config, 'qwen_model', 'qwen-mt-turbo')
+            
+            translator = CacheTranslator(self.config, cache_service, cache_model)
+            cached_path = translator.get_cached_translation_path()
+            
+            if cached_path:
+                # Create a symbolic link to the cached file in the expected location
+                output_path = self.config.translation_output_path
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                # Remove existing file/link if it exists
+                if output_path.exists() or output_path.is_symlink():
+                    output_path.unlink()
+                
+                # Create symbolic link to cached file
+                output_path.symlink_to(cached_path.resolve())
+                
+                if cache_model:
+                    logger.info(f"Using cached translation from {cache_service} (model: {cache_model})")
+                else:
+                    logger.info(f"Using cached translation from {cache_service}")
+                logger.info(f"Created symbolic link: {output_path} -> {cached_path}")
+                # Skip actual translation - symbolic link points to cache
+                return
+            else:
+                logger.warning(f"No valid cache found for {cache_service}, running fresh translation")
+        
         # Build service info string
         service_info = f"service: {self.config.translation_service}"
         if self.config.translation_service == "qwen":
-            service_info += f" (model: {getattr(self.config, 'qwen_model', 'qwen-mt-plus')})"
+            service_info += f" (model: {getattr(self.config, 'qwen_model', 'qwen-mt-turbo')})"
         
         logger.info(f"Running Chinese to English translation using {service_info}")
         
@@ -173,7 +219,7 @@ class PipelineRunner:
         # Build service info string
         service_info = f"service: {self.config.translation_service}"
         if self.config.translation_service == "qwen":
-            service_info += f" (model: {getattr(self.config, 'qwen_model', 'qwen-mt-plus')})"
+            service_info += f" (model: {getattr(self.config, 'qwen_model', 'qwen-mt-turbo')})"
         
         logger.info(f"Translating conversations to {self.config.language_name} using {service_info}")
         

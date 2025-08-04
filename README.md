@@ -17,6 +17,9 @@ Create a `.env` file with your API keys:
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
 ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+
+# Optional: For Qwen translation service
+DASHSCOPE_API_KEY=your_qwen_api_key_here
 ```
 
 ### Usage
@@ -59,6 +62,42 @@ python main.py --locale ar-sa --sample-limit 10
 python main.py --locale ar-sa --force
 ```
 
+#### Translation Cache
+
+The pipeline supports caching Chinese-to-English translations to avoid redundant API calls when running multiple locales:
+
+```bash
+# Generate cached translation using Google Translate
+python main.py --cache-translation --cache-service google
+
+# Generate cached translation using Qwen with specific model
+python main.py --cache-translation --cache-service qwen --cache-model qwen-mt-turbo
+
+# Force refresh existing cache
+python main.py --cache-translation --cache-service google --cache-force-refresh
+
+# List all cached translations
+python main.py --list-cached-translations
+```
+
+**Cache Configuration** (in `configs/common.json`):
+```json
+"translation_cache": {
+  "enabled": true,           # Enable cache system
+  "use_cache": true,         # Use cache in pipeline if available
+  "cache_dir": "data/translation_cache",
+  "cache_service": "qwen",   # Which service's cache to use
+  "force_refresh": false
+}
+```
+
+**Cache Features**:
+- Stores translations by service (google, argos, qwen)
+- For Qwen, stores separate caches per model (turbo, plus)
+- Validates cache against source file modification time
+- Automatically uses cache when available (if `use_cache: true`)
+- Links cached files directly without copying
+
 ## Pipeline Overview
 
 The pipeline consists of five main steps:
@@ -81,8 +120,10 @@ voice_scam_dataset_gen/
 │   │   └── tag_extractor.py          # Placeholder tag extraction
 │   ├── translation/                # Multi-service translation
 │   │   ├── translator.py             # Base translator interface
-│   │   ├── google_translator.py
-│   │   ├── argos_translator.py
+│   │   ├── google_translator.py      # Google Translate API
+│   │   ├── argos_translator.py       # Offline Argos Translate
+│   │   ├── qwen_translator.py        # Alibaba Cloud Qwen-MT
+│   │   ├── cache_translator.py       # Translation caching system
 │   │   └── language_codes.py         # Language code mappings
 │   ├── conversation/               # LLM dialogue generation
 │   │   ├── scam_generator.py         # Scam conversation generation
@@ -317,7 +358,7 @@ HOST_IP=192.168.1.100  # For LM-Studio/vLLM
 
 - **OpenAI API**: For LLM conversation generation (default provider)
 - **ElevenLabs API**: For text-to-speech synthesis
-- **Google Translate**: Default translation service (Argos Translate also supported)
+- **Translation Services**: Google Translate (default), Argos Translate (offline), Qwen-MT (Alibaba Cloud)
 - **Optional**: Anthropic/Gemini APIs for alternative LLM providers
 
 ## Migration from Legacy System

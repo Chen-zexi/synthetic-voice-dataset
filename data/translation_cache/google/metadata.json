@@ -1,0 +1,8 @@
+{
+  "service": "google",
+  "model": null,
+  "timestamp": "2025-08-04T12:05:07.545490",
+  "line_count": 216,
+  "source_file": "data/input/scamGen_combined_first_20k.txt",
+  "max_lines": 1000
+}

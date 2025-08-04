@@ -12,6 +12,7 @@ from typing import List, Optional
 from config.config_loader import ConfigLoader
 from pipeline.runner import PipelineRunner
 from tts.voice_validator import VoiceValidator
+from translation.cache_translator import CacheTranslator
 from cli.utils import (
     print_error, print_info, print_warning,
     print_step_header, format_language_info,
@@ -283,13 +284,130 @@ def show_pipeline_steps() -> int:
     return 0
 
 
-async def validate_voices_command(
-    language: str,
+def cache_translation(
+    service: str = "google",
+    model: Optional[str] = None,
+    force_refresh: bool = False,
     config_dir: str = "./configs",
-    output_dir: str = "./output"
+    verbose: bool = False
 ) -> int:
     """
-    Validate ElevenLabs voice IDs for a specific locale.
+    Run standalone Chinese to English translation and cache the results.
+    
+    Args:
+        service: Translation service to use (google, qwen, argos)
+        model: Optional model name for services that support it
+        force_refresh: Force new translation even if cache exists
+        config_dir: Path to configuration directory
+        verbose: Enable verbose output
+        
+    Returns:
+        Exit code (0 for success, 1 for error)
+    """
+    try:
+        # Load base configuration
+        config_loader = ConfigLoader(config_dir)
+        # Use a locale to load config
+        config = config_loader.load_localization("ar-sa")
+        
+        # Override translation service
+        config.translation_service = service
+        
+        # For Qwen, use model from parameter or fall back to config
+        if service == "qwen":
+            if model:
+                config.qwen_model = model
+            else:
+                # Use model from config (already loaded)
+                model = getattr(config, 'qwen_model', 'qwen-mt-turbo')
+        
+        print_step_header("Translation Cache")
+        
+        # Create cache translator
+        translator = CacheTranslator(config, service, model)
+        
+        # Check existing caches
+        if not force_refresh:
+            cached = CacheTranslator.list_cached_translations()
+            if cached:
+                print("Existing cached translations:")
+                for svc_key, metadata in cached.items():
+                    display_name = svc_key
+                    if metadata.get('model'):
+                        display_name = f"{svc_key} ({metadata['model']})"
+                    print(f"  - {display_name}: {metadata['line_count']} lines, "
+                          f"cached on {metadata['timestamp'][:10]}")
+                print()
+        
+        # Run translation
+        print(f"Service: {service}")
+        if model:
+            print(f"Model: {model}")
+        print(f"Force refresh: {force_refresh}")
+        print()
+        
+        metadata = translator.run_cached_translation(force_refresh)
+        
+        print_info(f"\nTranslation cached successfully!")
+        print(f"Lines translated: {metadata['line_count']}")
+        print(f"Cache location: data/translation_cache/{service}/")
+        
+        return 0
+        
+    except Exception as e:
+        print_error(f"Translation cache failed: {e}")
+        logger.exception("Translation cache error")
+        return 1
+
+
+def list_cached_translations(verbose: bool = False) -> int:
+    """
+    List all available cached translations.
+    
+    Args:
+        verbose: Enable verbose output
+        
+    Returns:
+        Exit code (0 for success)
+    """
+    print_step_header("Cached Translations")
+    
+    cached = CacheTranslator.list_cached_translations()
+    
+    if not cached:
+        print("No cached translations found.")
+        print("\nTo create a cache, run:")
+        print("  python main.py --cache-translation --service google")
+        return 0
+    
+    print("Available cached translations:\n")
+    
+    for service_key, metadata in cached.items():
+        # Handle service/model format for Qwen
+        if '/' in service_key:
+            service, model = service_key.split('/', 1)
+            print(f"Service: {service}")
+            print(f"  Model: {model}")
+        else:
+            print(f"Service: {service_key}")
+            if metadata.get('model'):
+                print(f"  Model: {metadata['model']}")
+        print(f"  Lines: {metadata['line_count']}")
+        print(f"  Cached: {metadata['timestamp'][:19]}")
+        print(f"  Source: {metadata['source_file']}")
+        print()
+    
+    print("To use a cached translation in the pipeline:")
+    print("  1. Set 'use_cache': true in configs/common.json")
+    print("  2. Set 'cache_service' to the desired service")
+    print("  3. Run the pipeline normally")
+    
+    return 0
+
+
+def validate_voices(language: str, config_dir: str = "./configs", output_dir: str = "./output") -> int:
+    """
+    Validate ElevenLabs voice IDs for a specific locale using the comprehensive validation script.
     
     Args:
         language: Language to validate voices for
@@ -300,63 +418,27 @@ async def validate_voices_command(
         Exit code (0 for success, 1 for failure)
     """
     try:
+        import subprocess
+        import sys
+        from pathlib import Path
+        
         print_step_header(f"Voice Validation for {language}")
         
-        # Load configuration
-        print_info(f"Loading configuration for {language}...")
-        config_loader = ConfigLoader(config_dir, output_dir)
-        config = config_loader.load_language(language)
+        # Get the path to the validation script
+        script_dir = Path(__file__).parent.parent.parent
+        validation_script = script_dir / "validate_voice_ids.py"
         
-        # Check if ElevenLabs API key is available
-        if not config.elevenlabs_api_key:
-            print_error("ElevenLabs API key not found. Please set ELEVENLABS_API_KEY in your .env file.")
+        if not validation_script.exists():
+            print_error(f"Validation script not found: {validation_script}")
             return 1
         
-        # Get voice IDs for the language
-        voice_ids = config.voice_ids.get(config.voice_language, [])
-        if not voice_ids:
-            print_error(f"No voice IDs configured for {config.voice_language}")
-            return 1
+        # Run the validation script for the specific locale
+        cmd = [sys.executable, str(validation_script), "--locale", language]
         
-        print_info(f"Found {len(voice_ids)} voice IDs to validate")
-        for i, voice_id in enumerate(voice_ids, 1):
-            print(f"  {i}. {voice_id}")
+        print_info(f"Running voice validation for {language}...")
+        result = subprocess.run(cmd, cwd=str(script_dir), capture_output=False)
         
-        # Create validator and validate voices
-        validator = VoiceValidator(config.elevenlabs_api_key)
-        print_info("Validating voice IDs...")
-        
-        results = await validator.validate_voice_ids(voice_ids)
-        
-        # Show results
-        valid_voices = validator.get_valid_voices(results)
-        invalid_voices = validator.get_invalid_voices(results)
-        
-        if valid_voices:
-            print_info(f"✓ Valid voices ({len(valid_voices)}):")
-            for voice in valid_voices:
-                print(f"  ✓ {voice.voice_id}: {voice.name}")
-        
-        if invalid_voices:
-            print_error(f"✗ Invalid voices ({len(invalid_voices)}):")
-            for voice in invalid_voices:
-                print(f"  ✗ {voice.voice_id}: {voice.error_message}")
-            
-            # Show available alternatives
-            print_info("\nFetching available voices for reference...")
-            available_voices = await validator.get_available_voices()
-            if available_voices:
-                print_info(f"Found {len(available_voices)} available voices:")
-                # Group by language if possible
-                for voice in available_voices[:10]:  # Show first 10
-                    print(f"  - {voice.get('voice_id', 'N/A')}: {voice.get('name', 'Unknown')}")
-                if len(available_voices) > 10:
-                    print(f"  ... and {len(available_voices) - 10} more")
-            
-            return 1
-        
-        print_info("All voice IDs are valid!")
-        return 0
+        return result.returncode
         
     except Exception as e:
         print_error(f"Voice validation failed: {e}")
@@ -364,16 +446,82 @@ async def validate_voices_command(
         return 1
 
 
-def validate_voices(language: str, config_dir: str = "./configs", output_dir: str = "./output") -> int:
+def validate_all_voices(config_dir: str = "./configs", update_configs: bool = False) -> int:
     """
-    Synchronous wrapper for voice validation command.
+    Validate all ElevenLabs voice IDs across all locales.
     
     Args:
-        language: Language to validate voices for
         config_dir: Configuration directory
-        output_dir: Output directory
+        update_configs: Whether to update configuration files automatically
         
     Returns:
         Exit code (0 for success, 1 for failure)
     """
-    return asyncio.run(validate_voices_command(language, config_dir, output_dir))
+    try:
+        import subprocess
+        import sys
+        from pathlib import Path
+        
+        print_step_header("Voice Validation for All Locales")
+        
+        # Get the path to the validation script
+        script_dir = Path(__file__).parent.parent.parent
+        validation_script = script_dir / "validate_voice_ids.py"
+        
+        if not validation_script.exists():
+            print_error(f"Validation script not found: {validation_script}")
+            return 1
+        
+        # Build command
+        cmd = [sys.executable, str(validation_script)]
+        if update_configs:
+            cmd.append("--update-configs")
+        
+        print_info("Running comprehensive voice validation for all locales...")
+        result = subprocess.run(cmd, cwd=str(script_dir), capture_output=False)
+        
+        return result.returncode
+        
+    except Exception as e:
+        print_error(f"Voice validation failed: {e}")
+        logger.exception("Voice validation error")
+        return 1
+
+
+def update_voice_configs(config_dir: str = "./configs") -> int:
+    """
+    Update configuration files to remove invalid voice IDs.
+    
+    Args:
+        config_dir: Configuration directory
+        
+    Returns:
+        Exit code (0 for success, 1 for failure)
+    """
+    try:
+        import subprocess
+        import sys
+        from pathlib import Path
+        
+        print_step_header("Updating Voice Configurations")
+        
+        # Get the path to the validation script
+        script_dir = Path(__file__).parent.parent.parent
+        validation_script = script_dir / "validate_voice_ids.py"
+        
+        if not validation_script.exists():
+            print_error(f"Validation script not found: {validation_script}")
+            return 1
+        
+        # Run with update flag
+        cmd = [sys.executable, str(validation_script), "--update-configs"]
+        
+        print_info("Updating configuration files to remove invalid voice IDs...")
+        result = subprocess.run(cmd, cwd=str(script_dir), capture_output=False)
+        
+        return result.returncode
+        
+    except Exception as e:
+        print_error(f"Voice configuration update failed: {e}")
+        logger.exception("Voice configuration update error")
+        return 1

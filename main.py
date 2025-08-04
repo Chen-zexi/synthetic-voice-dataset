@@ -21,7 +21,9 @@ from cli.commands import (
     list_locales,
     validate_config,
     validate_voices,
-    show_pipeline_steps
+    show_pipeline_steps,
+    cache_translation,
+    list_cached_translations
 )
 from cli.utils import setup_logging, print_banner
 from cli.ui import InteractiveUI
@@ -41,6 +43,8 @@ Examples:
   %(prog)s --list-languages                     # Show available languages
   %(prog)s --validate-config arabic             # Validate Arabic configuration
   %(prog)s --validate-voices japanese           # Validate ElevenLabs voices for Japanese
+  %(prog)s --validate-all-voices                # Validate all voice IDs across all locales
+  %(prog)s --update-voice-configs               # Update configs to remove invalid voice IDs
         """
     )
     
@@ -100,9 +104,54 @@ Examples:
     )
     
     parser.add_argument(
+        '--validate-all-voices',
+        action='store_true',
+        help='Validate all ElevenLabs voice IDs across all locales'
+    )
+    
+    parser.add_argument(
+        '--update-voice-configs',
+        action='store_true',
+        help='Update configuration files to remove invalid voice IDs'
+    )
+    
+    parser.add_argument(
         '--show-steps',
         action='store_true',
         help='Show all available pipeline steps and their descriptions'
+    )
+    
+    # Translation cache arguments
+    parser.add_argument(
+        '--cache-translation',
+        action='store_true',
+        help='Run standalone Chinese to English translation and cache results'
+    )
+    
+    parser.add_argument(
+        '--list-cached-translations',
+        action='store_true',
+        help='List all available cached translations'
+    )
+    
+    parser.add_argument(
+        '--cache-service',
+        type=str,
+        default='google',
+        choices=['google', 'qwen', 'argos'],
+        help='Translation service to use for caching (default: google)'
+    )
+    
+    parser.add_argument(
+        '--cache-model',
+        type=str,
+        help='Model to use for translation (e.g., qwen-mt-turbo for qwen service)'
+    )
+    
+    parser.add_argument(
+        '--cache-force-refresh',
+        action='store_true',
+        help='Force new translation even if cache exists'
     )
     
     # Output control
@@ -176,8 +225,29 @@ Examples:
     if args.validate_voices:
         return validate_voices(args.validate_voices, args.config_dir, args.output_dir)
     
+    if args.validate_all_voices:
+        from cli.commands import validate_all_voices
+        return validate_all_voices(args.config_dir, args.update_voice_configs)
+    
+    if args.update_voice_configs:
+        from cli.commands import update_voice_configs
+        return update_voice_configs(args.config_dir)
+    
     if args.show_steps:
         return show_pipeline_steps()
+    
+    # Handle translation cache commands
+    if args.cache_translation:
+        return cache_translation(
+            service=args.cache_service,
+            model=args.cache_model,
+            force_refresh=args.cache_force_refresh,
+            config_dir=args.config_dir,
+            verbose=args.verbose
+        )
+    
+    if args.list_cached_translations:
+        return list_cached_translations(verbose=args.verbose)
     
     # Determine which identifier to use
     identifier = None

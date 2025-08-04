@@ -1,0 +1,8 @@
+{
+  "service": "qwen",
+  "model": "qwen-mt-turbo",
+  "timestamp": "2025-08-04T11:55:43.654008",
+  "line_count": 25,
+  "source_file": "data/input/scam_first_line_chinese.txt",
+  "max_lines": 25
+}

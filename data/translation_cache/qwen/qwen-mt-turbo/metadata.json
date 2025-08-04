@@ -1,0 +1,8 @@
+{
+  "service": "qwen",
+  "model": "qwen-mt-turbo",
+  "timestamp": "2025-08-04T13:02:55.294394",
+  "line_count": 216,
+  "source_file": "data/input/scamGen_combined_first_20k.txt",
+  "max_lines": 1000
+}
