@@ -23,7 +23,9 @@ from cli.commands import (
     validate_voices,
     show_pipeline_steps,
     cache_translation,
-    list_cached_translations
+    list_cached_translations,
+    ensure_minimum_voices,
+    suggest_voices_for_locale
 )
 from cli.utils import setup_logging, print_banner
 from cli.ui import InteractiveUI
@@ -45,6 +47,8 @@ Examples:
   %(prog)s --validate-voices japanese           # Validate ElevenLabs voices for Japanese
   %(prog)s --validate-all-voices                # Validate all voice IDs across all locales
   %(prog)s --update-voice-configs               # Update configs to remove invalid voice IDs
+  %(prog)s --ensure-minimum-voices              # Check all locales have ≥2 voices
+  %(prog)s --suggest-voices ar-sa               # Get voice suggestions for Arabic Saudi
         """
     )
     
@@ -113,6 +117,19 @@ Examples:
         '--update-voice-configs',
         action='store_true',
         help='Update configuration files to remove invalid voice IDs'
+    )
+    
+    parser.add_argument(
+        '--ensure-minimum-voices',
+        action='store_true',
+        help='Check that all locales have at least 2 valid voice IDs for reliability'
+    )
+    
+    parser.add_argument(
+        '--suggest-voices',
+        type=str,
+        metavar='LOCALE',
+        help='Suggest additional voices for a specific locale (e.g., ar-sa, ja-jp)'
     )
     
     parser.add_argument(
@@ -232,6 +249,12 @@ Examples:
     if args.update_voice_configs:
         from cli.commands import update_voice_configs
         return update_voice_configs(args.config_dir)
+    
+    if args.ensure_minimum_voices:
+        return ensure_minimum_voices(args.config_dir)
+    
+    if args.suggest_voices:
+        return suggest_voices_for_locale(args.suggest_voices, args.config_dir)
     
     if args.show_steps:
         return show_pipeline_steps()

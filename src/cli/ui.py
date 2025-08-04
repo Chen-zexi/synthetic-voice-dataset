@@ -14,6 +14,10 @@ from cli.commands import (
     list_languages,
     list_locales, 
     validate_config,
+    validate_voices,
+    validate_all_voices,
+    ensure_minimum_voices,
+    suggest_voices_for_locale,
     show_pipeline_steps,
     cache_translation,
     list_cached_translations
@@ -28,6 +32,8 @@ from cli.utils import (
     confirm_action
 )
 from config.config_loader import ConfigLoader
+from config.locale_manager import LocaleConfigManager
+from tts.voice_validator import VoiceValidator
 
 
 class InteractiveUI:
@@ -165,8 +171,34 @@ class InteractiveUI:
             print(f"   Language: {config.language_name} ({config.language_code})")
             print(f"   Region: {config.region}")
             print(f"   Translation: {config.translation_from_code} → {config.translation_to_code}")
-            print(f"   Voice IDs: {len(config.voice_ids[config.language_code])} available")
+            
+            # Enhanced voice information with health status
+            try:
+                config_manager = LocaleConfigManager(f"{self.config_dir}/localizations")
+                locale_config = config_manager.load_config(locale_id)
+                voice_count = len(locale_config['voices']['ids'])
+                
+                # Voice status with health indicators
+                if voice_count >= 2:
+                    voice_status = f"✅ {voice_count} voices (meets minimum)"
+                elif voice_count == 1:
+                    voice_status = f"⚠️ {voice_count} voice (needs 1 more for redundancy)"
+                else:
+                    voice_status = f"❌ {voice_count} voices (critical - needs voices)"
+                
+                print(f"   Voice IDs: {voice_status}")
+                
+            except Exception:
+                # Fallback to old format if new config structure fails
+                voice_count = len(config.voice_ids[config.language_code])
+                print(f"   Voice IDs: {voice_count} available")
+            
             print(f"   Categories: {len(config.legit_call_categories)} conversation types")
+            
+            # Show quick action suggestions
+            if voice_count < 2:
+                print(f"\n   💡 Tip: Use Configuration > Voice ID Management to add more voices")
+                
         except KeyError as e:
             print_warning(f"Locale configuration is missing required field: {e}")
             print_info("This locale may need to be updated to the new configuration format.")
@@ -294,6 +326,7 @@ class InteractiveUI:
         print("  3. Show pipeline steps")
         print("  4. View configuration details")
         print("  5. Manage translation cache")
+        print("  6. Voice ID Management")
         print("  0. Back to main menu")
         
         choice = input("\nEnter your choice: ").strip()
@@ -313,6 +346,8 @@ class InteractiveUI:
             self._view_config_details()
         elif choice == '5':
             self._translation_cache_menu()
+        elif choice == '6':
+            self._voice_management_menu()
         else:
             print_warning("Invalid choice.")
     
@@ -586,22 +621,76 @@ class InteractiveUI:
         """Show command examples."""
         print_step_header("Command Examples")
         
-        print("Non-interactive usage examples:")
+        print("INTERACTIVE MODE:")
+        print("python main.py                           # Launch interactive interface")
+        print("python main.py --interactive             # Launch interactive interface")
         print()
-        print("# Run full pipeline for Arabic (Saudi Arabia)")
-        print("python main.py --locale ar-sa")
+        
+        print("PIPELINE EXECUTION:")
+        print("python main.py --locale ar-sa            # Run full pipeline for Arabic (Saudi Arabia)")
+        print("python main.py --locale ko-kr            # Run full pipeline for Korean")
+        print("python main.py --locale ja-jp            # Run full pipeline for Japanese")
+        print("python main.py --locale ms-my            # Run full pipeline for Malay")
         print()
         print("# Run specific steps only")
         print("python main.py --locale ar-sa --steps preprocess translate")
+        print("python main.py --locale ja-jp --steps conversation tts")
         print()
-        print("# Run with sample limit for testing")
-        print("python main.py --locale ar-sa --sample-limit 10")
+        print("# Run with options")
+        print("python main.py --locale ar-sa --sample-limit 10 --force")
+        print("python main.py --locale ko-kr --output-dir ./custom_output")
         print()
-        print("# List available locales")
-        print("python main.py --list-locales")
+        
+        print("CONFIGURATION & VALIDATION:")
+        print("python main.py --list-locales            # List all available locales")
+        print("python main.py --list-languages          # List legacy language mappings")
+        print("python main.py --validate-config ar-sa   # Validate locale configuration")
+        print("python main.py --show-steps              # Show available pipeline steps")
         print()
-        print("# Validate configuration")
-        print("python main.py --validate-config ar-sa")
+        
+        print("VOICE ID MANAGEMENT:")
+        print("python main.py --validate-voices ar-sa   # Validate voices for specific locale")
+        print("python main.py --validate-all-voices     # Validate all voice IDs across locales")
+        print("python main.py --update-voice-configs    # Remove invalid voice IDs from configs")
+        print("python main.py --ensure-minimum-voices   # Check minimum voice requirements")
+        print("python main.py --suggest-voices ar-sa    # Get voice suggestions for locale")
+        print()
+        
+        print("TRANSLATION CACHE:")
+        print("python main.py --cache-translation       # Cache Chinese→English translations")
+        print("python main.py --list-cached-translations # List cached translations")
+        print("python main.py --cache-service google    # Use specific translation service")
+        print("python main.py --cache-model qwen-mt-turbo # Use specific model (for qwen)")
+        print("python main.py --cache-force-refresh     # Force refresh translation cache")
+        print()
+        
+        print("BACKWARD COMPATIBILITY:")
+        print("python main.py --language arabic         # Maps to ar-sa locale")
+        print("python main.py --language malay          # Maps to ms-my locale")
+        print()
+        
+        print("LOGGING & OUTPUT:")
+        print("python main.py --locale ar-sa --verbose  # Enable verbose logging")
+        print("python main.py --locale ar-sa --quiet    # Suppress output except errors")
+        print()
+        
+        print("COMMON WORKFLOWS:")
+        print()
+        print("1. First-time setup:")
+        print("   python main.py --list-locales")
+        print("   python main.py --validate-config ar-sa")
+        print("   python main.py --validate-voices ar-sa")
+        print()
+        print("2. Test run with small dataset:")
+        print("   python main.py --locale ar-sa --sample-limit 5")
+        print()
+        print("3. Voice management workflow:")
+        print("   python main.py --validate-all-voices")
+        print("   python main.py --suggest-voices ar-sa")
+        print("   python main.py --update-voice-configs")
+        print()
+        print("4. Production run:")
+        print("   python main.py --locale ar-sa --force")
     
     def _show_troubleshooting(self):
         """Show troubleshooting tips."""
@@ -629,6 +718,307 @@ class InteractiveUI:
         print("   - Ensure write permissions for output directory")
         print("   - Check file system space availability")
     
+    def _voice_management_menu(self):
+        """Show voice ID management menu."""
+        print_step_header("Voice ID Management")
+        
+        print("Voice Management Options:")
+        print("  1. Check voice health (current locale)")
+        print("  2. Check voice health (all locales)")
+        print("  3. Add new voice ID")
+        print("  0. Back to configuration menu")
+        
+        choice = input("\nEnter your choice: ").strip()
+        
+        if choice == '0':
+            return
+        elif choice == '1':
+            self._voice_health_check(current_locale_only=True)
+        elif choice == '2':
+            self._voice_health_check(current_locale_only=False)
+        elif choice == '3':
+            self._add_voice_interactive()
+        else:
+            print_warning("Invalid choice.")
+    
+    def _voice_health_check(self, current_locale_only: bool = True):
+        """Check voice health for current locale or all locales."""
+        if current_locale_only and not self.current_locale:
+            print_warning("Please select a locale first.")
+            return
+        
+        print_step_header("Voice Health Check")
+        
+        try:
+            if current_locale_only:
+                print(f"Checking voice health for: {self.current_locale}")
+                result = validate_voices(self.current_locale, self.config_dir)
+            else:
+                print("Checking voice health for all locales...")
+                result = validate_all_voices(self.config_dir)
+            
+            if result == 0:
+                print_info("\n✅ Voice health check completed successfully!")
+            else:
+                print_warning("\n⚠️ Some issues were found during voice health check.")
+                
+                # Offer follow-up options when issues are found
+                print("\nFollow-up options:")
+                print("  1. Remove invalid voice IDs automatically")
+                print("  2. Get voice suggestions to add new voices")
+                print("  0. Continue without action")
+                
+                follow_up = input("\nChoose follow-up action: ").strip()
+                
+                if follow_up == '1':
+                    self._remove_invalid_voices()
+                elif follow_up == '2':
+                    self._suggest_voices_menu()
+                # Option 0 or any other input just continues
+                
+        except Exception as e:
+            print_error(f"Voice health check failed: {e}")
+    
+    def _suggest_voices_menu(self):
+        """Show voice suggestions menu with selection options."""
+        if not self.current_locale:
+            print_warning("Please select a locale first.")
+            return
+        
+        print_step_header(f"Voice Suggestions for {self.current_locale}")
+        
+        try:
+            # Get API key
+            api_key = os.getenv('ELEVENLABS_API_KEY')
+            if not api_key:
+                print_error("ELEVENLABS_API_KEY environment variable not found")
+                print_info("Please set your ElevenLabs API key to get voice suggestions.")
+                return
+            
+            # Initialize components
+            validator = VoiceValidator(api_key, verbose=False)
+            config_manager = LocaleConfigManager(f"{self.config_dir}/localizations")
+            
+            # Load locale configuration
+            locale_config = config_manager.load_locale_config(self.current_locale)
+            
+            print_info("Searching for compatible voices...")
+            
+            # Get voice suggestions
+            suggestions = validator.suggest_voices_for_locale(
+                self.current_locale,
+                locale_config.language_code,
+                locale_config.voice_ids,
+                needed_count=3  # Get 3 suggestions
+            )
+            
+            if not suggestions:
+                print_warning(f"No compatible voice suggestions found for {self.current_locale}")
+                return
+            
+            print(f"\n🔍 Found {len(suggestions)} voice suggestions:")
+            print("-" * 60)
+            
+            # Display suggestions with selection options
+            for i, suggestion in enumerate(suggestions, 1):
+                voice = suggestion.voice_info
+                confidence_bar = "█" * int(suggestion.confidence * 10)
+                print(f"\n{i}. {voice.name} (ID: {voice.voice_id})")
+                print(f"   Language: {voice.language or 'Unknown'}")
+                print(f"   Accent: {voice.accent or 'Standard'}")
+                print(f"   Confidence: {confidence_bar} ({suggestion.confidence:.1f})")
+                print(f"   Reason: {suggestion.reason}")
+            
+            # Allow user to select and add voices
+            print(f"\n0. Go back without adding")
+            
+            choice = input(f"\nSelect voice to add (1-{len(suggestions)}): ").strip()
+            
+            if choice == '0':
+                return
+            
+            try:
+                choice_idx = int(choice) - 1
+                if 0 <= choice_idx < len(suggestions):
+                    selected_suggestion = suggestions[choice_idx]
+                    self._add_suggested_voice(selected_suggestion)
+                else:
+                    print_warning("Invalid selection.")
+            except ValueError:
+                print_warning("Please enter a valid number.")
+                
+        except Exception as e:
+            print_error(f"Error getting voice suggestions: {e}")
+    
+    def _add_suggested_voice(self, suggestion):
+        """Add a suggested voice to the current locale."""
+        voice = suggestion.voice_info
+        
+        print_step_header(f"Add Voice: {voice.name}")
+        print(f"Voice ID: {voice.voice_id}")
+        print(f"Language: {voice.language or 'Unknown'}")
+        print(f"Accent: {voice.accent or 'Standard'}")
+        print(f"Confidence: {suggestion.confidence:.1f}")
+        
+        if confirm_action(f"Add this voice to {self.current_locale} configuration?", default_yes=True):
+            try:
+                config_manager = LocaleConfigManager(f"{self.config_dir}/localizations")
+                config = config_manager.load_config(self.current_locale)
+                
+                # Check if voice ID already exists
+                if voice.voice_id in config['voices']['ids']:
+                    print_warning("Voice ID already exists in configuration.")
+                    return
+                
+                # Add voice ID and name
+                config['voices']['ids'].append(voice.voice_id)
+                config['voices']['names'].append(voice.name)
+                
+                # Save updated configuration
+                config_manager.save_config(self.current_locale, config)
+                
+                print_info(f"✅ Successfully added voice '{voice.name}' to {self.current_locale}")
+                print_info(f"Total voices for {self.current_locale}: {len(config['voices']['ids'])}")
+                
+            except Exception as e:
+                print_error(f"Error adding voice: {e}")
+    
+    def _add_voice_interactive(self):
+        """Interactive voice addition with manual input."""
+        if not self.current_locale:
+            print_warning("Please select a locale first.")
+            return
+        
+        print_step_header(f"Add Voice ID to {self.current_locale}")
+        
+        # Get API key
+        api_key = os.getenv('ELEVENLABS_API_KEY')
+        if not api_key:
+            print_error("ELEVENLABS_API_KEY environment variable not found")
+            print_info("Please set your ElevenLabs API key to validate voice IDs.")
+            return
+        
+        try:
+            config_manager = LocaleConfigManager(f"{self.config_dir}/localizations")
+            config = config_manager.load_config(self.current_locale)
+            
+            # Show current voices
+            current_voices = config['voices']['ids']
+            print(f"\nCurrent voices for {self.current_locale}: {len(current_voices)}")
+            for i, (voice_id, name) in enumerate(zip(config['voices']['ids'], config['voices']['names']), 1):
+                print(f"  {i}. {name} ({voice_id})")
+            
+            print("\nOptions:")
+            print("  1. Enter voice ID manually")
+            print("  2. Get voice suggestions")
+            print("  0. Cancel")
+            
+            option = input("\nChoose option: ").strip()
+            
+            if option == '0':
+                return
+            elif option == '1':
+                self._add_voice_manual()
+            elif option == '2':
+                self._suggest_voices_menu()
+            else:
+                print_warning("Invalid option.")
+                
+        except Exception as e:
+            print_error(f"Error in voice addition: {e}")
+    
+    def _add_voice_manual(self):
+        """Add voice ID manually with validation."""
+        voice_id = input("\nEnter ElevenLabs Voice ID: ").strip()
+        
+        if not voice_id:
+            print_warning("Voice ID cannot be empty.")
+            return
+        
+        try:
+            # Validate voice ID
+            api_key = os.getenv('ELEVENLABS_API_KEY')
+            validator = VoiceValidator(api_key, verbose=False)
+            
+            print_info("Validating voice ID...")
+            is_valid, voice_info = validator.validate_single_voice_sync(voice_id)
+            
+            if not is_valid:
+                print_error(f"Voice ID '{voice_id}' is not valid or not accessible.")
+                return
+                
+            print_info(f"✅ Voice ID is valid: {voice_info.name}")
+            
+            # Get voice name (use API name or let user customize)
+            default_name = voice_info.name
+            voice_name = input(f"Enter voice name (default: {default_name}): ").strip()
+            if not voice_name:
+                voice_name = default_name
+            
+            # Confirm addition
+            print(f"\nVoice to add:")
+            print(f"  ID: {voice_id}")
+            print(f"  Name: {voice_name}")
+            if voice_info.language:
+                print(f"  Language: {voice_info.language}")
+            if voice_info.accent:
+                print(f"  Accent: {voice_info.accent}")
+            
+            if confirm_action("Add this voice to configuration?", default_yes=True):
+                config_manager = LocaleConfigManager(f"{self.config_dir}/localizations")
+                config = config_manager.load_config(self.current_locale)
+                
+                # Check if voice ID already exists
+                if voice_id in config['voices']['ids']:
+                    print_warning("Voice ID already exists in configuration.")
+                    return
+                
+                # Add voice ID and name
+                config['voices']['ids'].append(voice_id)
+                config['voices']['names'].append(voice_name)
+                
+                # Save updated configuration
+                config_manager.save_config(self.current_locale, config)
+                
+                print_info(f"✅ Successfully added voice '{voice_name}' to {self.current_locale}")
+                print_info(f"Total voices for {self.current_locale}: {len(config['voices']['ids'])}")
+                
+        except Exception as e:
+            print_error(f"Error validating or adding voice: {e}")
+    
+    def _remove_invalid_voices(self):
+        """Remove invalid voice IDs from configurations."""
+        print_step_header("Remove Invalid Voice IDs")
+        
+        print("Scanning for invalid voice IDs...")
+        
+        try:
+            result = validate_all_voices(self.config_dir, update_configs=True)
+            
+            if result == 0:
+                print_info("\n✅ All voice IDs are valid - no cleanup needed!")
+            else:
+                print_info("\n🔧 Invalid voice IDs have been removed from configurations.")
+                
+        except Exception as e:
+            print_error(f"Error removing invalid voices: {e}")
+    
+    def _check_minimum_requirements(self):
+        """Check minimum voice requirements for all locales."""
+        print_step_header("Minimum Voice Requirements Check")
+        
+        try:
+            result = ensure_minimum_voices(self.config_dir)
+            
+            if result == 0:
+                print_info("\n🎉 All locales meet minimum voice requirements!")
+            else:
+                print_warning("\n⚠️ Some locales need additional voices for reliability.")
+                print("\nTip: Use 'Get voice suggestions' to find compatible voices for problematic locales.")
+                
+        except Exception as e:
+            print_error(f"Error checking minimum requirements: {e}")
+
     def _show_about(self):
         """Show about information."""
         print_step_header("About Voice Scam Dataset Generator")

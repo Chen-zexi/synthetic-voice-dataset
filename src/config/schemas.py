@@ -20,7 +20,11 @@ COMMON_SCHEMA = {
     "translation": {
         "service": str,
         "max_lines": int,
-        "english_output": str
+        "english_output": str,
+        "chinese_code": str,
+        "qwen_model": str,
+        "qwen_base_url": str,
+        "max_concurrent_translations": int
     },
     "multi_turn": {
         "english_output": str,
@@ -48,6 +52,22 @@ COMMON_SCHEMA = {
             "scam": str,
             "legit": str
         }
+    },
+    "llm": {
+        "provider": str,
+        "model": str,
+        "max_concurrent_requests": int,
+        "temperature": float,
+        "max_tokens": (int, type(None)),
+        "top_p": float,
+        "n": int
+    },
+    "translation_cache": {
+        "enabled": bool,
+        "use_cache": bool,
+        "cache_dir": str,
+        "cache_service": str,
+        "force_refresh": bool
     }
 }
 
@@ -112,6 +132,12 @@ def validate_schema(data: Dict[str, Any], schema: Dict[str, Any], path: str = ""
         elif expected_type in (str, int, float, bool):
             if not isinstance(value, expected_type):
                 errors.append(f"Expected {expected_type.__name__} at {current_path}, got {type(value).__name__}")
+        
+        # Handle tuple types (for nullable fields)
+        elif isinstance(expected_type, tuple):
+            if not isinstance(value, expected_type):
+                type_names = [t.__name__ for t in expected_type]
+                errors.append(f"Expected one of {type_names} at {current_path}, got {type(value).__name__}")
         
         # Handle list type checking
         elif expected_type == List[str]:

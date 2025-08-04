@@ -361,6 +361,154 @@ HOST_IP=192.168.1.100  # For LM-Studio/vLLM
 - **Translation Services**: Google Translate (default), Argos Translate (offline), Qwen-MT (Alibaba Cloud)
 - **Optional**: Anthropic/Gemini APIs for alternative LLM providers
 
+## Voice ID Validation System
+
+The pipeline includes comprehensive voice ID validation to ensure audio generation reliability across all locales.
+
+### Features
+
+- **Real-time validation**: Verify voice IDs against ElevenLabs API
+- **Bulk validation**: Check all voice IDs across all locales simultaneously
+- **Automatic cleanup**: Remove invalid voice IDs from configuration files
+- **Voice suggestions**: Get compatible voice recommendations for specific locales
+- **Minimum requirements**: Ensure each locale has ≥2 voices for redundancy
+- **Interactive management**: GUI-based voice management through interactive mode
+
+### CLI Commands
+
+#### Voice Validation
+```bash
+# Validate voices for specific locale
+python main.py --validate-voices ar-sa
+
+# Validate all voice IDs across all locales
+python main.py --validate-all-voices
+
+# Remove invalid voice IDs from all configurations
+python main.py --update-voice-configs
+
+# Check minimum voice requirements (≥2 per locale)
+python main.py --ensure-minimum-voices
+
+# Get voice suggestions for a specific locale
+python main.py --suggest-voices ar-sa
+```
+
+#### Voice Management Workflow
+```bash
+# 1. Check current voice health
+python main.py --validate-all-voices
+
+# 2. Get suggestions for locales needing more voices
+python main.py --suggest-voices ar-sa
+
+# 3. Clean up invalid voice IDs
+python main.py --update-voice-configs
+
+# 4. Verify all requirements are met
+python main.py --ensure-minimum-voices
+```
+
+### Interactive Voice Management
+
+Launch interactive mode for guided voice management:
+
+```bash
+python main.py
+```
+
+Navigate to: **Configuration Management** → **Voice ID Management**
+
+#### Interactive Features:
+
+1. **Voice Health Check**
+   - Check individual locale or all locales
+   - Real-time API validation with detailed results
+   - Automatic follow-up options when issues are found
+
+2. **Voice Suggestions**
+   - AI-powered voice recommendations based on locale language
+   - Confidence scoring and compatibility analysis
+   - One-click voice addition to configuration
+
+3. **Manual Voice Addition**
+   - Real-time voice ID validation during entry
+   - Automatic voice name detection from API
+   - Duplicate detection and prevention
+
+4. **Automatic Cleanup**
+   - Batch removal of invalid voice IDs
+   - Configuration backup and safe updates
+   - Progress tracking for bulk operations
+
+### Voice Configuration Structure
+
+Voice IDs are stored in locale configuration files:
+
+```json
+{
+  "voices": {
+    "ids": [
+      "u0TsaWvt0v8migutHM3M",
+      "A9ATTqUUQ6GHu0coCz8t",
+      "R6nda3uM038xEEKi7GFl"
+    ],
+    "names": [
+      "Ghizlane (Female/Adult)",
+      "Hamid (Male/Adult)", 
+      "Anas (Male/Young)"
+    ]
+  }
+}
+```
+
+### Voice Quality Considerations
+
+- **Minimum Requirements**: Each locale needs ≥2 valid voices for reliability
+- **Language Compatibility**: Voices should match locale language for best results
+- **Regional Accents**: Consider regional accent compatibility when adding voices
+- **Voice Diversity**: Mix of genders and age ranges improves dataset quality
+
+### Voice Validation API Integration
+
+The system integrates with ElevenLabs API for:
+
+- **Voice Discovery**: Automatic detection of available voices
+- **Compatibility Checking**: Language and accent matching
+- **Real-time Validation**: Instant verification of voice ID accessibility
+- **Metadata Extraction**: Voice names, languages, and accent information
+
+### Troubleshooting Voice Issues
+
+#### Common Problems
+
+1. **Voice ID Not Found**: Voice may have been removed from ElevenLabs
+   - **Solution**: Use `--update-voice-configs` to clean invalid IDs
+   - **Prevention**: Regular validation with `--validate-all-voices`
+
+2. **Insufficient Voices**: Locale has <2 voices
+   - **Solution**: Use `--suggest-voices LOCALE` to find compatible voices
+   - **Interactive**: Use Voice Management menu for guided addition
+
+3. **API Rate Limiting**: Too many validation requests
+   - **Solution**: Built-in rate limiting prevents API throttling
+   - **Batch Processing**: Validation uses concurrent requests with semaphores
+
+4. **Language Mismatch**: Voice language doesn't match locale
+   - **Detection**: Voice suggestions include compatibility scoring
+   - **Manual Check**: Review voice metadata in interactive mode
+
+#### Debug Voice Validation
+
+```bash
+# Verbose validation output
+python main.py --validate-all-voices --verbose
+
+# Interactive troubleshooting
+python main.py
+# Navigate to: Help & Information → Troubleshooting Tips
+```
+
 ## Migration from Legacy System
 
 The system maintains backward compatibility with the old language-based structure:
@@ -431,6 +579,12 @@ python main.py --list-locales
 # Validate a specific configuration
 python main.py --validate-config ar-sa
 
+# Validate voice IDs for specific locale
+python main.py --validate-voices ar-sa
+
+# Validate all voice IDs across all locales
+python main.py --validate-all-voices
+
 # Show pipeline steps
 python main.py --show-steps
 ```
@@ -441,11 +595,14 @@ python main.py --show-steps
 python main.py
 
 # Navigate to: Configuration Management → Validate current locale configuration
+# Navigate to: Configuration Management → Voice ID Management
 # Navigate to: Help & Information → Troubleshooting Tips
 ```
 
 The interactive mode provides built-in troubleshooting with:
 - Real-time configuration validation
+- Voice ID health checking and management
+- Automatic voice suggestions and addition
 - Output directory status checking
 - Step-by-step guidance for common issues
 - Integrated help system with examples

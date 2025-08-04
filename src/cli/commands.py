@@ -12,6 +12,8 @@ from typing import List, Optional
 from config.config_loader import ConfigLoader
 from pipeline.runner import PipelineRunner
 from tts.voice_validator import VoiceValidator
+from tts.models import ValidationSummary, VoiceSuggestion
+from config.locale_manager import LocaleConfigManager
 from translation.cache_translator import CacheTranslator
 from cli.utils import (
     print_error, print_info, print_warning,
@@ -21,6 +23,119 @@ from cli.utils import (
 
 
 logger = logging.getLogger(__name__)
+
+
+def _print_validation_results(results, locale_voice_ids, check_minimum: bool = False):
+    """Print validation results in a formatted way"""
+    
+    print("\n" + "="*80)
+    print("ELEVENLABS VOICE ID VALIDATION RESULTS")
+    print("="*80)
+    
+    # Summary statistics
+    total_ids = len(results)
+    valid_ids = sum(1 for is_valid, _ in results.values() if is_valid)
+    invalid_ids = total_ids - valid_ids
+    
+    print(f"\nSUMMARY:")
+    print(f"  Total Voice IDs: {total_ids}")
+    print(f"  Valid IDs: {valid_ids}")
+    print(f"  Invalid IDs: {invalid_ids}")
+    print(f"  Success Rate: {(valid_ids/total_ids)*100:.1f}%")
+    
+    # Minimum voice analysis if requested
+    if check_minimum:
+        locales_below_minimum = 0
+        for locale, voice_ids in locale_voice_ids.items():
+            if not voice_ids:
+                continue
+            locale_valid = sum(1 for vid in voice_ids if results.get(vid, (False, None))[0])
+            if locale_valid < 2:
+                locales_below_minimum += 1
+        
+        print(f"  Locales Below Minimum (2 voices): {locales_below_minimum}")
+        if locales_below_minimum == 0:
+            print("  🎉 All locales meet minimum voice requirements!")
+        else:
+            print("  ⚠️  Some locales need additional voices")
+    
+    # Valid voices
+    if valid_ids > 0:
+        print(f"\n✅ VALID VOICE IDs ({valid_ids}):")
+        print("-" * 50)
+        for voice_id, (is_valid, voice_info) in results.items():
+            if is_valid and voice_info:
+                labels = voice_info.labels or {}
+                lang = labels.get('language', 'Unknown')
+                accent = labels.get('accent', '')
+                accent_str = f" ({accent})" if accent else ""
+                print(f"  {voice_id} - {voice_info.name} [{lang}{accent_str}]")
+    
+    # Invalid voices
+    if invalid_ids > 0:
+        print(f"\n❌ INVALID VOICE IDs ({invalid_ids}):")
+        print("-" * 50)
+        for voice_id, (is_valid, _) in results.items():
+            if not is_valid:
+                # Find which locales use this invalid ID
+                affected_locales = [locale for locale, ids in locale_voice_ids.items() 
+                                  if voice_id in ids]
+                print(f"  {voice_id} - Used in: {', '.join(affected_locales)}")
+    
+    # Results by locale with minimum checking
+    print(f"\nRESULTS BY LOCALE:")
+    print("-" * 50)
+    for locale, voice_ids in locale_voice_ids.items():
+        if not voice_ids:
+            continue
+        
+        locale_valid = sum(1 for vid in voice_ids if results.get(vid, (False, None))[0])
+        locale_total = len(voice_ids)
+        
+        # Enhanced status checking for minimum requirements
+        if check_minimum:
+            if locale_valid >= 2 and locale_valid == locale_total:
+                status = "✅"  # Perfect
+            elif locale_valid >= 2 and locale_valid < locale_total:
+                status = "⚠️"   # Has minimum but some invalid
+            elif locale_valid == 1:
+                status = "🔴"  # Critical - only 1 voice
+            else:
+                status = "❌"  # No valid voices
+            
+            print(f"  {status} {locale}: {locale_valid}/{locale_total} valid", end="")
+            if locale_valid < 2:
+                print(f" (NEEDS {2 - locale_valid} MORE)", end="")
+            print()
+        else:
+            status = "✅" if locale_valid == locale_total else "⚠️" if locale_valid > 0 else "❌"
+            print(f"  {status} {locale}: {locale_valid}/{locale_total} valid")
+        
+        # Show invalid IDs for this locale
+        invalid_for_locale = [vid for vid in voice_ids if not results.get(vid, (False, None))[0]]
+        if invalid_for_locale:
+            print(f"     Invalid: {', '.join(invalid_for_locale)}")
+
+
+def _print_voice_suggestions(suggestions, locale: str):
+    """Print voice suggestions for a locale"""
+    
+    print(f"\n🔍 VOICE SUGGESTIONS FOR {locale.upper()}:")
+    print("-" * 50)
+    
+    if not suggestions:
+        print("  No compatible voices found.")
+        return
+    
+    for i, suggestion in enumerate(suggestions, 1):
+        voice = suggestion.voice_info
+        confidence_bar = "█" * int(suggestion.confidence * 10)
+        print(f"  {i}. {voice.voice_id} - {voice.name}")
+        print(f"     Language: {voice.language or 'Unknown'}")
+        print(f"     Accent: {voice.accent or 'Standard'}")
+        print(f"     Confidence: {confidence_bar} ({suggestion.confidence:.1f})")
+        print(f"     Reason: {suggestion.reason}")
+        print()
 
 
 def run_pipeline(
@@ -407,7 +522,7 @@ def list_cached_translations(verbose: bool = False) -> int:
 
 def validate_voices(language: str, config_dir: str = "./configs", output_dir: str = "./output") -> int:
     """
-    Validate ElevenLabs voice IDs for a specific locale using the comprehensive validation script.
+    Validate ElevenLabs voice IDs for a specific locale.
     
     Args:
         language: Language to validate voices for
@@ -418,27 +533,51 @@ def validate_voices(language: str, config_dir: str = "./configs", output_dir: st
         Exit code (0 for success, 1 for failure)
     """
     try:
-        import subprocess
-        import sys
-        from pathlib import Path
-        
         print_step_header(f"Voice Validation for {language}")
         
-        # Get the path to the validation script
-        script_dir = Path(__file__).parent.parent.parent
-        validation_script = script_dir / "validate_voice_ids.py"
-        
-        if not validation_script.exists():
-            print_error(f"Validation script not found: {validation_script}")
+        # Get API key
+        api_key = os.getenv('ELEVENLABS_API_KEY')
+        if not api_key:
+            print_error("ELEVENLABS_API_KEY environment variable not found")
             return 1
         
-        # Run the validation script for the specific locale
-        cmd = [sys.executable, str(validation_script), "--locale", language]
+        # Initialize components
+        validator = VoiceValidator(api_key, verbose=True)
+        config_manager = LocaleConfigManager(f"{config_dir}/localizations")
         
-        print_info(f"Running voice validation for {language}...")
-        result = subprocess.run(cmd, cwd=str(script_dir), capture_output=False)
+        # Check if locale exists
+        if language not in config_manager.locales:
+            print_error(f"Locale '{language}' not found")
+            print_info(f"Available locales: {', '.join(config_manager.locales)}")
+            return 1
         
-        return result.returncode
+        # Extract voice IDs for the specific locale
+        locale_voice_ids = {language: config_manager.load_config(language).get('voices', {}).get('ids', [])}
+        
+        # Get unique voice IDs to validate
+        unique_voice_ids = set()
+        for ids in locale_voice_ids.values():
+            unique_voice_ids.update(ids)
+        
+        if not unique_voice_ids:
+            print_warning("No voice IDs found to validate")
+            return 0
+        
+        # Validate voice IDs
+        print_info(f"Validating {len(unique_voice_ids)} voice IDs...")
+        results = validator.validate_voice_ids_sync(list(unique_voice_ids))
+        
+        # Print results
+        _print_validation_results(results, locale_voice_ids, check_minimum=True)
+        
+        # Check for validation failures
+        invalid_count = sum(1 for is_valid, _ in results.values() if not is_valid)
+        if invalid_count > 0:
+            print_error(f"Found {invalid_count} invalid voice IDs")
+            return 1
+        
+        print_info("All voice IDs are valid!")
+        return 0
         
     except Exception as e:
         print_error(f"Voice validation failed: {e}")
@@ -458,29 +597,60 @@ def validate_all_voices(config_dir: str = "./configs", update_configs: bool = Fa
         Exit code (0 for success, 1 for failure)
     """
     try:
-        import subprocess
-        import sys
-        from pathlib import Path
-        
         print_step_header("Voice Validation for All Locales")
         
-        # Get the path to the validation script
-        script_dir = Path(__file__).parent.parent.parent
-        validation_script = script_dir / "validate_voice_ids.py"
-        
-        if not validation_script.exists():
-            print_error(f"Validation script not found: {validation_script}")
+        # Get API key
+        api_key = os.getenv('ELEVENLABS_API_KEY')
+        if not api_key:
+            print_error("ELEVENLABS_API_KEY environment variable not found")
             return 1
         
-        # Build command
-        cmd = [sys.executable, str(validation_script)]
+        # Initialize components
+        validator = VoiceValidator(api_key, verbose=True)
+        config_manager = LocaleConfigManager(f"{config_dir}/localizations")
+        
+        # Extract all voice IDs
+        locale_voice_ids = config_manager.extract_all_voice_ids()
+        
+        # Get unique voice IDs to validate
+        unique_voice_ids = set()
+        for ids in locale_voice_ids.values():
+            unique_voice_ids.update(ids)
+        
+        if not unique_voice_ids:
+            print_warning("No voice IDs found to validate")
+            return 0
+        
+        # Validate voice IDs
+        print_info(f"Validating {len(unique_voice_ids)} unique voice IDs across {len(locale_voice_ids)} locales...")
+        results = validator.validate_voice_ids_sync(list(unique_voice_ids))
+        
+        # Print results with minimum checking
+        _print_validation_results(results, locale_voice_ids, check_minimum=True)
+        
+        # Update configs if requested
         if update_configs:
-            cmd.append("--update-configs")
+            print_info("\nUPDATING CONFIGURATIONS:")
+            print("-" * 50)
+            
+            removed_voices = config_manager.remove_invalid_voices(results)
+            
+            for locale, removed_ids in removed_voices.items():
+                if removed_ids:
+                    print_info(f"  Updated {locale}: Removed {len(removed_ids)} invalid voice IDs")
+                else:
+                    print_info(f"  {locale}: No changes needed")
         
-        print_info("Running comprehensive voice validation for all locales...")
-        result = subprocess.run(cmd, cwd=str(script_dir), capture_output=False)
+        # Check for validation failures
+        invalid_count = sum(1 for is_valid, _ in results.values() if not is_valid)
+        if invalid_count > 0:
+            print_error(f"Found {invalid_count} invalid voice IDs across all locales")
+            if not update_configs:
+                print_info("Use --update-voice-configs to automatically remove invalid IDs")
+            return 1
         
-        return result.returncode
+        print_info("All voice IDs are valid!")
+        return 0
         
     except Exception as e:
         print_error(f"Voice validation failed: {e}")
@@ -499,29 +669,182 @@ def update_voice_configs(config_dir: str = "./configs") -> int:
         Exit code (0 for success, 1 for failure)
     """
     try:
-        import subprocess
-        import sys
-        from pathlib import Path
-        
         print_step_header("Updating Voice Configurations")
         
-        # Get the path to the validation script
-        script_dir = Path(__file__).parent.parent.parent
-        validation_script = script_dir / "validate_voice_ids.py"
-        
-        if not validation_script.exists():
-            print_error(f"Validation script not found: {validation_script}")
+        # Get API key
+        api_key = os.getenv('ELEVENLABS_API_KEY')
+        if not api_key:
+            print_error("ELEVENLABS_API_KEY environment variable not found")
             return 1
         
-        # Run with update flag
-        cmd = [sys.executable, str(validation_script), "--update-configs"]
+        # Initialize components
+        validator = VoiceValidator(api_key, verbose=True)
+        config_manager = LocaleConfigManager(f"{config_dir}/localizations")
         
-        print_info("Updating configuration files to remove invalid voice IDs...")
-        result = subprocess.run(cmd, cwd=str(script_dir), capture_output=False)
+        # Extract all voice IDs
+        locale_voice_ids = config_manager.extract_all_voice_ids()
         
-        return result.returncode
+        # Get unique voice IDs to validate
+        unique_voice_ids = set()
+        for ids in locale_voice_ids.values():
+            unique_voice_ids.update(ids)
+        
+        if not unique_voice_ids:
+            print_warning("No voice IDs found to validate")
+            return 0
+        
+        # Validate voice IDs
+        print_info(f"Validating {len(unique_voice_ids)} unique voice IDs...")
+        results = validator.validate_voice_ids_sync(list(unique_voice_ids))
+        
+        # Update configurations
+        print_info("\nUPDATING CONFIGURATIONS:")
+        print("-" * 50)
+        
+        removed_voices = config_manager.remove_invalid_voices(results)
+        updated_count = 0
+        
+        for locale, removed_ids in removed_voices.items():
+            if removed_ids:
+                print_info(f"  Updated {locale}: Removed {len(removed_ids)} invalid voice IDs")
+                updated_count += len(removed_ids)
+            else:
+                print_info(f"  {locale}: No changes needed")
+        
+        if updated_count > 0:
+            print_info(f"\nSuccessfully removed {updated_count} invalid voice IDs from configurations")
+        else:
+            print_info("\nNo invalid voice IDs found - all configurations are up to date")
+        
+        return 0
         
     except Exception as e:
         print_error(f"Voice configuration update failed: {e}")
         logger.exception("Voice configuration update error")
+        return 1
+
+
+def ensure_minimum_voices(config_dir: str = "./configs") -> int:
+    """
+    Check that all locales have at least 2 valid voice IDs for reliability.
+    
+    Args:
+        config_dir: Configuration directory
+        
+    Returns:
+        Exit code (0 for success, 1 if some locales need more voices)
+    """
+    try:
+        print_step_header("Minimum Voice Requirements Check")
+        
+        # Get API key
+        api_key = os.getenv('ELEVENLABS_API_KEY')
+        if not api_key:
+            print_error("ELEVENLABS_API_KEY environment variable not found")
+            return 1
+        
+        # Initialize components
+        validator = VoiceValidator(api_key, verbose=True)
+        config_manager = LocaleConfigManager(f"{config_dir}/localizations")
+        
+        # Extract all voice IDs
+        locale_voice_ids = config_manager.extract_all_voice_ids()
+        
+        # Get unique voice IDs to validate
+        unique_voice_ids = set()
+        for ids in locale_voice_ids.values():
+            unique_voice_ids.update(ids)
+        
+        if not unique_voice_ids:
+            print_warning("No voice IDs found to validate")
+            return 0
+        
+        # Validate voice IDs
+        print_info(f"Validating {len(unique_voice_ids)} unique voice IDs across {len(locale_voice_ids)} locales...")
+        results = validator.validate_voice_ids_sync(list(unique_voice_ids))
+        
+        # Check minimum requirements
+        print_info("\nMINIMUM VOICE ANALYSIS:")
+        print("-" * 50)
+        
+        summary = validator.check_minimum_requirements(results, locale_voice_ids, minimum=2)
+        
+        print(f"Health Score: {summary.health_score:.1f}/100")
+        
+        if summary.locales_below_minimum > 0:
+            print_warning(f"\nLOCALES NEEDING ATTENTION ({summary.locales_below_minimum}):")
+            for status in summary.locale_statuses:
+                if not status.meets_minimum:
+                    needed = 2 - status.valid_voices
+                    print(f"  {status.locale_id}: Needs {needed} more voice(s)")
+                    print(f"    Use: python main.py --suggest-voices {status.locale_id}")
+            
+            print_error(f"\n{summary.locales_below_minimum} locales need additional voices for reliability")
+            return 1
+        else:
+            print_info("\nAll locales meet minimum voice requirements!")
+            return 0
+        
+    except Exception as e:
+        print_error(f"Minimum voice check failed: {e}")
+        logger.exception("Minimum voice check error")
+        return 1
+
+
+def suggest_voices_for_locale(locale: str, config_dir: str = "./configs") -> int:
+    """
+    Suggest additional voices for a specific locale.
+    
+    Args:
+        locale: Locale to suggest voices for
+        config_dir: Configuration directory
+        
+    Returns:
+        Exit code (0 for success, 1 for failure)
+    """
+    try:
+        print_step_header(f"Voice Suggestions for {locale}")
+        
+        # Get API key
+        api_key = os.getenv('ELEVENLABS_API_KEY')
+        if not api_key:
+            print_error("ELEVENLABS_API_KEY environment variable not found")
+            return 1
+        
+        # Initialize components
+        validator = VoiceValidator(api_key, verbose=True)
+        config_manager = LocaleConfigManager(f"{config_dir}/localizations")
+        
+        # Check if locale exists
+        if locale not in config_manager.locales:
+            print_error(f"Locale '{locale}' not found")
+            print_info(f"Available locales: {', '.join(config_manager.locales)}")
+            return 1
+        
+        # Load locale configuration
+        locale_config = config_manager.load_locale_config(locale)
+        
+        # Get voice suggestions
+        print_info(f"Finding compatible voices for {locale}...")
+        suggestions = validator.suggest_voices_for_locale(
+            locale,
+            locale_config.language_code,
+            locale_config.voice_ids,
+            needed_count=2
+        )
+        
+        _print_voice_suggestions(suggestions, locale)
+        
+        if suggestions:
+            print_info(f"\nFound {len(suggestions)} voice suggestions for {locale}")
+            print_info("To add a voice, manually update the configuration file:")
+            print_info(f"  configs/localizations/{locale}/config.json")
+        else:
+            print_warning(f"No compatible voices found for {locale}")
+        
+        return 0
+        
+    except Exception as e:
+        print_error(f"Voice suggestion failed: {e}")
+        logger.exception("Voice suggestion error")
         return 1
