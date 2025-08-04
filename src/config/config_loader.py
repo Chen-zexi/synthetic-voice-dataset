@@ -109,6 +109,9 @@ class Config:
     llm_top_p: float = 0.95
     llm_n: int = 1
     
+    # Output control
+    verbose: bool = False
+    
     # Raw config data
     common_config: dict = field(default_factory=dict)
     lang_config: dict = field(default_factory=dict)

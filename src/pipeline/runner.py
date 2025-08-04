@@ -22,6 +22,7 @@ from conversation.legit_generator import LegitGenerator
 from tts.voice_synthesizer import VoiceSynthesizer
 from postprocessing.json_formatter import JsonFormatter
 from postprocessing.audio_packager import AudioPackager
+from utils.logging_utils import format_completion_message
 
 
 logger = logging.getLogger(__name__)
@@ -125,7 +126,8 @@ class PipelineRunner:
     
     def run_preprocessing(self):
         """Run preprocessing step: extract tags and create mappings."""
-        logger.info("Running preprocessing")
+        if self.config.verbose:
+            logger.info("Running preprocessing")
         
         extractor = TagExtractor(self.config)
         extractor.extract_tags()
@@ -177,12 +179,14 @@ class PipelineRunner:
     
     async def run_tts(self):
         """Run text-to-speech conversion."""
-        logger.info("Converting conversations to audio")
+        if self.config.verbose:
+            logger.info("Converting conversations to audio")
         
         synthesizer = VoiceSynthesizer(self.config)
         
         # Generate scam audio
-        print("Generating scam conversation audio...")
+        if self.config.verbose:
+            print("Generating scam conversation audio...")
         await synthesizer.generate_audio(
             input_file=self.config.voice_input_file_scam,
             output_dir=self.config.voice_output_dir_scam,
@@ -190,7 +194,8 @@ class PipelineRunner:
         )
         
         # Generate legitimate audio
-        print("Generating legitimate conversation audio...")
+        if self.config.verbose:
+            print("Generating legitimate conversation audio...")
         await synthesizer.generate_audio(
             input_file=self.config.voice_input_file_legit,
             output_dir=self.config.voice_output_dir_legit,
@@ -199,7 +204,8 @@ class PipelineRunner:
     
     def run_postprocessing(self):
         """Run postprocessing: format JSON and package audio."""
-        logger.info("Running postprocessing")
+        if self.config.verbose:
+            logger.info("Running postprocessing")
         
         # Format JSON files
         formatter = JsonFormatter(self.config)

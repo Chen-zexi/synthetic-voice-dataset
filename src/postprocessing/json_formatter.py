@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import List, Dict
 
 from config.config_loader import Config
+from utils.logging_utils import ConditionalLogger, create_progress_bar
 
 
 logger = logging.getLogger(__name__)
@@ -27,18 +28,27 @@ class JsonFormatter:
             config: Configuration object
         """
         self.config = config
+        self.clogger = ConditionalLogger(__name__, config.verbose)
     
     def format_all(self):
         """
         Format both scam and legitimate conversation JSON files.
         """
-        logger.info("Formatting JSON files")
+        self.clogger.info("Formatting JSON files")
+        
+        if not self.config.verbose:
+            pbar = create_progress_bar(2, "Formatting conversations", "files")
         
         # Format scam conversations
         self._format_scam_conversations()
+        if not self.config.verbose:
+            pbar.update(1)
         
         # Format legitimate conversations
         self._format_legit_conversations()
+        if not self.config.verbose:
+            pbar.update(1)
+            pbar.close()
     
     def _format_scam_conversations(self):
         """
@@ -48,10 +58,10 @@ class JsonFormatter:
         output_path = self.config.post_processing_scam_json_output
         
         if not input_path.exists():
-            logger.warning(f"Scam conversation file not found: {input_path}")
+            self.clogger.warning(f"Scam conversation file not found: {input_path}")
             return
         
-        logger.info(f"Formatting scam conversations: {input_path}")
+        self.clogger.debug(f"Formatting scam conversations: {input_path}")
         
         # Load conversations
         with open(input_path, 'r', encoding='utf-8') as f:
@@ -66,7 +76,7 @@ class JsonFormatter:
         # Save formatted conversations
         self._save_json(formatted_conversations, output_path)
         
-        logger.info(f"Formatted {len(formatted_conversations)} scam conversations")
+        self.clogger.debug(f"Formatted {len(formatted_conversations)} scam conversations")
     
     def _format_legit_conversations(self):
         """
@@ -76,10 +86,10 @@ class JsonFormatter:
         output_path = self.config.post_processing_legit_json_output
         
         if not input_path.exists():
-            logger.warning(f"Legitimate conversation file not found: {input_path}")
+            self.clogger.warning(f"Legitimate conversation file not found: {input_path}")
             return
         
-        logger.info(f"Formatting legitimate conversations: {input_path}")
+        self.clogger.debug(f"Formatting legitimate conversations: {input_path}")
         
         # Load conversations
         with open(input_path, 'r', encoding='utf-8') as f:
@@ -94,7 +104,7 @@ class JsonFormatter:
         # Save formatted conversations
         self._save_json(formatted_conversations, output_path)
         
-        logger.info(f"Formatted {len(formatted_conversations)} legitimate conversations")
+        self.clogger.debug(f"Formatted {len(formatted_conversations)} legitimate conversations")
     
     def _format_scam_conversation(self, conversation: Dict) -> OrderedDict:
         """
@@ -156,4 +166,4 @@ class JsonFormatter:
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         
-        logger.info(f"Saved formatted JSON to {output_path}")
+        self.clogger.debug(f"Saved formatted JSON to {output_path}")

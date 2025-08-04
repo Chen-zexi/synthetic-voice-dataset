@@ -455,7 +455,7 @@ class InteractiveUI:
         
         print("The Voice Scam Dataset Generator pipeline consists of 5 main steps:")
         print()
-        print("1. PREPROCESS")
+        print("1. PREPROCESSING")
         print("   Extract placeholders from Chinese source text and create mappings")
         print()
         print("2. TRANSLATE") 
@@ -464,7 +464,7 @@ class InteractiveUI:
         print("3. CONVERSATION")
         print("   Generate multi-turn dialogues and translate to target language")
         print()
-        print("4. TTS (Text-to-Speech)")
+        print("4. TTS")
         print("   Convert conversations to audio using ElevenLabs voices")
         print()
         print("5. POSTPROCESS")

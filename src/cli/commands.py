@@ -5,11 +5,13 @@ CLI command implementations for the voice scam dataset generator.
 import os
 import json
 import logging
+import asyncio
 from pathlib import Path
 from typing import List, Optional
 
 from config.config_loader import ConfigLoader
 from pipeline.runner import PipelineRunner
+from tts.voice_validator import VoiceValidator
 from cli.utils import (
     print_error, print_info, print_warning,
     print_step_header, format_language_info,
@@ -26,7 +28,8 @@ def run_pipeline(
     config_dir: str = "./configs",
     output_dir: str = "./output",
     force: bool = False,
-    sample_limit: Optional[int] = None
+    sample_limit: Optional[int] = None,
+    verbose: bool = False
 ) -> int:
     """
     Run the voice scam dataset generation pipeline.
@@ -38,6 +41,7 @@ def run_pipeline(
         output_dir: Output directory
         force: Force overwrite existing files
         sample_limit: Optional limit on number of samples to process
+        verbose: Enable verbose output
         
     Returns:
         Exit code (0 for success)
@@ -47,6 +51,7 @@ def run_pipeline(
         print_info(f"Loading configuration for {language}...")
         config_loader = ConfigLoader(config_dir, output_dir)
         config = config_loader.load_language(language)
+        config.verbose = verbose  # Set verbose flag
         
         # Display configuration info
         print(format_language_info(config))
@@ -276,3 +281,99 @@ def show_pipeline_steps() -> int:
     print("  python main.py --language arabic  # Run all steps")
     
     return 0
+
+
+async def validate_voices_command(
+    language: str,
+    config_dir: str = "./configs",
+    output_dir: str = "./output"
+) -> int:
+    """
+    Validate ElevenLabs voice IDs for a specific locale.
+    
+    Args:
+        language: Language to validate voices for
+        config_dir: Configuration directory
+        output_dir: Output directory
+        
+    Returns:
+        Exit code (0 for success, 1 for failure)
+    """
+    try:
+        print_step_header(f"Voice Validation for {language}")
+        
+        # Load configuration
+        print_info(f"Loading configuration for {language}...")
+        config_loader = ConfigLoader(config_dir, output_dir)
+        config = config_loader.load_language(language)
+        
+        # Check if ElevenLabs API key is available
+        if not config.elevenlabs_api_key:
+            print_error("ElevenLabs API key not found. Please set ELEVENLABS_API_KEY in your .env file.")
+            return 1
+        
+        # Get voice IDs for the language
+        voice_ids = config.voice_ids.get(config.voice_language, [])
+        if not voice_ids:
+            print_error(f"No voice IDs configured for {config.voice_language}")
+            return 1
+        
+        print_info(f"Found {len(voice_ids)} voice IDs to validate")
+        for i, voice_id in enumerate(voice_ids, 1):
+            print(f"  {i}. {voice_id}")
+        
+        # Create validator and validate voices
+        validator = VoiceValidator(config.elevenlabs_api_key)
+        print_info("Validating voice IDs...")
+        
+        results = await validator.validate_voice_ids(voice_ids)
+        
+        # Show results
+        valid_voices = validator.get_valid_voices(results)
+        invalid_voices = validator.get_invalid_voices(results)
+        
+        if valid_voices:
+            print_info(f"✓ Valid voices ({len(valid_voices)}):")
+            for voice in valid_voices:
+                print(f"  ✓ {voice.voice_id}: {voice.name}")
+        
+        if invalid_voices:
+            print_error(f"✗ Invalid voices ({len(invalid_voices)}):")
+            for voice in invalid_voices:
+                print(f"  ✗ {voice.voice_id}: {voice.error_message}")
+            
+            # Show available alternatives
+            print_info("\nFetching available voices for reference...")
+            available_voices = await validator.get_available_voices()
+            if available_voices:
+                print_info(f"Found {len(available_voices)} available voices:")
+                # Group by language if possible
+                for voice in available_voices[:10]:  # Show first 10
+                    print(f"  - {voice.get('voice_id', 'N/A')}: {voice.get('name', 'Unknown')}")
+                if len(available_voices) > 10:
+                    print(f"  ... and {len(available_voices) - 10} more")
+            
+            return 1
+        
+        print_info("All voice IDs are valid!")
+        return 0
+        
+    except Exception as e:
+        print_error(f"Voice validation failed: {e}")
+        logger.exception("Voice validation error")
+        return 1
+
+
+def validate_voices(language: str, config_dir: str = "./configs", output_dir: str = "./output") -> int:
+    """
+    Synchronous wrapper for voice validation command.
+    
+    Args:
+        language: Language to validate voices for
+        config_dir: Configuration directory
+        output_dir: Output directory
+        
+    Returns:
+        Exit code (0 for success, 1 for failure)
+    """
+    return asyncio.run(validate_voices_command(language, config_dir, output_dir))

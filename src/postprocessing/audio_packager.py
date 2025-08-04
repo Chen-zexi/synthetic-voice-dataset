@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import List, Tuple
 
 from config.config_loader import Config
+from utils.logging_utils import ConditionalLogger
 
 
 logger = logging.getLogger(__name__)
@@ -26,12 +27,13 @@ class AudioPackager:
             config: Configuration object
         """
         self.config = config
+        self.clogger = ConditionalLogger(__name__, config.verbose)
     
     def package_all(self):
         """
         Package both scam and legitimate audio files.
         """
-        logger.info("Packaging audio files")
+        self.clogger.debug("Packaging audio files")
         
         # Package scam audio
         self._package_scam_audio()
@@ -47,18 +49,18 @@ class AudioPackager:
         output_path = self.config.post_processing_scam_audio_zip_output
         
         if not audio_dir.exists():
-            logger.warning(f"Scam audio directory not found: {audio_dir}")
+            self.clogger.warning(f"Scam audio directory not found: {audio_dir}")
             return
         
-        logger.info(f"Packaging scam audio from {audio_dir}")
+        self.clogger.info(f"Packaging scam audio from {audio_dir}")
         
         files_to_zip = self._collect_audio_files(audio_dir)
         
         if files_to_zip:
             self._create_zip(files_to_zip, output_path)
-            logger.info(f"Packaged {len(files_to_zip)} scam audio files")
+            self.clogger.debug(f"Packaged {len(files_to_zip)} scam audio files")
         else:
-            logger.warning("No scam audio files found to package")
+            self.clogger.warning("No scam audio files found to package")
     
     def _package_legit_audio(self):
         """
@@ -68,18 +70,18 @@ class AudioPackager:
         output_path = self.config.post_processing_legit_audio_zip_output
         
         if not audio_dir.exists():
-            logger.warning(f"Legitimate audio directory not found: {audio_dir}")
+            self.clogger.warning(f"Legitimate audio directory not found: {audio_dir}")
             return
         
-        logger.info(f"Packaging legitimate audio from {audio_dir}")
+        self.clogger.info(f"Packaging legitimate audio from {audio_dir}")
         
         files_to_zip = self._collect_audio_files(audio_dir)
         
         if files_to_zip:
             self._create_zip(files_to_zip, output_path)
-            logger.info(f"Packaged {len(files_to_zip)} legitimate audio files")
+            self.clogger.debug(f"Packaged {len(files_to_zip)} legitimate audio files")
         else:
-            logger.warning("No legitimate audio files found to package")
+            self.clogger.warning("No legitimate audio files found to package")
     
     def _collect_audio_files(self, audio_dir: Path) -> List[Tuple[Path, str]]:
         """
@@ -107,7 +109,7 @@ class AudioPackager:
                         files_to_zip.append((file_path, archive_name))
                         break
         
-        logger.debug(f"Found {len(files_to_zip)} audio files to package")
+        self.clogger.debug(f"Found {len(files_to_zip)} audio files to package")
         return files_to_zip
     
     def _create_zip(self, files_to_zip: List[Tuple[Path, str]], output_path: Path):
@@ -124,9 +126,9 @@ class AudioPackager:
         # Create ZIP file
         with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
             for file_path, archive_name in files_to_zip:
-                logger.debug(f"Adding {archive_name} to archive")
+                self.clogger.debug(f"Adding {archive_name} to archive")
                 zipf.write(file_path, archive_name)
         
         # Log file size
         size_mb = output_path.stat().st_size / (1024 * 1024)
-        logger.info(f"Created ZIP archive: {output_path} ({size_mb:.1f} MB)")
+        self.clogger.debug(f"Created ZIP archive: {output_path} ({size_mb:.1f} MB)")

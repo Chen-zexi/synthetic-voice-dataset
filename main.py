@@ -20,6 +20,7 @@ from cli.commands import (
     list_languages,
     list_locales,
     validate_config,
+    validate_voices,
     show_pipeline_steps
 )
 from cli.utils import setup_logging, print_banner
@@ -39,6 +40,7 @@ Examples:
   %(prog)s --language malay --steps preprocess  # Run only preprocessing for Malay
   %(prog)s --list-languages                     # Show available languages
   %(prog)s --validate-config arabic             # Validate Arabic configuration
+  %(prog)s --validate-voices japanese           # Validate ElevenLabs voices for Japanese
         """
     )
     
@@ -88,6 +90,13 @@ Examples:
         type=str,
         metavar='LANGUAGE',
         help='Validate configuration for specified language'
+    )
+    
+    parser.add_argument(
+        '--validate-voices',
+        type=str,
+        metavar='LANGUAGE',
+        help='Validate ElevenLabs voice IDs for specified language'
     )
     
     parser.add_argument(
@@ -164,6 +173,9 @@ Examples:
     if args.validate_config:
         return validate_config(args.validate_config, args.config_dir)
     
+    if args.validate_voices:
+        return validate_voices(args.validate_voices, args.config_dir, args.output_dir)
+    
     if args.show_steps:
         return show_pipeline_steps()
     
@@ -184,7 +196,8 @@ Examples:
             config_dir=args.config_dir,
             output_dir=args.output_dir,
             force=args.force,
-            sample_limit=args.sample_limit
+            sample_limit=args.sample_limit,
+            verbose=args.verbose
         )
     except KeyboardInterrupt:
         print("\n\nPipeline interrupted by user.")

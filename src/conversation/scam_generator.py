@@ -14,6 +14,7 @@ from config.config_loader import Config
 from llm_core.api_provider import LLM
 from llm_core.api_call import make_api_call
 from conversation.schemas import ScamConversationResponse, DialogueTurn
+from utils.logging_utils import ConditionalLogger
 
 
 logger = logging.getLogger(__name__)
@@ -32,6 +33,7 @@ class ScamGenerator:
             config: Configuration object
         """
         self.config = config
+        self.clogger = ConditionalLogger(__name__, config.verbose)
         # Initialize LLM with configurable provider (default to OpenAI)
         self.llm_provider = getattr(config, 'llm_provider', 'openai')
         self.llm_model = getattr(config, 'llm_model', 'gpt-4o')
@@ -60,13 +62,13 @@ class ScamGenerator:
         Returns:
             List of conversation dictionaries
         """
-        logger.info(f"Generating scam conversations from {self.config.multi_turn_input_path}")
+        self.clogger.info(f"Generating scam conversations from {self.config.multi_turn_input_path}", force=True)
         
         # Load first turns
         with open(self.config.multi_turn_input_path, 'r', encoding='utf-8') as f:
             first_turns = [line.strip() for line in f if line.strip()]
         
-        logger.info(f"Loaded {len(first_turns)} first turns")
+        self.clogger.info(f"Loaded {len(first_turns)} first turns")
         
         # Prepare tasks
         tasks = []
@@ -106,14 +108,14 @@ class ScamGenerator:
         all_conversations = []
         for idx, result in enumerate(results):
             if isinstance(result, Exception):
-                logger.error(f"Task {idx} failed: {result}")
+                self.clogger.error(f"Task {idx} failed: {result}")
             elif result:
                 all_conversations.append(result)
         
         # Save conversations
         self._save_conversations(all_conversations)
         
-        logger.info(f"Generated {len(all_conversations)} conversations")
+        self.clogger.info(f"Generated {len(all_conversations)} conversations", force=True)
         return all_conversations
     
     async def _generate_single_conversation(self, conversation_id: int, first_turn: str) -> Optional[Dict]:
@@ -177,11 +179,11 @@ class ScamGenerator:
             if hasattr(response, 'dialogue'):
                 return [turn.model_dump() for turn in response.dialogue]
             else:
-                logger.error("Response missing dialogue field")
+                self.clogger.error("Response missing dialogue field")
                 return None
             
         except Exception as e:
-            logger.error(f"LLM API error: {e}")
+            self.clogger.error(f"LLM API error: {e}")
             return None
     
     def _create_system_prompt(self) -> str:
@@ -235,4 +237,4 @@ Generate exactly {num_turns} dialogue turns, starting with "caller" role."""
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(conversations, f, ensure_ascii=False, indent=2)
         
-        logger.info(f"Saved conversations to {output_path}")
+        self.clogger.info(f"Saved conversations to {output_path}", force=True)

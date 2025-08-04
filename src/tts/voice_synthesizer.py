@@ -11,11 +11,14 @@ import logging
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 from tqdm import tqdm
+import sys
 
 from elevenlabs import set_api_key, Voice, VoiceSettings
 from config.config_loader import Config
 from tts.audio_processor import AudioProcessor
 from tts.audio_combiner import AudioCombiner
+from tts.voice_validator import VoiceValidator
+from utils.logging_utils import ConditionalLogger, create_progress_bar, format_completion_message
 
 
 logger = logging.getLogger(__name__)
@@ -39,6 +42,61 @@ class VoiceSynthesizer:
         self.audio_processor = AudioProcessor(config)
         self.audio_combiner = AudioCombiner(config)
         self.base_url = "https://api.elevenlabs.io/v1"
+        self.voice_validator = VoiceValidator(config.elevenlabs_api_key, config.verbose)
+        self.validated_voices = set()  # Cache of validated voice IDs
+        self.clogger = ConditionalLogger(__name__, config.verbose)
+    
+    async def validate_voices(self) -> bool:
+        """
+        Validate all configured voice IDs before processing.
+        
+        Returns:
+            True if all voices are valid, False otherwise
+        """
+        voice_ids = self.config.voice_ids[self.config.voice_language]
+        
+        if not voice_ids:
+            logger.error("No voice IDs configured")
+            return False
+        
+        # Skip validation if already done
+        if set(voice_ids).issubset(self.validated_voices):
+            return True
+        
+        self.clogger.info(f"Validating {len(voice_ids)} voice IDs for {self.config.voice_language}")
+        
+        results = await self.voice_validator.validate_voice_ids(voice_ids)
+        invalid_voices = self.voice_validator.get_invalid_voices(results)
+        valid_voices = self.voice_validator.get_valid_voices(results)
+        
+        if invalid_voices:
+            self.clogger.error(f"Found {len(invalid_voices)} invalid voice IDs:")
+            for invalid in invalid_voices:
+                self.clogger.info(f"  - {invalid.voice_id}: {invalid.error_message}")
+            
+            # Show available alternatives only in verbose mode
+            self.clogger.info("Fetching available voices for reference...")
+            available_voices = await self.voice_validator.get_available_voices()
+            if available_voices:
+                self.clogger.info(f"Found {len(available_voices)} available voices")
+                # Show first few as examples
+                for voice in available_voices[:5]:
+                    self.clogger.info(f"  - {voice.get('voice_id', 'N/A')}: {voice.get('name', 'Unknown')}")
+                if len(available_voices) > 5:
+                    self.clogger.info(f"  ... and {len(available_voices) - 5} more")
+            
+            return False
+        
+        # Cache valid voices and show summary
+        for valid in valid_voices:
+            self.validated_voices.add(valid.voice_id)
+            self.clogger.info(f"✓ Voice {valid.voice_id} is valid: {valid.name}")
+        
+        # Show simple validation success in non-verbose mode
+        if not self.config.verbose:
+            print(f"Validating voices... ✓ ({len(valid_voices)}/{len(voice_ids)} valid)")
+        
+        return True
     
     async def generate_audio(self, input_file: Path, output_dir: Path, is_scam: bool = True):
         """
@@ -49,7 +107,12 @@ class VoiceSynthesizer:
             output_dir: Directory to save audio files
             is_scam: Whether these are scam conversations
         """
-        logger.info(f"Generating audio from {input_file}")
+        self.clogger.info(f"Generating audio from {input_file}")
+        
+        # Validate voice IDs first
+        if not await self.validate_voices():
+            logger.error("Voice validation failed. Cannot proceed with audio generation.")
+            raise ValueError("Invalid voice IDs detected. Please check your configuration.")
         
         # Create output directory
         output_dir.mkdir(parents=True, exist_ok=True)
@@ -58,26 +121,38 @@ class VoiceSynthesizer:
         with open(input_file, 'r', encoding='utf-8') as f:
             conversations = json.load(f)
         
-        logger.info(f"Found {len(conversations)} conversations to process")
+        self.clogger.info(f"Found {len(conversations)} conversations to process")
         
         # Limit conversations based on config
         conversations_to_process = conversations[:self.config.voice_sample_limit]
         
-        # Create progress bar
-        pbar = tqdm(total=len(conversations_to_process), desc="Generating audio for conversations")
+        # Create simplified progress bar
+        audio_type = "scam" if is_scam else "legit" 
+        pbar = create_progress_bar(
+            total=len(conversations_to_process),
+            desc=f"Generating {audio_type} audio",
+            unit="conversations"
+        )
         
         # Process conversations concurrently with semaphore for rate limiting
-        #max_concurrent = getattr(self.config, 'max_concurrent_requests', 5) - hardcoded to 5 for now per current limit
-        max_concurrent = 5
-        # ElevenLabs has stricter rate limits, so we'll be more conservative
-        semaphore = asyncio.Semaphore(min(max_concurrent, 5))
+        max_concurrent = 5  # Conservative limit for ElevenLabs API
+        semaphore = asyncio.Semaphore(max_concurrent)
+        
+        # Track progress safely
+        completed_count = 0
+        failed_count = 0
+        start_time = asyncio.get_event_loop().time()
         
         async def process_with_progress(conversation):
+            nonlocal completed_count, failed_count
             async with semaphore:
                 try:
-                    await self._process_conversation_async(conversation, output_dir)
+                    await self._process_conversation_async(conversation, output_dir, pbar)
+                    completed_count += 1
                 except Exception as e:
-                    logger.error(f"Error processing conversation {conversation['conversation_id']}: {e}")
+                    failed_count += 1
+                    # Log error conditionally
+                    self.clogger.progress_write(f"Error processing conversation {conversation['conversation_id']}: {e}", pbar)
                 finally:
                     pbar.update(1)
         
@@ -88,15 +163,23 @@ class VoiceSynthesizer:
             await asyncio.gather(*tasks)
         
         pbar.close()
-        logger.info(f"Completed audio generation for {len(conversations_to_process)} conversations")
+        
+        # Final summary
+        duration = asyncio.get_event_loop().time() - start_time
+        total_processed = len(conversations_to_process)
+        
+        if self.config.verbose:
+            self.clogger.info(f"Completed audio generation: {completed_count} successful, {failed_count} failed, {total_processed} total")
+        # Simple summary is handled by the pipeline runner
     
-    async def _process_conversation_async(self, conversation: Dict, output_dir: Path):
+    async def _process_conversation_async(self, conversation: Dict, output_dir: Path, pbar: tqdm):
         """
         Process a single conversation to generate audio asynchronously.
         
         Args:
             conversation: Conversation dictionary
             output_dir: Output directory
+            pbar: Progress bar for safe logging
         """
         conversation_id = conversation["conversation_id"]
         dialogue = conversation["dialogue"]
@@ -108,7 +191,9 @@ class VoiceSynthesizer:
         # Select voices for caller and callee
         caller_voice, callee_voice = self._select_voices()
         
-        logger.debug(f"Conversation {conversation_id}: Using voices {caller_voice} (caller) and {callee_voice} (callee)")
+        # Show voice assignment only in verbose mode
+        if self.config.verbose:
+            self.clogger.progress_write(f"Conversation {conversation_id}: Using voices {caller_voice} (caller) and {callee_voice} (callee)", pbar)
         
         audio_files = []
         
@@ -126,7 +211,7 @@ class VoiceSynthesizer:
             if isinstance(result, dict):
                 audio_files.append(result)
             elif isinstance(result, Exception):
-                logger.error(f"Turn generation failed: {result}")
+                self.clogger.progress_write(f"Turn generation failed: {result}", pbar)
         
         # Combine audio files (this is still sync as it involves local file operations)
         combined_path = await asyncio.to_thread(
@@ -181,13 +266,18 @@ class VoiceSynthesizer:
         # Select voice based on role
         voice_id = caller_voice if role == "caller" else callee_voice
         
+        # Skip if voice is not validated (safety check)
+        if voice_id not in self.validated_voices:
+            self.clogger.progress_write(f"Skipping turn {sent_id} ({role}): Voice {voice_id} not validated")
+            return None
+        
         # Generate filename
         filename = f"turn_{sent_id:02d}_{role}.mp3"
         filepath = conv_dir / filename
         
         # Skip if file already exists
         if filepath.exists():
-            logger.debug(f"Skipping existing file: {filename}")
+            self.clogger.progress_write(f"Skipping existing file: {filename}")
             return {
                 "turn_id": sent_id,
                 "role": role,
@@ -222,7 +312,7 @@ class VoiceSynthesizer:
                     # Save audio file (run in thread to not block)
                     await asyncio.to_thread(self._save_audio_file, filepath, audio_bytes)
                     
-                    logger.debug(f"Generated: {filename}")
+                    self.clogger.progress_write(f"Generated: {filename}")
                     
                     return {
                         "turn_id": sent_id,
@@ -233,11 +323,13 @@ class VoiceSynthesizer:
                     }
                 else:
                     error_text = await response.text()
-                    logger.error(f"ElevenLabs API error ({response.status}): {error_text}")
+                    # Show API errors only in verbose mode, or if they're critical (429 rate limit)
+                    if response.status == 429 or self.config.verbose:
+                        self.clogger.progress_write(f"ElevenLabs API error ({response.status}): {error_text}")
                     return None
                     
         except Exception as e:
-            logger.error(f"Error generating audio for turn {sent_id}: {e}")
+            self.clogger.progress_write(f"Error generating audio for turn {sent_id}: {e}")
             return None
     
     def _save_audio_file(self, filepath: Path, audio_bytes: bytes):

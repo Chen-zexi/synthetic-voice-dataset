@@ -12,6 +12,7 @@ import random
 
 from config.config_loader import Config
 from translation.language_codes import get_language_code
+from utils.logging_utils import ConditionalLogger
 
 
 logger = logging.getLogger(__name__)
@@ -31,6 +32,7 @@ class BaseTranslator(ABC):
         """
         self.config = config
         self.placeholder_pattern = re.compile(r'\{\d{5}\}')
+        self.clogger = ConditionalLogger(__name__, config.verbose)
     
     @abstractmethod
     def translate_text(self, text: str, from_code: str, to_code: str) -> str:
@@ -59,7 +61,7 @@ class BaseTranslator(ABC):
             to_code: Target language code
             max_lines: Maximum number of lines to translate
         """
-        logger.info(f"Translating file: {input_path} ({from_code} -> {to_code})")
+        self.clogger.info(f"Translating file: {input_path} ({from_code} -> {to_code})", force=True)
         
         with open(input_path, 'r', encoding='utf-8') as infile, \
              open(output_path, 'w', encoding='utf-8') as outfile:
@@ -73,9 +75,9 @@ class BaseTranslator(ABC):
                 outfile.write(translated + '\n')
                 
                 if line_num % 10 == 0:
-                    logger.debug(f"Translated {line_num} lines")
+                    self.clogger.debug(f"Translated {line_num} lines")
         
-        logger.info(f"Translation complete. Output: {output_path}")
+        self.clogger.info(f"Translation complete. Output: {output_path}", force=True)
     
     def translate_conversations(self, input_path: Path, output_path: Path,
                                from_code: str, to_code: str):
@@ -88,7 +90,7 @@ class BaseTranslator(ABC):
             from_code: Source language code
             to_code: Target language code
         """
-        logger.info(f"Translating conversations: {input_path} ({from_code} -> {to_code})")
+        self.clogger.info(f"Translating conversations: {input_path} ({from_code} -> {to_code})", force=True)
         
         # Load conversations
         with open(input_path, 'r', encoding='utf-8') as f:
@@ -101,7 +103,7 @@ class BaseTranslator(ABC):
         translated_conversations = []
         
         for conv_idx, conversation in enumerate(conversations):
-            logger.debug(f"Translating conversation {conv_idx + 1}/{len(conversations)}")
+            self.clogger.debug(f"Translating conversation {conv_idx + 1}/{len(conversations)}")
             
             # Create substitution cache for consistent replacements within conversation
             substitution_cache = {}
@@ -131,7 +133,7 @@ class BaseTranslator(ABC):
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(translated_conversations, f, ensure_ascii=False, indent=2)
         
-        logger.info(f"Translated {len(conversations)} conversations")
+        self.clogger.info(f"Translated {len(conversations)} conversations", force=True)
     
     def _fill_placeholders(self, text: str, placeholder_map: Dict[str, Dict],
                           substitution_cache: Dict[str, str]) -> str:
@@ -165,7 +167,7 @@ class BaseTranslator(ABC):
                     return substitution
             
             # Return code if no substitution found
-            logger.warning(f"No substitution found for {code}")
+            self.clogger.warning(f"No substitution found for {code}")
             return code
         
         return self.placeholder_pattern.sub(replace_placeholder, text)

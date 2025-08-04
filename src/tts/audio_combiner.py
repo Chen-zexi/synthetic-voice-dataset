@@ -8,6 +8,7 @@ from typing import Optional, List
 
 from pydub import AudioSegment
 from config.config_loader import Config
+from utils.logging_utils import ConditionalLogger
 
 
 logger = logging.getLogger(__name__)
@@ -26,6 +27,7 @@ class AudioCombiner:
             config: Configuration object
         """
         self.config = config
+        self.clogger = ConditionalLogger(__name__, config.verbose)
     
     def combine_conversation(self, conversation_dir: Path, 
                            conversation_id: int) -> Optional[Path]:
@@ -39,13 +41,13 @@ class AudioCombiner:
         Returns:
             Path to combined audio file or None if combination failed
         """
-        logger.debug(f"Combining audio files in {conversation_dir}")
+        self.clogger.debug(f"Combining audio files in {conversation_dir}")
         
         # Get all turn audio files
         audio_files = self._get_turn_files(conversation_dir)
         
         if not audio_files:
-            logger.warning(f"No audio files found in {conversation_dir}")
+            self.clogger.warning(f"No audio files found in {conversation_dir}")
             return None
         
         try:
@@ -58,11 +60,11 @@ class AudioCombiner:
             
             combined_audio.export(output_path, format="wav")
             
-            logger.info(f"Combined {len(audio_files)} audio files into {output_path}")
+            self.clogger.debug(f"Combined {len(audio_files)} audio files into {output_path}")
             return output_path
             
         except Exception as e:
-            logger.error(f"Error combining audio files: {e}")
+            self.clogger.error(f"Error combining audio files: {e}")
             return None
     
     def _get_turn_files(self, conversation_dir: Path) -> List[Path]:
