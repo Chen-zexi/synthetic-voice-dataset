@@ -169,23 +169,16 @@ class PipelineRunner:
             cached_path = translator.get_cached_translation_path()
             
             if cached_path:
-                # Create a symbolic link to the cached file in the expected location
-                output_path = self.config.translation_output_path
-                output_path.parent.mkdir(parents=True, exist_ok=True)
-                
-                # Remove existing file/link if it exists
-                if output_path.exists() or output_path.is_symlink():
-                    output_path.unlink()
-                
-                # Create symbolic link to cached file
-                output_path.symlink_to(cached_path.resolve())
+                # Update config paths to point to cached file instead of copying/linking
+                self.config.translation_output_path = cached_path
+                self.config.multi_turn_input_path = cached_path
                 
                 if cache_model:
                     logger.info(f"Using cached translation from {cache_service} (model: {cache_model})")
                 else:
                     logger.info(f"Using cached translation from {cache_service}")
-                logger.info(f"Created symbolic link: {output_path} -> {cached_path}")
-                # Skip actual translation - symbolic link points to cache
+                logger.info(f"Cache file: {cached_path}")
+                # Skip actual translation - config now points to cached file
                 return
             else:
                 logger.warning(f"No valid cache found for {cache_service}, running fresh translation")
