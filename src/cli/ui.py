@@ -165,6 +165,9 @@ class InteractiveUI:
             print(f"   Translation: {config.translation_from_code} → {config.translation_to_code}")
             print(f"   Voice IDs: {len(config.voice_ids[config.language_code])} available")
             print(f"   Categories: {len(config.legit_call_categories)} conversation types")
+        except KeyError as e:
+            print_warning(f"Locale configuration is missing required field: {e}")
+            print_info("This locale may need to be updated to the new configuration format.")
         except Exception as e:
             print_warning(f"Could not load locale details: {e}")
     

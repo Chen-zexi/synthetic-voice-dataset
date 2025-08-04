@@ -109,8 +109,8 @@ class PipelineRunner:
             start_time = time.time()
             
             try:
-                # Conversation and legit generation are async methods
-                if step in ['conversation', 'legit']:
+                # Conversation, legit generation, and TTS are async methods
+                if step in ['conversation', 'legit', 'tts']:
                     asyncio.run(method())
                 else:
                     method()
@@ -175,7 +175,7 @@ class PipelineRunner:
         generator = LegitGenerator(self.config)
         await generator.generate_conversations()
     
-    def run_tts(self):
+    async def run_tts(self):
         """Run text-to-speech conversion."""
         logger.info("Converting conversations to audio")
         
@@ -183,7 +183,7 @@ class PipelineRunner:
         
         # Generate scam audio
         print("Generating scam conversation audio...")
-        synthesizer.generate_audio(
+        await synthesizer.generate_audio(
             input_file=self.config.voice_input_file_scam,
             output_dir=self.config.voice_output_dir_scam,
             is_scam=True
@@ -191,7 +191,7 @@ class PipelineRunner:
         
         # Generate legitimate audio
         print("Generating legitimate conversation audio...")
-        synthesizer.generate_audio(
+        await synthesizer.generate_audio(
             input_file=self.config.voice_input_file_legit,
             output_dir=self.config.voice_output_dir_legit,
             is_scam=False

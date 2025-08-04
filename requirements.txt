@@ -11,3 +11,4 @@ langchain-openai>=0.3.26
 langchain-anthropic
 langchain-google-genai
 pydantic>=2.0
+aiohttp>=3.8.0
