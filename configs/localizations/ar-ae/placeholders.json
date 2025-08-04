@@ -133,6 +133,159 @@
       "Dubai Land Department"
     ]
   },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "برنامج زايد للإسكان",
+      "صندوق محمد بن راشد للإسكان",
+      "برنامج الإسكان الحكومي"
+    ],
+    "translations": [
+      "Sheikh Zayed Housing Programme",
+      "Mohammed bin Rashid Housing Fund",
+      "Government Housing Programme"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "substitutions": [
+      "هيئة تنظيم الاتصالات والحكومة الرقمية"
+    ],
+    "translations": [
+      "Telecommunications and Digital Government Regulatory Authority (TDRA)"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "أرامكس",
+      "دي إتش إل",
+      "فيديكس",
+      "إيميريتس بوست"
+    ],
+    "translations": [
+      "Aramex",
+      "DHL",
+      "FedEx",
+      "Emirates Post"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "واتساب",
+      "إنستغرام",
+      "سناب شات",
+      "تيك توك"
+    ],
+    "translations": [
+      "WhatsApp",
+      "Instagram",
+      "Snapchat",
+      "TikTok"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "substitutions": [
+      "وزارة الصحة ووقاية المجتمع",
+      "هيئة الصحة بدبي",
+      "دائرة الصحة أبوظبي"
+    ],
+    "translations": [
+      "Ministry of Health and Prevention (MOHAP)",
+      "Dubai Health Authority (DHA)",
+      "Department of Health Abu Dhabi (DOH)"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "كارفور",
+      "نون",
+      "لولو هايبرماركت",
+      "أمازون الإمارات"
+    ],
+    "translations": [
+      "Carrefour",
+      "Noon",
+      "LuLu Hypermarket",
+      "Amazon UAE"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "substitutions": [
+      "٢٥ درهم",
+      "٥٠ درهم",
+      "٧٥ درهم"
+    ],
+    "translations": [
+      "25 AED",
+      "50 AED",
+      "75 AED"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "أبوظبي الأول للأوراق المالية",
+      "الإمارات دبي الوطني كابيتال",
+      "شعاع كابيتال",
+      "أبوظبي الإسلامي للأوراق المالية"
+    ],
+    "translations": [
+      "FAB Securities",
+      "Emirates NBD Capital",
+      "SHUAA Capital",
+      "ADIB Securities"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "substitutions": [
+      "إعمار العقارية",
+      "داماك العقارية",
+      "نخيل العقارية",
+      "الدار العقارية"
+    ],
+    "translations": [
+      "Emaar Properties",
+      "DAMAC Properties",
+      "Nakheel Properties",
+      "Aldar Properties"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "حسين الجسمي",
+      "أحلام",
+      "محمد الشحي",
+      "بلقيس فتحي"
+    ],
+    "translations": [
+      "Hussain Al Jassmi",
+      "Ahlam",
+      "Mohammed Al Shehhi",
+      "Balqees Fathi"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "substitutions": [
+      "المدير",
+      "المسؤول",
+      "الشيخ",
+      "المعلم"
+    ],
+    "translations": [
+      "the manager/boss",
+      "the official/person in charge",
+      "the sheikh",
+      "the teacher/mentor"
+    ]
+  },
   "{00022}": {
     "tag": "<bank_name>",
     "substitutions": [
@@ -148,6 +301,407 @@
       "RAK Bank",
       "Emirates Islamic Bank",
       "Dubai Islamic Bank"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "substitutions": [
+      "اتصالات",
+      "دو",
+      "فيرجن موبايل"
+    ],
+    "translations": [
+      "Etisalat",
+      "du",
+      "Virgin Mobile"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "هيئة تنظيم الاتصالات والحكومة الرقمية"
+    ],
+    "translations": [
+      "Telecommunications and Digital Government Regulatory Authority (TDRA)"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "ماك",
+      "شانيل",
+      "ديور",
+      "بوبي براون",
+      "هدى بيوتي"
+    ],
+    "translations": [
+      "MAC",
+      "Chanel",
+      "Dior",
+      "Bobbi Brown",
+      "Huda Beauty"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "substitutions": [
+      "وزارة الاقتصاد - حماية المستهلك",
+      "دائرة التنمية الاقتصادية"
+    ],
+    "translations": [
+      "Ministry of Economy - Consumer Protection",
+      "Department of Economic Development (DED)"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "آبل باي",
+      "سامسونج باي",
+      "محفظة اتصالات",
+      "بيم"
+    ],
+    "translations": [
+      "Apple Pay",
+      "Samsung Pay",
+      "Etisalat Wallet",
+      "Beam"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "برنامج سكاي واردز",
+      "برنامج تاتش بوينتس",
+      "برنامج فزعة",
+      "برنامج أمبر",
+      "برنامج شكراً"
+    ],
+    "translations": [
+      "Skywards Program",
+      "Touchpoints Program",
+      "Fazaa Program",
+      "Amber Program",
+      "Shukran Program"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "substitutions": [
+      "هيئة الطرق والمواصلات",
+      "إدارة المرور والترخيص"
+    ],
+    "translations": [
+      "Roads and Transport Authority (RTA)",
+      "Traffic and Licensing Department"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "تويوتا",
+      "نيسان",
+      "مرسيدس",
+      "بي إم دبليو",
+      "لكزس",
+      "إنفينيتي",
+      "فورد"
+    ],
+    "translations": [
+      "Toyota",
+      "Nissan",
+      "Mercedes",
+      "BMW",
+      "Lexus",
+      "Infiniti",
+      "Ford"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "المراعي",
+      "نادك",
+      "العين للألبان",
+      "الروابي"
+    ],
+    "translations": [
+      "Almarai",
+      "NADEC",
+      "Al Ain Dairy",
+      "Al Rawabi"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "substitutions": [
+      "صندوق خليفة لتطوير المشاريع",
+      "مؤسسة الإمارات للتعليم المدرسي",
+      "برنامج حمدان بن محمد للابتعاث"
+    ],
+    "translations": [
+      "Khalifa Fund for Enterprise Development",
+      "Emirates Schools Establishment",
+      "Hamdan Bin Mohammed Scholarship Program"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "اتصالات للإنترنت",
+      "دو للإنترنت",
+      "فيرجن موبايل"
+    ],
+    "translations": [
+      "Etisalat Internet",
+      "du Internet",
+      "Virgin Mobile"
+    ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "إمارة دبي",
+      "إمارة أبوظبي",
+      "إمارة الشارقة",
+      "إمارة عجمان"
+    ],
+    "translations": [
+      "Emirate of Dubai",
+      "Emirate of Abu Dhabi",
+      "Emirate of Sharjah",
+      "Emirate of Ajman"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "منطقة الخليج",
+      "الشرق الأوسط",
+      "دول مجلس التعاون"
+    ],
+    "translations": [
+      "Gulf Region",
+      "Middle East",
+      "GCC Countries"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "الإمارات العربية المتحدة",
+      "دولة الإمارات",
+      "الإمارات"
+    ],
+    "translations": [
+      "United Arab Emirates",
+      "UAE",
+      "Emirates"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "substitutions": [
+      "شرطة دبي",
+      "شرطة أبوظبي",
+      "الشرطة الاتحادية"
+    ],
+    "translations": [
+      "Dubai Police",
+      "Abu Dhabi Police",
+      "Federal Police"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "إدارة التحقيقات الجنائية",
+      "قسم مكافحة الجرائم الإلكترونية"
+    ],
+    "translations": [
+      "Criminal Investigation Department",
+      "Cybercrime Department"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "مركز شرطة البرشاء",
+      "مركز شرطة المرقبات",
+      "مركز شرطة الراشدية"
+    ],
+    "translations": [
+      "Al Barsha Police Station",
+      "Al Muraqqabat Police Station",
+      "Al Rashidiya Police Station"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "مركز شرطة جميرا",
+      "مركز شرطة القصيص",
+      "مركز شرطة الخوانيج"
+    ],
+    "translations": [
+      "Jumeirah Police Station",
+      "Al Qusais Police Station",
+      "Al Khawaneej Police Station"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "جامعة الإمارات",
+      "الجامعة الأمريكية في دبي",
+      "جامعة زايد"
+    ],
+    "translations": [
+      "UAE University",
+      "American University in Dubai",
+      "Zayed University"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "وزارة التربية والتعليم",
+      "هيئة المعرفة والتنمية البشرية"
+    ],
+    "translations": [
+      "Ministry of Education",
+      "Knowledge and Human Development Authority (KHDA)"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "قسم القروض الشخصية",
+      "إدارة التمويل الطلابي"
+    ],
+    "translations": [
+      "Personal Loans Department",
+      "Student Finance Department"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "إي فيجن",
+      "أو إس إن"
+    ],
+    "translations": [
+      "eVision",
+      "OSN"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "باقة التلفزيون",
+      "خدمة البث المباشر"
+    ],
+    "translations": [
+      "TV Package",
+      "Streaming Service"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "اتصالات",
+      "دو"
+    ],
+    "translations": [
+      "Etisalat",
+      "du"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "نون",
+      "أمازون",
+      "نمشي"
+    ],
+    "translations": [
+      "Noon",
+      "Amazon",
+      "Namshi"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "آيفون",
+      "سامسونج جالاكسي",
+      "ماك بوك"
+    ],
+    "translations": [
+      "iPhone",
+      "Samsung Galaxy",
+      "MacBook"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "تمر",
+      "مانجو",
+      "برتقال"
+    ],
+    "translations": [
+      "dates",
+      "mango",
+      "oranges"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "وزارة تطوير البنية التحتية",
+      "برنامج الشيخ زايد للإسكان"
+    ],
+    "translations": [
+      "Ministry of Infrastructure Development",
+      "Sheikh Zayed Housing Programme"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "إدارة ترخيص السائقين والآليات",
+      "هيئة الطرق والمواصلات"
+    ],
+    "translations": [
+      "Drivers and Vehicles Licensing Department",
+      "Roads and Transport Authority"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "منطقة الخليج",
+      "الشرق الأوسط",
+      "دول مجلس التعاون"
+    ],
+    "translations": [
+      "Gulf Region",
+      "Middle East",
+      "GCC Countries"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "مركز الشرطة الشامل",
+      "مركز شرطة المطار",
+      "مركز شرطة الميناء"
+    ],
+    "translations": [
+      "Comprehensive Police Station",
+      "Airport Police Station",
+      "Port Police Station"
     ]
   }
 }

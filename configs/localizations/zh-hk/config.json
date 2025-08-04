@@ -1,28 +1,30 @@
 {
   "locale": {
-    "id": "XX-YY",
-    "language_code": "XX",
-    "country_code": "YY",
-    "language_name": "Language Name",
-    "region_name": "Country/Region Name",
-    "currency": "CUR",
-    "currency_symbol": "$"
+    "id": "zh-hk",
+    "language_code": "zh",
+    "country_code": "HK",
+    "language_name": "Chinese (Traditional/Cantonese)",
+    "region_name": "Hong Kong",
+    "currency": "HKD",
+    "currency_symbol": "HK$"
   },
   "translation": {
     "from_code": "zh-CN",
-    "to_code": "XX",
-    "intermediate_code": "en"
+    "to_code": "zh-TW",
+    "intermediate_code": "zh"
   },
   "voices": {
     "ids": [
-      "elevenlabs_voice_id_1",
-      "elevenlabs_voice_id_2",
-      "elevenlabs_voice_id_3"
+      "IKne3meq5aSn9XLyUdCD",
+      "XB0fDUnXU5powFXDhCwa",
+      "GBv7mTt0atIp3Br8iCZE",
+      "SOYHLrjzK2X1ezoPC6cr"
     ],
     "names": [
-      "Voice Name 1 (Gender/Age)",
-      "Voice Name 2 (Gender/Age)",
-      "Voice Name 3 (Gender/Age)"
+      "Charlie (Male/Young)",
+      "Charlotte (Female/Middle-aged)",
+      "Thomas (Male/Elderly)",
+      "Harry (Male/Middle-aged)"
     ]
   },
   "conversation": {
@@ -73,11 +75,18 @@
     "legit_formatted": "legit_conversation_formatted.json"
   },
   "cultural_notes": {
-    "currency": "Local currency code and symbol",
-    "phone_greeting": "Common phone greeting phrases",
-    "formality_level": "Formal/Informal/Mixed",
+    "currency": "HKD (HK$) / 港幣",
+    "phone_greeting": "喂，邊位呀？ / 喂，係邊位？",
+    "formality_level": "Mixed (Cantonese is more casual, formal for business)",
     "common_scam_themes": [
-      "List region-specific common scam themes"
+      "假冒官員 (香港政府或內地執法部門)",
+      "AI語音模仿 (克隆親友或上司聲音)",
+      "深偽技術 (Deepfake視像會議)",
+      "虛假客戶服務電話騙案",
+      "投資騙案 (保證回報騙局)",
+      "求職騙案 (高薪工作陷阱)",
+      "針對內地留學生的騙案",
+      "虛擬貨幣投資騙案"
     ]
   }
 }

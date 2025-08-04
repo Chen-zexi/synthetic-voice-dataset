@@ -3,18 +3,19 @@
 This guide provides step-by-step instructions for adding new locales to the voice scam dataset generation pipeline.
 
 ## User critical instructions
-**make sure you do your research (use web search to get the accurate subisitue)**
+**make sure you do your research (use web search to get the accurate substitutes)**
 - checkout the locale you are working on first on @locale_road_map.md i.e mark the status as in progress at the very beginning so that other people know you are working on it.
 
 ## Table of Contents
 1. [Overview](#overview)
 2. [Prerequisites](#prerequisites)
 3. [Step-by-Step Implementation](#step-by-step-implementation)
-4. [Placeholder Reference](#placeholder-reference)
-5. [Cultural Considerations](#cultural-considerations)
-6. [Voice Selection](#voice-selection)
-7. [Testing Checklist](#testing-checklist)
-8. [Troubleshooting](#troubleshooting)
+4. [Configuration Structure](#configuration-structure)
+5. [Placeholder Reference](#placeholder-reference)
+6. [Cultural Considerations](#cultural-considerations)
+7. [Voice Selection](#voice-selection)
+8. [Testing Checklist](#testing-checklist)
+9. [Troubleshooting](#troubleshooting)
 
 ## Overview
 
@@ -62,52 +63,193 @@ cp configs/localizations/template/* configs/localizations/[locale-code]/
 
 ### Step 3: Configure config.json
 
-Edit `configs/localizations/[locale-code]/config.json`:
+Edit `configs/localizations/[locale-code]/config.json` using the **new standardized structure**:
 
-1. **Update locale information:**
-   ```json
-   {
-     "locale_code": "ko-kr",
-     "locale_name": "Korean - South Korea",
-     "language_code": "ko",
-     "language_name": "Korean",
-     "region": "South Korea"
-   }
-   ```
+## Configuration Structure
 
-2. **Set translation paths:**
-   ```json
-   "translation": {
-     "from_code": "zh",      // Source (Chinese)
-     "to_code": "ko",        // Target language
-     "intermediate_code": "en" // English as intermediate
-   }
-   ```
+The configuration file must follow this **exact structure**:
 
-3. **Add ElevenLabs voice IDs:**
-   ```json
-   "voices": {
-     "ids": [
-       "voice_id_1",
-       "voice_id_2",
-       "voice_id_3"
-     ],
-     "names": [
-       "Junho (Male/Young)",
-       "Minji (Female/Middle-aged)",
-       "Sangho (Male/Elderly)"
-     ]
-   }
-   ```
+```json
+{
+  "locale": {
+    "id": "ko-kr",
+    "language_code": "ko",
+    "country_code": "KR",
+    "language_name": "Korean",
+    "region_name": "South Korea",
+    "currency": "KRW",
+    "currency_symbol": "₩"
+  },
+  "translation": {
+    "from_code": "zh-CN",
+    "to_code": "ko",
+    "intermediate_code": "en"
+  },
+  "voices": {
+    "ids": [
+      "voice_id_1",
+      "voice_id_2",
+      "voice_id_3"
+    ],
+    "names": [
+      "Junho (Male/Young)",
+      "Minji (Female/Middle-aged)",
+      "Sangho (Male/Elderly)"
+    ]
+  },
+  "conversation": {
+    "legit_categories": [
+      "family_checkin",
+      "friend_chat",
+      "relationship_talk",
+      "holiday_greeting",
+      "emergency_help_request",
+      "doctor_appointment_confirmation",
+      "clinic_test_results",
+      "delivery_confirmation",
+      "utility_service_followup",
+      "repair_scheduling",
+      "bank_verification_call",
+      "visa_status_update",
+      "tax_inquiry",
+      "insurance_claim_followup",
+      "civil_services_scheduling",
+      "job_interview_scheduling",
+      "coworker_sync",
+      "project_status_update",
+      "freelance_client_call",
+      "work_meeting_reminder",
+      "school_event_reminder",
+      "tutoring_session",
+      "academic_advising",
+      "exam_results_notification",
+      "class_schedule_change",
+      "restaurant_reservation",
+      "hairdresser_booking",
+      "hotel_booking_confirmation",
+      "volunteering_coordination",
+      "language_exchange_call",
+      "customer_support_callback",
+      "subscription_renewal_notice",
+      "product_feedback_survey",
+      "account_security_verification",
+      "appointment_cancellation_notice"
+    ]
+  },
+  "output": {
+    "scam_conversation": "scam_conversation.json",
+    "legit_conversation": "legit_conversation.json",
+    "scam_audio_dir": "scam",
+    "legit_audio_dir": "legit",
+    "scam_formatted": "scam_conversation_formatted.json",
+    "legit_formatted": "legit_conversation_formatted.json"
+  },
+  "cultural_notes": {
+    "phone_greeting": "여보세요 (yeoboseyo) - Hello (phone greeting)",
+    "formality_level": "Formal/Hierarchical - Korean uses different speech levels",
+    "common_scam_themes": [
+      "Voice phishing (보이스피싱) impersonating prosecutors or police",
+      "Loan scams targeting those with poor credit",
+      "Investment scams promising high returns"
+    ]
+  }
+}
+```
 
-4. **Update output paths:**
-   ```json
-   "output_paths": {
-     "scam_conversation": "scam_conversation_ko-kr.json",
-     "legit_conversation": "legit_conversation_ko-kr.json",
-     // ... update all paths with locale code
-   }
-   ```
+### Required Configuration Sections
+
+#### 1. Locale Section (REQUIRED)
+```json
+"locale": {
+  "id": "[locale-code]",           // e.g., "ko-kr", "fr-ca"
+  "language_code": "[lang]",       // ISO 639-1 code (e.g., "ko", "fr")
+  "country_code": "[country]",     // ISO 3166-1 code (e.g., "KR", "CA")
+  "language_name": "[Language]",   // English name (e.g., "Korean")
+  "region_name": "[Region]",       // English region (e.g., "South Korea")
+  "currency": "[CODE]",           // Currency code (e.g., "KRW", "CAD")
+  "currency_symbol": "[symbol]"   // Currency symbol (e.g., "₩", "C$")
+}
+```
+
+#### 2. Translation Section (REQUIRED)
+```json
+"translation": {
+  "from_code": "zh-CN",          // Always Chinese source
+  "to_code": "[target-lang]",    // Target language code (must be Google Translate supported)
+  "intermediate_code": "en"      // Always English intermediate
+}
+```
+
+**Important**: The `to_code` must use Google Translate supported language codes:
+- For Traditional Chinese regions (Hong Kong, Taiwan): use `"zh-TW"`
+- For Simplified Chinese regions (Singapore, Mainland): use `"zh-CN"`
+- For other languages: use ISO 639-1 codes (e.g., `"ja"`, `"ko"`, `"ms"`, `"ar"`)
+
+#### 3. Voices Section (REQUIRED)
+```json
+"voices": {
+  "ids": ["voice_id_1", "voice_id_2", "voice_id_3"],
+  "names": ["Name (Gender/Age)", "Name (Gender/Age)", "Name (Gender/Age)"]
+}
+```
+
+#### 4. Conversation Section (REQUIRED)
+```json
+"conversation": {
+  "legit_categories": [
+    // List of legitimate call categories
+    "family_checkin",
+    "friend_chat",
+    // ... (see full list above)
+  ]
+}
+```
+
+#### 5. Output Section (REQUIRED)
+```json
+"output": {
+  "scam_conversation": "scam_conversation.json",
+  "legit_conversation": "legit_conversation.json",
+  "scam_audio_dir": "scam",
+  "legit_audio_dir": "legit",
+  "scam_formatted": "scam_conversation_formatted.json",
+  "legit_formatted": "legit_conversation_formatted.json"
+}
+```
+
+#### 6. Cultural Notes Section (OPTIONAL)
+```json
+"cultural_notes": {
+  "phone_greeting": "Local phone greeting",
+  "formality_level": "Description of formality patterns",
+  "common_scam_themes": [
+    "Region-specific scam types"
+  ]
+}
+```
+
+### Currency Reference for Major Locales
+| Region | Currency Code | Symbol | Example |
+|--------|---------------|--------|---------|
+| United States | USD | $ | $100 |
+| European Union | EUR | € | €100 |
+| United Kingdom | GBP | £ | £100 |
+| Japan | JPY | ¥ | ¥10,000 |
+| South Korea | KRW | ₩ | ₩100,000 |
+| China | CNY | ¥ | ¥100 |
+| India | INR | ₹ | ₹1,000 |
+| Canada | CAD | C$ | C$100 |
+| Australia | AUD | A$ | A$100 |
+| Singapore | SGD | S$ | S$100 |
+| Hong Kong | HKD | HK$ | HK$100 |
+| Taiwan | TWD | NT$ | NT$1,000 |
+| Philippines | PHP | ₱ | ₱1,000 |
+| Vietnam | VND | ₫ | ₫100,000 |
+| Thailand | THB | ฿ | ฿1,000 |
+| Malaysia | MYR | RM | RM100 |
+| Indonesia | IDR | Rp | Rp100,000 |
+| Saudi Arabia | SAR | ﷼ | ﷼100 |
+| UAE | AED | د.إ | د.إ100 |
 
 ### Step 4: Populate placeholders.json
 
@@ -248,31 +390,32 @@ Ensure all placeholders are populated with relevant local data:
 ## Testing Checklist
 
 ### Pre-Pipeline Testing
+- [ ] Configuration follows the **new standardized structure**
+- [ ] All required sections are present: `locale`, `translation`, `voices`, `conversation`, `output`
 - [ ] All 53 placeholders have substitutions
 - [ ] Translations are accurate and culturally appropriate
 - [ ] Voice IDs are valid and tested
-- [ ] Config paths use correct locale code
-- [ ] Currency amounts are realistic
+- [ ] Currency codes and symbols are correct
 
 ### Pipeline Testing
 1. **Run preprocessing**:
    ```bash
-   python main.py --language [locale-code] --steps preprocess
+   python main.py --locale [locale-code] --steps preprocess
    ```
 
 2. **Check translations**:
    ```bash
-   python main.py --language [locale-code] --steps translate
+   python main.py --locale [locale-code] --steps translate
    ```
 
 3. **Generate sample conversations**:
    ```bash
-   python main.py --language [locale-code] --steps conversation --limit 5
+   python main.py --locale [locale-code] --steps conversation --sample-limit 5
    ```
 
 4. **Test TTS generation**:
    ```bash
-   python main.py --language [locale-code] --steps tts --limit 2
+   python main.py --locale [locale-code] --steps tts --sample-limit 2
    ```
 
 ### Quality Checks
@@ -286,21 +429,30 @@ Ensure all placeholders are populated with relevant local data:
 
 ### Common Issues
 
-1. **Missing placeholders error**:
+1. **"'locale' KeyError"**:
+   - **Cause**: Configuration file uses old format
+   - **Solution**: Update to new standardized structure with `"locale"` section
+   - **Fix**: Follow the Configuration Structure section above exactly
+
+2. **Missing placeholders error**:
    - Ensure all {00001} through {00053} are defined
    - Check for typos in placeholder codes
 
-2. **Translation failures**:
+3. **Translation failures**:
+   - **"No support for the provided language"**: Use correct Google Translate codes
+     - Hong Kong/Taiwan: `"zh-TW"` (not `"zh-HK"`)
+     - Singapore/Mainland China: `"zh-CN"` (not `"zh"`)
+     - Other languages: Use standard ISO codes
    - Verify language codes are correct
    - Check Google Translate API limits
    - Consider using Argos for offline translation
 
-3. **Voice synthesis errors**:
+4. **Voice synthesis errors**:
    - Confirm ElevenLabs API key is valid
    - Verify voice IDs exist
    - Check API quota limits
 
-4. **Cultural inappropriateness**:
+5. **Cultural inappropriateness**:
    - Review with native speakers
    - Adjust formality levels
    - Update placeholder substitutions
@@ -312,10 +464,10 @@ Ensure all placeholders are populated with relevant local data:
 python main.py --validate-config [locale-code]
 
 # Test single step with verbose output
-python main.py --language [locale-code] --steps preprocess --verbose
+python main.py --locale [locale-code] --steps preprocess --verbose
 
 # Generate small test batch
-python main.py --language [locale-code] --limit 5
+python main.py --locale [locale-code] --sample-limit 5
 ```
 
 ## Adding to locale_road_map.md

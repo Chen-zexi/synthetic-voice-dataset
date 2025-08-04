@@ -441,5 +441,273 @@
       "TIME",
       "Celcom Home"
     ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "Selangor",
+      "Kuala Lumpur",
+      "Johor",
+      "Pulau Pinang",
+      "Perak",
+      "Sabah",
+      "Sarawak"
+    ],
+    "translations": [
+      "Selangor",
+      "Kuala Lumpur",
+      "Johor",
+      "Penang",
+      "Perak",
+      "Sabah",
+      "Sarawak"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "Lembah Klang",
+      "Pantai Timur",
+      "Pantai Barat",
+      "Malaysia Timur"
+    ],
+    "translations": [
+      "Klang Valley",
+      "East Coast",
+      "West Coast",
+      "East Malaysia"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "Malaysia",
+      "Negara Malaysia"
+    ],
+    "translations": [
+      "Malaysia",
+      "Country of Malaysia"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "substitutions": [
+      "Polis Diraja Malaysia",
+      "PDRM",
+      "Polis"
+    ],
+    "translations": [
+      "Royal Malaysia Police",
+      "PDRM",
+      "Police"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "Jabatan Siasatan Jenayah",
+      "Bahagian Jenayah Komersial",
+      "Unit Jenayah Siber"
+    ],
+    "translations": [
+      "Criminal Investigation Department",
+      "Commercial Crime Division",
+      "Cyber Crime Unit"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "Balai Polis Dang Wangi",
+      "Balai Polis Petaling Jaya",
+      "Balai Polis Subang Jaya"
+    ],
+    "translations": [
+      "Dang Wangi Police Station",
+      "Petaling Jaya Police Station",
+      "Subang Jaya Police Station"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "Balai Polis Cheras",
+      "Balai Polis Ampang",
+      "Balai Polis Shah Alam"
+    ],
+    "translations": [
+      "Cheras Police Station",
+      "Ampang Police Station",
+      "Shah Alam Police Station"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "Universiti Malaya",
+      "Universiti Kebangsaan Malaysia",
+      "Universiti Putra Malaysia",
+      "Universiti Teknologi Malaysia"
+    ],
+    "translations": [
+      "University of Malaya",
+      "National University of Malaysia",
+      "Putra University Malaysia",
+      "Malaysia University of Technology"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "Kementerian Pendidikan Malaysia",
+      "Jabatan Pendidikan Tinggi"
+    ],
+    "translations": [
+      "Ministry of Education Malaysia",
+      "Department of Higher Education"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "Jabatan Pinjaman Peribadi",
+      "Bahagian Pembiayaan"
+    ],
+    "translations": [
+      "Personal Loan Department",
+      "Financing Division"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "Astro",
+      "HyppTV",
+      "Njoi"
+    ],
+    "translations": [
+      "Astro",
+      "HyppTV",
+      "Njoi"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "Pakej TV",
+      "Perkhidmatan Siaran"
+    ],
+    "translations": [
+      "TV Package",
+      "Broadcasting Service"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "TM",
+      "Maxis",
+      "Celcom",
+      "Digi"
+    ],
+    "translations": [
+      "TM",
+      "Maxis",
+      "Celcom",
+      "Digi"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "Shopee",
+      "Lazada",
+      "Zalora",
+      "PG Mall"
+    ],
+    "translations": [
+      "Shopee",
+      "Lazada",
+      "Zalora",
+      "PG Mall"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "iPhone",
+      "Samsung Galaxy",
+      "Huawei",
+      "Xiaomi"
+    ],
+    "translations": [
+      "iPhone",
+      "Samsung Galaxy",
+      "Huawei",
+      "Xiaomi"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "durian",
+      "mangga",
+      "rambutan",
+      "limau"
+    ],
+    "translations": [
+      "durian",
+      "mango",
+      "rambutan",
+      "orange"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "Kementerian Perumahan dan Kerajaan Tempatan",
+      "Lembaga Perumahan dan Hartanah Selangor"
+    ],
+    "translations": [
+      "Ministry of Housing and Local Government",
+      "Selangor Housing and Property Board"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "Jabatan Pengangkutan Jalan",
+      "JPJ"
+    ],
+    "translations": [
+      "Road Transport Department",
+      "JPJ"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "Asia Tenggara",
+      "ASEAN",
+      "Rantau Asia Pasifik"
+    ],
+    "translations": [
+      "Southeast Asia",
+      "ASEAN",
+      "Asia Pacific Region"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "Balai Polis Trafik",
+      "Balai Polis Lapangan Terbang",
+      "Balai Polis Pelabuhan"
+    ],
+    "translations": [
+      "Traffic Police Station",
+      "Airport Police Station",
+      "Port Police Station"
+    ]
   }
 }

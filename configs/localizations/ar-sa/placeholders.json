@@ -421,5 +421,253 @@
       "Zain",
       "Salam"
     ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "المنطقة الشرقية",
+      "المنطقة الغربية",
+      "المنطقة الوسطى",
+      "المنطقة الشمالية"
+    ],
+    "translations": [
+      "Eastern Province",
+      "Western Province",
+      "Central Province",
+      "Northern Province"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "منطقة الخليج",
+      "الشرق الأوسط",
+      "دول مجلس التعاون"
+    ],
+    "translations": [
+      "Gulf Region",
+      "Middle East",
+      "GCC Countries"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "المملكة العربية السعودية",
+      "السعودية",
+      "المملكة"
+    ],
+    "translations": [
+      "Kingdom of Saudi Arabia",
+      "Saudi Arabia",
+      "The Kingdom"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "substitutions": [
+      "الشرطة",
+      "الأمن العام",
+      "شرطة المنطقة"
+    ],
+    "translations": [
+      "Police",
+      "Public Security",
+      "Regional Police"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "إدارة التحقيقات الجنائية",
+      "قسم الجرائم الإلكترونية"
+    ],
+    "translations": [
+      "Criminal Investigation Department",
+      "Cybercrime Department"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "مركز شرطة العليا",
+      "مركز شرطة السليمانية",
+      "مركز شرطة الملز"
+    ],
+    "translations": [
+      "Al Olaya Police Station",
+      "Al Sulaimaniyah Police Station",
+      "Al Malaz Police Station"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "مركز شرطة النسيم",
+      "مركز شرطة الروضة",
+      "مركز شرطة المربع"
+    ],
+    "translations": [
+      "Al Naseem Police Station",
+      "Al Rawdah Police Station",
+      "Al Murabba Police Station"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "جامعة الملك سعود",
+      "جامعة الملك عبدالعزيز",
+      "جامعة الإمام محمد بن سعود"
+    ],
+    "translations": [
+      "King Saud University",
+      "King Abdulaziz University",
+      "Imam Muhammad ibn Saud University"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "وزارة التعليم",
+      "المؤسسة العامة للتدريب التقني والمهني"
+    ],
+    "translations": [
+      "Ministry of Education",
+      "Technical and Vocational Training Corporation (TVTC)"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "قسم القروض الشخصية",
+      "إدارة التمويل"
+    ],
+    "translations": [
+      "Personal Loans Department",
+      "Finance Department"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "جوي تي في",
+      "أوربت شوتايم"
+    ],
+    "translations": [
+      "Jawwy TV",
+      "Orbit Showtime"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "باقة التلفزيون",
+      "خدمة البث"
+    ],
+    "translations": [
+      "TV Package",
+      "Streaming Service"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "إس تي سي",
+      "موبايلي",
+      "زين"
+    ],
+    "translations": [
+      "STC",
+      "Mobily",
+      "Zain"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "نون",
+      "أمازون",
+      "جرير"
+    ],
+    "translations": [
+      "Noon",
+      "Amazon",
+      "Jarir"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "آيفون",
+      "جالاكسي",
+      "هواوي"
+    ],
+    "translations": [
+      "iPhone",
+      "Galaxy",
+      "Huawei"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "تمر",
+      "برتقال",
+      "تفاح"
+    ],
+    "translations": [
+      "dates",
+      "oranges",
+      "apples"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "وزارة البلديات والإسكان",
+      "صندوق التنمية العقارية"
+    ],
+    "translations": [
+      "Ministry of Municipalities and Housing",
+      "Real Estate Development Fund"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "إدارة المرور",
+      "إدارة ترخيص المركبات"
+    ],
+    "translations": [
+      "Traffic Department",
+      "Vehicle Licensing Department"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "منطقة الخليج",
+      "الشرق الأوسط",
+      "دول مجلس التعاون"
+    ],
+    "translations": [
+      "Gulf Region",
+      "Middle East",
+      "GCC Countries"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "مركز الشرطة الشامل",
+      "مركز شرطة المطار",
+      "مركز أمن الطرق"
+    ],
+    "translations": [
+      "Comprehensive Police Station",
+      "Airport Police Station",
+      "Highway Security Center"
+    ]
   }
 }

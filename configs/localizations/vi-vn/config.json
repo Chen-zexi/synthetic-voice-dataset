@@ -1,28 +1,28 @@
 {
   "locale": {
-    "id": "XX-YY",
-    "language_code": "XX",
-    "country_code": "YY",
-    "language_name": "Language Name",
-    "region_name": "Country/Region Name",
-    "currency": "CUR",
-    "currency_symbol": "$"
+    "id": "vi-vn",
+    "language_code": "vi",
+    "country_code": "VN",
+    "language_name": "Vietnamese",
+    "region_name": "Vietnam",
+    "currency": "VND",
+    "currency_symbol": "₫"
   },
   "translation": {
     "from_code": "zh-CN",
-    "to_code": "XX",
+    "to_code": "vi",
     "intermediate_code": "en"
   },
   "voices": {
     "ids": [
-      "elevenlabs_voice_id_1",
-      "elevenlabs_voice_id_2",
-      "elevenlabs_voice_id_3"
+      "Hb0YiPp0P9SoN0oWJXU8",
+      "9BWtsMINqrJLrRacOk9x",
+      "ItGqFGSjmwSm8YwJimqH"
     ],
     "names": [
-      "Voice Name 1 (Gender/Age)",
-      "Voice Name 2 (Gender/Age)",
-      "Voice Name 3 (Gender/Age)"
+      "Vietnamese Male (Middle-aged)",
+      "Vietnamese Female (Young)",
+      "Vietnamese Male (Elderly)"
     ]
   },
   "conversation": {
@@ -73,11 +73,15 @@
     "legit_formatted": "legit_conversation_formatted.json"
   },
   "cultural_notes": {
-    "currency": "Local currency code and symbol",
-    "phone_greeting": "Common phone greeting phrases",
-    "formality_level": "Formal/Informal/Mixed",
+    "currency": "VND (₫) - Vietnamese Dong",
+    "phone_greeting": "A lô (Hello - phone greeting)",
+    "formality_level": "Formal/Hierarchical - Vietnamese uses different pronouns based on age, gender and social status",
     "common_scam_themes": [
-      "List region-specific common scam themes"
+      "Bank account security threats",
+      "Fake lottery winnings",
+      "Government subsidy scams",
+      "Investment scams with high returns",
+      "Impersonating police or prosecutors"
     ]
   }
 }

@@ -1,28 +1,30 @@
 {
   "locale": {
-    "id": "XX-YY",
-    "language_code": "XX",
-    "country_code": "YY",
-    "language_name": "Language Name",
-    "region_name": "Country/Region Name",
-    "currency": "CUR",
-    "currency_symbol": "$"
+    "id": "en-sg",
+    "language_code": "en",
+    "country_code": "SG",
+    "language_name": "English",
+    "region_name": "Singapore",
+    "currency": "SGD",
+    "currency_symbol": "S$"
   },
   "translation": {
     "from_code": "zh-CN",
-    "to_code": "XX",
+    "to_code": "en",
     "intermediate_code": "en"
   },
   "voices": {
     "ids": [
-      "elevenlabs_voice_id_1",
-      "elevenlabs_voice_id_2",
-      "elevenlabs_voice_id_3"
+      "JBFqnCBsd6RMkjVDRZzb",
+      "MF3mGyEYCl7XYWbV9V6O",
+      "pNInz6obpgDQGcFmaJgB",
+      "yoZ06aMxZJJ28mfd3POQ"
     ],
     "names": [
-      "Voice Name 1 (Gender/Age)",
-      "Voice Name 2 (Gender/Age)",
-      "Voice Name 3 (Gender/Age)"
+      "George (Male/Young)",
+      "Emily (Female/Middle-aged)",
+      "Adam (Male/Elderly)",
+      "Sam (Male/Middle-aged)"
     ]
   },
   "conversation": {
@@ -73,11 +75,18 @@
     "legit_formatted": "legit_conversation_formatted.json"
   },
   "cultural_notes": {
-    "currency": "Local currency code and symbol",
-    "phone_greeting": "Common phone greeting phrases",
-    "formality_level": "Formal/Informal/Mixed",
+    "currency": "SGD (S$)",
+    "phone_greeting": "Hello, good morning/afternoon/evening",
+    "formality_level": "Mixed (more formal for government/business, informal for personal)",
     "common_scam_themes": [
-      "List region-specific common scam themes"
+      "CPF (Central Provident Fund) refunds or issues",
+      "HDB housing grants or subsidies",
+      "ICA (Immigration & Checkpoints Authority) visa issues",
+      "Singtel/StarHub/M1 billing problems",
+      "DBS/OCBC/UOB account security",
+      "Online shopping scams (Carousell, Lazada, Shopee)",
+      "Job scams promising high pay",
+      "Investment scams with guaranteed returns"
     ]
   }
 }

@@ -1,28 +1,30 @@
 {
   "locale": {
-    "id": "XX-YY",
-    "language_code": "XX",
-    "country_code": "YY",
-    "language_name": "Language Name",
-    "region_name": "Country/Region Name",
-    "currency": "CUR",
-    "currency_symbol": "$"
+    "id": "zh-sg",
+    "language_code": "zh",
+    "country_code": "SG",
+    "language_name": "Chinese (Simplified)",
+    "region_name": "Singapore",
+    "currency": "SGD",
+    "currency_symbol": "S$"
   },
   "translation": {
     "from_code": "zh-CN",
-    "to_code": "XX",
-    "intermediate_code": "en"
+    "to_code": "zh-CN",
+    "intermediate_code": "zh"
   },
   "voices": {
     "ids": [
-      "elevenlabs_voice_id_1",
-      "elevenlabs_voice_id_2",
-      "elevenlabs_voice_id_3"
+      "IKne3meq5aSn9XLyUdCD",
+      "XB0fDUnXU5powFXDhCwa",
+      "GBv7mTt0atIp3Br8iCZE",
+      "SOYHLrjzK2X1ezoPC6cr"
     ],
     "names": [
-      "Voice Name 1 (Gender/Age)",
-      "Voice Name 2 (Gender/Age)",
-      "Voice Name 3 (Gender/Age)"
+      "Charlie (Male/Young)",
+      "Charlotte (Female/Middle-aged)", 
+      "Thomas (Male/Elderly)",
+      "Harry (Male/Middle-aged)"
     ]
   },
   "conversation": {
@@ -73,11 +75,18 @@
     "legit_formatted": "legit_conversation_formatted.json"
   },
   "cultural_notes": {
-    "currency": "Local currency code and symbol",
-    "phone_greeting": "Common phone greeting phrases",
-    "formality_level": "Formal/Informal/Mixed",
+    "currency": "SGD (S$) / 新币",
+    "phone_greeting": "喂，您好 / 你好，请问哪位？",
+    "formality_level": "Mixed (more formal for government/business)",
     "common_scam_themes": [
-      "List region-specific common scam themes"
+      "公积金 (CPF) 退款或问题",
+      "建屋局 (HDB) 补贴申请",
+      "移民局 (ICA) 签证问题",
+      "新电信/星和/第一通账单问题",
+      "星展/华侨/大华银行账户安全",
+      "网购诈骗 (Carousell, Lazada, Shopee)",
+      "高薪工作骗局",
+      "保证回报的投资骗局"
     ]
   }
 }

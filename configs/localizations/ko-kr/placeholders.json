@@ -1,0 +1,767 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "김민수",
+      "이지은",
+      "박준호",
+      "최서연",
+      "정하윤",
+      "강도윤",
+      "윤은우",
+      "장민지"
+    ],
+    "translations": [
+      "Kim Minsoo",
+      "Lee Jieun",
+      "Park Junho",
+      "Choi Seoyeon",
+      "Jung Hayoon",
+      "Kang Doyoon",
+      "Yoon Eunwoo",
+      "Jang Minji"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "서울",
+      "부산",
+      "인천",
+      "대구",
+      "대전",
+      "광주",
+      "수원",
+      "울산"
+    ],
+    "translations": [
+      "Seoul",
+      "Busan",
+      "Incheon",
+      "Daegu",
+      "Daejeon",
+      "Gwangju",
+      "Suwon",
+      "Ulsan"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "substitutions": [
+      "30만원",
+      "50만원",
+      "100만원",
+      "200만원"
+    ],
+    "translations": [
+      "300,000 KRW",
+      "500,000 KRW",
+      "1,000,000 KRW",
+      "2,000,000 KRW"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "substitutions": [
+      "메가스터디",
+      "대성학원",
+      "청솔학원",
+      "이투스"
+    ],
+    "translations": [
+      "Megastudy",
+      "Daesung Academy",
+      "Chungsol Academy",
+      "Etoos"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "비자",
+      "마스터카드",
+      "아메리칸 익스프레스",
+      "유니온페이"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "UnionPay"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "substitutions": [
+      "3만원",
+      "5만원",
+      "10만원"
+    ],
+    "translations": [
+      "30,000 KRW",
+      "50,000 KRW",
+      "100,000 KRW"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "국민은행",
+      "신한은행",
+      "하나은행",
+      "우리은행",
+      "농협은행"
+    ],
+    "translations": [
+      "KB Kookmin Bank",
+      "Shinhan Bank",
+      "Hana Bank",
+      "Woori Bank",
+      "NH Bank"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "인천국제공항",
+      "김포국제공항",
+      "김해국제공항",
+      "제주국제공항"
+    ],
+    "translations": [
+      "Incheon International Airport",
+      "Gimpo International Airport",
+      "Gimhae International Airport",
+      "Jeju International Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "국민카드",
+      "신한카드",
+      "하나카드",
+      "우리카드",
+      "삼성카드"
+    ],
+    "translations": [
+      "KB Card",
+      "Shinhan Card",
+      "Hana Card",
+      "Woori Card",
+      "Samsung Card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "substitutions": [
+      "국토교통부",
+      "한국토지주택공사",
+      "서울주택도시공사"
+    ],
+    "translations": [
+      "Ministry of Land, Infrastructure and Transport",
+      "Korea Land and Housing Corporation",
+      "Seoul Housing & Communities Corporation"
+    ]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "주택구입자금 지원",
+      "신혼부부 특별공급",
+      "청약통장 혜택",
+      "생애최초 주택구입 지원"
+    ],
+    "translations": [
+      "Home Purchase Fund Support",
+      "Newlywed Special Supply",
+      "Housing Subscription Benefits",
+      "First-time Homebuyer Support"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "substitutions": [
+      "과학기술정보통신부",
+      "방송통신위원회"
+    ],
+    "translations": [
+      "Ministry of Science and ICT",
+      "Korea Communications Commission"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "CJ대한통운",
+      "한진택배",
+      "롯데택배",
+      "우체국택배"
+    ],
+    "translations": [
+      "CJ Logistics",
+      "Hanjin Express",
+      "Lotte Express",
+      "Korea Post"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "카카오톡",
+      "네이버",
+      "인스타그램",
+      "유튜브"
+    ],
+    "translations": [
+      "KakaoTalk",
+      "Naver",
+      "Instagram",
+      "YouTube"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "substitutions": [
+      "보건복지부",
+      "국민건강보험공단",
+      "질병관리청"
+    ],
+    "translations": [
+      "Ministry of Health and Welfare",
+      "National Health Insurance Service",
+      "Korea Disease Control and Prevention Agency"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "쿠팡",
+      "네이버쇼핑",
+      "이마트",
+      "롯데마트",
+      "홈플러스"
+    ],
+    "translations": [
+      "Coupang",
+      "Naver Shopping",
+      "E-mart",
+      "Lotte Mart",
+      "Homeplus"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "substitutions": [
+      "5천원",
+      "1만원",
+      "2만원"
+    ],
+    "translations": [
+      "5,000 KRW",
+      "10,000 KRW",
+      "20,000 KRW"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "미래에셋증권",
+      "한국투자증권",
+      "삼성증권",
+      "NH투자증권",
+      "키움증권"
+    ],
+    "translations": [
+      "Mirae Asset Securities",
+      "Korea Investment Securities",
+      "Samsung Securities",
+      "NH Investment Securities",
+      "Kiwoom Securities"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "substitutions": [
+      "삼성물산",
+      "현대건설",
+      "대우건설",
+      "포스코건설"
+    ],
+    "translations": [
+      "Samsung C&T",
+      "Hyundai E&C",
+      "Daewoo E&C",
+      "POSCO E&C"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "아이유",
+      "임영웅",
+      "블랙핑크",
+      "방탄소년단",
+      "뉴진스",
+      "세븐틴"
+    ],
+    "translations": [
+      "IU",
+      "Lim Young-woong",
+      "BLACKPINK",
+      "BTS",
+      "NewJeans",
+      "SEVENTEEN"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "substitutions": [
+      "부장님",
+      "사장님",
+      "선생님",
+      "교수님"
+    ],
+    "translations": [
+      "Manager/Director",
+      "President/Boss",
+      "Teacher",
+      "Professor"
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "KB국민은행",
+      "신한은행",
+      "하나은행",
+      "우리은행",
+      "NH농협은행",
+      "IBK기업은행"
+    ],
+    "translations": [
+      "KB Kookmin Bank",
+      "Shinhan Bank",
+      "Hana Bank",
+      "Woori Bank",
+      "NH Bank",
+      "IBK Industrial Bank"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "substitutions": [
+      "SK텔레콤",
+      "KT",
+      "LG유플러스"
+    ],
+    "translations": [
+      "SK Telecom",
+      "KT",
+      "LG U+"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "과학기술정보통신부",
+      "방송통신위원회"
+    ],
+    "translations": [
+      "Ministry of Science and ICT",
+      "Korea Communications Commission"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "이니스프리",
+      "에뛰드하우스",
+      "미샤",
+      "더페이스샵",
+      "설화수"
+    ],
+    "translations": [
+      "Innisfree",
+      "Etude House",
+      "Missha",
+      "The Face Shop",
+      "Sulwhasoo"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "substitutions": [
+      "한국소비자원",
+      "공정거래위원회",
+      "소비자보호원"
+    ],
+    "translations": [
+      "Korea Consumer Agency",
+      "Fair Trade Commission",
+      "Consumer Protection Agency"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "카카오페이",
+      "네이버페이",
+      "토스",
+      "페이코"
+    ],
+    "translations": [
+      "Kakao Pay",
+      "Naver Pay",
+      "Toss",
+      "Payco"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "신한카드 포인트",
+      "삼성카드 리워드",
+      "KB국민카드 포인트리",
+      "하나카드 하나머니"
+    ],
+    "translations": [
+      "Shinhan Card Points",
+      "Samsung Card Rewards",
+      "KB Card Point Ree",
+      "Hana Card Hana Money"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "substitutions": [
+      "도로교통공단",
+      "한국교통안전공단"
+    ],
+    "translations": [
+      "Korea Road Traffic Authority",
+      "Korea Transportation Safety Authority"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "현대",
+      "기아",
+      "제네시스",
+      "쌍용",
+      "쉐보레"
+    ],
+    "translations": [
+      "Hyundai",
+      "Kia",
+      "Genesis",
+      "SsangYong",
+      "Chevrolet"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "서울우유",
+      "매일유업",
+      "남양유업",
+      "빙그레"
+    ],
+    "translations": [
+      "Seoul Milk",
+      "Maeil Dairy",
+      "Namyang Dairy",
+      "Binggrae"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "substitutions": [
+      "한국장학재단",
+      "교육부 학자금지원과"
+    ],
+    "translations": [
+      "Korea Student Aid Foundation",
+      "Ministry of Education Student Loan Division"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "KT 인터넷",
+      "SK브로드밴드",
+      "LG유플러스 인터넷"
+    ],
+    "translations": [
+      "KT Internet",
+      "SK Broadband",
+      "LG U+ Internet"
+    ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "서울특별시",
+      "경기도",
+      "인천광역시",
+      "부산광역시",
+      "경상남도",
+      "전라남도",
+      "충청북도"
+    ],
+    "translations": [
+      "Seoul",
+      "Gyeonggi Province",
+      "Incheon",
+      "Busan",
+      "South Gyeongsang Province",
+      "South Jeolla Province",
+      "North Chungcheong Province"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "수도권",
+      "영남지방",
+      "호남지방",
+      "충청지방"
+    ],
+    "translations": [
+      "Seoul Metropolitan Area",
+      "Yeongnam Region",
+      "Honam Region",
+      "Chungcheong Region"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "대한민국",
+      "한국"
+    ],
+    "translations": [
+      "Republic of Korea",
+      "South Korea"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "substitutions": [
+      "경찰청",
+      "서울경찰청",
+      "경찰"
+    ],
+    "translations": [
+      "National Police Agency",
+      "Seoul Metropolitan Police",
+      "Police"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "형사과",
+      "사이버수사대",
+      "지능범죄수사대"
+    ],
+    "translations": [
+      "Criminal Investigation Division",
+      "Cyber Investigation Unit",
+      "Intelligent Crime Investigation Unit"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "강남경찰서",
+      "종로경찰서",
+      "서초경찰서"
+    ],
+    "translations": [
+      "Gangnam Police Station",
+      "Jongno Police Station",
+      "Seocho Police Station"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "영등포경찰서",
+      "마포경찰서",
+      "송파경찰서"
+    ],
+    "translations": [
+      "Yeongdeungpo Police Station",
+      "Mapo Police Station",
+      "Songpa Police Station"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "서울대학교",
+      "연세대학교",
+      "고려대학교",
+      "카이스트"
+    ],
+    "translations": [
+      "Seoul National University",
+      "Yonsei University",
+      "Korea University",
+      "KAIST"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "교육부",
+      "서울시교육청"
+    ],
+    "translations": [
+      "Ministry of Education",
+      "Seoul Metropolitan Office of Education"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "개인금융부",
+      "대출상담센터"
+    ],
+    "translations": [
+      "Personal Finance Department",
+      "Loan Consultation Center"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "KT 올레TV",
+      "SK브로드밴드 BTV",
+      "LG유플러스 TV"
+    ],
+    "translations": [
+      "KT Olleh TV",
+      "SK Broadband BTV",
+      "LG U+ TV"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "IPTV 서비스",
+      "케이블TV"
+    ],
+    "translations": [
+      "IPTV Service",
+      "Cable TV"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "KT",
+      "SK브로드밴드",
+      "LG유플러스"
+    ],
+    "translations": [
+      "KT",
+      "SK Broadband",
+      "LG U+"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "쿠팡",
+      "11번가",
+      "G마켓",
+      "네이버쇼핑"
+    ],
+    "translations": [
+      "Coupang",
+      "11st",
+      "Gmarket",
+      "Naver Shopping"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "갤럭시",
+      "아이폰",
+      "LG그램"
+    ],
+    "translations": [
+      "Galaxy",
+      "iPhone",
+      "LG Gram"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "사과",
+      "배",
+      "감",
+      "귤"
+    ],
+    "translations": [
+      "apple",
+      "pear",
+      "persimmon",
+      "tangerine"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "국토교통부",
+      "LH한국토지주택공사"
+    ],
+    "translations": [
+      "Ministry of Land, Infrastructure and Transport",
+      "Korea Land and Housing Corporation"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "차량등록사업소",
+      "운전면허시험장"
+    ],
+    "translations": [
+      "Vehicle Registration Office",
+      "Driver's License Examination Office"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "수도권",
+      "영남지방",
+      "호남지방"
+    ],
+    "translations": [
+      "Seoul Metropolitan Area",
+      "Yeongnam Region",
+      "Honam Region"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "공항경찰대",
+      "지하철경찰대",
+      "고속도로순찰대"
+    ],
+    "translations": [
+      "Airport Police Unit",
+      "Subway Police Unit",
+      "Highway Patrol Unit"
+    ]
+  }
+}

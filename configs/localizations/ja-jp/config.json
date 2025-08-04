@@ -1,28 +1,28 @@
 {
   "locale": {
-    "id": "XX-YY",
-    "language_code": "XX",
-    "country_code": "YY",
-    "language_name": "Language Name",
-    "region_name": "Country/Region Name",
-    "currency": "CUR",
-    "currency_symbol": "$"
+    "id": "ja-jp",
+    "language_code": "ja",
+    "country_code": "JP",
+    "language_name": "Japanese",
+    "region_name": "Japan",
+    "currency": "JPY",
+    "currency_symbol": "¥"
   },
   "translation": {
     "from_code": "zh-CN",
-    "to_code": "XX",
+    "to_code": "ja",
     "intermediate_code": "en"
   },
   "voices": {
     "ids": [
-      "elevenlabs_voice_id_1",
-      "elevenlabs_voice_id_2",
-      "elevenlabs_voice_id_3"
+      "XrExE9yKIg1WjnnlVkGX",
+      "pFZP5JQG7iQjIQuC4Mw2",
+      "ODq5zmih8GrVes37Dizd"
     ],
     "names": [
-      "Voice Name 1 (Gender/Age)",
-      "Voice Name 2 (Gender/Age)",
-      "Voice Name 3 (Gender/Age)"
+      "Japanese Male (Middle-aged)",
+      "Japanese Female (Young)",
+      "Japanese Male (Elderly)"
     ]
   },
   "conversation": {
@@ -73,11 +73,15 @@
     "legit_formatted": "legit_conversation_formatted.json"
   },
   "cultural_notes": {
-    "currency": "Local currency code and symbol",
-    "phone_greeting": "Common phone greeting phrases",
-    "formality_level": "Formal/Informal/Mixed",
+    "currency": "JPY (¥) - Japanese Yen",
+    "phone_greeting": "もしもし (moshi moshi) - Hello (phone greeting)",
+    "formality_level": "Highly Formal - Japanese uses complex honorific system (keigo)",
     "common_scam_themes": [
-      "List region-specific common scam themes"
+      "Ore ore sagi (オレオレ詐欺) - It's me scams targeting elderly",
+      "Furikome sagi (振り込め詐欺) - Bank transfer scams",
+      "Kanpu-kin sagi (還付金詐欺) - Tax refund scams",
+      "Kakuu seikyu sagi (架空請求詐欺) - Fictitious billing scams",
+      "Yushi hosho-kin sagi (融資保証金詐欺) - Loan deposit scams"
     ]
   }
 }

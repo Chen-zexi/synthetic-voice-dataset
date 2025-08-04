@@ -1,28 +1,28 @@
 {
   "locale": {
-    "id": "XX-YY",
-    "language_code": "XX",
-    "country_code": "YY",
-    "language_name": "Language Name",
-    "region_name": "Country/Region Name",
-    "currency": "CUR",
-    "currency_symbol": "$"
+    "id": "en-ph",
+    "language_code": "en",
+    "country_code": "PH",
+    "language_name": "English (Philippine)",
+    "region_name": "Philippines",
+    "currency": "PHP",
+    "currency_symbol": "₱"
   },
   "translation": {
     "from_code": "zh-CN",
-    "to_code": "XX",
+    "to_code": "en",
     "intermediate_code": "en"
   },
   "voices": {
     "ids": [
-      "elevenlabs_voice_id_1",
-      "elevenlabs_voice_id_2",
-      "elevenlabs_voice_id_3"
+      "ThT5KcBeYPX3keUQqHPh",
+      "FGY2WhTYpPnrIDTdsKH5",
+      "xoSfDZoxvQUPoXgfAPTJ"
     ],
     "names": [
-      "Voice Name 1 (Gender/Age)",
-      "Voice Name 2 (Gender/Age)",
-      "Voice Name 3 (Gender/Age)"
+      "Filipino Male (Middle-aged)",
+      "Filipino Female (Young)",
+      "Filipino Male (Young)"
     ]
   },
   "conversation": {
@@ -73,11 +73,15 @@
     "legit_formatted": "legit_conversation_formatted.json"
   },
   "cultural_notes": {
-    "currency": "Local currency code and symbol",
-    "phone_greeting": "Common phone greeting phrases",
-    "formality_level": "Formal/Informal/Mixed",
+    "currency": "PHP (₱) - Philippine Peso",
+    "phone_greeting": "Hello po / Hi (formal) / Kumusta (How are you)",
+    "formality_level": "Mixed - Uses 'po' and 'opo' for respect, English mixed with Filipino",
     "common_scam_themes": [
-      "List region-specific common scam themes"
+      "Love scams targeting overseas Filipino workers",
+      "Investment scams with high returns",
+      "Government agency impersonation (SSS, BIR)",
+      "Online shopping scams",
+      "Text scams offering prizes or loans"
     ]
   }
 }

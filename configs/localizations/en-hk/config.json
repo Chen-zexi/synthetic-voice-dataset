@@ -1,0 +1,91 @@
+{
+  "locale": {
+    "id": "en-hk",
+    "language_code": "en",
+    "country_code": "HK",
+    "language_name": "English",
+    "region_name": "Hong Kong",
+    "currency": "HKD",
+    "currency_symbol": "HK$"
+  },
+  "translation": {
+    "from_code": "zh-CN",
+    "to_code": "en",
+    "intermediate_code": "en"
+  },
+  "voices": {
+    "ids": [
+      "JBFqnCBsd6RMkjVDRZzb",
+      "MF3mGyEYCl7XYWbV9V6O",
+      "pNInz6obpgDQGcFmaJgB",
+      "yoZ06aMxZJJ28mfd3POQ"
+    ],
+    "names": [
+      "George (Male/Young)",
+      "Elli (Female/Middle-aged)",
+      "Adam (Male/Middle-aged)",
+      "Sam (Male/Elderly)"
+    ]
+  },
+  "conversation": {
+    "legit_categories": [
+      "family_checkin",
+      "friend_chat",
+      "relationship_talk",
+      "holiday_greeting",
+      "emergency_help_request",
+      "doctor_appointment_confirmation",
+      "clinic_test_results",
+      "delivery_confirmation",
+      "utility_service_followup",
+      "repair_scheduling",
+      "bank_verification_call",
+      "visa_status_update",
+      "tax_inquiry",
+      "insurance_claim_followup",
+      "civil_services_scheduling",
+      "job_interview_scheduling",
+      "coworker_sync",
+      "project_status_update",
+      "freelance_client_call",
+      "work_meeting_reminder",
+      "school_event_reminder",
+      "tutoring_session",
+      "academic_advising",
+      "exam_results_notification",
+      "class_schedule_change",
+      "restaurant_reservation",
+      "hairdresser_booking",
+      "hotel_booking_confirmation",
+      "volunteering_coordination",
+      "language_exchange_call",
+      "customer_support_callback",
+      "subscription_renewal_notice",
+      "product_feedback_survey",
+      "account_security_verification",
+      "appointment_cancellation_notice"
+    ]
+  },
+  "output": {
+    "scam_conversation": "scam_conversation.json",
+    "legit_conversation": "legit_conversation.json",
+    "scam_audio_dir": "scam",
+    "legit_audio_dir": "legit",
+    "scam_formatted": "scam_conversation_formatted.json",
+    "legit_formatted": "legit_conversation_formatted.json"
+  },
+  "cultural_notes": {
+    "phone_greeting": "Hello / Hi, who's calling?",
+    "formality_level": "Mixed (Professional contexts formal, casual otherwise)",
+    "common_scam_themes": [
+      "Fake government officials (Hong Kong or mainland law enforcement)",
+      "AI voice cloning (impersonating family or bosses)",
+      "Deepfake technology (video conference scams)",
+      "Fake customer service calls",
+      "Investment scams (guaranteed returns)",
+      "Job scams (high-paying job traps)",
+      "Scams targeting mainland students",
+      "Cryptocurrency investment scams"
+    ]
+  }
+}

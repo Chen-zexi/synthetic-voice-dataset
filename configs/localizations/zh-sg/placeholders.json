@@ -1,0 +1,1070 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "description": "Common Chinese names in Singapore",
+    "substitutions": [
+      "陈伟明",
+      "李美玲",
+      "林俊杰",
+      "黄秀芬",
+      "张志勇",
+      "吴淑娴",
+      "王建国",
+      "郭晓华"
+    ],
+    "translations": [
+      "Chen Weiming",
+      "Li Meiling",
+      "Lin Junjie",
+      "Huang Xiufen",
+      "Zhang Zhiyong",
+      "Wu Shuxian",
+      "Wang Jianguo",
+      "Guo Xiaohua"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "description": "Major areas in Singapore",
+    "substitutions": [
+      "裕廊西",
+      "兀兰",
+      "淡滨尼",
+      "榜鹅",
+      "宏茂桥",
+      "勿洛",
+      "义顺",
+      "金文泰"
+    ],
+    "translations": [
+      "Jurong West",
+      "Woodlands",
+      "Tampines",
+      "Punggol",
+      "Ang Mo Kio",
+      "Bedok",
+      "Yishun",
+      "Clementi"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "description": "Medium monetary amounts in SGD",
+    "substitutions": [
+      "500新元",
+      "800新元",
+      "1200新元",
+      "300新元",
+      "600新元",
+      "1000新元"
+    ],
+    "translations": [
+      "S$500",
+      "S$800",
+      "S$1,200",
+      "S$300",
+      "S$600",
+      "S$1,000"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "description": "Educational tutoring centers",
+    "substitutions": [
+      "学而思教育",
+      "脑力开发中心",
+      "公文教育",
+      "数学猴子",
+      "明智补习中心",
+      "Eye Level学习中心"
+    ],
+    "translations": [
+      "The Learning Lab",
+      "MindChamps",
+      "Kumon",
+      "Math Monkey",
+      "Mavis Tutorial Centre",
+      "Eye Level"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "description": "Credit card companies",
+    "substitutions": [
+      "威士卡",
+      "万事达卡",
+      "美国运通",
+      "银联卡",
+      "星展银行卡",
+      "华侨银行卡"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "UnionPay",
+      "DBS Card",
+      "OCBC Card"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "description": "Small monetary amounts in SGD",
+    "substitutions": [
+      "50新元",
+      "80新元",
+      "30新元",
+      "100新元",
+      "75新元",
+      "60新元"
+    ],
+    "translations": [
+      "S$50",
+      "S$80",
+      "S$30",
+      "S$100",
+      "S$75",
+      "S$60"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "description": "Banks in Singapore",
+    "substitutions": [
+      "星展银行",
+      "华侨银行",
+      "大华银行",
+      "渣打银行",
+      "汇丰银行",
+      "花旗银行"
+    ],
+    "translations": [
+      "DBS Bank",
+      "OCBC Bank",
+      "UOB",
+      "Standard Chartered",
+      "HSBC",
+      "Citibank"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "description": "Airports in Singapore",
+    "substitutions": [
+      "樟宜机场",
+      "樟宜第一航站楼",
+      "樟宜第二航站楼",
+      "樟宜第三航站楼",
+      "樟宜第四航站楼",
+      "实里达机场"
+    ],
+    "translations": [
+      "Changi Airport",
+      "Changi Terminal 1",
+      "Changi Terminal 2",
+      "Changi Terminal 3",
+      "Changi Terminal 4",
+      "Seletar Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "description": "Bank card names",
+    "substitutions": [
+      "星展PayLah!卡",
+      "华侨365卡",
+      "大华One卡",
+      "星展Multiplier卡",
+      "华侨FRANK卡",
+      "储蓄银行日常卡"
+    ],
+    "translations": [
+      "DBS PayLah! card",
+      "OCBC 365 card",
+      "UOB One card",
+      "DBS Multiplier card",
+      "OCBC FRANK card",
+      "POSB Everyday card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "description": "Government housing agency",
+    "substitutions": [
+      "建屋发展局",
+      "建屋局",
+      "建屋局分行",
+      "建屋局大厦",
+      "市镇理事会",
+      "组屋管理处"
+    ],
+    "translations": [
+      "HDB",
+      "Housing Development Board",
+      "HDB Branch Office",
+      "HDB Hub",
+      "Town Council",
+      "HDB Management"
+    ]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "description": "Housing grants and schemes",
+    "substitutions": [
+      "公积金购屋津贴",
+      "预购组屋计划",
+      "额外公积金购屋津贴",
+      "近居购屋津贴",
+      "乐龄安居花红",
+      "家庭津贴"
+    ],
+    "translations": [
+      "CPF Housing Grant",
+      "BTO scheme",
+      "Enhanced CPF Housing Grant",
+      "Proximity Housing Grant",
+      "Silver Housing Bonus",
+      "Family Grant"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "description": "Telecommunications authority",
+    "substitutions": [
+      "资讯通信媒体发展局",
+      "资媒局",
+      "资讯通信发展管理局",
+      "电信管理局",
+      "媒体发展局",
+      "通讯管理局"
+    ],
+    "translations": [
+      "IMDA",
+      "Infocomm Media Development Authority",
+      "IDA",
+      "Telecom Authority",
+      "MDA",
+      "Communications Authority"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "description": "Courier services",
+    "substitutions": [
+      "新加坡邮政",
+      "忍者快递",
+      "敦豪快递",
+      "联邦快递",
+      "极兔快递",
+      "Qxpress快递"
+    ],
+    "translations": [
+      "SingPost",
+      "Ninja Van",
+      "DHL",
+      "FedEx",
+      "J&T Express",
+      "Qxpress"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "description": "Popular social media platforms",
+    "substitutions": [
+      "WhatsApp",
+      "脸书",
+      "Instagram",
+      "电报",
+      "微信",
+      "抖音"
+    ],
+    "translations": [
+      "WhatsApp",
+      "Facebook",
+      "Instagram",
+      "Telegram",
+      "WeChat",
+      "TikTok"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "description": "Government health agencies",
+    "substitutions": [
+      "卫生部",
+      "卫生部门",
+      "保健促进局",
+      "健康促进局",
+      "卫生科学局",
+      "新保集团"
+    ],
+    "translations": [
+      "MOH",
+      "Ministry of Health",
+      "HPB",
+      "Health Promotion Board",
+      "HSA",
+      "SingHealth"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "description": "Popular marketplaces",
+    "substitutions": [
+      "职总平价",
+      "巨人超市",
+      "冷藏公司",
+      "昇菘超市",
+      "来赞达",
+      "虾皮"
+    ],
+    "translations": [
+      "FairPrice",
+      "Giant",
+      "Cold Storage",
+      "Sheng Siong",
+      "Lazada",
+      "Shopee"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "description": "Very small amounts in SGD",
+    "substitutions": [
+      "10新元",
+      "20新元",
+      "15新元",
+      "5新元",
+      "8新元",
+      "12新元"
+    ],
+    "translations": [
+      "S$10",
+      "S$20",
+      "S$15",
+      "S$5",
+      "S$8",
+      "S$12"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "description": "Investment firms",
+    "substitutions": [
+      "星展唯高达",
+      "华侨证券",
+      "大华继显",
+      "辉立证券",
+      "老虎证券",
+      "盛宝金融"
+    ],
+    "translations": [
+      "DBS Vickers",
+      "OCBC Securities",
+      "UOB Kay Hian",
+      "Phillip Securities",
+      "Tiger Brokers",
+      "Saxo Markets"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "description": "Real estate companies",
+    "substitutions": [
+      "PropertyGuru",
+      "ERA产业",
+      "PropNex产业",
+      "合登集团",
+      "橙易产业",
+      "99.co"
+    ],
+    "translations": [
+      "PropertyGuru",
+      "ERA Realty",
+      "PropNex",
+      "Huttons Asia",
+      "OrangeTee & Tie",
+      "99.co"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "description": "Popular singers/artists",
+    "substitutions": [
+      "林俊杰",
+      "孙燕姿",
+      "李迪文",
+      "陈洁仪",
+      "蔡健雅",
+      "向洋"
+    ],
+    "translations": [
+      "JJ Lin",
+      "Stefanie Sun",
+      "Dick Lee",
+      "Kit Chan",
+      "Tanya Chua",
+      "Nathan Hartono"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "description": "Titles of respect",
+    "substitutions": [
+      "老板",
+      "先生",
+      "女士",
+      "经理",
+      "主任",
+      "医生"
+    ],
+    "translations": [
+      "Boss",
+      "Sir",
+      "Madam",
+      "Manager",
+      "Director",
+      "Doctor"
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "description": "Major banks",
+    "substitutions": [
+      "星展银行",
+      "储蓄银行",
+      "华侨银行",
+      "大华银行",
+      "渣打银行",
+      "马来亚银行"
+    ],
+    "translations": [
+      "DBS",
+      "POSB",
+      "OCBC",
+      "UOB",
+      "Standard Chartered",
+      "Maybank"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "description": "Mobile service providers",
+    "substitutions": [
+      "新电信",
+      "星和",
+      "第一通",
+      "TPG电信",
+      "MyRepublic",
+      "Circles.Life"
+    ],
+    "translations": [
+      "Singtel",
+      "StarHub",
+      "M1",
+      "TPG Telecom",
+      "MyRepublic",
+      "Circles.Life"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "description": "Same as telecom_regulator",
+    "substitutions": [
+      "资讯通信媒体发展局",
+      "资媒局",
+      "通信管理局",
+      "电信监管局",
+      "媒体发展管理局",
+      "资讯通信局"
+    ],
+    "translations": [
+      "IMDA",
+      "Infocomm Media Development Authority",
+      "Communications Authority",
+      "Telecom Regulatory Authority",
+      "Media Development Authority",
+      "IDA"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "description": "Popular cosmetic brands",
+    "substitutions": [
+      "丝芙兰",
+      "美体小铺",
+      "SK-II",
+      "兰芝",
+      "悦诗风吟",
+      "魅可"
+    ],
+    "translations": [
+      "Sephora",
+      "The Body Shop",
+      "SK-II",
+      "Laneige",
+      "Innisfree",
+      "MAC"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "description": "Consumer protection agencies",
+    "substitutions": [
+      "消费者协会",
+      "新加坡消费者协会",
+      "竞争与消费者委员会",
+      "消委会",
+      "小额索偿庭",
+      "消费者保护组"
+    ],
+    "translations": [
+      "CASE",
+      "Consumers Association of Singapore",
+      "Competition and Consumer Commission",
+      "CCCS",
+      "Small Claims Tribunal",
+      "Consumer Protection Unit"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "description": "Digital payment apps",
+    "substitutions": [
+      "PayNow",
+      "Grab支付",
+      "PayLah!",
+      "谷歌支付",
+      "苹果支付",
+      "Fave"
+    ],
+    "translations": [
+      "PayNow",
+      "GrabPay",
+      "PayLah!",
+      "Google Pay",
+      "Apple Pay",
+      "Fave"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "description": "Loyalty programs",
+    "substitutions": [
+      "星展积分",
+      "华侨元奖赏",
+      "大华奖赏",
+      "新航里程",
+      "Grab奖赏",
+      "Link积分"
+    ],
+    "translations": [
+      "DBS Points",
+      "OCBC$ Rewards",
+      "UOB Rewards",
+      "KrisFlyer Miles",
+      "Grab Rewards",
+      "LinkPoints"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "description": "Vehicle authority",
+    "substitutions": [
+      "陆路交通管理局",
+      "陆交局",
+      "交通警察",
+      "一站式汽车资讯",
+      "道路交通局",
+      "车辆注册处"
+    ],
+    "translations": [
+      "LTA",
+      "Land Transport Authority",
+      "Traffic Police",
+      "One Motoring",
+      "Road Transport Authority",
+      "Vehicle Registry"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "description": "Popular car brands",
+    "substitutions": [
+      "丰田",
+      "本田",
+      "马自达",
+      "奔驰",
+      "宝马",
+      "现代"
+    ],
+    "translations": [
+      "Toyota",
+      "Honda",
+      "Mazda",
+      "Mercedes-Benz",
+      "BMW",
+      "Hyundai"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "description": "Dairy brands/stores",
+    "substitutions": [
+      "明治",
+      "万里望",
+      "农场",
+      "美珍香",
+      "绿野",
+      "F&N"
+    ],
+    "translations": [
+      "Meiji",
+      "Marigold",
+      "Farmhouse",
+      "Magnolia",
+      "Greenfields",
+      "F&N"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "description": "Education loan organizations",
+    "substitutions": [
+      "教育部学费贷款",
+      "公积金教育计划",
+      "星展教育贷款",
+      "华侨Frank教育贷款",
+      "回教理事会教育基金",
+      "PSB学院"
+    ],
+    "translations": [
+      "MOE Tuition Fee Loan",
+      "CPF Education Scheme",
+      "DBS Education Loan",
+      "OCBC Frank Education Loan",
+      "Mendaki Education Fund",
+      "PSB Academy"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "description": "ISPs in Singapore",
+    "substitutions": [
+      "新电信光纤",
+      "星和宽带",
+      "第一通光纤",
+      "MyRepublic",
+      "ViewQwest",
+      "WhizComms"
+    ],
+    "translations": [
+      "Singtel Fibre",
+      "StarHub Broadband",
+      "M1 Fibre",
+      "MyRepublic",
+      "ViewQwest",
+      "WhizComms"
+    ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "description": "Singapore regions",
+    "substitutions": [
+      "中部地区",
+      "东部地区",
+      "北部地区",
+      "东北地区",
+      "西部地区",
+      "中央区"
+    ],
+    "translations": [
+      "Central Region",
+      "East Region",
+      "North Region",
+      "North-East Region",
+      "West Region",
+      "Central Area"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "description": "Broader regions",
+    "substitutions": [
+      "东南亚",
+      "亚细安",
+      "亚太地区",
+      "滨海湾地区",
+      "裕廊湖区",
+      "樟宜商业园"
+    ],
+    "translations": [
+      "Southeast Asia",
+      "ASEAN",
+      "Asia Pacific",
+      "Marina Bay area",
+      "Jurong Lake District",
+      "Changi Business Park"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "description": "Country variations",
+    "substitutions": [
+      "新加坡",
+      "新加坡共和国",
+      "狮城",
+      "星洲",
+      "花园城市",
+      "小红点"
+    ],
+    "translations": [
+      "Singapore",
+      "Republic of Singapore",
+      "Lion City",
+      "Sin Chew",
+      "Garden City",
+      "Red Dot"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "description": "Police force names",
+    "substitutions": [
+      "新加坡警察部队",
+      "警察部队",
+      "交通警察",
+      "邻里警察",
+      "警卫部队",
+      "刑事侦查局"
+    ],
+    "translations": [
+      "Singapore Police Force",
+      "SPF",
+      "Traffic Police",
+      "Neighbourhood Police",
+      "Police Coast Guard",
+      "CID"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "description": "Investigation units",
+    "substitutions": [
+      "刑事侦查局",
+      "商业事务局",
+      "贪污调查局",
+      "反贪局",
+      "经济罪案调查局",
+      "重案组"
+    ],
+    "translations": [
+      "Criminal Investigation Department",
+      "Commercial Affairs Department",
+      "Corrupt Practices Investigation Bureau",
+      "CPIB",
+      "CAD",
+      "Major Crime Division"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "description": "Police station names",
+    "substitutions": [
+      "宏茂桥警署",
+      "裕廊警署",
+      "东陵警署",
+      "勿洛警署",
+      "中央警署",
+      "金文泰警署"
+    ],
+    "translations": [
+      "Ang Mo Kio Police Division",
+      "Jurong Police Division",
+      "Tanglin Police Division",
+      "Bedok Police Division",
+      "Central Police Division",
+      "Clementi Police Division"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "description": "More police stations",
+    "substitutions": [
+      "马林百列邻里警岗",
+      "兀兰邻里警岗",
+      "淡滨尼邻里警岗",
+      "红山邻里警岗",
+      "榜鹅邻里警岗",
+      "义顺北邻里警岗"
+    ],
+    "translations": [
+      "Marine Parade NPC",
+      "Woodlands NPC",
+      "Tampines NPC",
+      "Bukit Merah West NPC",
+      "Punggol NPC",
+      "Yishun North NPC"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "description": "Universities and colleges",
+    "substitutions": [
+      "新加坡国立大学",
+      "南洋理工大学",
+      "新加坡管理大学",
+      "新跃社科大学",
+      "新加坡理工大学",
+      "新加坡理工学院"
+    ],
+    "translations": [
+      "NUS",
+      "NTU",
+      "SMU",
+      "SUSS",
+      "SIT",
+      "Singapore Polytechnic"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "description": "Education ministry",
+    "substitutions": [
+      "教育部",
+      "教育部门",
+      "新加坡考试局",
+      "考试与评鉴局",
+      "精深技能发展局",
+      "工艺教育学院"
+    ],
+    "translations": [
+      "MOE",
+      "Ministry of Education",
+      "SEAB",
+      "Singapore Examinations Board",
+      "SkillsFuture Singapore",
+      "ITE"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "description": "Loan departments",
+    "substitutions": [
+      "建屋局贷款部",
+      "公积金局",
+      "个人贷款部",
+      "中小企业贷款中心",
+      "学生贷款处",
+      "汽车贷款部"
+    ],
+    "translations": [
+      "HDB Loan Department",
+      "CPF Board",
+      "Personal Loan Department",
+      "SME Loan Centre",
+      "Student Loan Office",
+      "Car Loan Department"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "description": "TV service providers",
+    "substitutions": [
+      "新电信电视",
+      "星和电视",
+      "Toggle",
+      "meWATCH",
+      "奈飞新加坡",
+      "迪士尼+新加坡"
+    ],
+    "translations": [
+      "Singtel TV",
+      "StarHub TV",
+      "Toggle",
+      "meWATCH",
+      "Netflix Singapore",
+      "Disney+ Singapore"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "description": "TV packages",
+    "substitutions": [
+      "基本电视配套",
+      "体育配套",
+      "娱乐加强版",
+      "亚洲配套",
+      "儿童配套",
+      "精选配套"
+    ],
+    "translations": [
+      "Basic TV Package",
+      "Sports Package",
+      "Entertainment Plus",
+      "Asian Package",
+      "Kids Package",
+      "Premium Bundle"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "description": "ISP names",
+    "substitutions": [
+      "新电信",
+      "星和",
+      "第一通",
+      "MyRepublic",
+      "ViewQwest",
+      "超级网络"
+    ],
+    "translations": [
+      "Singtel",
+      "StarHub",
+      "M1",
+      "MyRepublic",
+      "ViewQwest",
+      "SuperInternet"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "description": "E-commerce platforms",
+    "substitutions": [
+      "来赞达",
+      "虾皮",
+      "Qoo10",
+      "亚马逊新加坡",
+      "旋转拍卖",
+      "RedMart"
+    ],
+    "translations": [
+      "Lazada",
+      "Shopee",
+      "Qoo10",
+      "Amazon Singapore",
+      "Carousell",
+      "RedMart"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "description": "Popular products",
+    "substitutions": [
+      "iPhone 15",
+      "三星Galaxy S24",
+      "iPad Pro",
+      "任天堂Switch",
+      "戴森吸尘器",
+      "索尼耳机"
+    ],
+    "translations": [
+      "iPhone 15",
+      "Samsung Galaxy S24",
+      "iPad Pro",
+      "Nintendo Switch",
+      "Dyson vacuum",
+      "Sony headphones"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "description": "Common fruits",
+    "substitutions": [
+      "榴莲",
+      "芒果",
+      "红毛丹",
+      "山竹",
+      "苹果",
+      "橙子"
+    ],
+    "translations": [
+      "durian",
+      "mango",
+      "rambutan",
+      "mangosteen",
+      "apple",
+      "orange"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "description": "Housing agency variant",
+    "substitutions": [
+      "建屋局",
+      "建屋发展局",
+      "建设局",
+      "建筑管理局",
+      "市区重建局",
+      "市建局"
+    ],
+    "translations": [
+      "HDB",
+      "Housing & Development Board",
+      "BCA",
+      "Building and Construction Authority",
+      "URA",
+      "Urban Redevelopment Authority"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "description": "Vehicle registration",
+    "substitutions": [
+      "陆交局车辆注册处",
+      "一站式汽车资讯网",
+      "陆路交通管理局",
+      "车辆检验中心",
+      "威康车检",
+      "STA检验"
+    ],
+    "translations": [
+      "LTA Vehicle Registry",
+      "One Motoring",
+      "Land Transport Authority",
+      "Vehicle Inspection Centre",
+      "VICOM",
+      "STA Inspection"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "description": "Region name (typo)",
+    "substitutions": [
+      "滨海湾",
+      "乌节路",
+      "中央商业区",
+      "裕廊",
+      "樟宜",
+      "圣淘沙"
+    ],
+    "translations": [
+      "Marina Bay",
+      "Orchard Road",
+      "CBD",
+      "Jurong",
+      "Changi",
+      "Sentosa"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "description": "Special stations",
+    "substitutions": [
+      "机场警署",
+      "警察总部",
+      "乌节邻里警岗",
+      "滨海湾邻里警岗",
+      "芽笼邻里警岗",
+      "小印度邻里警岗"
+    ],
+    "translations": [
+      "Airport Police Division",
+      "Police Cantonment Complex",
+      "Orchard NPC",
+      "Marina Bay NPC",
+      "Geylang NPC",
+      "Little India NPC"
+    ]
+  }
+}

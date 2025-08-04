@@ -1,28 +1,30 @@
 {
   "locale": {
-    "id": "XX-YY",
-    "language_code": "XX",
-    "country_code": "YY",
-    "language_name": "Language Name",
-    "region_name": "Country/Region Name",
-    "currency": "CUR",
-    "currency_symbol": "$"
+    "id": "zh-tw",
+    "language_code": "zh",
+    "country_code": "TW",
+    "language_name": "Chinese (Traditional)",
+    "region_name": "Taiwan",
+    "currency": "TWD",
+    "currency_symbol": "NT$"
   },
   "translation": {
     "from_code": "zh-CN",
-    "to_code": "XX",
-    "intermediate_code": "en"
+    "to_code": "zh-TW",
+    "intermediate_code": "zh"
   },
   "voices": {
     "ids": [
-      "elevenlabs_voice_id_1",
-      "elevenlabs_voice_id_2",
-      "elevenlabs_voice_id_3"
+      "IKne3meq5aSn9XLyUdCD",
+      "XB0fDUnXU5powFXDhCwa",
+      "onwK4e9ZLuTAKqWW03F9",
+      "SOYHLrjzK2X1ezoPC6cr"
     ],
     "names": [
-      "Voice Name 1 (Gender/Age)",
-      "Voice Name 2 (Gender/Age)",
-      "Voice Name 3 (Gender/Age)"
+      "Charlie (Male/Young)",
+      "Charlotte (Female/Middle-aged)",
+      "Daniel (Male/Elderly)",
+      "Harry (Male/Middle-aged)"
     ]
   },
   "conversation": {
@@ -73,11 +75,18 @@
     "legit_formatted": "legit_conversation_formatted.json"
   },
   "cultural_notes": {
-    "currency": "Local currency code and symbol",
-    "phone_greeting": "Common phone greeting phrases",
-    "formality_level": "Formal/Informal/Mixed",
+    "currency": "TWD (NT$) / 新臺幣",
+    "phone_greeting": "喂，您好 / 喂，請問找哪位？",
+    "formality_level": "Mixed (formal for business/government)",
     "common_scam_themes": [
-      "List region-specific common scam themes"
+      "假冒檢察官或警察 (刑事偵查保密原則)",
+      "投資詐騙 (假冒名人推薦股票)",
+      "網路購物詐騙 (解除分期付款)",
+      "個資盜用 (健保卡被盜刷)",
+      "付款失敗退款詐騙",
+      "二次詐騙 (謊稱可追回被詐騙款項)",
+      "AI變臉及變聲詐騙",
+      "網路交友感情詐騙"
     ]
   }
 }

@@ -1,0 +1,781 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "Juan Santos",
+      "Maria Reyes",
+      "Jose Cruz",
+      "Ana Bautista",
+      "Miguel Garcia",
+      "Rosa Mendoza",
+      "Carlos Torres",
+      "Elena Ocampo"
+    ],
+    "translations": [
+      "Juan Santos",
+      "Maria Reyes",
+      "Jose Cruz",
+      "Ana Bautista",
+      "Miguel Garcia",
+      "Rosa Mendoza",
+      "Carlos Torres",
+      "Elena Ocampo"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "Quezon City",
+      "Manila",
+      "Davao City",
+      "Cebu City",
+      "Caloocan",
+      "Taguig",
+      "Makati",
+      "Pasig"
+    ],
+    "translations": [
+      "Quezon City",
+      "Manila",
+      "Davao City",
+      "Cebu City",
+      "Caloocan",
+      "Taguig",
+      "Makati",
+      "Pasig"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "substitutions": [
+      "₱10,000",
+      "₱20,000",
+      "₱30,000",
+      "₱50,000"
+    ],
+    "translations": [
+      "10,000 PHP",
+      "20,000 PHP",
+      "30,000 PHP",
+      "50,000 PHP"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "substitutions": [
+      "Kumon",
+      "Brain Train",
+      "Center for Learning",
+      "Ahead Tutorial"
+    ],
+    "translations": [
+      "Kumon",
+      "Brain Train",
+      "Center for Learning",
+      "Ahead Tutorial"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "Visa",
+      "Mastercard",
+      "JCB",
+      "American Express"
+    ],
+    "translations": [
+      "Visa",
+      "Mastercard",
+      "JCB",
+      "American Express"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "substitutions": [
+      "₱1,000",
+      "₱2,000",
+      "₱5,000"
+    ],
+    "translations": [
+      "1,000 PHP",
+      "2,000 PHP",
+      "5,000 PHP"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "BDO",
+      "BPI",
+      "Metrobank",
+      "Landbank",
+      "PNB"
+    ],
+    "translations": [
+      "BDO",
+      "BPI",
+      "Metrobank",
+      "Landbank",
+      "PNB"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "Ninoy Aquino International Airport",
+      "Mactan-Cebu International Airport",
+      "Francisco Bangoy International Airport",
+      "Clark International Airport"
+    ],
+    "translations": [
+      "NAIA",
+      "Mactan-Cebu Airport",
+      "Davao International Airport",
+      "Clark Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "BDO Card",
+      "BPI Card",
+      "Metrobank Card",
+      "Security Bank Card",
+      "UnionBank Card"
+    ],
+    "translations": [
+      "BDO Card",
+      "BPI Card",
+      "Metrobank Card",
+      "Security Bank Card",
+      "UnionBank Card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "substitutions": [
+      "Department of Human Settlements and Urban Development",
+      "National Housing Authority",
+      "Home Development Mutual Fund"
+    ],
+    "translations": [
+      "DHSUD",
+      "NHA",
+      "Pag-IBIG Fund"
+    ]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "Pag-IBIG Housing Loan",
+      "4PH Program",
+      "Affordable Housing Program",
+      "SSS Housing Loan"
+    ],
+    "translations": [
+      "Pag-IBIG Housing Loan",
+      "4PH Program",
+      "Affordable Housing Program",
+      "SSS Housing Loan"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "substitutions": [
+      "National Telecommunications Commission",
+      "Department of Information and Communications Technology"
+    ],
+    "translations": [
+      "NTC",
+      "DICT"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "LBC Express",
+      "JRS Express",
+      "2GO Express",
+      "Ninja Van",
+      "GoGo Xpress"
+    ],
+    "translations": [
+      "LBC Express",
+      "JRS Express",
+      "2GO Express",
+      "Ninja Van",
+      "GoGo Xpress"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "Facebook",
+      "TikTok",
+      "Instagram",
+      "Twitter"
+    ],
+    "translations": [
+      "Facebook",
+      "TikTok",
+      "Instagram",
+      "Twitter"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "substitutions": [
+      "Department of Health",
+      "PhilHealth",
+      "Food and Drug Administration"
+    ],
+    "translations": [
+      "DOH",
+      "PhilHealth",
+      "FDA"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "Shopee",
+      "Lazada",
+      "SM Mall",
+      "Zalora",
+      "Robinsons"
+    ],
+    "translations": [
+      "Shopee",
+      "Lazada",
+      "SM Mall",
+      "Zalora",
+      "Robinsons"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "substitutions": [
+      "₱200",
+      "₱500",
+      "₱750"
+    ],
+    "translations": [
+      "200 PHP",
+      "500 PHP",
+      "750 PHP"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "COL Financial",
+      "First Metro Sec",
+      "BDO Securities",
+      "BPI Trade",
+      "Philstocks"
+    ],
+    "translations": [
+      "COL Financial",
+      "First Metro Sec",
+      "BDO Securities",
+      "BPI Trade",
+      "Philstocks"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "substitutions": [
+      "Ayala Land",
+      "SM Prime",
+      "Megaworld",
+      "Vista Land"
+    ],
+    "translations": [
+      "Ayala Land",
+      "SM Prime",
+      "Megaworld",
+      "Vista Land"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "Sarah Geronimo",
+      "Regine Velasquez",
+      "Gary Valenciano",
+      "BINI",
+      "SB19",
+      "Ben&Ben"
+    ],
+    "translations": [
+      "Sarah Geronimo",
+      "Regine Velasquez",
+      "Gary Valenciano",
+      "BINI",
+      "SB19",
+      "Ben&Ben"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "substitutions": [
+      "Sir",
+      "Ma'am",
+      "Boss",
+      "Attorney"
+    ],
+    "translations": [
+      "Sir",
+      "Ma'am",
+      "Boss",
+      "Attorney"
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "BDO Unibank",
+      "Bank of the Philippine Islands",
+      "Metropolitan Bank",
+      "Land Bank of the Philippines",
+      "Philippine National Bank",
+      "Security Bank"
+    ],
+    "translations": [
+      "BDO",
+      "BPI",
+      "Metrobank",
+      "Landbank",
+      "PNB",
+      "Security Bank"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "substitutions": [
+      "Globe Telecom",
+      "Smart Communications",
+      "DITO Telecommunity",
+      "PLDT"
+    ],
+    "translations": [
+      "Globe",
+      "Smart",
+      "DITO",
+      "PLDT"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "National Telecommunications Commission",
+      "Department of Information and Communications Technology"
+    ],
+    "translations": [
+      "NTC",
+      "DICT"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "Bench",
+      "Human Nature",
+      "Ever Bilena",
+      "Careline",
+      "VMV Hypoallergenics"
+    ],
+    "translations": [
+      "Bench",
+      "Human Nature",
+      "Ever Bilena",
+      "Careline",
+      "VMV Hypoallergenics"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "substitutions": [
+      "Department of Trade and Industry",
+      "Consumer Protection Group",
+      "Fair Trade Enforcement Bureau"
+    ],
+    "translations": [
+      "DTI",
+      "CPG",
+      "FTEB"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "GCash",
+      "PayMaya",
+      "GrabPay",
+      "Coins.ph"
+    ],
+    "translations": [
+      "GCash",
+      "PayMaya",
+      "GrabPay",
+      "Coins.ph"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "BDO Rewards",
+      "BPI Rewards",
+      "Metrobank Rewards Plus",
+      "RCBC Rewards"
+    ],
+    "translations": [
+      "BDO Rewards",
+      "BPI Rewards",
+      "Metrobank Rewards Plus",
+      "RCBC Rewards"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "substitutions": [
+      "Land Transportation Office",
+      "Land Transportation Franchising and Regulatory Board"
+    ],
+    "translations": [
+      "LTO",
+      "LTFRB"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "Toyota",
+      "Mitsubishi",
+      "Honda",
+      "Nissan",
+      "Hyundai",
+      "Ford"
+    ],
+    "translations": [
+      "Toyota",
+      "Mitsubishi",
+      "Honda",
+      "Nissan",
+      "Hyundai",
+      "Ford"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "Magnolia",
+      "Alaska",
+      "Nestle",
+      "Bear Brand"
+    ],
+    "translations": [
+      "Magnolia",
+      "Alaska",
+      "Nestle",
+      "Bear Brand"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "substitutions": [
+      "Commission on Higher Education",
+      "UniFAST",
+      "GSIS Educational Loan"
+    ],
+    "translations": [
+      "CHED",
+      "UniFAST",
+      "GSIS Educational Loan"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "PLDT Fibr",
+      "Globe Fiber",
+      "Converge ICT",
+      "Sky Fiber"
+    ],
+    "translations": [
+      "PLDT Fibr",
+      "Globe Fiber",
+      "Converge ICT",
+      "Sky Fiber"
+    ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "Metro Manila",
+      "Cebu Province",
+      "Davao del Sur",
+      "Laguna",
+      "Cavite",
+      "Bulacan",
+      "Rizal"
+    ],
+    "translations": [
+      "Metro Manila",
+      "Cebu Province",
+      "Davao del Sur",
+      "Laguna",
+      "Cavite",
+      "Bulacan",
+      "Rizal"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "Luzon",
+      "Visayas",
+      "Mindanao",
+      "National Capital Region"
+    ],
+    "translations": [
+      "Luzon",
+      "Visayas",
+      "Mindanao",
+      "NCR"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "Philippines",
+      "Republic of the Philippines"
+    ],
+    "translations": [
+      "Philippines",
+      "Republic of the Philippines"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "substitutions": [
+      "Philippine National Police",
+      "PNP",
+      "Police"
+    ],
+    "translations": [
+      "PNP",
+      "PNP",
+      "Police"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "Criminal Investigation and Detection Group",
+      "National Bureau of Investigation",
+      "Anti-Cybercrime Group"
+    ],
+    "translations": [
+      "CIDG",
+      "NBI",
+      "ACG"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "Station 1 Tondo",
+      "Station 3 Sta. Cruz",
+      "Makati Police Station"
+    ],
+    "translations": [
+      "Station 1 Tondo",
+      "Station 3 Sta. Cruz",
+      "Makati Police Station"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "Quezon City Police Station 9",
+      "Pasig City Police Station",
+      "Mandaluyong Police Station"
+    ],
+    "translations": [
+      "QCPD Station 9",
+      "Pasig Police Station",
+      "Mandaluyong Police Station"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "University of the Philippines",
+      "Ateneo de Manila University",
+      "De La Salle University",
+      "University of Santo Tomas"
+    ],
+    "translations": [
+      "UP",
+      "Ateneo",
+      "DLSU",
+      "UST"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "Department of Education",
+      "Commission on Higher Education"
+    ],
+    "translations": [
+      "DepEd",
+      "CHED"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "Personal Loan Department",
+      "Loan Processing Center"
+    ],
+    "translations": [
+      "Personal Loan Department",
+      "Loan Processing Center"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "Sky Cable",
+      "Cignal TV",
+      "TV5",
+      "One PH"
+    ],
+    "translations": [
+      "Sky Cable",
+      "Cignal TV",
+      "TV5",
+      "One PH"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "Basic Cable",
+      "HD Package",
+      "Premium Bundle"
+    ],
+    "translations": [
+      "Basic Cable",
+      "HD Package",
+      "Premium Bundle"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "PLDT",
+      "Globe",
+      "Converge"
+    ],
+    "translations": [
+      "PLDT",
+      "Globe",
+      "Converge"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "Shopee",
+      "Lazada",
+      "Zalora",
+      "Carousell"
+    ],
+    "translations": [
+      "Shopee",
+      "Lazada",
+      "Zalora",
+      "Carousell"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "iPhone",
+      "Samsung Galaxy",
+      "Oppo"
+    ],
+    "translations": [
+      "iPhone",
+      "Samsung Galaxy",
+      "Oppo"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "mango",
+      "banana",
+      "pineapple",
+      "durian"
+    ],
+    "translations": [
+      "mango",
+      "banana",
+      "pineapple",
+      "durian"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "National Housing Authority",
+      "Department of Human Settlements"
+    ],
+    "translations": [
+      "NHA",
+      "DHSUD"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "Land Transportation Office",
+      "Motor Vehicle Registration"
+    ],
+    "translations": [
+      "LTO",
+      "Motor Vehicle Registration"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "Central Luzon",
+      "Western Visayas",
+      "CALABARZON"
+    ],
+    "translations": [
+      "Region III",
+      "Region VI",
+      "Region IV-A"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "NAIA Police Station",
+      "MRT Police Station",
+      "Port Area Police Station"
+    ],
+    "translations": [
+      "NAIA Police",
+      "MRT Police",
+      "Port Police"
+    ]
+  }
+}

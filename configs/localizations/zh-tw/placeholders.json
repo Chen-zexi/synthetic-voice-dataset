@@ -1,0 +1,1070 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "description": "Common names in Taiwan",
+    "substitutions": [
+      "陳志明",
+      "林美玲",
+      "張俊傑",
+      "黃淑芬",
+      "李志勇",
+      "王淑娟",
+      "吳建國",
+      "劉曉華"
+    ],
+    "translations": [
+      "Chen Zhiming",
+      "Lin Meiling",
+      "Zhang Junjie",
+      "Huang Shufen",
+      "Li Zhiyong",
+      "Wang Shujuan",
+      "Wu Jianguo",
+      "Liu Xiaohua"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "description": "Major cities in Taiwan",
+    "substitutions": [
+      "臺北市",
+      "新北市",
+      "臺中市",
+      "高雄市",
+      "桃園市",
+      "臺南市",
+      "新竹市",
+      "基隆市"
+    ],
+    "translations": [
+      "Taipei City",
+      "New Taipei City",
+      "Taichung City",
+      "Kaohsiung City",
+      "Taoyuan City",
+      "Tainan City",
+      "Hsinchu City",
+      "Keelung City"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "description": "Medium amounts in TWD",
+    "substitutions": [
+      "6,000元",
+      "10,000元",
+      "20,000元",
+      "15,000元",
+      "25,000元",
+      "30,000元"
+    ],
+    "translations": [
+      "NT$6,000",
+      "NT$10,000",
+      "NT$20,000",
+      "NT$15,000",
+      "NT$25,000",
+      "NT$30,000"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "description": "Tutoring centers",
+    "substitutions": [
+      "何嘉仁美語",
+      "劉毅英文",
+      "陳立教育",
+      "康軒文教",
+      "三民補習班",
+      "儒林補習班"
+    ],
+    "translations": [
+      "Hess Language School",
+      "Liu Yi English",
+      "Chen Li Education",
+      "Kang Hsuan Educational",
+      "San Min Cram School",
+      "Ru Lin Cram School"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "description": "Credit card companies",
+    "substitutions": [
+      "威士卡",
+      "萬事達卡",
+      "美國運通",
+      "JCB卡",
+      "聯合信用卡",
+      "國泰世華卡"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "JCB Card",
+      "Union Card",
+      "Cathay United Card"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "description": "Small amounts in TWD",
+    "substitutions": [
+      "500元",
+      "1,000元",
+      "1,500元",
+      "2,000元",
+      "2,500元",
+      "3,000元"
+    ],
+    "translations": [
+      "NT$500",
+      "NT$1,000",
+      "NT$1,500",
+      "NT$2,000",
+      "NT$2,500",
+      "NT$3,000"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "description": "Banks in Taiwan",
+    "substitutions": [
+      "臺灣銀行",
+      "第一銀行",
+      "華南銀行",
+      "彰化銀行",
+      "國泰世華銀行",
+      "玉山銀行"
+    ],
+    "translations": [
+      "Bank of Taiwan",
+      "First Bank",
+      "Hua Nan Bank",
+      "Chang Hwa Bank",
+      "Cathay United Bank",
+      "E.SUN Bank"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "description": "Airports in Taiwan",
+    "substitutions": [
+      "桃園國際機場",
+      "松山機場",
+      "高雄國際機場",
+      "臺中清泉崗機場",
+      "花蓮機場",
+      "臺東機場"
+    ],
+    "translations": [
+      "Taoyuan International Airport",
+      "Songshan Airport",
+      "Kaohsiung International Airport",
+      "Taichung Airport",
+      "Hualien Airport",
+      "Taitung Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "description": "Bank card names",
+    "substitutions": [
+      "國泰世華KOKO卡",
+      "台新@GoGo卡",
+      "玉山Pi拍錢包卡",
+      "花旗現金回饋卡",
+      "中信LinePay卡",
+      "富邦J卡"
+    ],
+    "translations": [
+      "Cathay KOKO Card",
+      "Taishin @GoGo Card",
+      "E.SUN Pi Card",
+      "Citi Cash Back Card",
+      "CTBC LinePay Card",
+      "Fubon J Card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "description": "Housing agencies",
+    "substitutions": [
+      "內政部營建署",
+      "住宅都市更新基金",
+      "國家住宅及都市更新中心",
+      "社會住宅推動聯盟",
+      "崔媽媽基金會",
+      "都市發展局"
+    ],
+    "translations": [
+      "Construction and Planning Agency",
+      "Housing and Urban Renewal Fund",
+      "National Housing and Urban Regeneration Center",
+      "Social Housing Advocacy Consortium",
+      "Tsuei Ma Ma Foundation",
+      "Urban Development Bureau"
+    ]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "description": "Housing subsidies",
+    "substitutions": [
+      "青年安心成家購屋優惠貸款",
+      "租金補貼",
+      "自購住宅貸款利息補貼",
+      "社會住宅",
+      "包租代管",
+      "危老重建獎勵"
+    ],
+    "translations": [
+      "Youth Housing Loan Program",
+      "Rent Subsidy",
+      "Home Purchase Interest Subsidy",
+      "Social Housing",
+      "Rental Management",
+      "Dangerous Building Reconstruction Incentive"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "description": "Telecom authority",
+    "substitutions": [
+      "國家通訊傳播委員會",
+      "NCC",
+      "通傳會",
+      "電信管理局",
+      "通訊傳播監理處",
+      "數位發展部"
+    ],
+    "translations": [
+      "National Communications Commission",
+      "NCC",
+      "Communications Commission",
+      "Telecom Management Bureau",
+      "Communications Supervision Office",
+      "Ministry of Digital Affairs"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "description": "Courier services",
+    "substitutions": [
+      "中華郵政",
+      "黑貓宅急便",
+      "新竹貨運",
+      "嘉里大榮",
+      "順豐速運",
+      "宅配通"
+    ],
+    "translations": [
+      "Chunghwa Post",
+      "T-Cat",
+      "Hsinchu Transport",
+      "Kerry TJ Logistics",
+      "SF Express",
+      "Pelican Express"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "description": "Social media platforms",
+    "substitutions": [
+      "Line",
+      "臉書",
+      "Instagram",
+      "PTT",
+      "Dcard",
+      "抖音"
+    ],
+    "translations": [
+      "Line",
+      "Facebook",
+      "Instagram",
+      "PTT",
+      "Dcard",
+      "TikTok"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "description": "Health agencies",
+    "substitutions": [
+      "衛生福利部",
+      "衛福部",
+      "疾病管制署",
+      "健保署",
+      "食藥署",
+      "國民健康署"
+    ],
+    "translations": [
+      "Ministry of Health and Welfare",
+      "MOHW",
+      "CDC Taiwan",
+      "National Health Insurance Administration",
+      "Taiwan FDA",
+      "Health Promotion Administration"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "description": "Popular marketplaces",
+    "substitutions": [
+      "家樂福",
+      "全聯福利中心",
+      "好市多",
+      "PChome",
+      "momo購物",
+      "蝦皮購物"
+    ],
+    "translations": [
+      "Carrefour",
+      "PX Mart",
+      "Costco",
+      "PChome",
+      "momo Shopping",
+      "Shopee"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "description": "Very small amounts",
+    "substitutions": [
+      "100元",
+      "200元",
+      "300元",
+      "150元",
+      "250元",
+      "400元"
+    ],
+    "translations": [
+      "NT$100",
+      "NT$200",
+      "NT$300",
+      "NT$150",
+      "NT$250",
+      "NT$400"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "description": "Brokerage firms",
+    "substitutions": [
+      "元大證券",
+      "凱基證券",
+      "富邦證券",
+      "永豐金證券",
+      "群益證券",
+      "統一證券"
+    ],
+    "translations": [
+      "Yuanta Securities",
+      "KGI Securities",
+      "Fubon Securities",
+      "SinoPac Securities",
+      "Capital Securities",
+      "President Securities"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "description": "Real estate companies",
+    "substitutions": [
+      "信義房屋",
+      "永慶房屋",
+      "住商不動產",
+      "東森房屋",
+      "中信房屋",
+      "21世紀不動產"
+    ],
+    "translations": [
+      "Sinyi Realty",
+      "Yung Ching Realty",
+      "H&B Real Estate",
+      "Etwarm Real Estate",
+      "Chinatrust Real Estate",
+      "Century 21"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "description": "Popular singers",
+    "substitutions": [
+      "周杰倫",
+      "蔡依林",
+      "五月天",
+      "張惠妹",
+      "林俊傑",
+      "陳奕迅"
+    ],
+    "translations": [
+      "Jay Chou",
+      "Jolin Tsai",
+      "Mayday",
+      "A-Mei",
+      "JJ Lin",
+      "Eason Chan"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "description": "Titles of respect",
+    "substitutions": [
+      "老闆",
+      "經理",
+      "主任",
+      "先生",
+      "小姐",
+      "醫師"
+    ],
+    "translations": [
+      "Boss",
+      "Manager",
+      "Director",
+      "Mr.",
+      "Miss",
+      "Doctor"
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "description": "Major banks",
+    "substitutions": [
+      "中國信託",
+      "台新銀行",
+      "兆豐銀行",
+      "合作金庫",
+      "土地銀行",
+      "台灣企銀"
+    ],
+    "translations": [
+      "CTBC Bank",
+      "Taishin Bank",
+      "Mega Bank",
+      "Taiwan Cooperative Bank",
+      "Land Bank of Taiwan",
+      "Taiwan Business Bank"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "description": "Telecom providers",
+    "substitutions": [
+      "中華電信",
+      "台灣大哥大",
+      "遠傳電信",
+      "台灣之星",
+      "亞太電信",
+      "凱擘大寬頻"
+    ],
+    "translations": [
+      "Chunghwa Telecom",
+      "Taiwan Mobile",
+      "FarEasTone",
+      "Taiwan Star",
+      "Asia Pacific Telecom",
+      "Kbro"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "description": "Same as telecom_regulator",
+    "substitutions": [
+      "國家通訊傳播委員會",
+      "NCC",
+      "通傳會",
+      "電信總局",
+      "數位發展部",
+      "通訊監理處"
+    ],
+    "translations": [
+      "National Communications Commission",
+      "NCC",
+      "Communications Commission",
+      "Directorate General of Telecommunications",
+      "Ministry of Digital Affairs",
+      "Communications Supervision Office"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "description": "Cosmetic brands",
+    "substitutions": [
+      "SK-II",
+      "資生堂",
+      "蘭蔻",
+      "雅詩蘭黛",
+      "屈臣氏",
+      "康是美"
+    ],
+    "translations": [
+      "SK-II",
+      "Shiseido",
+      "Lancôme",
+      "Estée Lauder",
+      "Watsons",
+      "Cosmed"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "description": "Consumer protection",
+    "substitutions": [
+      "消費者保護會",
+      "消保會",
+      "消費者文教基金會",
+      "消基會",
+      "公平交易委員會",
+      "165反詐騙專線"
+    ],
+    "translations": [
+      "Consumer Protection Committee",
+      "CPC",
+      "Consumers' Foundation",
+      "CFCT",
+      "Fair Trade Commission",
+      "165 Anti-Fraud Hotline"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "description": "Payment apps",
+    "substitutions": [
+      "Line Pay",
+      "街口支付",
+      "悠遊付",
+      "台灣Pay",
+      "Apple Pay",
+      "Google Pay"
+    ],
+    "translations": [
+      "Line Pay",
+      "JKO Pay",
+      "EasyWallet",
+      "Taiwan Pay",
+      "Apple Pay",
+      "Google Pay"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "description": "Loyalty programs",
+    "substitutions": [
+      "HAPPY GO",
+      "OPEN POINT",
+      "中信紅利點數",
+      "國泰優惠點數",
+      "遠東快樂購",
+      "全聯PX Pay點數"
+    ],
+    "translations": [
+      "HAPPY GO",
+      "OPEN POINT",
+      "CTBC Reward Points",
+      "Cathay Reward Points",
+      "FE Happy Shopping",
+      "PX Pay Points"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "description": "Vehicle authority",
+    "substitutions": [
+      "監理所",
+      "監理站",
+      "公路總局",
+      "交通部",
+      "車輛管理處",
+      "交通大隊"
+    ],
+    "translations": [
+      "Motor Vehicle Office",
+      "Vehicle Registration Office",
+      "Directorate General of Highways",
+      "Ministry of Transportation",
+      "Vehicle Management Office",
+      "Traffic Brigade"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "description": "Car brands",
+    "substitutions": [
+      "Toyota",
+      "Honda",
+      "Nissan",
+      "Mazda",
+      "三菱",
+      "福特"
+    ],
+    "translations": [
+      "Toyota",
+      "Honda",
+      "Nissan",
+      "Mazda",
+      "Mitsubishi",
+      "Ford"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "description": "Dairy brands",
+    "substitutions": [
+      "統一",
+      "光泉",
+      "味全",
+      "林鳳營",
+      "瑞穗鮮乳",
+      "福樂"
+    ],
+    "translations": [
+      "Uni-President",
+      "Kuang Chuan",
+      "Wei Chuan",
+      "Lin Feng Ying",
+      "Ruisui Fresh Milk",
+      "Fu Le"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "description": "Student loans",
+    "substitutions": [
+      "教育部就學貸款",
+      "臺灣銀行就貸組",
+      "學雜費減免",
+      "弱勢助學金",
+      "教育部助學貸款",
+      "高教深耕計畫"
+    ],
+    "translations": [
+      "MOE Student Loan",
+      "Bank of Taiwan Student Loan Division",
+      "Tuition Waiver",
+      "Disadvantaged Student Grant",
+      "MOE Education Loan",
+      "Higher Education Sprout Project"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "description": "ISPs",
+    "substitutions": [
+      "中華電信HiNet",
+      "凱擘大寬頻",
+      "台灣大寬頻",
+      "遠傳大寬頻",
+      "台灣固網",
+      "亞太寬頻"
+    ],
+    "translations": [
+      "Chunghwa Telecom HiNet",
+      "Kbro Broadband",
+      "Taiwan Broadband",
+      "FET Broadband",
+      "Taiwan Fixed Network",
+      "APTG Broadband"
+    ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "description": "Counties/Cities",
+    "substitutions": [
+      "新北市",
+      "桃園市",
+      "臺中市",
+      "高雄市",
+      "新竹縣",
+      "苗栗縣"
+    ],
+    "translations": [
+      "New Taipei City",
+      "Taoyuan City",
+      "Taichung City",
+      "Kaohsiung City",
+      "Hsinchu County",
+      "Miaoli County"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "description": "Regions",
+    "substitutions": [
+      "北部地區",
+      "中部地區",
+      "南部地區",
+      "東部地區",
+      "大臺北地區",
+      "桃竹苗地區"
+    ],
+    "translations": [
+      "Northern Region",
+      "Central Region",
+      "Southern Region",
+      "Eastern Region",
+      "Greater Taipei Area",
+      "Taoyuan-Hsinchu-Miaoli Area"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "description": "Country names",
+    "substitutions": [
+      "臺灣",
+      "中華民國",
+      "寶島",
+      "福爾摩沙",
+      "臺灣地區",
+      "本島"
+    ],
+    "translations": [
+      "Taiwan",
+      "Republic of China",
+      "Treasure Island",
+      "Formosa",
+      "Taiwan Area",
+      "Main Island"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "description": "Police forces",
+    "substitutions": [
+      "警察局",
+      "派出所",
+      "刑事警察局",
+      "保安警察",
+      "交通警察",
+      "警政署"
+    ],
+    "translations": [
+      "Police Bureau",
+      "Police Station",
+      "Criminal Investigation Bureau",
+      "Security Police",
+      "Traffic Police",
+      "National Police Agency"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "description": "Investigation units",
+    "substitutions": [
+      "刑事警察局",
+      "調查局",
+      "廉政署",
+      "165反詐騙專線",
+      "經濟犯罪防制處",
+      "網路犯罪偵查隊"
+    ],
+    "translations": [
+      "Criminal Investigation Bureau",
+      "Investigation Bureau",
+      "Agency Against Corruption",
+      "165 Anti-Fraud Hotline",
+      "Economic Crime Prevention Division",
+      "Cybercrime Investigation Unit"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "description": "Police stations",
+    "substitutions": [
+      "中正第一分局",
+      "大安分局",
+      "信義分局",
+      "士林分局",
+      "內湖分局",
+      "松山分局"
+    ],
+    "translations": [
+      "Zhongzheng First Precinct",
+      "Da'an Precinct",
+      "Xinyi Precinct",
+      "Shilin Precinct",
+      "Neihu Precinct",
+      "Songshan Precinct"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "description": "More stations",
+    "substitutions": [
+      "三重分局",
+      "板橋分局",
+      "永和分局",
+      "中壢分局",
+      "平鎮分局",
+      "桃園分局"
+    ],
+    "translations": [
+      "Sanchong Precinct",
+      "Banqiao Precinct",
+      "Yonghe Precinct",
+      "Zhongli Precinct",
+      "Pingzhen Precinct",
+      "Taoyuan Precinct"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "description": "Universities",
+    "substitutions": [
+      "臺灣大學",
+      "清華大學",
+      "交通大學",
+      "成功大學",
+      "政治大學",
+      "中央大學"
+    ],
+    "translations": [
+      "National Taiwan University",
+      "National Tsing Hua University",
+      "National Chiao Tung University",
+      "National Cheng Kung University",
+      "National Chengchi University",
+      "National Central University"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "description": "Education ministry",
+    "substitutions": [
+      "教育部",
+      "高教司",
+      "國教署",
+      "技職司",
+      "終身教育司",
+      "體育署"
+    ],
+    "translations": [
+      "Ministry of Education",
+      "Department of Higher Education",
+      "K-12 Education Administration",
+      "Department of Technological and Vocational Education",
+      "Department of Lifelong Education",
+      "Sports Administration"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "description": "Loan departments",
+    "substitutions": [
+      "貸款部",
+      "信貸部門",
+      "房貸部",
+      "企業金融部",
+      "個人金融部",
+      "財富管理部"
+    ],
+    "translations": [
+      "Loan Department",
+      "Credit Department",
+      "Mortgage Department",
+      "Corporate Banking",
+      "Personal Banking",
+      "Wealth Management"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "description": "TV providers",
+    "substitutions": [
+      "中華電信MOD",
+      "凱擘有線電視",
+      "台灣大寬頻",
+      "TBC台灣寬頻",
+      "中嘉有線電視",
+      "Netflix"
+    ],
+    "translations": [
+      "Chunghwa Telecom MOD",
+      "Kbro Cable TV",
+      "Taiwan Broadband",
+      "TBC",
+      "CNS Cable TV",
+      "Netflix"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "description": "TV packages",
+    "substitutions": [
+      "基本頻道",
+      "電影套餐",
+      "運動套餐",
+      "兒童套餐",
+      "HD高畫質套餐",
+      "4K超高畫質"
+    ],
+    "translations": [
+      "Basic Channels",
+      "Movie Package",
+      "Sports Package",
+      "Kids Package",
+      "HD Package",
+      "4K Ultra HD"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "description": "ISP names",
+    "substitutions": [
+      "HiNet",
+      "So-net",
+      "Seednet",
+      "APOL",
+      "台灣固網",
+      "速博"
+    ],
+    "translations": [
+      "HiNet",
+      "So-net",
+      "Seednet",
+      "APOL",
+      "Taiwan Fixed Network",
+      "Sparq"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "description": "E-commerce sites",
+    "substitutions": [
+      "PChome 24h",
+      "momo購物網",
+      "蝦皮購物",
+      "Yahoo奇摩購物",
+      "博客來",
+      "東森購物"
+    ],
+    "translations": [
+      "PChome 24h",
+      "momo Shopping",
+      "Shopee",
+      "Yahoo Shopping",
+      "Books.com.tw",
+      "ETMall"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "description": "Popular products",
+    "substitutions": [
+      "iPhone 15",
+      "三星Galaxy S24",
+      "ASUS筆電",
+      "Sony耳機",
+      "Switch遊戲機",
+      "小米手環"
+    ],
+    "translations": [
+      "iPhone 15",
+      "Samsung Galaxy S24",
+      "ASUS Laptop",
+      "Sony Headphones",
+      "Nintendo Switch",
+      "Mi Band"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "description": "Common fruits",
+    "substitutions": [
+      "芒果",
+      "鳳梨",
+      "香蕉",
+      "芭樂",
+      "蓮霧",
+      "釋迦"
+    ],
+    "translations": [
+      "mango",
+      "pineapple",
+      "banana",
+      "guava",
+      "wax apple",
+      "sugar apple"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "description": "Housing agency variant",
+    "substitutions": [
+      "營建署",
+      "都發局",
+      "住宅處",
+      "都市更新處",
+      "住宅基金",
+      "社會住宅處"
+    ],
+    "translations": [
+      "Construction and Planning Agency",
+      "Urban Development Bureau",
+      "Housing Department",
+      "Urban Renewal Office",
+      "Housing Fund",
+      "Social Housing Office"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "description": "Vehicle registration",
+    "substitutions": [
+      "監理所",
+      "監理站",
+      "車輛檢驗中心",
+      "代檢廠",
+      "牌照稅處",
+      "交通裁決所"
+    ],
+    "translations": [
+      "Motor Vehicle Office",
+      "Vehicle Registration Office",
+      "Vehicle Inspection Center",
+      "Authorized Inspection Station",
+      "Vehicle License Tax Office",
+      "Traffic Adjudication Office"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "description": "Region (typo)",
+    "substitutions": [
+      "信義區",
+      "大安區",
+      "西門町",
+      "東區",
+      "天母",
+      "淡水"
+    ],
+    "translations": [
+      "Xinyi District",
+      "Da'an District",
+      "Ximending",
+      "East District",
+      "Tianmu",
+      "Tamsui"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "description": "Special stations",
+    "substitutions": [
+      "航空警察局",
+      "鐵路警察局",
+      "港務警察總隊",
+      "國道警察局",
+      "保二總隊",
+      "保三總隊"
+    ],
+    "translations": [
+      "Aviation Police Bureau",
+      "Railway Police Bureau",
+      "Harbor Police",
+      "National Highway Police Bureau",
+      "Second Security Police Corps",
+      "Third Security Police Corps"
+    ]
+  }
+}
