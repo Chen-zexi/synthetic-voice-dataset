@@ -86,7 +86,11 @@ voice_scam_dataset_gen/
 │   │   └── language_codes.py         # Language code mappings
 │   ├── conversation/               # LLM dialogue generation
 │   │   ├── scam_generator.py         # Scam conversation generation
-│   │   └── legit_generator.py        # Legitimate conversation generation
+│   │   ├── legit_generator.py        # Legitimate conversation generation
+│   │   └── schemas.py                # Pydantic schemas for structured output
+│   ├── llm_core/                   # LLM abstraction layer with LangChain
+│   │   ├── api_provider.py           # Multi-provider LLM factory
+│   │   └── api_call.py               # Unified async API interface
 │   ├── tts/                        # ElevenLabs voice synthesis
 │   │   ├── voice_synthesizer.py
 │   │   └── audio_combiner.py
@@ -124,14 +128,22 @@ voice_scam_dataset_gen/
 
 ## Adding a New Locale
 
-Adding support for a new region is straightforward:
+Adding support for a new region is straightforward. For comprehensive instructions, see the [Locale Implementation Guide](LOCALE_IMPLEMENTATION_GUIDE.md) and check the [Locale Roadmap](locale_road_map.md) for current status.
 
-### 1. Create Locale Directory
+### Quick Start
+
+### 1. Check Roadmap and Mark Status
+Before starting, check the [Locale Roadmap](locale_road_map.md) and mark your locale as "🚧 In Progress".
+
+### 2. Use Template Files
 ```bash
-mkdir -p configs/localizations/ar-eg  # Arabic - Egypt example
+# Copy template to new locale directory
+cp -r configs/localizations/template/ configs/localizations/ar-eg/
 ```
 
-### 2. Create Configuration File (`config.json`)
+### 3. Configure Locale Settings
+Edit `configs/localizations/ar-eg/config.json` with the **new standardized structure**:
+
 ```json
 {
   "locale": {
@@ -149,11 +161,18 @@ mkdir -p configs/localizations/ar-eg  # Arabic - Egypt example
     "intermediate_code": "en"
   },
   "voices": {
-    "ids": ["voice_id_1", "voice_id_2"],
-    "names": ["Voice1", "Voice2"]
+    "ids": ["voice_id_1", "voice_id_2", "voice_id_3"],
+    "names": ["Voice1 (Gender/Age)", "Voice2 (Gender/Age)", "Voice3 (Gender/Age)"]
   },
   "conversation": {
-    "legit_categories": ["family_checkin", "bank_verification_call", ...]
+    "legit_categories": [
+      "family_checkin", "friend_chat", "relationship_talk",
+      "holiday_greeting", "emergency_help_request",
+      "doctor_appointment_confirmation", "clinic_test_results",
+      "delivery_confirmation", "utility_service_followup",
+      "repair_scheduling", "bank_verification_call",
+      "visa_status_update", "tax_inquiry"
+    ]
   },
   "output": {
     "scam_conversation": "scam_conversation.json",
@@ -162,35 +181,40 @@ mkdir -p configs/localizations/ar-eg  # Arabic - Egypt example
     "legit_audio_dir": "legit",
     "scam_formatted": "scam_conversation_formatted.json",
     "legit_formatted": "legit_conversation_formatted.json"
+  },
+  "cultural_notes": {
+    "phone_greeting": "السلام عليكم / أهلاً",
+    "formality_level": "Formal - Arabic uses respectful forms",
+    "common_scam_themes": [
+      "Government agency impersonation",
+      "Bank security calls",
+      "Investment scams"
+    ]
   }
 }
 ```
 
-### 3. Create Placeholder Mappings (`placeholders.json`)
-```json
-{
-  "{00001}": {
-    "tag": "<person_name>",
-    "substitutions": ["أحمد", "فاطمة", "محمد"],
-    "translations": ["Ahmed", "Fatima", "Mohammed"]
-  },
-  "{00002}": {
-    "tag": "<city_name>",
-    "substitutions": ["القاهرة", "الإسكندرية", "الجيزة"],
-    "translations": ["Cairo", "Alexandria", "Giza"]
-  },
-  "{00003}": {
-    "tag": "<money_amount_medium>",
-    "substitutions": ["١٠٠٠ جنيه", "٢٠٠٠ جنيه", "٣٠٠٠ جنيه"],
-    "translations": ["1000 EGP", "2000 EGP", "3000 EGP"]
-  }
-}
-```
+### 4. Populate All 53 Placeholders
+Edit `configs/localizations/ar-eg/placeholders.json` with culturally appropriate substitutions for all placeholders ({00001} through {00053}).
 
-### 4. Run the Pipeline
+### 5. Test and Validate
 ```bash
+# Validate configuration
+python main.py --validate-config ar-eg
+
+# Test with sample data
+python main.py --locale ar-eg --sample-limit 5
+
+# Run full pipeline
 python main.py --locale ar-eg
 ```
+
+### 6. Update Documentation
+- Mark locale as "✅ Completed" in [locale_road_map.md](locale_road_map.md)
+- Test all 53 placeholders are populated
+- Verify cultural appropriateness
+
+For detailed implementation instructions, troubleshooting, and placeholder reference, see the [Locale Implementation Guide](LOCALE_IMPLEMENTATION_GUIDE.md).
 
 ## Output Structure
 
@@ -226,15 +250,75 @@ output/
 - Validation warns about missing mappings
 
 ### Supported Locales
+
+See the [Locale Roadmap](locale_road_map.md) for current implementation status. Currently supported:
+
 - **ar-sa**: Arabic (Saudi Arabia) - SAR currency, Saudi entities
 - **ar-ae**: Arabic (United Arab Emirates) - AED currency, UAE entities  
 - **ms-my**: Malay (Malaysia) - MYR currency, Malaysian entities
+- **ko-kr**: Korean (South Korea) - KRW currency, Korean entities
+- **ja-jp**: Japanese (Japan) - JPY currency, Japanese entities
+- **vi-vn**: Vietnamese (Vietnam) - VND currency, Vietnamese entities
+- **en-ph**: English (Philippines) - PHP currency, Filipino entities
+- **th-th**: Thai (Thailand) - THB currency, Thai entities
+- **en-sg**: English (Singapore) - SGD currency, Singaporean entities
+- **zh-sg**: Chinese (Singapore) - SGD currency, Singaporean entities
+- **zh-tw**: Chinese (Taiwan) - TWD currency, Taiwanese entities
+- **zh-hk**: Chinese (Hong Kong) - HKD currency, Hong Kong entities
+- **en-hk**: English (Hong Kong) - HKD currency, Hong Kong entities
+
+## LLM Module
+
+The project includes a unified LLM abstraction layer (`src/llm_core/`) that supports multiple providers:
+
+### Supported LLM Providers
+- **OpenAI**: GPT-4, GPT-3.5-turbo (default: gpt-4.1-mini)
+- **Anthropic**: Claude models
+- **Google**: Gemini models
+- **LM-Studio**: Local model hosting
+- **vLLM**: High-performance inference server
+
+### LLM Configuration
+
+Configure LLM parameters in `configs/common.json`:
+```json
+{
+  "llm": {
+    "provider": "openai",
+    "model": "gpt-4.1-mini",
+    "max_concurrent_requests": 10,
+    "temperature": 1.0,
+    "max_tokens": null,
+    "top_p": 0.95,
+    "n": 1
+  }
+}
+```
+
+### Features
+- **Async-only architecture**: All LLM calls are asynchronous for better performance
+- **Structured output**: Uses LangChain's `with_structured_output` with Pydantic schemas
+- **JSON fallback**: Robust parsing with multiple fallback patterns
+- **Rate limiting**: Semaphore-based concurrent request management
+- **Provider abstraction**: Easy switching between different LLM providers
+
+### Environment Variables
+```env
+# OpenAI (default)
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Optional: other providers
+ANTHROPIC_API_KEY=your_anthropic_key
+GEMINI_API_KEY=your_gemini_key
+HOST_IP=192.168.1.100  # For LM-Studio/vLLM
+```
 
 ## API Requirements
 
-- **OpenAI API**: For LLM conversation generation
+- **OpenAI API**: For LLM conversation generation (default provider)
 - **ElevenLabs API**: For text-to-speech synthesis
 - **Google Translate**: Default translation service (Argos Translate also supported)
+- **Optional**: Anthropic/Gemini APIs for alternative LLM providers
 
 ## Migration from Legacy System
 
@@ -278,11 +362,16 @@ python main.py --locale ms-my
 ### Common Issues
 
 1. **Missing API Keys**: Ensure `.env` file contains valid keys
-2. **Locale Config Not Found**: Check locale ID format (e.g., ar-sa, not arabic-sa)
-3. **Audio Generation Fails**: Verify ElevenLabs quota and voice IDs
-4. **Translation Errors**: Check internet connection and Google Translate API limits
-5. **Missing Placeholder Mappings**: Check warnings in preprocessing step
-6. **Voice Synthesis Quota**: ElevenLabs has monthly character limits
+2. **"'locale' KeyError"**: Update config to new standardized structure with `"locale"` section
+3. **Translation failures**: 
+   - Hong Kong/Taiwan: use `"zh-TW"` (not `"zh-HK"`)
+   - Singapore/Mainland China: use `"zh-CN"` (not `"zh"`)
+4. **Locale Config Not Found**: Check locale ID format (e.g., ar-sa, not arabic-sa)
+5. **Audio Generation Fails**: Verify ElevenLabs quota and voice IDs
+6. **Translation Errors**: Check internet connection and Google Translate API limits
+7. **Missing Placeholder Mappings**: Ensure all 53 placeholders are defined
+8. **Voice Synthesis Quota**: ElevenLabs has monthly character limits
+9. **LLM Parameter Warnings**: Parameters are now passed directly to model constructors
 
 ### Debug Mode
 
