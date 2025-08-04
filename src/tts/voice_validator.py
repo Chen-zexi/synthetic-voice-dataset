@@ -3,12 +3,11 @@ ElevenLabs voice ID validation utility with both async and sync support.
 """
 
 import asyncio
-import aiohttp
-import requests
 import logging
 from typing import List, Dict, Set, Optional, Tuple
 from dataclasses import dataclass
 
+from elevenlabs.client import AsyncElevenLabs, ElevenLabs
 from utils.logging_utils import ConditionalLogger
 from tts.models import (
     VoiceInfo, VoiceValidationResult, VoiceDiscoveryFilter, 
@@ -33,7 +32,9 @@ class VoiceValidator:
             verbose: Whether to show verbose output
         """
         self.api_key = api_key
-        self.base_url = "https://api.elevenlabs.io/v1"
+        self.async_client = AsyncElevenLabs(api_key=api_key)
+        self.sync_client = ElevenLabs(api_key=api_key)
+        self.base_url = "https://api.elevenlabs.io/v1"  # Keep for backwards compatibility
         self._voice_cache: Dict[str, VoiceValidationResult] = {}
         self._all_voices_cache: Optional[Dict[str, VoiceInfo]] = None
         self.clogger = ConditionalLogger(__name__, verbose)
@@ -63,83 +64,78 @@ class VoiceValidator:
             else:
                 uncached_ids.append(voice_id)
         
-        # Validate uncached IDs
+        # Validate uncached IDs using SDK
         if uncached_ids:
-            async with aiohttp.ClientSession() as session:
-                tasks = [self._validate_single_voice(session, voice_id) for voice_id in uncached_ids]
-                new_results = await asyncio.gather(*tasks, return_exceptions=True)
-                
-                # Process results and update cache
-                for result in new_results:
-                    if isinstance(result, VoiceValidationResult):
-                        self._voice_cache[result.voice_id] = result
-                        cached_results.append(result)
-                    elif isinstance(result, Exception):
-                        self.clogger.error(f"Error validating voice: {result}")
+            tasks = [self._validate_single_voice_sdk(voice_id) for voice_id in uncached_ids]
+            new_results = await asyncio.gather(*tasks, return_exceptions=True)
+            
+            # Process results and update cache
+            for result in new_results:
+                if isinstance(result, VoiceValidationResult):
+                    self._voice_cache[result.voice_id] = result
+                    cached_results.append(result)
+                elif isinstance(result, Exception):
+                    self.clogger.error(f"Error validating voice: {result}")
         
         # Sort results to match input order
         result_map = {r.voice_id: r for r in cached_results}
         return [result_map.get(voice_id, VoiceValidationResult(voice_id, False, error_message="Validation failed")) 
                 for voice_id in voice_ids]
     
-    async def _validate_single_voice(self, session: aiohttp.ClientSession, voice_id: str) -> VoiceValidationResult:
+    async def _validate_single_voice_sdk(self, voice_id: str) -> VoiceValidationResult:
         """
-        Validate a single voice ID.
+        Validate a single voice ID using the ElevenLabs SDK.
         
         Args:
-            session: HTTP session
             voice_id: Voice ID to validate
             
         Returns:
             Validation result
         """
-        url = f"{self.base_url}/voices/{voice_id}"
-        headers = {"xi-api-key": self.api_key}
-        
         try:
-            async with session.get(url, headers=headers) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    voice_name = data.get("name", "Unknown")
-                    self.clogger.debug(f"Voice {voice_id} is valid: {voice_name}")
-                    return VoiceValidationResult(voice_id, True, voice_name)
-                elif response.status == 404:
-                    error_msg = f"Voice not found: {voice_id}"
-                    self.clogger.warning(error_msg)
-                    return VoiceValidationResult(voice_id, False, error_message=error_msg)
-                else:
-                    error_text = await response.text()
-                    error_msg = f"API error ({response.status}): {error_text}"
-                    self.clogger.error(f"Error validating voice {voice_id}: {error_msg}")
-                    return VoiceValidationResult(voice_id, False, error_message=error_msg)
-                    
+            voice = await self.async_client.voices.get(voice_id)
+            voice_name = voice.name if hasattr(voice, 'name') else "Unknown"
+            self.clogger.debug(f"Voice {voice_id} is valid: {voice_name}")
+            return VoiceValidationResult(voice_id, True, voice_name)
+            
         except Exception as e:
-            error_msg = f"Exception during validation: {str(e)}"
-            logger.error(f"Error validating voice {voice_id}: {error_msg}")
+            error_msg = str(e)
+            if "404" in error_msg or "not found" in error_msg.lower():
+                error_msg = f"Voice not found: {voice_id}"
+                self.clogger.warning(error_msg)
+            else:
+                self.clogger.error(f"Error validating voice {voice_id}: {error_msg}")
             return VoiceValidationResult(voice_id, False, error_message=error_msg)
     
     async def get_available_voices(self) -> List[Dict]:
         """
-        Get all available voices from ElevenLabs API.
+        Get all available voices from ElevenLabs API using SDK.
         
         Returns:
             List of voice information dictionaries
         """
-        url = f"{self.base_url}/voices"
-        headers = {"xi-api-key": self.api_key}
-        
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, headers=headers) as response:
-                    if response.status == 200:
-                        data = await response.json()
-                        voices = data.get("voices", [])
-                        self.clogger.info(f"Retrieved {len(voices)} available voices")
-                        return voices
-                    else:
-                        error_text = await response.text()
-                        self.clogger.error(f"Error getting available voices ({response.status}): {error_text}")
-                        return []
+            voices_response = await self.async_client.voices.get_all()
+            voices = []
+            
+            if hasattr(voices_response, 'voices'):
+                for voice in voices_response.voices:
+                    voice_dict = {
+                        'voice_id': voice.voice_id,
+                        'name': voice.name,
+                        'category': getattr(voice, 'category', 'unknown'),
+                        'description': getattr(voice, 'description', ''),
+                        'preview_url': getattr(voice, 'preview_url', None),
+                        'labels': getattr(voice, 'labels', {})
+                    }
+                    voices.append(voice_dict)
+                
+                self.clogger.info(f"Retrieved {len(voices)} available voices")
+                return voices
+            else:
+                self.clogger.error("Unexpected response format from voices API")
+                return []
+                
         except Exception as e:
             self.clogger.error(f"Exception getting available voices: {e}")
             return []
@@ -209,7 +205,7 @@ class VoiceValidator:
     
     def get_all_voices_sync(self) -> Dict[str, VoiceInfo]:
         """
-        Synchronously fetch all available voices from ElevenLabs API.
+        Synchronously fetch all available voices from ElevenLabs API using SDK.
         
         Returns:
             Dictionary mapping voice_id to VoiceInfo objects
@@ -220,31 +216,31 @@ class VoiceValidator:
         self.clogger.info("Fetching all voices from ElevenLabs API (sync)...")
         
         try:
-            headers = {"xi-api-key": self.api_key}
-            response = requests.get(f"{self.base_url}/voices", headers=headers)
-            response.raise_for_status()
-            
-            data = response.json()
+            voices_response = self.sync_client.voices.get_all()
             voices = {}
             
-            for voice_data in data.get('voices', []):
-                voice_info = VoiceInfo(
-                    voice_id=voice_data['voice_id'],
-                    name=voice_data['name'],
-                    category=voice_data.get('category', 'unknown'),
-                    description=voice_data.get('description', ''),
-                    preview_url=voice_data.get('preview_url'),
-                    labels=voice_data.get('labels', {}),
-                    language=voice_data.get('labels', {}).get('language'),
-                    accent=voice_data.get('labels', {}).get('accent')
-                )
-                voices[voice_info.voice_id] = voice_info
+            if hasattr(voices_response, 'voices'):
+                for voice_data in voices_response.voices:
+                    voice_info = VoiceInfo(
+                        voice_id=voice_data.voice_id,
+                        name=voice_data.name,
+                        category=getattr(voice_data, 'category', 'unknown'),
+                        description=getattr(voice_data, 'description', ''),
+                        preview_url=getattr(voice_data, 'preview_url', None),
+                        labels=getattr(voice_data, 'labels', {}),
+                        language=getattr(voice_data, 'labels', {}).get('language') if hasattr(voice_data, 'labels') else None,
+                        accent=getattr(voice_data, 'labels', {}).get('accent') if hasattr(voice_data, 'labels') else None
+                    )
+                    voices[voice_info.voice_id] = voice_info
+                
+                self._all_voices_cache = voices
+                self.clogger.info(f"Fetched {len(voices)} voices from ElevenLabs API")
+                return voices
+            else:
+                self.clogger.error("Unexpected response format from voices API")
+                raise RuntimeError("Failed to fetch voices: unexpected response format")
             
-            self._all_voices_cache = voices
-            self.clogger.info(f"Fetched {len(voices)} voices from ElevenLabs API")
-            return voices
-            
-        except requests.RequestException as e:
+        except Exception as e:
             self.clogger.error(f"Error fetching voices from ElevenLabs API: {e}")
             raise
     

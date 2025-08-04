@@ -6,14 +6,13 @@ import json
 import os
 import random
 import asyncio
-import aiohttp
 import logging
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 from tqdm import tqdm
 import sys
 
-from elevenlabs import set_api_key, Voice, VoiceSettings
+from elevenlabs.client import AsyncElevenLabs
 from config.config_loader import Config
 from tts.audio_processor import AudioProcessor
 from tts.audio_combiner import AudioCombiner
@@ -37,7 +36,7 @@ class VoiceSynthesizer:
             config: Configuration object
         """
         self.config = config
-        set_api_key(config.elevenlabs_api_key)
+        self.client = AsyncElevenLabs(api_key=config.elevenlabs_api_key)
         self.api_key = config.elevenlabs_api_key
         self.audio_processor = AudioProcessor(config)
         self.audio_combiner = AudioCombiner(config)
@@ -156,11 +155,9 @@ class VoiceSynthesizer:
                 finally:
                     pbar.update(1)
         
-        # Create async session for HTTP requests
-        async with aiohttp.ClientSession() as session:
-            self.session = session
-            tasks = [process_with_progress(conv) for conv in conversations_to_process]
-            await asyncio.gather(*tasks)
+        # Process conversations concurrently
+        tasks = [process_with_progress(conv) for conv in conversations_to_process]
+        await asyncio.gather(*tasks)
         
         pbar.close()
         
@@ -287,46 +284,34 @@ class VoiceSynthesizer:
             }
         
         try:
-            # Prepare request data
-            url = f"{self.base_url}/text-to-speech/{voice_id}"
-            headers = {
-                "Accept": "audio/mpeg",
-                "Content-Type": "application/json",
-                "xi-api-key": self.api_key
-            }
-            
-            data = {
-                "text": text,
-                "model_id": self.config.voice_model_id,
-                "voice_settings": {
+            # Use the new ElevenLabs SDK client
+            audio_generator = self.client.text_to_speech.convert(
+                text=text,
+                voice_id=voice_id,
+                model_id=self.config.voice_model_id,
+                voice_settings={
                     "stability": 0.5,
                     "similarity_boost": 0.5
                 }
-            }
+            )
             
-            # Make async request
-            async with self.session.post(url, json=data, headers=headers) as response:
-                if response.status == 200:
-                    audio_bytes = await response.read()
-                    
-                    # Save audio file (run in thread to not block)
-                    await asyncio.to_thread(self._save_audio_file, filepath, audio_bytes)
-                    
-                    self.clogger.progress_write(f"Generated: {filename}")
-                    
-                    return {
-                        "turn_id": sent_id,
-                        "role": role,
-                        "text": text,
-                        "voice_id": voice_id,
-                        "filename": filename
-                    }
-                else:
-                    error_text = await response.text()
-                    # Show API errors only in verbose mode, or if they're critical (429 rate limit)
-                    if response.status == 429 or self.config.verbose:
-                        self.clogger.progress_write(f"ElevenLabs API error ({response.status}): {error_text}")
-                    return None
+            # Collect audio bytes
+            audio_bytes = b""
+            async for chunk in audio_generator:
+                audio_bytes += chunk
+            
+            # Save audio file (run in thread to not block)
+            await asyncio.to_thread(self._save_audio_file, filepath, audio_bytes)
+            
+            self.clogger.progress_write(f"Generated: {filename}")
+            
+            return {
+                "turn_id": sent_id,
+                "role": role,
+                "text": text,
+                "voice_id": voice_id,
+                "filename": filename
+            }
                     
         except Exception as e:
             self.clogger.progress_write(f"Error generating audio for turn {sent_id}: {e}")
