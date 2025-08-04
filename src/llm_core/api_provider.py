@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from langchain_google_genai import ChatGoogleGenerativeAI
+import httpx
 # from ..exceptions import MissingAPIKeyError, InvalidProviderError
 
 load_dotenv()
@@ -45,13 +46,30 @@ class LLM:
             api_key = os.getenv("OPENAI_API_KEY")
             if not api_key:
                 raise ValueError("OPENAI_API_KEY environment variable is not set")
+            
+            # Create custom httpx clients to fix async cleanup issues
+            # These clients will properly close connections
+            http_client = httpx.Client(
+                headers={"Connection": "close"},
+                timeout=30.0
+            )
+            http_async_client = httpx.AsyncClient(
+                headers={"Connection": "close"},
+                timeout=30.0
+            )
+            
             return ChatOpenAI(
                 api_key=api_key, 
                 model=self.model, 
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,
                 top_p=self.top_p,
-                n=self.n
+                n=self.n,
+                # Custom clients with proper connection handling
+                http_client=http_client,
+                http_async_client=http_async_client,
+                # Also set default headers as backup
+                default_headers={"Connection": "close"}
             )
         elif self.provider == "anthropic":
             api_key = os.getenv("ANTHROPIC_API_KEY")

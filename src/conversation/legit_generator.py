@@ -114,6 +114,9 @@ class LegitGenerator:
         # Save conversations
         self._save_conversations(all_conversations)
         
+        # Add small delay to allow async cleanup
+        await asyncio.sleep(0.1)
+        
         self.clogger.info(f"Generated {len(all_conversations)} legitimate conversations", force=True)
         return all_conversations
     
