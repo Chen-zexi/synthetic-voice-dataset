@@ -154,7 +154,9 @@ class CacheTranslator:
             with open(self.cached_translation_file, 'r', encoding='utf-8') as f:
                 cached_lines = sum(1 for _ in f)
             
-            if cached_lines != metadata.get('line_count', 0):
+            expected_lines = metadata.get('line_count', 0)
+            
+            if cached_lines != expected_lines:
                 self.clogger.warning("Cached translation line count mismatch")
                 return False
             

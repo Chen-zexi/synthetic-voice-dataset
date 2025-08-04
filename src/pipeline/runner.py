@@ -150,8 +150,10 @@ class PipelineRunner:
         # Check if translation cache is enabled
         use_cache = getattr(self.config, 'use_translation_cache', False)
         cache_service = getattr(self.config, 'translation_cache_service', 'google')
+        force_refresh = getattr(self.config, 'force_translation_refresh', False)
         
-        if use_cache and not getattr(self.config, 'force_translation_refresh', False):
+        
+        if use_cache and not force_refresh:
             # Try to use cached translation
             from translation.cache_translator import CacheTranslator
             
