@@ -21,9 +21,17 @@ def setup_logging(level: str = 'INFO'):
         datefmt='%Y-%m-%d %H:%M:%S'
     )
     
-    # Set httpx logger to DEBUG level to prevent INFO logs from interfering with tqdm
+    # Set httpx logger to WARNING level to prevent INFO logs from interfering with tqdm
     httpx_logger = logging.getLogger('httpx')
     httpx_logger.setLevel(logging.WARNING)
+    
+    # Set OpenAI client logger to WARNING level to suppress retry messages
+    openai_logger = logging.getLogger('openai')
+    openai_logger.setLevel(logging.WARNING)
+    
+    # Also set the base client logger
+    openai_base_logger = logging.getLogger('openai._base_client')
+    openai_base_logger.setLevel(logging.WARNING)
 
 
 def print_banner():

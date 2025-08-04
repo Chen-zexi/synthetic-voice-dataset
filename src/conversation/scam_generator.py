@@ -1,16 +1,19 @@
 """
-Scam conversation generator using OpenAI GPT-4.
+Scam conversation generator using LLM core with LangChain.
 """
 
 import json
 import random
 import logging
+import asyncio
 from pathlib import Path
 from typing import List, Dict, Optional
 from tqdm import tqdm
 
-from openai import OpenAI
 from config.config_loader import Config
+from llm_core.api_provider import LLM
+from llm_core.api_call import make_api_call
+from conversation.schemas import ScamConversationResponse, DialogueTurn
 
 
 logger = logging.getLogger(__name__)
@@ -29,12 +32,30 @@ class ScamGenerator:
             config: Configuration object
         """
         self.config = config
-        self.client = OpenAI(api_key=config.openai_api_key)
-        self.model = "gpt-4.1"
+        # Initialize LLM with configurable provider (default to OpenAI)
+        self.llm_provider = getattr(config, 'llm_provider', 'openai')
+        self.llm_model = getattr(config, 'llm_model', 'gpt-4o')
+        
+        # Get LLM parameters from config
+        llm_temperature = getattr(config, 'llm_temperature', 1.0)
+        llm_max_tokens = getattr(config, 'llm_max_tokens', None)
+        llm_top_p = getattr(config, 'llm_top_p', 0.95)
+        llm_n = getattr(config, 'llm_n', 1)
+        
+        # Create LLM instance with parameters
+        llm_instance = LLM(
+            provider=self.llm_provider, 
+            model=self.llm_model,
+            temperature=llm_temperature,
+            max_tokens=llm_max_tokens,
+            top_p=llm_top_p,
+            n=llm_n
+        )
+        self.llm = llm_instance.get_llm()
     
-    def generate_conversations(self) -> List[Dict]:
+    async def generate_conversations(self) -> List[Dict]:
         """
-        Generate scam conversations based on input first turns.
+        Generate scam conversations asynchronously for faster processing.
         
         Returns:
             List of conversation dictionaries
@@ -47,20 +68,47 @@ class ScamGenerator:
         
         logger.info(f"Loaded {len(first_turns)} first turns")
         
-        all_conversations = []
-        
-        # Process each first turn
-        for idx, first_turn in enumerate(tqdm(first_turns[:self.config.sample_limit], 
-                                            desc="Generating conversations")):
+        # Prepare tasks
+        tasks = []
+        for idx, first_turn in enumerate(first_turns[:self.config.sample_limit]):
             if idx >= self.config.max_conversation:
                 break
             
-            # Generate conversation
-            conversation = self._generate_single_conversation(idx + 1, first_turn)
-            if conversation:
-                all_conversations.append(conversation)
-            else:
-                logger.warning(f"Failed to generate conversation {idx + 1}")
+            task = self._generate_single_conversation(idx + 1, first_turn)
+            tasks.append(task)
+        
+        # Run tasks concurrently with progress bar
+        max_concurrent = getattr(self.config, 'max_concurrent_requests', 10)
+        semaphore = asyncio.Semaphore(max_concurrent)
+        
+        # Wrap tasks with semaphore
+        async def limited_task(task_func):
+            async with semaphore:
+                return await task_func
+        
+        # Create progress bar for async operations
+        pbar = tqdm(total=len(tasks), desc="Generating conversations")
+        
+        async def run_with_progress(task_func):
+            result = await limited_task(task_func)
+            pbar.update(1)
+            return result
+        
+        # Run all tasks concurrently
+        results = await asyncio.gather(
+            *[run_with_progress(task) for task in tasks],
+            return_exceptions=True
+        )
+        
+        pbar.close()
+        
+        # Collect successful results
+        all_conversations = []
+        for idx, result in enumerate(results):
+            if isinstance(result, Exception):
+                logger.error(f"Task {idx} failed: {result}")
+            elif result:
+                all_conversations.append(result)
         
         # Save conversations
         self._save_conversations(all_conversations)
@@ -68,9 +116,9 @@ class ScamGenerator:
         logger.info(f"Generated {len(all_conversations)} conversations")
         return all_conversations
     
-    def _generate_single_conversation(self, conversation_id: int, first_turn: str) -> Optional[Dict]:
+    async def _generate_single_conversation(self, conversation_id: int, first_turn: str) -> Optional[Dict]:
         """
-        Generate a single conversation.
+        Generate a single conversation asynchronously.
         
         Args:
             conversation_id: Unique conversation ID
@@ -87,7 +135,7 @@ class ScamGenerator:
         victim_awareness = random.choice(self.config.victim_awareness_levels)
         
         # Generate dialogue
-        dialogue = self._generate_dialogue(first_turn, num_turns, victim_awareness)
+        dialogue = await self._generate_dialogue(first_turn, num_turns, victim_awareness)
         
         if dialogue:
             return {
@@ -100,10 +148,10 @@ class ScamGenerator:
         
         return None
     
-    def _generate_dialogue(self, first_turn: str, num_turns: int, 
-                          victim_awareness: str) -> Optional[List[Dict]]:
+    async def _generate_dialogue(self, first_turn: str, num_turns: int, 
+                                victim_awareness: str) -> Optional[List[Dict]]:
         """
-        Generate dialogue turns using GPT-4.
+        Generate dialogue turns asynchronously using LLM.
         
         Args:
             first_turn: Opening line
@@ -113,29 +161,39 @@ class ScamGenerator:
         Returns:
             List of dialogue turns or None if generation failed
         """
-        prompt = self._create_prompt(first_turn, num_turns, victim_awareness)
+        system_prompt = self._create_system_prompt()
+        user_prompt = self._create_user_prompt(first_turn, num_turns, victim_awareness)
         
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=1,
-                max_tokens=3000,
-                top_p=0.95,
-                n=1
+            # Use async structured output
+            response = await make_api_call(
+                llm=self.llm,
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                response_schema=ScamConversationResponse
             )
             
-            response_text = response.choices[0].message.content.strip()
-            return self._parse_json_response(response_text)
+            # Convert Pydantic models to dicts
+            if hasattr(response, 'dialogue'):
+                return [turn.model_dump() for turn in response.dialogue]
+            else:
+                logger.error("Response missing dialogue field")
+                return None
             
         except Exception as e:
-            logger.error(f"OpenAI API error: {e}")
+            logger.error(f"LLM API error: {e}")
             return None
     
-    def _create_prompt(self, first_turn: str, num_turns: int, 
-                      victim_awareness: str) -> str:
+    def _create_system_prompt(self) -> str:
+        """Create the system prompt for conversation generation."""
+        return """You are a dialogue generator for creating realistic phone conversations.
+Your task is to generate structured dialogues with alternating turns between caller and callee.
+Follow all formatting requirements exactly and preserve any special codes in the input."""
+
+    def _create_user_prompt(self, first_turn: str, num_turns: int, 
+                           victim_awareness: str) -> str:
         """
-        Create the prompt for GPT-4.
+        Create the user prompt for conversation generation.
         
         Args:
             first_turn: Opening line
@@ -147,68 +205,22 @@ class ScamGenerator:
         """
         return f"""Continue the scam phone call dialogue between the caller (scammer) and callee (victim). The victim is {victim_awareness} aware of the scam.
 
-    The total number of turns must be exactly {num_turns} individual turns (i.e., lines), alternating between caller and callee.
+The total number of turns must be exactly {num_turns} individual turns (i.e., lines), alternating between caller and callee.
 
-    **STRICT RULE - FIRST SENTENCE**:  
-    The conversation **must begin** with a **shortened version** of the first sentence below.  
-    This means using fewer words while preserving the original intent and **keeping all special codes unchanged and in the same position**.
-    First sentence to shorten and use as Turn 1: "{first_turn}"
+**STRICT RULE - FIRST SENTENCE**:  
+The conversation **must begin** with a **shortened version** of the first sentence below.  
+This means using fewer words while preserving the original intent and **keeping all special codes unchanged and in the same position**.
+First sentence to shorten and use as Turn 1: "{first_turn}"
 
-    **STRICT RULE - SPECIAL CODE**: 
-    Special codes (e.g., {{00001}}, {{00002}}, etc.) represent fixed values (e.g., names, organizations, or amounts).
-    If the first sentence includes special codes, you **must reuse** the exact same codes from the first sentence throughout the dialogue - but only in the same types of places where they were originally used, and they must appear in those places. 
-    If the first sentence does not include special codes, that's okay. Do **not** use any codes in this case.
-    Do **not** invent or introduce any new codes under any circumstances.
-    
-    Shorter sentences are preferred.
-    
-    Output format (must be valid JSON):
-    A list of {num_turns} objects, where:
-    - The first object must have `"text"` equal to the shortened version of the first sentence (as defined above).
-    - The `"role"` alternates between `"caller"` and `"callee"`.
-    - The `"sent_id"` starts at 1 and increments by 1.
+**STRICT RULE - SPECIAL CODE**: 
+Special codes (e.g., {{00001}}, {{00002}}, etc.) represent fixed values (e.g., names, organizations, or amounts).
+If the first sentence includes special codes, you **must reuse** the exact same codes from the first sentence throughout the dialogue - but only in the same types of places where they were originally used, and they must appear in those places. 
+If the first sentence does not include special codes, that's okay. Do **not** use any codes in this case.
+Do **not** invent or introduce any new codes under any circumstances.
 
-    Example format:
-    [
-        {{
-            "sent_id": 1,
-            "text": "...",
-            "role": "caller"
-        }},
-        {{
-            "sent_id": 2,
-            "text": "...",
-            "role": "callee"
-        }},
-        ...
-    ]
-    """
-    
-    def _parse_json_response(self, response_text: str) -> Optional[List[Dict]]:
-        """
-        Parse JSON response from GPT-4.
-        
-        Args:
-            response_text: Raw response text
-            
-        Returns:
-            Parsed JSON list or None if parsing failed
-        """
-        try:
-            # Find JSON array in the response
-            start_idx = response_text.find('[')
-            end_idx = response_text.rfind(']') + 1
-            
-            if start_idx != -1 and end_idx != 0:
-                json_str = response_text[start_idx:end_idx]
-                return json.loads(json_str)
-            else:
-                logger.error("Could not find JSON array in response")
-                return None
-                
-        except json.JSONDecodeError as e:
-            logger.error(f"JSON parsing error: {e}")
-            return None
+Shorter sentences are preferred.
+
+Generate exactly {num_turns} dialogue turns, starting with "caller" role."""
     
     def _save_conversations(self, conversations: List[Dict]):
         """

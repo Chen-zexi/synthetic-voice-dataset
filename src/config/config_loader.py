@@ -100,6 +100,15 @@ class Config:
     post_processing_scam_label: int
     post_processing_legit_label: int
     
+    # LLM settings
+    llm_provider: str = "openai"
+    llm_model: str = "gpt-4.1-mini"
+    max_concurrent_requests: int = 10
+    llm_temperature: float = 1.0
+    llm_max_tokens: Optional[int] = None
+    llm_top_p: float = 0.95
+    llm_n: int = 1
+    
     # Raw config data
     common_config: dict = field(default_factory=dict)
     lang_config: dict = field(default_factory=dict)
@@ -254,6 +263,9 @@ class ConfigLoader:
         scam_audio_zip = final_dir / "archives" / self.common_config["post_processing"]["audio_zip_names"]["scam"]
         legit_audio_zip = final_dir / "archives" / self.common_config["post_processing"]["audio_zip_names"]["legit"]
         
+        # Add LLM settings
+        llm_config = self.common_config.get("llm", {})
+        
         return Config(
             # Environment variables
             openai_api_key=openai_api_key,
@@ -339,6 +351,15 @@ class ConfigLoader:
             post_processing_scam_label=self.common_config["post_processing"]["scam_label"],
             post_processing_legit_label=self.common_config["post_processing"]["legit_label"],
             
+            # LLM settings
+            llm_provider=llm_config.get("provider", "openai"),
+            llm_model=llm_config.get("model", "gpt-4o"),
+            max_concurrent_requests=llm_config.get("max_concurrent_requests", 10),
+            llm_temperature=llm_config.get("temperature", 1.0),
+            llm_max_tokens=llm_config.get("max_tokens"),
+            llm_top_p=llm_config.get("top_p", 0.95),
+            llm_n=llm_config.get("n", 1),
+            
             # Raw config data
             common_config=self.common_config,
             lang_config=lang_config
@@ -400,6 +421,9 @@ class ConfigLoader:
         legit_formatted = final_dir / "json" / locale_config["output"]["legit_formatted"]
         scam_audio_zip = final_dir / "archives" / self.common_config["post_processing"]["audio_zip_names"]["scam"]
         legit_audio_zip = final_dir / "archives" / self.common_config["post_processing"]["audio_zip_names"]["legit"]
+        
+        # Add LLM settings
+        llm_config = self.common_config.get("llm", {})
         
         return Config(
             # Environment variables
@@ -485,6 +509,15 @@ class ConfigLoader:
             post_processing_legit_audio_zip_output=legit_audio_zip,
             post_processing_scam_label=self.common_config["post_processing"]["scam_label"],
             post_processing_legit_label=self.common_config["post_processing"]["legit_label"],
+            
+            # LLM settings
+            llm_provider=llm_config.get("provider", "openai"),
+            llm_model=llm_config.get("model", "gpt-4o"),
+            max_concurrent_requests=llm_config.get("max_concurrent_requests", 10),
+            llm_temperature=llm_config.get("temperature", 1.0),
+            llm_max_tokens=llm_config.get("max_tokens"),
+            llm_top_p=llm_config.get("top_p", 0.95),
+            llm_n=llm_config.get("n", 1),
             
             # Raw config data
             common_config=self.common_config,

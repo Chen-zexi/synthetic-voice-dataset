@@ -4,6 +4,7 @@ Pipeline runner for orchestrating the voice scam dataset generation process.
 
 import logging
 import time
+import asyncio
 from typing import List, Optional, Dict, Callable
 from pathlib import Path
 
@@ -108,7 +109,11 @@ class PipelineRunner:
             start_time = time.time()
             
             try:
-                method()
+                # Conversation and legit generation are async methods
+                if step in ['conversation', 'legit']:
+                    asyncio.run(method())
+                else:
+                    method()
                 duration = time.time() - start_time
                 print_step_complete(step, duration)
                 self.progress.update(step)
@@ -141,12 +146,12 @@ class PipelineRunner:
             max_lines=self.config.max_lines
         )
     
-    def run_conversation_generation(self):
+    async def run_conversation_generation(self):
         """Run conversation generation: create multi-turn scam dialogues."""
         logger.info("Generating scam conversations")
         
         generator = ScamGenerator(self.config)
-        generator.generate_conversations()
+        await generator.generate_conversations()
     
     def run_final_translation(self):
         """Run final translation: English to target language."""
@@ -163,12 +168,12 @@ class PipelineRunner:
             to_code=self.config.multi_turn_to_code
         )
     
-    def run_legit_generation(self):
+    async def run_legit_generation(self):
         """Run legitimate conversation generation."""
         logger.info("Generating legitimate conversations")
         
         generator = LegitGenerator(self.config)
-        generator.generate_conversations()
+        await generator.generate_conversations()
     
     def run_tts(self):
         """Run text-to-speech conversion."""
