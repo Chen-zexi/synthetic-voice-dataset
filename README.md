@@ -561,6 +561,7 @@ python main.py --locale ms-my
 7. **Missing Placeholder Mappings**: Ensure all 53 placeholders are defined
 8. **Voice Synthesis Quota**: ElevenLabs has monthly character limits
 9. **LLM Parameter Warnings**: Parameters are now passed directly to model constructors
+10. **Translation Cache Not Working**: Cache will not work if source file is modified after cache is created. Use ```find data/translation_cache -type f -exec touch {} \;``` to refresh the cache timestamp to by pass
 
 ### Debug Mode
 

@@ -140,13 +140,13 @@ class CacheTranslator:
         if not self.cached_translation_file.exists() or not self.metadata_file.exists():
             return False
         
-        # Check if source file has been modified since cache was created
+        # Check if source file has been modified since cache file was last modified
         try:
-            metadata = self._load_metadata()
-            cache_time = datetime.fromisoformat(metadata['timestamp'])
+            # Use cache file modification time instead of metadata timestamp
+            cache_mtime = datetime.fromtimestamp(self.cached_translation_file.stat().st_mtime)
             source_mtime = datetime.fromtimestamp(self.chinese_input.stat().st_mtime)
             
-            if source_mtime > cache_time:
+            if source_mtime > cache_mtime:
                 self.clogger.info("Source file has been modified since cache was created")
                 return False
             
@@ -154,6 +154,8 @@ class CacheTranslator:
             with open(self.cached_translation_file, 'r', encoding='utf-8') as f:
                 cached_lines = sum(1 for _ in f)
             
+            # Load metadata to get expected line count
+            metadata = self._load_metadata()
             expected_lines = metadata.get('line_count', 0)
             
             if cached_lines != expected_lines:
