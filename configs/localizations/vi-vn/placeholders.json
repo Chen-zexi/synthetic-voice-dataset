@@ -48,10 +48,10 @@
   "{00003}": {
     "tag": "<money_amount_medium>",
     "substitutions": [
-      "5 triệu đồng",
-      "10 triệu đồng",
-      "20 triệu đồng",
-      "30 triệu đồng"
+      "5 triệu đồng (VND)",
+      "10 triệu đồng (VND)",
+      "20 triệu đồng (VND)",
+      "30 triệu đồng (VND)"
     ],
     "translations": [
       "5,000,000 VND",
@@ -93,9 +93,9 @@
   "{00006}": {
     "tag": "<money_amount_small>",
     "substitutions": [
-      "500 nghìn đồng",
-      "1 triệu đồng",
-      "2 triệu đồng"
+      "500 nghìn đồng (VND)",
+      "1 triệu đồng (VND)",
+      "2 triệu đồng (VND)"
     ],
     "translations": [
       "500,000 VND",
@@ -254,9 +254,9 @@
   "{00017}": {
     "tag": "<money_amount_very_small>",
     "substitutions": [
-      "100 nghìn đồng",
-      "200 nghìn đồng",
-      "300 nghìn đồng"
+      "100 nghìn đồng (VND)",
+      "200 nghìn đồng (VND)",
+      "300 nghìn đồng (VND)"
     ],
     "translations": [
       "100,000 VND",

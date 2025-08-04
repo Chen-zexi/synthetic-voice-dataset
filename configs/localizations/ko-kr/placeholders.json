@@ -48,10 +48,10 @@
   "{00003}": {
     "tag": "<money_amount_medium>",
     "substitutions": [
-      "30만원",
-      "50만원",
-      "100만원",
-      "200만원"
+      "30만원 (KRW)",
+      "50만원 (KRW)",
+      "100만원 (KRW)",
+      "200만원 (KRW)"
     ],
     "translations": [
       "300,000 KRW",
@@ -93,9 +93,9 @@
   "{00006}": {
     "tag": "<money_amount_small>",
     "substitutions": [
-      "3만원",
-      "5만원",
-      "10만원"
+      "3만원 (KRW)",
+      "5만원 (KRW)",
+      "10만원 (KRW)"
     ],
     "translations": [
       "30,000 KRW",
@@ -254,9 +254,9 @@
   "{00017}": {
     "tag": "<money_amount_very_small>",
     "substitutions": [
-      "5천원",
-      "1만원",
-      "2만원"
+      "5천원 (KRW)",
+      "1만원 (KRW)",
+      "2만원 (KRW)"
     ],
     "translations": [
       "5,000 KRW",

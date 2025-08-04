@@ -16,14 +16,13 @@
   "voices": {
     "ids": [
       "onwK4e9ZLuTAKqWW03F9",
-      "pqHfZKP75CvOlQylNhV4",
-      "SOYHLrjzK2X1ezoPC6cr"
+      "pqHfZKP75CvOlQylNhV4"
     ],
     "names": [
       "Korean Male (Middle-aged)",
-      "Korean Female (Young)",
-      "Korean Male (Young)"
-    ]
+      "Korean Female (Young)"
+    ],
+    "_note": "Invalid voice IDs removed: SOYHLrjzK2X1ezoPC6cr. Use --validate-voices to find alternatives."
   },
   "conversation": {
     "legit_categories": [

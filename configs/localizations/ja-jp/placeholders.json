@@ -48,10 +48,10 @@
   "{00003}": {
     "tag": "<money_amount_medium>",
     "substitutions": [
-      "3万円",
-      "5万円",
-      "10万円",
-      "20万円"
+      "3万円 (JPY)",
+      "5万円 (JPY)",
+      "10万円 (JPY)",
+      "20万円 (JPY)"
     ],
     "translations": [
       "30,000 JPY",
@@ -93,9 +93,9 @@
   "{00006}": {
     "tag": "<money_amount_small>",
     "substitutions": [
-      "3千円",
-      "5千円",
-      "1万円"
+      "3千円 (JPY)",
+      "5千円 (JPY)",
+      "1万円 (JPY)"
     ],
     "translations": [
       "3,000 JPY",
@@ -254,9 +254,9 @@
   "{00017}": {
     "tag": "<money_amount_very_small>",
     "substitutions": [
-      "500円",
-      "1,000円",
-      "2,000円"
+      "500円 (JPY)",
+      "1,000円 (JPY)",
+      "2,000円 (JPY)"
     ],
     "translations": [
       "500 JPY",

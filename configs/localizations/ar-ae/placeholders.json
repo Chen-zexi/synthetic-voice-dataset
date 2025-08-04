@@ -32,10 +32,10 @@
   "{00003}": {
     "tag": "<money_amount_medium>",
     "substitutions": [
-      "١٠٠٠ درهم",
-      "٢٠٠٠ درهم",
-      "٣٠٠٠ درهم",
-      "٥٠٠٠ درهم"
+      "١٠٠٠ درهم (AED)",
+      "٢٠٠٠ درهم (AED)",
+      "٣٠٠٠ درهم (AED)",
+      "٥٠٠٠ درهم (AED)"
     ],
     "translations": [
       "1000 AED",
@@ -73,9 +73,9 @@
   "{00006}": {
     "tag": "<money_amount_small>",
     "substitutions": [
-      "١٠٠ درهم",
-      "٢٠٠ درهم",
-      "٥٠٠ درهم"
+      "١٠٠ درهم (AED)",
+      "٢٠٠ درهم (AED)",
+      "٥٠٠ درهم (AED)"
     ],
     "translations": [
       "100 AED",
@@ -216,9 +216,9 @@
   "{00017}": {
     "tag": "<money_amount_very_small>",
     "substitutions": [
-      "٢٥ درهم",
-      "٥٠ درهم",
-      "٧٥ درهم"
+      "٢٥ درهم (AED)",
+      "٥٠ درهم (AED)",
+      "٧٥ درهم (AED)"
     ],
     "translations": [
       "25 AED",

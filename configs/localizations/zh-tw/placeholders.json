@@ -51,12 +51,12 @@
     "tag": "<money_amount_medium>",
     "description": "Medium amounts in TWD",
     "substitutions": [
-      "6,000元",
-      "10,000元",
-      "20,000元",
-      "15,000元",
-      "25,000元",
-      "30,000元"
+      "6,000元 (TWD)",
+      "10,000元 (TWD)",
+      "20,000元 (TWD)",
+      "15,000元 (TWD)",
+      "25,000元 (TWD)",
+      "30,000元 (TWD)"
     ],
     "translations": [
       "NT$6,000",
@@ -111,12 +111,12 @@
     "tag": "<money_amount_small>",
     "description": "Small amounts in TWD",
     "substitutions": [
-      "500元",
-      "1,000元",
-      "1,500元",
-      "2,000元",
-      "2,500元",
-      "3,000元"
+      "500元 (TWD)",
+      "1,000元 (TWD)",
+      "1,500元 (TWD)",
+      "2,000元 (TWD)",
+      "2,500元 (TWD)",
+      "3,000元 (TWD)"
     ],
     "translations": [
       "NT$500",
@@ -331,12 +331,12 @@
     "tag": "<money_amount_very_small>",
     "description": "Very small amounts",
     "substitutions": [
-      "100元",
-      "200元",
-      "300元",
-      "150元",
-      "250元",
-      "400元"
+      "100元 (TWD)",
+      "200元 (TWD)",
+      "300元 (TWD)",
+      "150元 (TWD)",
+      "250元 (TWD)",
+      "400元 (TWD)"
     ],
     "translations": [
       "NT$100",

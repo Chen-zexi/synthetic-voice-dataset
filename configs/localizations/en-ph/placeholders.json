@@ -48,10 +48,10 @@
   "{00003}": {
     "tag": "<money_amount_medium>",
     "substitutions": [
-      "₱10,000",
-      "₱20,000",
-      "₱30,000",
-      "₱50,000"
+      "₱10,000 PHP",
+      "₱20,000 PHP",
+      "₱30,000 PHP",
+      "₱50,000 PHP"
     ],
     "translations": [
       "10,000 PHP",
@@ -93,9 +93,9 @@
   "{00006}": {
     "tag": "<money_amount_small>",
     "substitutions": [
-      "₱1,000",
-      "₱2,000",
-      "₱5,000"
+      "₱1,000 PHP",
+      "₱2,000 PHP",
+      "₱5,000 PHP"
     ],
     "translations": [
       "1,000 PHP",
@@ -256,9 +256,9 @@
   "{00017}": {
     "tag": "<money_amount_very_small>",
     "substitutions": [
-      "₱200",
-      "₱500",
-      "₱750"
+      "₱200 PHP",
+      "₱500 PHP",
+      "₱750 PHP"
     ],
     "translations": [
       "200 PHP",
@@ -565,7 +565,7 @@
       "Police"
     ],
     "translations": [
-      "PNP",
+      "Philippine National Police",
       "PNP",
       "Police"
     ]

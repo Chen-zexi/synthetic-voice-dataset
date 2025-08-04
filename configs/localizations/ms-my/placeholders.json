@@ -36,10 +36,10 @@
   "{00003}": {
     "tag": "<money_amount_medium>",
     "substitutions": [
-      "RM1,000",
-      "RM2,000",
-      "RM3,000",
-      "RM5,000"
+      "RM1,000 (MYR)",
+      "RM2,000 (MYR)",
+      "RM3,000 (MYR)",
+      "RM5,000 (MYR)"
     ],
     "translations": [
       "RM1,000",
@@ -77,9 +77,9 @@
   "{00006}": {
     "tag": "<money_amount_small>",
     "substitutions": [
-      "RM50",
-      "RM100",
-      "RM200"
+      "RM50 (MYR)",
+      "RM100 (MYR)",
+      "RM200 (MYR)"
     ],
     "translations": [
       "RM50",
@@ -218,9 +218,9 @@
   "{00017}": {
     "tag": "<money_amount_very_small>",
     "substitutions": [
-      "RM10",
-      "RM20",
-      "RM30"
+      "RM10 (MYR)",
+      "RM20 (MYR)",
+      "RM30 (MYR)"
     ],
     "translations": [
       "RM10",

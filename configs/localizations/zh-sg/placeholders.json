@@ -51,12 +51,12 @@
     "tag": "<money_amount_medium>",
     "description": "Medium monetary amounts in SGD",
     "substitutions": [
-      "500新元",
-      "800新元",
-      "1200新元",
-      "300新元",
-      "600新元",
-      "1000新元"
+      "500新元 (SGD)",
+      "800新元 (SGD)",
+      "1200新元 (SGD)",
+      "300新元 (SGD)",
+      "600新元 (SGD)",
+      "1000新元 (SGD)"
     ],
     "translations": [
       "S$500",
@@ -111,12 +111,12 @@
     "tag": "<money_amount_small>",
     "description": "Small monetary amounts in SGD",
     "substitutions": [
-      "50新元",
-      "80新元",
-      "30新元",
-      "100新元",
-      "75新元",
-      "60新元"
+      "50新元 (SGD)",
+      "80新元 (SGD)",
+      "30新元 (SGD)",
+      "100新元 (SGD)",
+      "75新元 (SGD)",
+      "60新元 (SGD)"
     ],
     "translations": [
       "S$50",
@@ -331,12 +331,12 @@
     "tag": "<money_amount_very_small>",
     "description": "Very small amounts in SGD",
     "substitutions": [
-      "10新元",
-      "20新元",
-      "15新元",
-      "5新元",
-      "8新元",
-      "12新元"
+      "10新元 (SGD)",
+      "20新元 (SGD)",
+      "15新元 (SGD)",
+      "5新元 (SGD)",
+      "8新元 (SGD)",
+      "12新元 (SGD)"
     ],
     "translations": [
       "S$10",
