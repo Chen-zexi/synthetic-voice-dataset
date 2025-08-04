@@ -4,6 +4,7 @@ Base translator interface and factory for translation services.
 
 import json
 import logging
+import asyncio
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -36,9 +37,9 @@ class BaseTranslator(ABC):
         self.clogger = ConditionalLogger(__name__, config.verbose)
     
     @abstractmethod
-    def translate_text(self, text: str, from_code: str, to_code: str) -> str:
+    async def translate_text(self, text: str, from_code: str, to_code: str) -> str:
         """
-        Translate a single text string.
+        Translate a single text string asynchronously.
         
         Args:
             text: Text to translate
@@ -50,10 +51,11 @@ class BaseTranslator(ABC):
         """
         pass
     
-    def translate_file(self, input_path: Path, output_path: Path, 
-                      from_code: str, to_code: str, max_lines: Optional[int] = None):
+    async def translate_file(self, input_path: Path, output_path: Path, 
+                            from_code: str, to_code: str, max_lines: Optional[int] = None,
+                            max_concurrent: int = 10):
         """
-        Translate a text file line by line.
+        Translate a text file with concurrent processing.
         
         Args:
             input_path: Input file path
@@ -61,6 +63,7 @@ class BaseTranslator(ABC):
             from_code: Source language code
             to_code: Target language code
             max_lines: Maximum number of lines to translate
+            max_concurrent: Maximum concurrent translations
         """
         # Get service name for logging
         service_name = self.__class__.__name__.replace('Translator', '')
@@ -71,40 +74,53 @@ class BaseTranslator(ABC):
             
         self.clogger.info(f"Translating file using {service_info}: {input_path} ({from_code} -> {to_code})", force=True)
         
-        # First, count total lines for progress bar
+        # Read all lines
         with open(input_path, 'r', encoding='utf-8') as f:
-            total_lines = sum(1 for _ in f)
+            lines = [line.strip() for line in f.readlines()]
             if max_lines:
-                total_lines = min(total_lines, max_lines)
+                lines = lines[:max_lines]
         
-        with open(input_path, 'r', encoding='utf-8') as infile, \
-             open(output_path, 'w', encoding='utf-8') as outfile:
+        # Create semaphore for rate limiting
+        semaphore = asyncio.Semaphore(max_concurrent)
+        
+        async def translate_with_semaphore(line_text: str, line_num: int):
+            async with semaphore:
+                return await self.translate_text(line_text, from_code, to_code), line_num
+        
+        # Process lines concurrently
+        self.clogger.info(f"Starting concurrent translation of {len(lines)} lines")
+        
+        with tqdm(total=len(lines), desc="Translating lines", unit="line") as pbar:
+            # Create tasks for all lines
+            tasks = [translate_with_semaphore(line, i) for i, line in enumerate(lines) if line.strip()]
             
-            # Create progress bar
-            with tqdm(total=total_lines, desc="Translating lines", unit="line") as pbar:
-                for line_num, line in enumerate(infile, 1):
-                    if max_lines and line_num > max_lines:
-                        break
-                    
-                    # Translate line
-                    translated = self.translate_text(line.strip(), from_code, to_code)
-                    outfile.write(translated + '\n')
-                    
-                    # Update progress bar
-                    pbar.update(1)
+            # Process with progress updates
+            translated_results = []
+            for task in asyncio.as_completed(tasks):
+                translated_text, line_num = await task
+                translated_results.append((line_num, translated_text))
+                pbar.update(1)
+        
+        # Sort results by original line order and write to file
+        translated_results.sort(key=lambda x: x[0])
+        
+        with open(output_path, 'w', encoding='utf-8') as outfile:
+            for _, translated_text in translated_results:
+                outfile.write(translated_text + '\n')
         
         self.clogger.info(f"Translation complete. Output: {output_path}", force=True)
     
-    def translate_conversations(self, input_path: Path, output_path: Path,
-                               from_code: str, to_code: str):
+    async def translate_conversations(self, input_path: Path, output_path: Path,
+                                     from_code: str, to_code: str, max_concurrent: int = 5):
         """
-        Translate conversation JSON files with placeholder filling.
+        Translate conversation JSON files with placeholder filling and concurrent processing.
         
         Args:
             input_path: Input JSON file path
             output_path: Output JSON file path
             from_code: Source language code
             to_code: Target language code
+            max_concurrent: Maximum concurrent conversations to process
         """
         # Get service name for logging
         service_name = self.__class__.__name__.replace('Translator', '')
@@ -123,13 +139,11 @@ class BaseTranslator(ABC):
         with open(self.config.preprocessing_map_path, 'r', encoding='utf-8') as f:
             placeholder_map = json.load(f)
         
-        translated_conversations = []
+        # Create semaphore for rate limiting
+        semaphore = asyncio.Semaphore(max_concurrent)
         
-        # Calculate total number of dialogue turns for progress bar
-        total_turns = sum(len(conv.get("dialogue", [])) for conv in conversations)
-        
-        with tqdm(total=total_turns, desc="Translating dialogue turns", unit="turn") as pbar:
-            for conv_idx, conversation in enumerate(conversations):
+        async def translate_conversation(conv_idx: int, conversation: Dict) -> Dict:
+            async with semaphore:
                 self.clogger.debug(f"Translating conversation {conv_idx + 1}/{len(conversations)}")
                 
                 # Create substitution cache for consistent replacements within conversation
@@ -137,27 +151,50 @@ class BaseTranslator(ABC):
                 
                 translated_conv = conversation.copy()
                 
-                # Translate dialogue turns
+                # Translate dialogue turns concurrently within the conversation
                 if "dialogue" in translated_conv:
+                    # Create tasks for all turns in this conversation
+                    turn_tasks = []
                     for turn in translated_conv["dialogue"]:
-                        # Translate text
-                        translated_text = self.translate_text(
-                            turn["text"], from_code, to_code
-                        )
-                        
-                        # Fill placeholders
+                        task = self.translate_text(turn["text"], from_code, to_code)
+                        turn_tasks.append(task)
+                    
+                    # Wait for all turn translations to complete
+                    translated_texts = await asyncio.gather(*turn_tasks)
+                    
+                    # Apply translations and fill placeholders
+                    for turn, translated_text in zip(translated_conv["dialogue"], translated_texts):
                         turn["text"] = self._fill_placeholders(
                             translated_text, placeholder_map, substitution_cache
                         )
-                        
-                        # Update progress bar
-                        pbar.update(1)
                 
                 # Update first_turn if present
                 if translated_conv.get("dialogue"):
                     translated_conv["first_turn"] = translated_conv["dialogue"][0]["text"]
                 
-                translated_conversations.append(translated_conv)
+                return translated_conv
+        
+        # Process conversations concurrently while maintaining order
+        self.clogger.info(f"Starting concurrent translation of {len(conversations)} conversations")
+        
+        # Create tasks with indices to maintain order
+        async def translate_with_index(i: int, conv: Dict) -> tuple:
+            result = await translate_conversation(i, conv)
+            return i, result
+        
+        tasks = [translate_with_index(i, conv) for i, conv in enumerate(conversations)]
+        
+        with tqdm(total=len(conversations), desc="Translating conversations", unit="conv") as pbar:
+            # Process all tasks concurrently
+            results = []
+            for task in asyncio.as_completed(tasks):
+                index, translated_conv = await task
+                results.append((index, translated_conv))
+                pbar.update(1)
+        
+        # Sort by original index and extract conversations
+        results.sort(key=lambda x: x[0])
+        translated_conversations = [conv for _, conv in results]
         
         # Save translated conversations
         with open(output_path, 'w', encoding='utf-8') as f:

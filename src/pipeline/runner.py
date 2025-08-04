@@ -115,8 +115,8 @@ class PipelineRunner:
             start_time = time.time()
             
             try:
-                # Conversation, legit generation, and TTS are async methods
-                if step in ['conversation', 'legit', 'tts']:
+                # Conversation, legit generation, translation, and TTS are async methods
+                if step in ['conversation', 'legit', 'tts', 'translate', 'translate_final']:
                     # Use asyncio.run with debug=False to suppress warnings
                     loop = asyncio.new_event_loop()
                     asyncio.set_event_loop(loop)
@@ -145,7 +145,7 @@ class PipelineRunner:
         extractor = TagExtractor(self.config)
         extractor.extract_tags()
     
-    def run_translation(self):
+    async def run_translation(self):
         """Run initial translation: Chinese to English."""
         # Check if translation cache is enabled
         use_cache = getattr(self.config, 'use_translation_cache', False)
@@ -194,7 +194,7 @@ class PipelineRunner:
             self.config.translation_service,
             self.config
         )
-        translator.translate_file(
+        await translator.translate_file(
             input_path=self.config.translation_input_path,
             output_path=self.config.translation_output_path,
             from_code=self.config.translation_from_code,
@@ -209,7 +209,7 @@ class PipelineRunner:
         generator = ScamGenerator(self.config)
         await generator.generate_conversations()
     
-    def run_final_translation(self):
+    async def run_final_translation(self):
         """Run final translation: English to target language."""
         # Build service info string
         service_info = f"service: {self.config.translation_service}"
@@ -222,7 +222,7 @@ class PipelineRunner:
             self.config.translation_service,
             self.config
         )
-        translator.translate_conversations(
+        await translator.translate_conversations(
             input_path=self.config.multi_turn_translated_input_path,
             output_path=self.config.multi_turn_translated_output_path,
             from_code=self.config.multi_turn_from_code,

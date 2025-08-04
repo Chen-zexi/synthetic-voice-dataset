@@ -461,7 +461,7 @@ def cache_translation(
         print(f"Force refresh: {force_refresh}")
         print()
         
-        metadata = translator.run_cached_translation(force_refresh)
+        metadata = translator.run_cached_translation_sync(force_refresh)
         
         print_info(f"\nTranslation cached successfully!")
         print(f"Lines translated: {metadata['line_count']}")

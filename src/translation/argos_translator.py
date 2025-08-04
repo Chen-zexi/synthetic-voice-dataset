@@ -1,8 +1,9 @@
 """
-Argos Translate implementation for the translation module.
+Argos Translate implementation for the translation module with async support.
 """
 
 import logging
+import asyncio
 import re
 import argostranslate.package
 import argostranslate.translate
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 class ArgosTranslator(BaseTranslator):
     """
-    Argos Translate implementation of the translator interface.
+    Argos Translate implementation of the translator interface with async support.
     """
     
     def __init__(self, config: Config):
@@ -29,6 +30,7 @@ class ArgosTranslator(BaseTranslator):
         """
         super().__init__(config)
         self.installed_packages = {}
+        self.semaphore = asyncio.Semaphore(5)  # Limit concurrent Argos translations
         self._initialize_packages()
     
     def _initialize_packages(self):
@@ -87,9 +89,9 @@ class ArgosTranslator(BaseTranslator):
         
         raise ValueError(f"Failed to install package for {source_code} -> {target_code}")
     
-    def translate_text(self, text: str, from_code: str, to_code: str) -> str:
+    async def translate_text(self, text: str, from_code: str, to_code: str) -> str:
         """
-        Translate text using Argos Translate.
+        Translate text using Argos Translate asynchronously.
         
         Args:
             text: Text to translate
@@ -102,34 +104,36 @@ class ArgosTranslator(BaseTranslator):
         if not text.strip():
             return text
         
-        try:
-            # Preserve placeholders
-            placeholders = self.placeholder_pattern.findall(text)
-            temp_text = text
-            
-            # Replace placeholders with temporary markers
-            # Use a pattern that translation services are less likely to modify
-            for i, placeholder in enumerate(placeholders):
-                temp_text = temp_text.replace(placeholder, f"###PH{i}###")
-            
-            # Get translation package
-            from_lang, to_lang = self._get_translation_package(from_code, to_code)
-            
-            # Translate
-            translation = from_lang.get_translation(to_lang)
-            translated = translation.translate(temp_text)
-            
-            # Restore placeholders
-            for i, placeholder in enumerate(placeholders):
-                # Replace our marker back with original placeholder
-                translated = translated.replace(f"###PH{i}###", placeholder)
-                # Also try variations in case translation modified it
-                translated = translated.replace(f"### PH{i} ###", placeholder)
-                translated = translated.replace(f"###ph{i}###", placeholder)
-                translated = translated.replace(f"### ph{i} ###", placeholder)
-            
-            return translated
-            
-        except Exception as e:
-            logger.error(f"Argos translation failed: {e}")
-            return text  # Return original text if translation fails
+        async with self.semaphore:
+            try:
+                # Preserve placeholders
+                placeholders = self.placeholder_pattern.findall(text)
+                temp_text = text
+                
+                # Replace placeholders with temporary markers
+                # Use a pattern that translation services are less likely to modify
+                for i, placeholder in enumerate(placeholders):
+                    temp_text = temp_text.replace(placeholder, f"###PH{i}###")
+                
+                # Get translation package (this is sync but fast)
+                from_lang, to_lang = self._get_translation_package(from_code, to_code)
+                
+                # Translate using asyncio.to_thread to avoid blocking
+                translation = from_lang.get_translation(to_lang)
+                translated = await asyncio.to_thread(translation.translate, temp_text)
+                
+                # Restore placeholders
+                for i, placeholder in enumerate(placeholders):
+                    # Replace our marker back with original placeholder
+                    translated = translated.replace(f"###PH{i}###", placeholder)
+                    # Also try variations in case translation modified it
+                    translated = translated.replace(f"### PH{i} ###", placeholder)
+                    translated = translated.replace(f"###ph{i}###", placeholder)
+                    translated = translated.replace(f"### ph{i} ###", placeholder)
+                
+                self.clogger.debug(f"Translated: '{text[:50]}...' -> '{translated[:50]}...'")
+                return translated
+                
+            except Exception as e:
+                logger.error(f"Argos translation failed: {e}")
+                return text  # Return original text if translation fails

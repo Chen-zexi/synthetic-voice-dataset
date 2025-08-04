@@ -6,6 +6,7 @@ and caches the results for reuse across different locale pipelines.
 
 import json
 import logging
+import asyncio
 import shutil
 from datetime import datetime
 from pathlib import Path
@@ -59,7 +60,7 @@ class CacheTranslator:
         self.preprocessed_output = Path("data/input") / preprocessing_input_file.replace('.txt', '_mapped.txt')
         self.preprocessing_map = Path("data/input/preprocessing_map.json")
     
-    def run_cached_translation(self, force_refresh: bool = False) -> Dict[str, any]:
+    async def run_cached_translation(self, force_refresh: bool = False) -> Dict[str, any]:
         """
         Run the standalone translation with caching.
         
@@ -83,13 +84,25 @@ class CacheTranslator:
         
         # Step 2: Run translation
         self.clogger.info(f"Running Chinese to English translation using {self.service}", force=True)
-        self._run_translation()
+        await self._run_translation()
         
         # Step 3: Save metadata
         metadata = self._save_metadata()
         
         self.clogger.info(f"Translation cached successfully in {self.service_cache_dir}", force=True)
         return metadata
+    
+    def run_cached_translation_sync(self, force_refresh: bool = False) -> Dict[str, any]:
+        """
+        Run the standalone translation with caching synchronously.
+        
+        Args:
+            force_refresh: Force new translation even if cache exists
+            
+        Returns:
+            Dictionary with translation metadata
+        """
+        return asyncio.run(self.run_cached_translation(force_refresh))
     
     def _run_preprocessing(self):
         """
@@ -110,7 +123,7 @@ class CacheTranslator:
         extractor = TagExtractor(preprocess_config)
         extractor.extract_tags()
     
-    def _run_translation(self):
+    async def _run_translation(self):
         """
         Run the actual translation from Chinese to English.
         """
@@ -122,7 +135,7 @@ class CacheTranslator:
         translator = TranslatorFactory.create(self.service, self.config)
         
         # Translate the preprocessed file
-        translator.translate_file(
+        await translator.translate_file(
             input_path=self.preprocessed_output,
             output_path=self.cached_translation_file,
             from_code="zh-CN",

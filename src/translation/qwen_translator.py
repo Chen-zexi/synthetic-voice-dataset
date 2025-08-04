@@ -64,59 +64,12 @@ class QwenTranslator(BaseTranslator):
             base_url=self.base_url
         )
     
-    def translate_text(self, text: str, from_code: str, to_code: str) -> str:
-        """
-        Translate text synchronously using Qwen-MT.
-        
-        Args:
-            text: Text to translate
-            from_code: Source language code
-            to_code: Target language code
-            
-        Returns:
-            Translated text
-        """
-        if not text.strip():
-            return text
-        
-        # Map language codes for Qwen-MT
-        source_lang = get_language_code('qwen', from_code)
-        target_lang = get_language_code('qwen', to_code)
-        
-        for attempt in range(self.retry_count):
-            try:
-                # Prepare translation options
-                translation_options = {
-                    "source_lang": source_lang,
-                    "target_lang": target_lang
-                }
-                
-                # Make the translation request
-                completion = self.client.chat.completions.create(
-                    model=self.model,
-                    messages=[{"role": "user", "content": text}],
-                    extra_body={"translation_options": translation_options}
-                )
-                
-                # Extract translated text
-                translated = completion.choices[0].message.content
-                
-                self.clogger.debug(f"Translated: '{text[:50]}...' -> '{translated[:50]}...'")
-                return translated
-                
-            except Exception as e:
-                logger.warning(f"Translation attempt {attempt + 1} failed: {e}")
-                if attempt < self.retry_count - 1:
-                    time.sleep(self.retry_delay * (attempt + 1))
-                else:
-                    logger.error(f"Translation failed after {self.retry_count} attempts")
-                    return text  # Return original text if translation fails
     
-    async def translate_text_async(self, text: str, from_code: str, to_code: str, 
-                                   terminology: Optional[Dict[str, str]] = None,
-                                   domain: Optional[str] = None) -> str:
+    async def translate_text(self, text: str, from_code: str, to_code: str, 
+                            terminology: Optional[Dict[str, str]] = None,
+                            domain: Optional[str] = None) -> str:
         """
-        Translate text asynchronously using Qwen-MT with advanced features.
+        Translate text using Qwen-MT with advanced features.
         
         Args:
             text: Text to translate
@@ -201,16 +154,17 @@ class QwenTranslator(BaseTranslator):
         
         return prompt
     
-    async def translate_conversations_async(self, input_path: Path, output_path: Path,
-                                          from_code: str, to_code: str):
+    async def translate_conversations(self, input_path: Path, output_path: Path,
+                                     from_code: str, to_code: str, max_concurrent: int = 5):
         """
-        Translate conversation JSON files asynchronously with concurrent processing.
+        Translate conversation JSON files with concurrent processing.
         
         Args:
             input_path: Input JSON file path
             output_path: Output JSON file path
             from_code: Source language code
             to_code: Target language code
+            max_concurrent: Maximum concurrent conversations to process
         """
         self.clogger.info(f"Translating conversations: {input_path} ({from_code} -> {to_code})", force=True)
         
@@ -222,27 +176,36 @@ class QwenTranslator(BaseTranslator):
         with open(self.config.preprocessing_map_path, 'r', encoding='utf-8') as f:
             placeholder_map = json.load(f)
         
-        # Create tasks for concurrent translation
-        tasks = []
-        for conv_idx, conversation in enumerate(conversations):
-            task = self._translate_conversation_async(
-                conversation, conv_idx, len(conversations), 
-                from_code, to_code, placeholder_map
-            )
-            tasks.append(task)
+        # Use semaphore for rate limiting with the specified concurrency
+        if max_concurrent != self.max_concurrent:
+            semaphore = asyncio.Semaphore(max_concurrent)
+        else:
+            semaphore = self.semaphore
+        
+        # Create tasks for concurrent translation with rate limiting
+        async def translate_with_semaphore(conv_idx: int, conversation: Dict) -> tuple:
+            async with semaphore:
+                result = await self._translate_conversation_async(
+                    conversation, conv_idx, len(conversations), 
+                    from_code, to_code, placeholder_map
+                )
+                return conv_idx, result
+        
+        tasks = [translate_with_semaphore(i, conv) for i, conv in enumerate(conversations)]
         
         # Execute translations concurrently with progress bar
         self.clogger.info(f"Starting concurrent translation of {len(conversations)} conversations")
         
         with tqdm(total=len(tasks), desc="Translating conversations") as pbar:
-            async def run_with_progress(task):
-                result = await task
+            results = []
+            for task in asyncio.as_completed(tasks):
+                conv_idx, translated_conv = await task
+                results.append((conv_idx, translated_conv))
                 pbar.update(1)
-                return result
-            
-            translated_conversations = await asyncio.gather(
-                *[run_with_progress(task) for task in tasks]
-            )
+        
+        # Sort results by original index and extract conversations
+        results.sort(key=lambda x: x[0])
+        translated_conversations = [conv for _, conv in results]
         
         # Save translated conversations
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -278,7 +241,7 @@ class QwenTranslator(BaseTranslator):
         if "dialogue" in translated_conv:
             for turn in translated_conv["dialogue"]:
                 # Translate text asynchronously
-                translated_text = await self.translate_text_async(
+                translated_text = await self.translate_text(
                     turn["text"], from_code, to_code
                 )
                 
@@ -293,19 +256,3 @@ class QwenTranslator(BaseTranslator):
         
         return translated_conv
     
-    def translate_conversations(self, input_path: Path, output_path: Path,
-                               from_code: str, to_code: str):
-        """
-        Translate conversation JSON files synchronously.
-        Overrides parent method to use async implementation.
-        
-        Args:
-            input_path: Input JSON file path
-            output_path: Output JSON file path
-            from_code: Source language code
-            to_code: Target language code
-        """
-        # Run async method synchronously
-        asyncio.run(self.translate_conversations_async(
-            input_path, output_path, from_code, to_code
-        ))
