@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 import re
 import random
+from tqdm import tqdm
 
 from config.config_loader import Config
 from translation.language_codes import get_language_code
@@ -61,21 +62,36 @@ class BaseTranslator(ABC):
             to_code: Target language code
             max_lines: Maximum number of lines to translate
         """
-        self.clogger.info(f"Translating file: {input_path} ({from_code} -> {to_code})", force=True)
+        # Get service name for logging
+        service_name = self.__class__.__name__.replace('Translator', '')
+        if service_name == 'Qwen' and hasattr(self, 'model'):
+            service_info = f"{service_name} ({self.model})"
+        else:
+            service_info = service_name
+            
+        self.clogger.info(f"Translating file using {service_info}: {input_path} ({from_code} -> {to_code})", force=True)
+        
+        # First, count total lines for progress bar
+        with open(input_path, 'r', encoding='utf-8') as f:
+            total_lines = sum(1 for _ in f)
+            if max_lines:
+                total_lines = min(total_lines, max_lines)
         
         with open(input_path, 'r', encoding='utf-8') as infile, \
              open(output_path, 'w', encoding='utf-8') as outfile:
             
-            for line_num, line in enumerate(infile, 1):
-                if max_lines and line_num > max_lines:
-                    break
-                
-                # Translate line
-                translated = self.translate_text(line.strip(), from_code, to_code)
-                outfile.write(translated + '\n')
-                
-                if line_num % 10 == 0:
-                    self.clogger.debug(f"Translated {line_num} lines")
+            # Create progress bar
+            with tqdm(total=total_lines, desc="Translating lines", unit="line") as pbar:
+                for line_num, line in enumerate(infile, 1):
+                    if max_lines and line_num > max_lines:
+                        break
+                    
+                    # Translate line
+                    translated = self.translate_text(line.strip(), from_code, to_code)
+                    outfile.write(translated + '\n')
+                    
+                    # Update progress bar
+                    pbar.update(1)
         
         self.clogger.info(f"Translation complete. Output: {output_path}", force=True)
     
@@ -90,7 +106,14 @@ class BaseTranslator(ABC):
             from_code: Source language code
             to_code: Target language code
         """
-        self.clogger.info(f"Translating conversations: {input_path} ({from_code} -> {to_code})", force=True)
+        # Get service name for logging
+        service_name = self.__class__.__name__.replace('Translator', '')
+        if service_name == 'Qwen' and hasattr(self, 'model'):
+            service_info = f"{service_name} ({self.model})"
+        else:
+            service_info = service_name
+            
+        self.clogger.info(f"Translating conversations using {service_info}: {input_path} ({from_code} -> {to_code})", force=True)
         
         # Load conversations
         with open(input_path, 'r', encoding='utf-8') as f:
@@ -102,32 +125,39 @@ class BaseTranslator(ABC):
         
         translated_conversations = []
         
-        for conv_idx, conversation in enumerate(conversations):
-            self.clogger.debug(f"Translating conversation {conv_idx + 1}/{len(conversations)}")
-            
-            # Create substitution cache for consistent replacements within conversation
-            substitution_cache = {}
-            
-            translated_conv = conversation.copy()
-            
-            # Translate dialogue turns
-            if "dialogue" in translated_conv:
-                for turn in translated_conv["dialogue"]:
-                    # Translate text
-                    translated_text = self.translate_text(
-                        turn["text"], from_code, to_code
-                    )
-                    
-                    # Fill placeholders
-                    turn["text"] = self._fill_placeholders(
-                        translated_text, placeholder_map, substitution_cache
-                    )
-            
-            # Update first_turn if present
-            if translated_conv.get("dialogue"):
-                translated_conv["first_turn"] = translated_conv["dialogue"][0]["text"]
-            
-            translated_conversations.append(translated_conv)
+        # Calculate total number of dialogue turns for progress bar
+        total_turns = sum(len(conv.get("dialogue", [])) for conv in conversations)
+        
+        with tqdm(total=total_turns, desc="Translating dialogue turns", unit="turn") as pbar:
+            for conv_idx, conversation in enumerate(conversations):
+                self.clogger.debug(f"Translating conversation {conv_idx + 1}/{len(conversations)}")
+                
+                # Create substitution cache for consistent replacements within conversation
+                substitution_cache = {}
+                
+                translated_conv = conversation.copy()
+                
+                # Translate dialogue turns
+                if "dialogue" in translated_conv:
+                    for turn in translated_conv["dialogue"]:
+                        # Translate text
+                        translated_text = self.translate_text(
+                            turn["text"], from_code, to_code
+                        )
+                        
+                        # Fill placeholders
+                        turn["text"] = self._fill_placeholders(
+                            translated_text, placeholder_map, substitution_cache
+                        )
+                        
+                        # Update progress bar
+                        pbar.update(1)
+                
+                # Update first_turn if present
+                if translated_conv.get("dialogue"):
+                    translated_conv["first_turn"] = translated_conv["dialogue"][0]["text"]
+                
+                translated_conversations.append(translated_conv)
         
         # Save translated conversations
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -196,5 +226,8 @@ class TranslatorFactory:
         elif service == "argos":
             from translation.argos_translator import ArgosTranslator
             return ArgosTranslator(config)
+        elif service == "qwen":
+            from translation.qwen_translator import QwenTranslator
+            return QwenTranslator(config)
         else:
             raise ValueError(f"Unknown translation service: {service}")

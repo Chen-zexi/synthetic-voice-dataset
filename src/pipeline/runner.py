@@ -112,7 +112,15 @@ class PipelineRunner:
             try:
                 # Conversation, legit generation, and TTS are async methods
                 if step in ['conversation', 'legit', 'tts']:
-                    asyncio.run(method())
+                    # Use asyncio.run with debug=False to suppress warnings
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+                    try:
+                        loop.run_until_complete(method())
+                    finally:
+                        # Allow time for cleanup before closing
+                        loop.run_until_complete(asyncio.sleep(0.5))
+                        loop.close()
                 else:
                     method()
                 duration = time.time() - start_time
@@ -134,7 +142,12 @@ class PipelineRunner:
     
     def run_translation(self):
         """Run initial translation: Chinese to English."""
-        logger.info("Running Chinese to English translation")
+        # Build service info string
+        service_info = f"service: {self.config.translation_service}"
+        if self.config.translation_service == "qwen":
+            service_info += f" (model: {getattr(self.config, 'qwen_model', 'qwen-mt-plus')})"
+        
+        logger.info(f"Running Chinese to English translation using {service_info}")
         
         translator = TranslatorFactory.create(
             self.config.translation_service,
@@ -157,7 +170,12 @@ class PipelineRunner:
     
     def run_final_translation(self):
         """Run final translation: English to target language."""
-        logger.info(f"Translating conversations to {self.config.language_name}")
+        # Build service info string
+        service_info = f"service: {self.config.translation_service}"
+        if self.config.translation_service == "qwen":
+            service_info += f" (model: {getattr(self.config, 'qwen_model', 'qwen-mt-plus')})"
+        
+        logger.info(f"Translating conversations to {self.config.language_name} using {service_info}")
         
         translator = TranslatorFactory.create(
             self.config.translation_service,

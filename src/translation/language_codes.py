@@ -52,6 +52,103 @@ LANGUAGE_CODE_MAPPINGS = {
         "nl": "nl",             # Dutch
         "pl": "pl",             # Polish
     },
+    "qwen": {
+        # Qwen-MT uses language names, not ISO codes
+        "zh": "Chinese",        # Chinese (auto-detect variant)
+        "zh-CN": "Chinese",     # Chinese simplified
+        "zh-TW": "Chinese",     # Chinese traditional
+        "en": "English",        # English
+        "ar": "Arabic",         # Arabic
+        "ms": "Malay",          # Malay
+        "es": "Spanish",        # Spanish
+        "fr": "French",         # French
+        "de": "German",         # German
+        "ja": "Japanese",       # Japanese
+        "ko": "Korean",         # Korean
+        "hi": "Hindi",          # Hindi
+        "id": "Indonesian",     # Indonesian
+        "th": "Thai",           # Thai
+        "vi": "Vietnamese",     # Vietnamese
+        "tr": "Turkish",        # Turkish
+        "ru": "Russian",        # Russian
+        "pt": "Portuguese",     # Portuguese
+        "it": "Italian",        # Italian
+        "nl": "Dutch",          # Dutch
+        "pl": "Polish",         # Polish
+        "uk": "Ukrainian",      # Ukrainian
+        "cs": "Czech",          # Czech
+        "sv": "Swedish",        # Swedish
+        "da": "Danish",         # Danish
+        "fi": "Finnish",        # Finnish
+        "no": "Norwegian",      # Norwegian
+        "el": "Greek",          # Greek
+        "he": "Hebrew",         # Hebrew
+        "hu": "Hungarian",      # Hungarian
+        "ro": "Romanian",       # Romanian
+        "sk": "Slovak",         # Slovak
+        "bg": "Bulgarian",      # Bulgarian
+        "hr": "Croatian",       # Croatian
+        "lt": "Lithuanian",     # Lithuanian
+        "lv": "Latvian",        # Latvian
+        "et": "Estonian",       # Estonian
+        "sl": "Slovenian",      # Slovenian
+        "ca": "Catalan",        # Catalan
+        "eu": "Basque",         # Basque
+        "gl": "Galician",       # Galician
+        "sq": "Albanian",       # Albanian
+        "mk": "Macedonian",     # Macedonian
+        "sr": "Serbian",        # Serbian
+        "bs": "Bosnian",        # Bosnian
+        "is": "Icelandic",      # Icelandic
+        "ga": "Irish",          # Irish
+        "cy": "Welsh",          # Welsh
+        "mt": "Maltese",        # Maltese
+        "lb": "Luxembourgish",  # Luxembourgish
+        "af": "Afrikaans",      # Afrikaans
+        "sw": "Swahili",        # Swahili
+        "am": "Amharic",        # Amharic
+        "ha": "Hausa",          # Hausa
+        "yo": "Yoruba",         # Yoruba
+        "ig": "Igbo",           # Igbo
+        "zu": "Zulu",           # Zulu
+        "xh": "Xhosa",          # Xhosa
+        "sn": "Shona",          # Shona
+        "rw": "Kinyarwanda",    # Kinyarwanda
+        "so": "Somali",         # Somali
+        "ta": "Tamil",          # Tamil
+        "te": "Telugu",         # Telugu
+        "kn": "Kannada",        # Kannada
+        "ml": "Malayalam",      # Malayalam
+        "mr": "Marathi",        # Marathi
+        "gu": "Gujarati",       # Gujarati
+        "bn": "Bengali",        # Bengali
+        "pa": "Punjabi",        # Punjabi
+        "or": "Odia",           # Odia
+        "as": "Assamese",       # Assamese
+        "ne": "Nepali",         # Nepali
+        "si": "Sinhala",        # Sinhala
+        "my": "Burmese",        # Burmese
+        "km": "Khmer",          # Khmer
+        "lo": "Lao",            # Lao
+        "ka": "Georgian",       # Georgian
+        "hy": "Armenian",       # Armenian
+        "az": "Azerbaijani",    # Azerbaijani
+        "kk": "Kazakh",         # Kazakh
+        "ky": "Kyrgyz",         # Kyrgyz
+        "uz": "Uzbek",          # Uzbek
+        "tg": "Tajik",          # Tajik
+        "tk": "Turkmen",        # Turkmen
+        "mn": "Mongolian",      # Mongolian
+        "ur": "Urdu",           # Urdu
+        "ps": "Pashto",         # Pashto
+        "fa": "Persian",        # Persian
+        "ku": "Kurdish",        # Kurdish
+        "ckb": "Central Kurdish", # Central Kurdish
+        "sd": "Sindhi",         # Sindhi
+        "be": "Belarusian",     # Belarusian
+        "eo": "Esperanto",      # Esperanto
+        "la": "Latin",          # Latin
+    },
     # Add more translation services as needed
     "deepl": {
         # DeepL uses its own codes
