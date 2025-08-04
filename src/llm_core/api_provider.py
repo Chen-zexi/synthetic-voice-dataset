@@ -50,7 +50,8 @@ class LLM:
                 model=self.model, 
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,
-                model_kwargs={"top_p": self.top_p, "n": self.n}
+                top_p=self.top_p,
+                n=self.n
             )
         elif self.provider == "anthropic":
             api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -95,7 +96,8 @@ class LLM:
                 model=self.model, 
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,
-                model_kwargs={"top_p": self.top_p, "n": self.n}
+                top_p=self.top_p,
+                n=self.n
             )
         elif self.provider == "vllm":
             # Assume using lm-studio
@@ -109,7 +111,8 @@ class LLM:
                 model=self.model, 
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,
-                model_kwargs={"top_p": self.top_p, "n": self.n}
+                top_p=self.top_p,
+                n=self.n
             )
         else:
             raise ValueError(f"Unsupported provider: {self.provider}. Supported: openai, anthropic, gemini, lm-studio, vllm")
