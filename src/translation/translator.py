@@ -15,6 +15,7 @@ from tqdm import tqdm
 from config.config_loader import Config
 from translation.language_codes import get_language_code
 from utils.logging_utils import ConditionalLogger
+from utils.placeholder_reconciler import PlaceholderReconciler
 
 
 logger = logging.getLogger(__name__)
@@ -135,9 +136,8 @@ class BaseTranslator(ABC):
         with open(input_path, 'r', encoding='utf-8') as f:
             conversations = json.load(f)
         
-        # Load placeholder mapping
-        with open(self.config.preprocessing_map_path, 'r', encoding='utf-8') as f:
-            placeholder_map = json.load(f)
+        # Load placeholder mapping with reconciliation if needed
+        placeholder_map = self._load_placeholder_map()
         
         # Create semaphore for rate limiting
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -238,6 +238,44 @@ class BaseTranslator(ABC):
             return code
         
         return self.placeholder_pattern.sub(replace_placeholder, text)
+    
+    def _load_placeholder_map(self) -> Dict[str, Dict]:
+        """
+        Load placeholder mapping with reconciliation if dynamic map exists.
+        
+        Returns:
+            Placeholder mapping dictionary
+        """
+        # Check if dynamic map exists
+        dynamic_map_path = self.config.output_dir / "intermediate" / "preprocessed" / "dynamic_placeholder_map.json"
+        
+        if dynamic_map_path.exists():
+            # Dynamic map exists, reconcile with pre-populated map
+            self.clogger.debug(f"Found dynamic placeholder map, reconciling with pre-populated map")
+            
+            try:
+                reconciler = PlaceholderReconciler(
+                    dynamic_map_path=dynamic_map_path,
+                    prepopulated_map_path=self.config.preprocessing_map_path
+                )
+                placeholder_map = reconciler.reconcile()
+                
+                # Validate and save reconciled map
+                if reconciler.validate_reconciliation():
+                    reconciler.save_reconciled_map()
+                else:
+                    self.clogger.warning("Reconciliation validation failed, using reconciled map anyway")
+                
+                return placeholder_map
+                
+            except Exception as e:
+                self.clogger.error(f"Failed to reconcile placeholder maps: {e}")
+                self.clogger.warning("Falling back to pre-populated map")
+        
+        # Fall back to pre-populated map
+        self.clogger.debug(f"Using pre-populated placeholder map from {self.config.preprocessing_map_path}")
+        with open(self.config.preprocessing_map_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
 
 
 class TranslatorFactory:
