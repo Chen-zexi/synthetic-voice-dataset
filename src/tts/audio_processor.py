@@ -29,6 +29,15 @@ class AudioProcessor:
         """
         self.config = config
         self.sound_effects_dir = Path("data/sound_effects")
+        
+        # Load audio effect settings with defaults
+        self.effects_config = getattr(config, 'audio_effects', {
+            'enable_background_noise': True,
+            'enable_call_end_effect': True,
+            'enable_bandpass_filter': True,
+            'background_noise_level': 0.3,
+            'call_end_volume': 0.5
+        })
     
     def process_conversation_audio(self, audio_path: Path) -> Optional[Path]:
         """
@@ -41,15 +50,20 @@ class AudioProcessor:
             Path to the processed audio file or None if processing failed
         """
         try:
-            # Add background and sound effects
-            with_effects_path = self._add_background_and_effects(audio_path)
+            processed_path = audio_path
             
-            if with_effects_path:
-                # Apply bandpass filter for phone quality
-                final_path = self._apply_bandpass_filter(with_effects_path)
+            # Add background and sound effects if enabled
+            if self.effects_config.get('enable_background_noise') or self.effects_config.get('enable_call_end_effect'):
+                processed_path = self._add_background_and_effects(processed_path)
+                if not processed_path:
+                    processed_path = audio_path
+            
+            # Apply bandpass filter for phone quality if enabled
+            if self.effects_config.get('enable_bandpass_filter'):
+                final_path = self._apply_bandpass_filter(processed_path)
                 return final_path
             
-            return None
+            return processed_path
             
         except Exception as e:
             logger.error(f"Error processing audio {audio_path}: {e}")
@@ -71,25 +85,49 @@ class AudioProcessor:
             # Load audio files
             call_audio = AudioSegment.from_file(audio_path)
             
-            # Get sound effects
-            background_audio = self._get_random_background()
-            call_end_effect = self._get_call_end_effect()
+            # Get sound effects based on configuration
+            background_audio = None
+            call_end_effect = None
             
-            if not background_audio or not call_end_effect:
-                logger.warning("Sound effects not found, skipping background/effects")
+            if self.effects_config.get('enable_background_noise'):
+                background_audio = self._get_random_background()
+            
+            if self.effects_config.get('enable_call_end_effect'):
+                call_end_effect = self._get_call_end_effect()
+            
+            if not background_audio and not call_end_effect:
+                logger.debug("No sound effects to add")
                 return audio_path
             
-            # Handle background audio length
-            background_audio = self._adjust_background_length(background_audio, call_audio)
+            combined_audio = call_audio
             
-            # Reduce background volume
-            background_audio = self._reduce_background_volume(background_audio, call_audio)
+            # Add background noise if enabled and available
+            if background_audio:
+                # Handle background audio length
+                background_audio = self._adjust_background_length(background_audio, call_audio)
+                
+                # Reduce background volume
+                background_audio = self._reduce_background_volume(background_audio, call_audio)
+                
+                # Apply additional level adjustment from config
+                noise_level = self.effects_config.get('background_noise_level', 0.3)
+                if noise_level < 1.0:
+                    # Further reduce volume based on noise level (0.0 = silent, 1.0 = full)
+                    additional_reduction = -20 * (1.0 - noise_level)  # Convert to dB
+                    background_audio = background_audio + additional_reduction
+                
+                # Overlay background with call audio
+                combined_audio = call_audio.overlay(background_audio)
             
-            # Overlay background with call audio
-            combined_audio = call_audio.overlay(background_audio)
-            
-            # Append call end effect
-            combined_audio = combined_audio + call_end_effect
+            # Append call end effect if enabled and available
+            if call_end_effect:
+                # Adjust call end effect volume
+                end_volume = self.effects_config.get('call_end_volume', 0.5)
+                if end_volume < 1.0:
+                    volume_adjustment = -20 * (1.0 - end_volume)  # Convert to dB
+                    call_end_effect = call_end_effect + volume_adjustment
+                
+                combined_audio = combined_audio + call_end_effect
             
             # Save processed audio
             output_path = audio_path.parent / audio_path.name.replace('.wav', '_with_effects.wav')
