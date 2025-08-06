@@ -5,7 +5,7 @@ These schemas enable LangChain's with_structured_output functionality
 for cleaner and more reliable conversation generation.
 """
 
-from typing import List, Literal
+from typing import List, Literal, Optional, Dict
 from pydantic import BaseModel, Field
 
 
@@ -21,12 +21,20 @@ class ScamConversationResponse(BaseModel):
     dialogue: List[DialogueTurn] = Field(
         description="List of dialogue turns alternating between caller and callee"
     )
+    voice_mapping: Optional[Dict[str, str]] = Field(
+        default=None,
+        description="Voice assignments for caller and callee based on available voice profiles"
+    )
 
 
 class LegitConversationResponse(BaseModel):
     """Structured response for legitimate conversation generation."""
     dialogue: List[DialogueTurn] = Field(
         description="List of dialogue turns for a legitimate phone call"
+    )
+    voice_mapping: Optional[Dict[str, str]] = Field(
+        default=None,
+        description="Voice assignments for caller and callee based on available voice profiles"
     )
 
 

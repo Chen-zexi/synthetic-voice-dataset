@@ -39,7 +39,7 @@
     "output_format": "mp3_44100_128",
     "voice_speed": 1.08,
     "silence_duration_ms": 500,
-    "background_volume_reduction_db": 25,
+    "background_volume_reduction_db": 18,
     "bandpass_filter": {
       "low_freq": 300,
       "high_freq": 3400
@@ -48,8 +48,8 @@
       "enable_background_noise": true,
       "enable_call_end_effect": true,
       "enable_bandpass_filter": true,
-      "background_noise_level": 0.3,
-      "call_end_volume": 0.5
+      "background_noise_level": 1.0,
+      "call_end_volume": 1.0
     }
   },
   "post_processing": {

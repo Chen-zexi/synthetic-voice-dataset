@@ -136,13 +136,30 @@ class LegitGenerator:
         dialogue = await self._generate_dialogue(num_turns, category)
         
         if dialogue:
-            return {
-                "conversation_id": conversation_id,
-                "region": self.config.legit_call_region,
-                "category": category,
-                "num_turns": num_turns,
-                "dialogue": dialogue
-            }
+            # Check if dialogue is a dict with voice_mapping (from LLM response)
+            if isinstance(dialogue, dict) and 'dialogue' in dialogue:
+                conversation = {
+                    "conversation_id": conversation_id,
+                    "region": self.config.legit_call_region,
+                    "category": category,
+                    "num_turns": num_turns,
+                    "dialogue": dialogue['dialogue']
+                }
+                # Add voice mapping if provided by LLM
+                if 'voice_mapping' in dialogue:
+                    conversation["voice_mapping"] = dialogue['voice_mapping']
+                    self.clogger.info(f"LLM assigned voices for conversation {conversation_id}: {dialogue['voice_mapping']}")
+            else:
+                # Legacy format - just dialogue list
+                conversation = {
+                    "conversation_id": conversation_id,
+                    "region": self.config.legit_call_region,
+                    "category": category,
+                    "num_turns": num_turns,
+                    "dialogue": dialogue
+                }
+            
+            return conversation
         
         return None
     
@@ -171,7 +188,13 @@ class LegitGenerator:
             
             # Convert Pydantic models to dicts
             if hasattr(response, 'dialogue'):
-                return [turn.model_dump() for turn in response.dialogue]
+                result = {
+                    'dialogue': [turn.model_dump() for turn in response.dialogue]
+                }
+                # Include voice_mapping if present
+                if hasattr(response, 'voice_mapping') and response.voice_mapping:
+                    result['voice_mapping'] = response.voice_mapping
+                return result
             else:
                 self.clogger.error("Response missing dialogue field")
                 return None
@@ -180,11 +203,58 @@ class LegitGenerator:
             self.clogger.error(f"LLM API error: {e}")
             return None
     
+    def _format_voice_profiles_for_prompt(self) -> str:
+        """
+        Format voice profiles dynamically for prompt injection, focusing on gender.
+        
+        Returns:
+            Formatted string with voice options or empty string if no profiles
+        """
+        if not self.config.voice_profiles or 'available_voices' not in self.config.voice_profiles:
+            return ""
+        
+        profiles = self.config.voice_profiles.get('available_voices', {})
+        
+        # Group by gender
+        male_voices = []
+        female_voices = []
+        
+        for name, info in profiles.items():
+            gender = info.get('gender', 'unknown')
+            age = info.get('age', '')
+            desc = f"{name} ({gender}"
+            if age:
+                desc += f", {age}"
+            desc += ")"
+            
+            if gender == 'male':
+                male_voices.append(desc)
+            elif gender == 'female':
+                female_voices.append(desc)
+        
+        voice_instructions = f"""
+Available voices for this locale:
+- Male voices: {', '.join(male_voices) if male_voices else 'None available'}
+- Female voices: {', '.join(female_voices) if female_voices else 'None available'}
+
+Based on the conversation category and context, select appropriate voices:
+- Consider the professional context (delivery, medical, banking, etc.)
+- Match gender to natural distribution for the scenario
+- Return the voice names (not the gender/age info) in the voice_mapping field
+"""
+        return voice_instructions
+    
     def _create_system_prompt(self) -> str:
         """Create the system prompt for legitimate conversation generation."""
         return """You are a dialogue generator for creating realistic phone conversations.
 Your task is to generate structured dialogues for legitimate (non-scam) phone calls with alternating turns between caller and callee.
-The conversations should be natural, contextually appropriate, and culturally relevant."""
+The conversations should be natural, contextually appropriate, and culturally relevant.
+
+When voice profiles are provided:
+1. Consider the professional context and select appropriate voices
+2. Ensure natural gender distribution for the scenario
+3. Match voices to the conversation category (e.g., delivery, medical, business)
+4. Output voice_mapping with selected voice names (use just the name, not the full description)"""
 
     def _create_user_prompt(self, num_turns: int, category: str) -> str:
         """
@@ -197,11 +267,17 @@ The conversations should be natural, contextually appropriate, and culturally re
         Returns:
             Formatted prompt
         """
+        # Get voice profile information if available
+        voice_info = self._format_voice_profiles_for_prompt()
+        
         # Convert category from snake_case to human-readable
         category_display = category.replace('_', ' ').title()
         
-        return f"""Generate realistic {self.config.legit_call_language} phone call dialogue between a caller and a callee from {self.config.legit_call_region}.
+        prompt = f"""Generate realistic {self.config.legit_call_language} phone call dialogue between a caller and a callee from {self.config.legit_call_region}.
 The call content is about {category_display}.
+
+{voice_info}
+
 The total number of turns must be exactly {num_turns} individual turns (i.e., lines), alternating between caller and callee.
 
 Avoid overly generic or repetitive phrasing - the dialogue should feel natural and realistic.
@@ -211,6 +287,18 @@ To protect privacy, do not use real personal data. Instead, generate synthetic b
 Shorter sentences are preferred.
 
 Generate exactly {num_turns} dialogue turns, starting with "caller" role."""
+        
+        # Add voice mapping instruction if profiles are available
+        if voice_info:
+            prompt += """
+
+Include a voice_mapping field with your selected voices:
+{
+  "caller": "selected_voice_name",
+  "callee": "selected_voice_name"
+}"""
+        
+        return prompt
     
     def _save_conversations(self, conversations: List[Dict]):
         """

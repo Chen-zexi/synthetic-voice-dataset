@@ -4,11 +4,14 @@ Configuration loader for managing language-specific and common configurations.
 
 import os
 import json
+import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 
 from config.schemas import validate_schema, COMMON_SCHEMA, LANGUAGE_SCHEMA
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -122,6 +125,12 @@ class Config:
     
     # Output control
     verbose: bool = False
+    
+    # Voice profiles for intelligent voice assignment (optional)
+    voice_profiles: Optional[Dict] = None
+    
+    # Locale identifier (e.g., 'ms-my', 'ar-sa')
+    locale: Optional[str] = None
     
     # Raw config data
     common_config: dict = field(default_factory=dict)
@@ -423,6 +432,17 @@ class ConfigLoader:
         # Extract locale info
         locale_info = locale_config["locale"]
         
+        # Load voice profiles if available
+        voice_profiles = None
+        voice_profiles_path = self.config_dir / "localizations" / locale_id / "voice_profiles.json"
+        if voice_profiles_path.exists():
+            try:
+                with open(voice_profiles_path, 'r', encoding='utf-8') as f:
+                    voice_profiles = json.load(f)
+                logger.info(f"Loaded voice profiles for {locale_id}")
+            except Exception as e:
+                logger.warning(f"Failed to load voice profiles: {e}")
+        
         # Build paths using locale_id
         locale_output_dir = self.output_dir / locale_id
         intermediate_dir = locale_output_dir / "intermediate"
@@ -566,6 +586,12 @@ class ConfigLoader:
             llm_max_tokens=llm_config.get("max_tokens"),
             llm_top_p=llm_config.get("top_p", 0.95),
             llm_n=llm_config.get("n", 1),
+            
+            # Voice profiles for intelligent voice assignment
+            voice_profiles=voice_profiles,
+            
+            # Locale identifier
+            locale=locale_id,
             
             # Raw config data
             common_config=self.common_config,

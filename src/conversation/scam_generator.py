@@ -143,13 +143,30 @@ class ScamGenerator:
         dialogue = await self._generate_dialogue(first_turn, num_turns, victim_awareness)
         
         if dialogue:
-            return {
-                "conversation_id": conversation_id,
-                "first_turn": first_turn,
-                "num_turns": num_turns,
-                "victim_awareness": victim_awareness,
-                "dialogue": dialogue
-            }
+            # Check if dialogue is a dict with voice_mapping (from LLM response)
+            if isinstance(dialogue, dict) and 'dialogue' in dialogue:
+                conversation = {
+                    "conversation_id": conversation_id,
+                    "first_turn": first_turn,
+                    "num_turns": num_turns,
+                    "victim_awareness": victim_awareness,
+                    "dialogue": dialogue['dialogue']
+                }
+                # Add voice mapping if provided by LLM
+                if 'voice_mapping' in dialogue:
+                    conversation["voice_mapping"] = dialogue['voice_mapping']
+                    self.clogger.info(f"LLM assigned voices for conversation {conversation_id}: {dialogue['voice_mapping']}")
+            else:
+                # Legacy format - just dialogue list
+                conversation = {
+                    "conversation_id": conversation_id,
+                    "first_turn": first_turn,
+                    "num_turns": num_turns,
+                    "victim_awareness": victim_awareness,
+                    "dialogue": dialogue
+                }
+            
+            return conversation
         
         return None
     
@@ -180,7 +197,13 @@ class ScamGenerator:
             
             # Convert Pydantic models to dicts
             if hasattr(response, 'dialogue'):
-                return [turn.model_dump() for turn in response.dialogue]
+                result = {
+                    'dialogue': [turn.model_dump() for turn in response.dialogue]
+                }
+                # Include voice_mapping if present
+                if hasattr(response, 'voice_mapping') and response.voice_mapping:
+                    result['voice_mapping'] = response.voice_mapping
+                return result
             else:
                 self.clogger.error("Response missing dialogue field")
                 return None
@@ -189,11 +212,58 @@ class ScamGenerator:
             self.clogger.error(f"LLM API error: {e}")
             return None
     
+    def _format_voice_profiles_for_prompt(self) -> str:
+        """
+        Format voice profiles dynamically for prompt injection, focusing on gender.
+        
+        Returns:
+            Formatted string with voice options or empty string if no profiles
+        """
+        if not self.config.voice_profiles or 'available_voices' not in self.config.voice_profiles:
+            return ""
+        
+        profiles = self.config.voice_profiles.get('available_voices', {})
+        
+        # Group by gender
+        male_voices = []
+        female_voices = []
+        
+        for name, info in profiles.items():
+            gender = info.get('gender', 'unknown')
+            age = info.get('age', '')
+            desc = f"{name} ({gender}"
+            if age:
+                desc += f", {age}"
+            desc += ")"
+            
+            if gender == 'male':
+                male_voices.append(desc)
+            elif gender == 'female':
+                female_voices.append(desc)
+        
+        voice_instructions = f"""
+Available voices for this locale:
+- Male voices: {', '.join(male_voices) if male_voices else 'None available'}
+- Female voices: {', '.join(female_voices) if female_voices else 'None available'}
+
+Based on the conversation context, select appropriate voices and include in your response:
+- For the scammer (caller): Choose a voice that fits an authority figure or professional
+- For the victim (callee): Choose a voice that fits the implied gender and age from context
+- Return the voice names (not the gender/age info) in the voice_mapping field
+"""
+        return voice_instructions
+    
     def _create_system_prompt(self) -> str:
         """Create the system prompt for conversation generation."""
         return """You are a dialogue generator for creating realistic phone conversations.
 Your task is to generate structured dialogues with alternating turns between caller and callee.
-Follow all formatting requirements exactly and preserve any special codes in the input."""
+Follow all formatting requirements exactly and preserve any special codes in the input.
+
+When voice profiles are provided:
+1. Consider the gender and age implications from the conversation context
+2. Match authority figures with appropriate voice characteristics
+3. Ensure realistic voice assignments based on the scenario
+4. Output voice_mapping with selected voice names (use just the name, not the full description)"""
 
     def _create_user_prompt(self, first_turn: str, num_turns: int, 
                            victim_awareness: str) -> str:
@@ -208,7 +278,12 @@ Follow all formatting requirements exactly and preserve any special codes in the
         Returns:
             Formatted prompt
         """
-        return f"""Continue the scam phone call dialogue between the caller (scammer) and callee (victim). The victim is {victim_awareness} aware of the scam.
+        # Get voice profile information if available
+        voice_info = self._format_voice_profiles_for_prompt()
+        
+        prompt = f"""Continue the scam phone call dialogue between the caller (scammer) and callee (victim). The victim is {victim_awareness} aware of the scam.
+
+{voice_info}
 
 The total number of turns must be exactly {num_turns} individual turns (i.e., lines), alternating between caller and callee.
 
@@ -226,6 +301,18 @@ Do **not** invent or introduce any new codes under any circumstances.
 Shorter sentences are preferred.
 
 Generate exactly {num_turns} dialogue turns, starting with "caller" role."""
+        
+        # Add voice mapping instruction if profiles are available
+        if voice_info:
+            prompt += """
+
+Include a voice_mapping field with your selected voices:
+{
+  "caller": "selected_voice_name",
+  "callee": "selected_voice_name"
+}"""
+        
+        return prompt
     
     def _save_conversations(self, conversations: List[Dict]):
         """
