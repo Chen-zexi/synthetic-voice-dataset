@@ -84,11 +84,24 @@ class ConditionalLogger:
             message: Message to write
             pbar: Progress bar instance (optional)
         """
+        # Only write in verbose mode to avoid cluttering output
+        if not self.verbose:
+            return
+            
+        # Truncate very long messages to prevent display issues
+        if len(message) > 200:
+            message = message[:197] + "..."
+        
         # Always use tqdm.write when available to avoid interference
-        if pbar:
-            tqdm.write(message)
+        if pbar and not getattr(pbar, 'disable', False):
+            try:
+                tqdm.write(message, file=pbar.fp if hasattr(pbar, 'fp') else sys.stderr)
+            except Exception:
+                # Fallback if tqdm.write fails
+                if self.verbose:
+                    print(message, file=sys.stderr, flush=True)
         elif self.verbose:
-            print(message, file=sys.stdout, flush=True)
+            print(message, file=sys.stderr, flush=True)
 
 
 def create_progress_bar(total: int, desc: str, unit: str = "it", leave: bool = True) -> tqdm:

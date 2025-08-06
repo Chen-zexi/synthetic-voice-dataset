@@ -89,6 +89,7 @@ class Config:
     background_volume_reduction_db: int
     bandpass_low_freq: int
     bandpass_high_freq: int
+    audio_effects: dict  # Audio effects configuration
     
     # Post-processing settings
     post_processing_scam_json_input: Path
@@ -353,6 +354,13 @@ class ConfigLoader:
             background_volume_reduction_db=self.common_config["voice_generation"]["background_volume_reduction_db"],
             bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
             bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
+            audio_effects=self.common_config["voice_generation"].get("audio_effects", {
+                "enable_background_noise": True,
+                "enable_call_end_effect": True,
+                "enable_bandpass_filter": True,
+                "background_noise_level": 0.3,
+                "call_end_volume": 0.5
+            }),
             
             # Translation cache configuration
             use_translation_cache=self.common_config.get("translation_cache", {}).get("use_cache", False),
@@ -522,6 +530,13 @@ class ConfigLoader:
             background_volume_reduction_db=self.common_config["voice_generation"]["background_volume_reduction_db"],
             bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
             bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
+            audio_effects=self.common_config["voice_generation"].get("audio_effects", {
+                "enable_background_noise": True,
+                "enable_call_end_effect": True,
+                "enable_bandpass_filter": True,
+                "background_noise_level": 0.3,
+                "call_end_volume": 0.5
+            }),
             
             # Translation cache configuration
             use_translation_cache=self.common_config.get("translation_cache", {}).get("use_cache", False),
