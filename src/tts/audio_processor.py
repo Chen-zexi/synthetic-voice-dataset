@@ -54,14 +54,20 @@ class AudioProcessor:
             
             # Add background and sound effects if enabled
             if self.effects_config.get('enable_background_noise') or self.effects_config.get('enable_call_end_effect'):
+                logger.debug(f"Adding background and effects to {audio_path}")
                 processed_path = self._add_background_and_effects(processed_path)
                 if not processed_path:
                     processed_path = audio_path
+            else:
+                logger.debug(f"No background or call end effect added")
             
             # Apply bandpass filter for phone quality if enabled
             if self.effects_config.get('enable_bandpass_filter'):
+                logger.debug(f"Applying bandpass filter to {processed_path}")
                 final_path = self._apply_bandpass_filter(processed_path)
                 return final_path
+            else:
+                logger.debug(f"No bandpass filter applied")
             
             return processed_path
             
@@ -118,6 +124,9 @@ class AudioProcessor:
                 
                 # Overlay background with call audio
                 combined_audio = call_audio.overlay(background_audio)
+                logger.debug(f"Background audio added to call audio")
+            else:
+                logger.debug(f"No background audio added")
             
             # Append call end effect if enabled and available
             if call_end_effect:
@@ -128,6 +137,9 @@ class AudioProcessor:
                     call_end_effect = call_end_effect + volume_adjustment
                 
                 combined_audio = combined_audio + call_end_effect
+                logger.debug(f"Call end effect added to combined audio")
+            else:
+                logger.debug(f"No call end effect added")
             
             # Save processed audio
             output_path = audio_path.parent / audio_path.name.replace('.wav', '_with_effects.wav')

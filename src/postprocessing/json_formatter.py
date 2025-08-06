@@ -138,6 +138,21 @@ class JsonFormatter:
         Returns:
             Formatted conversation as OrderedDict
         """
+        # Transform conversation structure
+        conv = conversation.copy()
+        
+        if "victim_awareness" in conv:
+            conv.pop("victim_awareness")
+        if "num_turns" in conv:
+            conv.pop("num_turns")
+        for utter in conv['dialogue']:
+            if "role" in utter:
+                utter["RX/TX"] = utter.pop("role")
+                utter["RX/TX"] = utter["RX/TX"].replace('caller', 'TX').replace('callee', 'RX')
+            if "text" in utter:
+                utter["stt_text"] = utter.pop("text")
+        conv['full_content'] = conv.pop('dialogue')
+        
         # Use configured fields to exclude
         internal_fields = self.exclude_fields
         
@@ -147,7 +162,7 @@ class JsonFormatter:
         formatted["is_vp"] = self.config.post_processing_scam_label
         
         # Add remaining fields, excluding internal ones
-        for key, value in conversation.items():
+        for key, value in conv.items():
             if key not in internal_fields:
                 formatted[key] = value
         
@@ -163,6 +178,21 @@ class JsonFormatter:
         Returns:
             Formatted conversation as OrderedDict
         """
+        # Transform conversation structure
+        conv = conversation.copy()
+        
+        if "victim_awareness" in conv:
+            conv.pop("victim_awareness")
+        if "num_turns" in conv:
+            conv.pop("num_turns")
+        for utter in conv['dialogue']:
+            if "role" in utter:
+                utter["RX/TX"] = utter.pop("role")
+                utter["RX/TX"] = utter["RX/TX"].replace('caller', 'TX').replace('callee', 'RX')
+            if "text" in utter:
+                utter["stt_text"] = utter.pop("text")
+        conv['full_content'] = conv.pop('dialogue')
+        
         # Use configured fields to exclude
         internal_fields = self.exclude_fields
         
@@ -171,7 +201,7 @@ class JsonFormatter:
         formatted["is_vp"] = self.config.post_processing_legit_label
         
         # Add remaining fields, excluding internal ones
-        for key, value in conversation.items():
+        for key, value in conv.items():
             if key not in internal_fields:
                 formatted[key] = value
         
