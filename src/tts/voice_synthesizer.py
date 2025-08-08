@@ -1,5 +1,5 @@
 """
-Voice synthesizer using ElevenLabs TTS API with async support.
+Enhanced voice synthesizer using ElevenLabs TTS API with v3 support and audio tags.
 """
 
 import json
@@ -17,6 +17,7 @@ from config.config_loader import Config
 from tts.audio_processor import AudioProcessor
 from tts.audio_combiner import AudioCombiner
 from tts.voice_validator import VoiceValidator
+from tts.audio_tags import AudioTagManager
 from utils.logging_utils import ConditionalLogger, create_progress_bar, format_completion_message
 
 
@@ -25,15 +26,15 @@ logger = logging.getLogger(__name__)
 
 class VoiceSynthesizer:
     """
-    Synthesizes voice audio from text conversations using ElevenLabs with async support.
+    Enhanced voice synthesizer using ElevenLabs with v3 support, audio tags, and improved quality settings.
     """
     
     def __init__(self, config: Config):
         """
-        Initialize the voice synthesizer.
+        Initialize the enhanced voice synthesizer.
         
         Args:
-            config: Configuration object
+            config: Configuration object with enhanced voice settings
         """
         self.config = config
         self.client = AsyncElevenLabs(api_key=config.elevenlabs_api_key)
@@ -44,6 +45,35 @@ class VoiceSynthesizer:
         self.voice_validator = VoiceValidator(config.elevenlabs_api_key, config.verbose)
         self.validated_voices = set()  # Cache of validated voice IDs
         self.clogger = ConditionalLogger(__name__, config.verbose)
+        
+        # Enhanced features
+        self.audio_tag_manager = AudioTagManager()
+        self.current_conversation_type = None  # Track if processing scam or legit conversations
+        
+        # Determine model to use
+        self.model_id = self._get_model_id()
+        
+        # Log enhancement features being used
+        if config.model_v3_enabled:
+            self.clogger.info("ElevenLabs v3 features enabled: audio tags, enhanced expressiveness")
+        if config.use_audio_tags:
+            self.clogger.info("Audio tags enabled for emotional context")
+        if config.use_high_quality:
+            self.clogger.info(f"High-quality audio enabled: {config.high_quality_format}")
+    
+    def _get_model_id(self) -> str:
+        """
+        Determine which model to use based on configuration.
+        
+        Returns:
+            Model ID to use for TTS
+        """
+        if self.config.model_v3_enabled:
+            # Use v3 model if enabled
+            return "eleven_multilingual_v3"
+        else:
+            # Use configured model (default v2)
+            return self.config.voice_model_id
     
     async def validate_voices(self) -> bool:
         """
@@ -99,14 +129,18 @@ class VoiceSynthesizer:
     
     async def generate_audio(self, input_file: Path, output_dir: Path, is_scam: bool = True):
         """
-        Generate audio for all conversations in the input file asynchronously.
+        Generate enhanced audio for all conversations in the input file asynchronously.
         
         Args:
             input_file: Path to JSON file containing conversations
             output_dir: Directory to save audio files
             is_scam: Whether these are scam conversations
         """
-        self.clogger.info(f"Generating audio from {input_file}")
+        # Set conversation type for context-aware audio generation
+        self.current_conversation_type = "scam" if is_scam else "legit"
+        
+        self.clogger.info(f"Generating {self.current_conversation_type} audio from {input_file}")
+        self.clogger.info(f"Using model: {self.model_id}")
         
         # Validate voice IDs first
         if not await self.validate_voices():
@@ -171,7 +205,7 @@ class VoiceSynthesizer:
     
     async def _process_conversation_async(self, conversation: Dict, output_dir: Path, pbar: tqdm):
         """
-        Process a single conversation to generate audio asynchronously.
+        Process a single conversation to generate enhanced audio asynchronously.
         
         Args:
             conversation: Conversation dictionary
@@ -194,10 +228,18 @@ class VoiceSynthesizer:
         
         audio_files = []
         
-        # Generate audio for each turn concurrently
+        # Generate audio for each turn concurrently with enhanced context
         turn_tasks = []
-        for turn in dialogue:
-            task = self._generate_turn_audio_async(turn, caller_voice, callee_voice, conv_dir)
+        for i, turn in enumerate(dialogue):
+            # Determine turn position for context-aware tagging
+            if i == 0:
+                turn_position = "opening"
+            elif i == len(dialogue) - 1:
+                turn_position = "closing"
+            else:
+                turn_position = "middle"
+            
+            task = self._generate_turn_audio_async(turn, caller_voice, callee_voice, conv_dir, turn_position)
             turn_tasks.append(task)
         
         # Wait for all turns to complete
@@ -243,15 +285,16 @@ class VoiceSynthesizer:
         return selected[0], selected[1]
     
     async def _generate_turn_audio_async(self, turn: Dict, caller_voice: str, 
-                                       callee_voice: str, conv_dir: Path) -> Optional[Dict]:
+                                       callee_voice: str, conv_dir: Path, turn_position: str = "middle") -> Optional[Dict]:
         """
-        Generate audio for a single dialogue turn asynchronously.
+        Generate enhanced audio for a single dialogue turn asynchronously.
         
         Args:
             turn: Dialogue turn dictionary
             caller_voice: Voice ID for caller
             callee_voice: Voice ID for callee
             conv_dir: Conversation directory
+            turn_position: Position in conversation (opening, middle, closing)
             
         Returns:
             Audio file info dictionary or None if generation failed
@@ -268,8 +311,12 @@ class VoiceSynthesizer:
             self.clogger.progress_write(f"Skipping turn {sent_id} ({role}): Voice {voice_id} not validated")
             return None
         
-        # Generate filename
-        filename = f"turn_{sent_id:02d}_{role}.mp3"
+        # Enhance text with audio tags if enabled
+        enhanced_text = self._enhance_text_with_tags(text, role, turn_position)
+        
+        # Generate filename with quality indicator
+        file_extension = "wav" if self.config.use_high_quality else "mp3"
+        filename = f"turn_{sent_id:02d}_{role}.{file_extension}"
         filepath = conv_dir / filename
         
         # Skip if file already exists
@@ -279,20 +326,26 @@ class VoiceSynthesizer:
                 "turn_id": sent_id,
                 "role": role,
                 "text": text,
+                "enhanced_text": enhanced_text,
                 "voice_id": voice_id,
                 "filename": filename
             }
         
         try:
-            # Use the new ElevenLabs SDK client
+            # Build enhanced voice settings
+            voice_settings = self._build_voice_settings()
+            
+            # Determine output format
+            output_format = self._get_output_format()
+            
+            # Use the enhanced ElevenLabs SDK client
             audio_generator = self.client.text_to_speech.convert(
-                text=text,
+                text=enhanced_text,
                 voice_id=voice_id,
-                model_id=self.config.voice_model_id,
-                voice_settings={
-                    "stability": 0.5,
-                    "similarity_boost": 0.5
-                }
+                model_id=self.model_id,
+                voice_settings=voice_settings,
+                output_format=output_format,
+                optimize_streaming_latency=self.config.optimize_streaming_latency
             )
             
             # Collect audio bytes
@@ -309,8 +362,10 @@ class VoiceSynthesizer:
                 "turn_id": sent_id,
                 "role": role,
                 "text": text,
+                "enhanced_text": enhanced_text,
                 "voice_id": voice_id,
-                "filename": filename
+                "filename": filename,
+                "audio_tags_used": self._get_last_used_tags()
             }
                     
         except Exception as e:
@@ -347,9 +402,88 @@ class VoiceSynthesizer:
             "caller_voice_id": caller_voice,
             "callee_voice_id": callee_voice,
             "audio_files": audio_files,
-            "combined_audio_file": processed_path.name if processed_path else None
+            "combined_audio_file": processed_path.name if processed_path else None,
+            "model_used": self.model_id,
+            "v3_features_enabled": self.config.model_v3_enabled,
+            "audio_tags_enabled": self.config.use_audio_tags,
+            "high_quality_enabled": self.config.use_high_quality
         }
         
         metadata_file = conv_dir / "metadata.json"
         with open(metadata_file, 'w', encoding='utf-8') as f:
             json.dump(metadata, f, ensure_ascii=False, indent=2)
+    
+    def _enhance_text_with_tags(self, text: str, role: str, turn_position: str) -> str:
+        """
+        Enhance text with audio tags based on context.
+        
+        Args:
+            text: Original text
+            role: Speaker role (caller/callee)
+            turn_position: Position in conversation
+            
+        Returns:
+            Enhanced text with audio tags
+        """
+        if not self.config.use_audio_tags or not self.current_conversation_type:
+            return text
+        
+        # Get contextual tags
+        tags = self.audio_tag_manager.get_contextual_tags(
+            conversation_type=self.current_conversation_type,
+            turn_position=turn_position,
+            role=role,
+            text_content=text
+        )
+        
+        # Store tags for metadata
+        self._last_used_tags = tags
+        
+        # Format text with tags
+        enhanced_text = self.audio_tag_manager.format_text_with_tags(text, tags)
+        
+        # Log tag usage in verbose mode
+        if self.config.verbose and tags:
+            self.clogger.info(f"Applied tags {tags} to {role} text: '{text[:50]}...'")
+        
+        return enhanced_text
+    
+    def _build_voice_settings(self) -> Dict:
+        """
+        Build voice settings from configuration.
+        
+        Returns:
+            Voice settings dictionary
+        """
+        settings = {
+            "stability": self.config.voice_stability,
+            "similarity_boost": self.config.voice_similarity_boost,
+            "speaker_boost": self.config.voice_speaker_boost
+        }
+        
+        # Add style setting for v3 model
+        if self.config.model_v3_enabled:
+            settings["style"] = self.config.voice_style
+        
+        return settings
+    
+    def _get_output_format(self) -> str:
+        """
+        Get output format based on configuration.
+        
+        Returns:
+            Output format string
+        """
+        if self.config.use_high_quality:
+            return self.config.high_quality_format
+        else:
+            return self.config.voice_output_format
+    
+    def _get_last_used_tags(self) -> List[str]:
+        """
+        Get the last used audio tags for metadata.
+        
+        Returns:
+            List of last used tags
+        """
+        return getattr(self, '_last_used_tags', [])

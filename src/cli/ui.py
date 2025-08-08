@@ -34,6 +34,7 @@ from cli.utils import (
 from config.config_loader import ConfigLoader
 from config.locale_manager import LocaleConfigManager
 from tts.voice_validator import VoiceValidator
+from cli.voice_quality_commands import VoiceQualityManager
 
 
 class InteractiveUI:
@@ -50,6 +51,7 @@ class InteractiveUI:
         self.config_dir = config_dir
         self.output_dir = output_dir
         self.config_loader = ConfigLoader(config_dir, output_dir)
+        self.voice_quality_manager = VoiceQualityManager(self.config_loader)
         self.current_locale = None
         self.pipeline_steps = [
             'preprocess',
@@ -327,6 +329,7 @@ class InteractiveUI:
         print("  4. View configuration details")
         print("  5. Manage translation cache")
         print("  6. Voice ID Management")
+        print("  7. Voice Quality & V3 Features")
         print("  0. Back to main menu")
         
         choice = input("\nEnter your choice: ").strip()
@@ -348,6 +351,8 @@ class InteractiveUI:
             self._translation_cache_menu()
         elif choice == '6':
             self._voice_management_menu()
+        elif choice == '7':
+            self._voice_quality_menu()
         else:
             print_warning("Invalid choice.")
     
@@ -1102,3 +1107,106 @@ class InteractiveUI:
                 self._execute_pipeline(steps=steps, sample_limit=sample_limit, force=True)
         except ValueError:
             print_warning("Invalid sample limit. Please enter a number.")
+    
+    def _voice_quality_menu(self):
+        """Show voice quality and v3 features management menu."""
+        print_step_header("Voice Quality & ElevenLabs V3 Features")
+        
+        # Show current settings first
+        self.voice_quality_manager.show_current_settings()
+        print("\n" + "=" * 40)
+        
+        print("Voice Quality Options:")
+        print("  1. Enable ElevenLabs V3 Features (with audio tags)")
+        print("  2. Enable ElevenLabs V3 Features (without audio tags)")
+        print("  3. Disable V3 Features (revert to V2)")
+        print("  4. Enable High-Quality Audio (PCM uncompressed)")
+        print("  5. Disable High-Quality Audio (standard MP3)")
+        print("  6. Configure Voice Settings")
+        print("  7. Show Current Settings")
+        print("  8. Reset All Settings to Defaults")
+        print("  0. Back to configuration menu")
+        
+        choice = input("\nEnter your choice: ").strip()
+        
+        if choice == '0':
+            return
+        elif choice == '1':
+            print_info("Enabling ElevenLabs V3 with audio tags...")
+            if self.voice_quality_manager.enable_v3_features(enable_audio_tags=True):
+                print_info("V3 features enabled! Your audio will now include:")
+                print("  • More expressive speech with emotional context")
+                print("  • Audio tags for enhanced conversational flow")
+                print("  • Better pronunciation and intonation")
+                print("  • Context-aware emotional responses")
+        elif choice == '2':
+            print_info("Enabling ElevenLabs V3 without audio tags...")
+            if self.voice_quality_manager.enable_v3_features(enable_audio_tags=False):
+                print_info("V3 features enabled! Your audio will now include:")
+                print("  • More expressive speech")
+                print("  • Better pronunciation and intonation")
+                print("  • Note: Audio tags are disabled")
+        elif choice == '3':
+            print_info("Disabling V3 features...")
+            if self.voice_quality_manager.disable_v3_features():
+                print_info("Reverted to ElevenLabs V2 for compatibility")
+        elif choice == '4':
+            print_info("Enabling high-quality audio...")
+            if self.voice_quality_manager.enable_high_quality_audio():
+                print_warning("Note: High-quality audio will create larger files")
+                print_info("Recommended for final production datasets")
+        elif choice == '5':
+            print_info("Disabling high-quality audio...")
+            if self.voice_quality_manager.disable_high_quality_audio():
+                print_info("Audio will use standard MP3 compression")
+        elif choice == '6':
+            self._configure_voice_settings()
+        elif choice == '7':
+            self.voice_quality_manager.show_current_settings()
+        elif choice == '8':
+            if confirm_action("Reset all voice settings to defaults?"):
+                if self.voice_quality_manager.reset_to_defaults():
+                    print_info("All voice settings have been reset to defaults")
+        else:
+            print_warning("Invalid choice.")
+    
+    def _configure_voice_settings(self):
+        """Configure individual voice settings."""
+        print_step_header("Configure Voice Settings")
+        
+        print("Current voice settings will be updated.")
+        print("Press Enter to keep current value, or enter new value:")
+        
+        try:
+            # Stability setting
+            stability_input = input("Voice Stability (0.0-1.0, current: see above): ").strip()
+            stability = float(stability_input) if stability_input else None
+            
+            # Similarity boost setting
+            similarity_input = input("Similarity Boost (0.0-1.0, current: see above): ").strip()
+            similarity_boost = float(similarity_input) if similarity_input else None
+            
+            # Style setting (v3 only)
+            style_input = input("Style (0.0-1.0, V3 only, current: see above): ").strip()
+            style = float(style_input) if style_input else None
+            
+            # Speaker boost
+            speaker_boost_input = input("Speaker Boost (true/false, current: see above): ").strip().lower()
+            speaker_boost = None
+            if speaker_boost_input in ['true', 't', 'yes', 'y', '1']:
+                speaker_boost = True
+            elif speaker_boost_input in ['false', 'f', 'no', 'n', '0']:
+                speaker_boost = False
+            
+            # Apply settings
+            self.voice_quality_manager.set_voice_settings(
+                stability=stability,
+                similarity_boost=similarity_boost,
+                style=style,
+                speaker_boost=speaker_boost
+            )
+            
+        except ValueError:
+            print_error("Invalid input. Values must be numbers between 0.0 and 1.0.")
+        except Exception as e:
+            print_error(f"Error configuring voice settings: {e}")

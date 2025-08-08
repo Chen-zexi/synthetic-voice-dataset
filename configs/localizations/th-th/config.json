@@ -14,15 +14,9 @@
     "intermediate_code": "en"
   },
   "voices": {
-    "ids": [
-      "BeIxObt4dYBRJLYoe1hU",
-      "UcqZLa941Kkt8ZhEEybf"
-    ],
-    "names": [
-      "Athira - Friendly & Natural Female Malay Voice",
-      "AFIFAH"
-    ],
-    "_note": "Invalid voice IDs removed: AZnzlk1XvdvUeBnXmlld. Use --validate-voices to find alternatives."
+    "ids": ["XrExE9yKIg1WjnnlVkGX", "pqHfZKP75CvOlQylNhV4"],
+    "names": ["Matilda (Female/Adult)", "Bill (Male/Adult)"],
+    "_note": "Using English voices compatible with Thai text via multilingual models"
   },
   "conversation": {
     "legit_categories": [

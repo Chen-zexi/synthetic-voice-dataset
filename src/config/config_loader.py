@@ -90,6 +90,21 @@ class Config:
     bandpass_low_freq: int
     bandpass_high_freq: int
     
+    # Enhanced voice settings
+    model_v3_enabled: bool
+    voice_stability: float
+    voice_similarity_boost: float
+    voice_style: float
+    voice_speaker_boost: bool
+    use_high_quality: bool
+    high_quality_format: str
+    optimize_streaming_latency: int
+    use_audio_tags: bool
+    emotional_context: bool
+    conversation_context: bool
+    default_emotion_scam: str
+    default_emotion_legit: str
+    
     # Post-processing settings
     post_processing_scam_json_input: Path
     post_processing_scam_json_output: Path
@@ -354,6 +369,21 @@ class ConfigLoader:
             bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
             bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
             
+            # Enhanced voice settings
+            model_v3_enabled=self.common_config["voice_generation"]["model_v3_enabled"],
+            voice_stability=self.common_config["voice_generation"]["voice_settings"]["stability"],
+            voice_similarity_boost=self.common_config["voice_generation"]["voice_settings"]["similarity_boost"],
+            voice_style=self.common_config["voice_generation"]["voice_settings"]["style"],
+            voice_speaker_boost=self.common_config["voice_generation"]["voice_settings"]["speaker_boost"],
+            use_high_quality=self.common_config["voice_generation"]["quality_settings"]["use_high_quality"],
+            high_quality_format=self.common_config["voice_generation"]["quality_settings"]["high_quality_format"],
+            optimize_streaming_latency=self.common_config["voice_generation"]["quality_settings"]["optimize_streaming_latency"],
+            use_audio_tags=self.common_config["voice_generation"]["v3_features"]["use_audio_tags"],
+            emotional_context=self.common_config["voice_generation"]["v3_features"]["emotional_context"],
+            conversation_context=self.common_config["voice_generation"]["v3_features"]["conversation_context"],
+            default_emotion_scam=self.common_config["voice_generation"]["v3_features"]["default_emotion_scam"],
+            default_emotion_legit=self.common_config["voice_generation"]["v3_features"]["default_emotion_legit"],
+            
             # Translation cache configuration
             use_translation_cache=self.common_config.get("translation_cache", {}).get("use_cache", False),
             translation_cache_enabled=self.common_config.get("translation_cache", {}).get("enabled", True),
@@ -522,6 +552,21 @@ class ConfigLoader:
             background_volume_reduction_db=self.common_config["voice_generation"]["background_volume_reduction_db"],
             bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
             bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
+            
+            # Enhanced voice settings
+            model_v3_enabled=self.common_config["voice_generation"]["model_v3_enabled"],
+            voice_stability=self.common_config["voice_generation"]["voice_settings"]["stability"],
+            voice_similarity_boost=self.common_config["voice_generation"]["voice_settings"]["similarity_boost"],
+            voice_style=self.common_config["voice_generation"]["voice_settings"]["style"],
+            voice_speaker_boost=self.common_config["voice_generation"]["voice_settings"]["speaker_boost"],
+            use_high_quality=self.common_config["voice_generation"]["quality_settings"]["use_high_quality"],
+            high_quality_format=self.common_config["voice_generation"]["quality_settings"]["high_quality_format"],
+            optimize_streaming_latency=self.common_config["voice_generation"]["quality_settings"]["optimize_streaming_latency"],
+            use_audio_tags=self.common_config["voice_generation"]["v3_features"]["use_audio_tags"],
+            emotional_context=self.common_config["voice_generation"]["v3_features"]["emotional_context"],
+            conversation_context=self.common_config["voice_generation"]["v3_features"]["conversation_context"],
+            default_emotion_scam=self.common_config["voice_generation"]["v3_features"]["default_emotion_scam"],
+            default_emotion_legit=self.common_config["voice_generation"]["v3_features"]["default_emotion_legit"],
             
             # Translation cache configuration
             use_translation_cache=self.common_config.get("translation_cache", {}).get("use_cache", False),

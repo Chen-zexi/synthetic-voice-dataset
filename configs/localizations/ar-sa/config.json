@@ -14,18 +14,9 @@
     "intermediate_code": "en"
   },
   "voices": {
-    "ids": [
-      "u0TsaWvt0v8migutHM3M",
-      "A9ATTqUUQ6GHu0coCz8t",
-      "R6nda3uM038xEEKi7GFl",
-      "VwC51uc4PUblWEJSPzeo"
-    ],
-    "names": [
-      "Ghizlane",
-      "Hamid",
-      "Anas",
-      "Abrar Sabbah"
-    ]
+    "ids": ["9BWtsMINqrJLrRacOk9x", "onwK4e9ZLuTAKqWW03F9"],
+    "names": ["Aria (Female/Adult)", "Daniel (Male/Adult)"],
+    "_note": "Using English voices compatible with Arabic text via multilingual models"
   },
   "conversation": {
     "legit_categories": [

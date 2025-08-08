@@ -14,14 +14,9 @@
     "intermediate_code": "en"
   },
   "voices": {
-    "ids": [
-      "u0TsaWvt0v8migutHM3M",
-      "A9ATTqUUQ6GHu0coCz8t"
-    ],
-    "names": [
-      "Ghizlane",
-      "Hamid"
-    ]
+    "ids": ["4wf10lgibMnboGJGCLrP", "s83SAGdFTflAwJcAV81K"],
+    "names": ["Farah", "Adeeb"],
+    "_note": "Native Arabic voices from ElevenLabs dashboard"
   },
   "conversation": {
     "legit_categories": [

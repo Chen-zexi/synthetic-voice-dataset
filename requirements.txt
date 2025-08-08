@@ -1,7 +1,7 @@
 argostranslate
 python-dotenv
 openai>=1.0.0
-elevenlabs
+elevenlabs>=1.0.0
 tqdm
 numpy
 deep-translator

@@ -14,14 +14,9 @@
     "intermediate_code": "en"
   },
   "voices": {
-    "ids": [
-      "C1gMsiiE7sXAt59fmvYg",
-      "BeIxObt4dYBRJLYoe1hU"
-    ],
-    "names": [
-      "Hasnan",
-      "Athira"
-    ]
+    "ids": ["Xb7hH8MSUJpSbSDYk0k2", "JBFqnCBsd6RMkjVDRZzb"],
+    "names": ["Alice (Female/Adult)", "George (Male/Adult)"],
+    "_note": "Using English voices compatible with Malay text via multilingual models"
   },
   "conversation": {
     "legit_categories": [
