@@ -120,7 +120,16 @@ class VoiceSynthesizer:
         
         # Load conversations
         with open(input_file, 'r', encoding='utf-8') as f:
-            conversations = json.load(f)
+            data = json.load(f)
+        
+        # Extract conversations list from the data structure
+        # Handle both dict format (with 'conversations' key) and plain array format
+        if isinstance(data, dict):
+            conversations = data.get('conversations', [])
+        elif isinstance(data, list):
+            conversations = data
+        else:
+            raise ValueError(f"Unexpected data format in {input_file}: {type(data)}")
         
         self.clogger.info(f"Found {len(conversations)} conversations to process")
         

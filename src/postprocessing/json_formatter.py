@@ -87,7 +87,15 @@ class JsonFormatter:
         
         # Load conversations
         with open(input_path, 'r', encoding='utf-8') as f:
-            conversations = json.load(f)
+            data = json.load(f)
+        
+        # Handle both wrapped format (with 'conversations' key) and plain array format
+        if isinstance(data, dict):
+            conversations = data.get('conversations', [])
+        elif isinstance(data, list):
+            conversations = data
+        else:
+            raise ValueError(f"Unexpected data format in {input_path}: {type(data)}")
         
         # Format each conversation
         formatted_conversations = []
@@ -115,7 +123,15 @@ class JsonFormatter:
         
         # Load conversations
         with open(input_path, 'r', encoding='utf-8') as f:
-            conversations = json.load(f)
+            data = json.load(f)
+        
+        # Handle both wrapped format (with 'conversations' key) and plain array format
+        if isinstance(data, dict):
+            conversations = data.get('conversations', [])
+        elif isinstance(data, list):
+            conversations = data
+        else:
+            raise ValueError(f"Unexpected data format in {input_path}: {type(data)}")
         
         # Format each conversation
         formatted_conversations = []
