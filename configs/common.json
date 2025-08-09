@@ -3,20 +3,29 @@
     "num_turns_lower_limit": 2,
     "num_turns_upper_limit": 4,
     "sample_limit": 25,
-    "victim_awareness_levels": ["not", "not", "not", "not", "not", "tiny", "very"]
+    "victim_awareness_levels": [
+      "not",
+      "not",
+      "not",
+      "not",
+      "not",
+      "tiny",
+      "very"
+    ]
   },
   "preprocessing": {
     "input_file": "scamGen_combined_first_20k.txt",
     "mapped_suffix": "_mapped.txt"
   },
   "translation": {
-    "service": "qwen",
+    "service": "google",
     "max_lines": 1000,
     "english_output": "scamGen_combined_first_20k_en.txt",
     "chinese_code": "zh-CN",
     "qwen_model": "qwen-mt-turbo",
     "qwen_base_url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-    "max_concurrent_translations": 20
+    "max_concurrent_translations": 20,
+    "track_tokens": true
   },
   "multi_turn": {
     "english_output": "scam_conversation_english.json",
@@ -27,8 +36,8 @@
   },
   "voice_generation": {
     "sample_limit": 25,
-    "model_id": "eleven_multilingual_v2",
-    "model_v3_enabled": false,
+    "model_id": "eleven_multilingual_v3",
+    "model_v3_enabled": true,
     "output_format": "mp3_44100_128",
     "voice_speed": 1.08,
     "silence_duration_ms": 500,
@@ -36,6 +45,13 @@
     "bandpass_filter": {
       "low_freq": 300,
       "high_freq": 3400
+    },
+    "audio_effects": {
+      "enable_background_noise": true,
+      "enable_call_end_effect": true,
+      "enable_bandpass_filter": true,
+      "background_noise_level": 1.0,
+      "call_end_volume": 1.0
     },
     "voice_settings": {
       "stability": 0.5,
@@ -49,7 +65,7 @@
       "optimize_streaming_latency": 0
     },
     "v3_features": {
-      "use_audio_tags": false,
+      "use_audio_tags": true,
       "emotional_context": true,
       "conversation_context": true,
       "default_emotion_scam": "urgent",
@@ -62,16 +78,36 @@
     "audio_zip_names": {
       "scam": "scam_conversation_audio.zip",
       "legit": "legit_conversation_audio.zip"
-    }
+    },
+    "exclude_fields": [
+      "first_turn",
+      "voice_mapping",
+      "scenario",
+      "metadata",
+      "victim_awareness",
+      "category"
+    ]
   },
   "llm": {
     "provider": "openai",
-    "model": "gpt-4.1-mini",
-    "max_concurrent_requests": 10,
+    "model": "gpt-5-nano",
+    "max_concurrent_requests": 20,
+    "comment": "Standard model parameters (ignored for reasoning models)",
     "temperature": 1.0,
     "max_tokens": null,
     "top_p": 0.95,
-    "n": 1
+    "n": 1,
+    "presence_penalty": 0.0,
+    "frequency_penalty": 0.0,
+    "comment2": "Reasoning model parameters (ignored for standard models)",
+    "reasoning_effort": "minimal",
+    "max_completion_tokens": null,
+    "comment3": "Gemini-specific parameters",
+    "thinking_budget": 0,
+    "max_output_tokens": null,
+    "comment4": "Features (Response API defaults to true for OpenAI)",
+    "use_response_api": null,
+    "track_tokens": true
   },
   "translation_cache": {
     "enabled": true,

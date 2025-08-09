@@ -115,6 +115,20 @@ class QwenTranslator(BaseTranslator):
                     # Extract translated text
                     translated = completion.choices[0].message.content
                     
+                    # Track token usage if enabled
+                    if self.token_tracker and hasattr(completion, 'usage'):
+                        usage = completion.usage
+                        token_info = {
+                            'input_tokens': usage.prompt_tokens,
+                            'output_tokens': usage.completion_tokens,
+                            'total_tokens': usage.total_tokens
+                        }
+                        self.token_tracker.add_usage(
+                            token_info,
+                            self.model,
+                            f"translate_{source_lang}_to_{target_lang}"
+                        )
+                    
                     self.clogger.debug(f"Translated: '{text[:50]}...' -> '{translated[:50]}...'")
                     return translated
                     
@@ -168,9 +182,8 @@ class QwenTranslator(BaseTranslator):
         """
         self.clogger.info(f"Translating conversations: {input_path} ({from_code} -> {to_code})", force=True)
         
-        # Load conversations
-        with open(input_path, 'r', encoding='utf-8') as f:
-            conversations = json.load(f)
+        # Load conversations using base class helper method
+        conversations = self._load_conversations_from_json(input_path)
         
         # Load placeholder mapping
         with open(self.config.preprocessing_map_path, 'r', encoding='utf-8') as f:
@@ -255,4 +268,38 @@ class QwenTranslator(BaseTranslator):
             translated_conv["first_turn"] = translated_conv["dialogue"][0]["text"]
         
         return translated_conv
+    
+    def get_token_summary(self):
+        """Get token usage summary with cost estimation for Qwen models."""
+        if not self.token_tracker:
+            return None
+        
+        # Load model pricing from config
+        try:
+            config_path = Path(__file__).parent / "model_config.json"
+            with open(config_path, 'r') as f:
+                model_config = json.load(f)
+            
+            # Get pricing for the current model
+            pricing = {}
+            for model_info in model_config['models']['qwen']:
+                if model_info['id'] == self.model:
+                    # Convert from per 1M tokens to per 1K tokens for compatibility
+                    pricing[self.model] = {
+                        'input': model_info['pricing']['input'] / 1000,
+                        'output': model_info['pricing']['output'] / 1000
+                    }
+                    break
+            
+            # Return summary with costs
+            return {
+                'summary': self.token_tracker.get_summary(include_details=False),
+                'cost': self.token_tracker.estimate_cost(pricing)
+            }
+        except Exception as e:
+            logger.warning(f"Could not load pricing config: {e}")
+            return {
+                'summary': self.token_tracker.get_summary(include_details=False),
+                'cost': None
+            }
     

@@ -29,6 +29,28 @@ class JsonFormatter:
         """
         self.config = config
         self.clogger = ConditionalLogger(__name__, config.verbose)
+        
+        # Load fields to exclude from config or use defaults
+        self.exclude_fields = [
+            "first_turn",
+            "voice_mapping",
+            "scenario",
+            "metadata",
+            "victim_awareness",
+            "category"
+        ]
+        
+        # Try to load from config if available
+        try:
+            import json
+            from pathlib import Path
+            common_config_path = Path("configs/common.json")
+            if common_config_path.exists():
+                with open(common_config_path, 'r') as f:
+                    common_config = json.load(f)
+                    self.exclude_fields = common_config.get("post_processing", {}).get("exclude_fields", self.exclude_fields)
+        except Exception as e:
+            self.clogger.debug(f"Using default exclude fields: {e}")
     
     def format_all(self):
         """
@@ -65,7 +87,15 @@ class JsonFormatter:
         
         # Load conversations
         with open(input_path, 'r', encoding='utf-8') as f:
-            conversations = json.load(f)
+            data = json.load(f)
+        
+        # Handle both wrapped format (with 'conversations' key) and plain array format
+        if isinstance(data, dict):
+            conversations = data.get('conversations', [])
+        elif isinstance(data, list):
+            conversations = data
+        else:
+            raise ValueError(f"Unexpected data format in {input_path}: {type(data)}")
         
         # Format each conversation
         formatted_conversations = []
@@ -93,7 +123,15 @@ class JsonFormatter:
         
         # Load conversations
         with open(input_path, 'r', encoding='utf-8') as f:
-            conversations = json.load(f)
+            data = json.load(f)
+        
+        # Handle both wrapped format (with 'conversations' key) and plain array format
+        if isinstance(data, dict):
+            conversations = data.get('conversations', [])
+        elif isinstance(data, list):
+            conversations = data
+        else:
+            raise ValueError(f"Unexpected data format in {input_path}: {type(data)}")
         
         # Format each conversation
         formatted_conversations = []
@@ -116,16 +154,33 @@ class JsonFormatter:
         Returns:
             Formatted conversation as OrderedDict
         """
-        # Remove 'first_turn' if it exists
-        conversation.pop("first_turn", None)
+        # Transform conversation structure
+        conv = conversation.copy()
+        
+        if "victim_awareness" in conv:
+            conv.pop("victim_awareness")
+        if "num_turns" in conv:
+            conv.pop("num_turns")
+        for utter in conv['dialogue']:
+            if "role" in utter:
+                utter["RX/TX"] = utter.pop("role")
+                utter["RX/TX"] = utter["RX/TX"].replace('caller', 'TX').replace('callee', 'RX')
+            if "text" in utter:
+                utter["stt_text"] = utter.pop("text")
+        conv['full_content'] = conv.pop('dialogue')
+        
+        # Use configured fields to exclude
+        internal_fields = self.exclude_fields
         
         # Create ordered dictionary with required fields first
         formatted = OrderedDict()
         formatted["region"] = self.config.post_processing_region
         formatted["is_vp"] = self.config.post_processing_scam_label
         
-        # Add remaining fields
-        formatted.update(conversation)
+        # Add remaining fields, excluding internal ones
+        for key, value in conv.items():
+            if key not in internal_fields:
+                formatted[key] = value
         
         return formatted
     
@@ -139,15 +194,32 @@ class JsonFormatter:
         Returns:
             Formatted conversation as OrderedDict
         """
-        # Remove 'first_turn' if it exists (shouldn't exist for legit)
-        conversation.pop("first_turn", None)
+        # Transform conversation structure
+        conv = conversation.copy()
+        
+        if "victim_awareness" in conv:
+            conv.pop("victim_awareness")
+        if "num_turns" in conv:
+            conv.pop("num_turns")
+        for utter in conv['dialogue']:
+            if "role" in utter:
+                utter["RX/TX"] = utter.pop("role")
+                utter["RX/TX"] = utter["RX/TX"].replace('caller', 'TX').replace('callee', 'RX')
+            if "text" in utter:
+                utter["stt_text"] = utter.pop("text")
+        conv['full_content'] = conv.pop('dialogue')
+        
+        # Use configured fields to exclude
+        internal_fields = self.exclude_fields
         
         # Create ordered dictionary with is_vp field first
         formatted = OrderedDict()
         formatted["is_vp"] = self.config.post_processing_legit_label
         
-        # Add remaining fields
-        formatted.update(conversation)
+        # Add remaining fields, excluding internal ones
+        for key, value in conv.items():
+            if key not in internal_fields:
+                formatted[key] = value
         
         return formatted
     

@@ -1,0 +1,76 @@
+{
+  "models": {
+    "qwen": [
+      {
+        "id": "qwen-mt-plus",
+        "name": "Qwen-MT-Plus",
+        "description": "Qwen3-based Pro Translation model with 92 language support",
+        "pricing": {
+          "input": 2.46,
+          "output": 7.37,
+          "unit": "per_1m_tokens"
+        },
+        "context": {
+          "context_length": 4096,
+          "max_output_tokens": 2048
+        },
+        "rate_limit": {
+          "rpm": 60,
+          "tpm": 100000
+        },
+        "supported_languages": 92
+      },
+      {
+        "id": "qwen-mt-turbo",
+        "name": "Qwen-MT-Turbo",
+        "description": "Cost-effective translation model with lightweight MoE architecture",
+        "pricing": {
+          "input": 0.16,
+          "output": 0.49,
+          "unit": "per_1m_tokens"
+        },
+        "context": {
+          "context_length": 4096,
+          "max_output_tokens": 2048
+        },
+        "rate_limit": {
+          "rpm": 60,
+          "tpm": 100000
+        },
+        "supported_languages": 92
+      }
+    ]
+  },
+  "provider_config": {
+    "qwen": {
+      "base_url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+      "api_key_env": "DASHSCOPE_API_KEY",
+      "supports_streaming": true,
+      "supports_terminology": true,
+      "supports_domain_prompts": true,
+      "supports_translation_memory": true
+    }
+  },
+  "features": {
+    "terminology_intervention": {
+      "description": "Allows specifying custom terminology mappings for consistent translation",
+      "example": {
+        "source_term": "target_term"
+      }
+    },
+    "domain_prompts": {
+      "description": "Enables domain-specific translation optimizations",
+      "supported_domains": [
+        "medical",
+        "legal",
+        "technical",
+        "financial",
+        "general"
+      ]
+    },
+    "translation_memory": {
+      "description": "Leverages previous translations for consistency",
+      "max_entries": 100
+    }
+  }
+}

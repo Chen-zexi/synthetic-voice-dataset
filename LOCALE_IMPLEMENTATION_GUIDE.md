@@ -25,13 +25,17 @@ The locale system uses a two-letter language code followed by a two-letter count
 ```
 configs/
 └── localizations/
-    ├── template/           # Template files for new locales
-    │   ├── config.json    # Base configuration
-    │   └── placeholders.json # Placeholder mappings
-    ├── ar-sa/             # Arabic - Saudi Arabia
-    ├── ar-ae/             # Arabic - UAE
-    ├── ms-my/             # Malay - Malaysia
-    └── [new-locale]/      # Your new locale
+    ├── template/                      # Template files for new locales
+    │   ├── config.json               # Base configuration
+    │   ├── placeholders.json         # Placeholder mappings
+    │   └── voice_profiles_template.json # Voice profile template (optional)
+    ├── ar-sa/                        # Arabic - Saudi Arabia
+    ├── ar-ae/                        # Arabic - UAE
+    ├── ms-my/                        # Malay - Malaysia
+    │   ├── config.json
+    │   ├── placeholders.json
+    │   └── voice_profiles.json      # Voice profiles (optional)
+    └── [new-locale]/                 # Your new locale
 ```
 
 ## Prerequisites
@@ -386,6 +390,60 @@ Ensure all placeholders are populated with relevant local data:
 3. Filter by language and accent
 4. Test voices with sample text
 5. Note the voice_id for each selected voice
+
+## Voice Profiles (Optional)
+
+### Overview
+Voice profiles enable intelligent voice assignment during conversation generation. The system automatically selects appropriate voices based on conversation context, character roles, and scenario types.
+
+### Creating voice_profiles.json
+1. **Copy the template**:
+   ```bash
+   cp configs/localizations/template/voice_profiles_template.json \
+      configs/localizations/[locale-code]/voice_profiles.json
+   ```
+
+2. **Define available voices**:
+   ```json
+   "available_voices": {
+     "ahmad": {
+       "id": "elevenlabs_voice_id",
+       "name": "Ahmad Hassan",
+       "gender": "male",
+       "age": "middle-aged",
+       "description": "Professional male voice with local accent",
+       "use_cases": ["authority", "professional", "government"]
+     }
+   }
+   ```
+
+3. **Map roles to voices**:
+   ```json
+   "role_assignments": {
+     "scam_scenarios": {
+       "police_officer": ["ahmad", "khalid"],
+       "bank_officer": ["sarah"],
+       "female_victim": ["fatima", "aisha"],
+       "male_victim": ["omar", "yousef"]
+     },
+     "legitimate_scenarios": {
+       "delivery_rider": ["yousef"],
+       "bank_representative": ["sarah", "ahmad"],
+       "customer": ["fatima", "omar"]
+     }
+   }
+   ```
+
+### Voice Selection Logic
+- **Scam conversations**: Voices selected based on scammer role (police, bank, government) and victim characteristics
+- **Legitimate conversations**: Voices selected based on conversation category (delivery, medical, banking, etc.)
+- **Fallback**: If no profiles exist, system uses random voice selection
+
+### Benefits
+- **Contextual appropriateness**: Authority figures get authoritative voices
+- **Gender matching**: Appropriate voice genders for cultural context
+- **Consistency**: Same types of characters use similar voices
+- **Optional**: Fully backward compatible - works without profiles
 
 ## Testing Checklist
 

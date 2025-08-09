@@ -14,9 +14,20 @@
     "intermediate_code": "en"
   },
   "voices": {
-    "ids": ["Xb7hH8MSUJpSbSDYk0k2", "JBFqnCBsd6RMkjVDRZzb"],
-    "names": ["Alice (Female/Adult)", "George (Male/Adult)"],
-    "_note": "Using English voices compatible with Malay text via multilingual models"
+    "ids": [
+      "Wc6X61hTD7yucJMheuLN",
+      "C1gMsiiE7sXAt59fmvYg",
+      "UcqZLa941Kkt8ZhEEybf",
+      "BeIxObt4dYBRJLYoe1hU",
+      "NpVSXJvYSdIbjOaMbShj"
+    ],
+    "names": [
+      "Faizal",
+      "Hasnan",
+      "Afifah",
+      "Athira",
+      "Jawaid Iqbal"
+    ]
   },
   "conversation": {
     "legit_categories": [

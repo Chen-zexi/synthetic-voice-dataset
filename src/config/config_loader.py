@@ -4,11 +4,14 @@ Configuration loader for managing language-specific and common configurations.
 
 import os
 import json
+import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 
 from config.schemas import validate_schema, COMMON_SCHEMA, LANGUAGE_SCHEMA
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -89,6 +92,7 @@ class Config:
     background_volume_reduction_db: int
     bandpass_low_freq: int
     bandpass_high_freq: int
+    audio_effects: dict  # Audio effects configuration
     
     # Enhanced voice settings
     model_v3_enabled: bool
@@ -122,10 +126,26 @@ class Config:
     llm_provider: str = "openai"
     llm_model: str = "gpt-4.1-mini"
     max_concurrent_requests: int = 10
+    
+    # Standard model parameters
     llm_temperature: float = 1.0
     llm_max_tokens: Optional[int] = None
     llm_top_p: float = 0.95
     llm_n: int = 1
+    llm_presence_penalty: float = 0.0
+    llm_frequency_penalty: float = 0.0
+    
+    # Reasoning model parameters
+    llm_reasoning_effort: Optional[str] = None  # "minimal", "low", "medium", "high"
+    llm_max_completion_tokens: Optional[int] = None
+    
+    # Gemini-specific parameters
+    llm_thinking_budget: Optional[int] = None
+    llm_max_output_tokens: Optional[int] = None
+    
+    # Features
+    llm_use_response_api: bool = False
+    llm_track_tokens: bool = False
     
     # Translation cache settings
     use_translation_cache: bool = False
@@ -134,8 +154,17 @@ class Config:
     translation_cache_service: str = "google"
     force_translation_refresh: bool = False
     
+    # Translation token tracking
+    translation_track_tokens: bool = False
+    
     # Output control
     verbose: bool = False
+    
+    # Voice profiles for intelligent voice assignment (optional)
+    voice_profiles: Optional[Dict] = None
+    
+    # Locale identifier (e.g., 'ms-my', 'ar-sa')
+    locale: Optional[str] = None
     
     # Raw config data
     common_config: dict = field(default_factory=dict)
@@ -368,6 +397,13 @@ class ConfigLoader:
             background_volume_reduction_db=self.common_config["voice_generation"]["background_volume_reduction_db"],
             bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
             bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
+            audio_effects=self.common_config["voice_generation"].get("audio_effects", {
+                "enable_background_noise": True,
+                "enable_call_end_effect": True,
+                "enable_bandpass_filter": True,
+                "background_noise_level": 0.3,
+                "call_end_volume": 0.5
+            }),
             
             # Enhanced voice settings
             model_v3_enabled=self.common_config["voice_generation"]["model_v3_enabled"],
@@ -391,6 +427,9 @@ class ConfigLoader:
             translation_cache_service=self.common_config.get("translation_cache", {}).get("cache_service", "google"),
             force_translation_refresh=self.common_config.get("translation_cache", {}).get("force_refresh", False),
             
+            # Translation token tracking
+            translation_track_tokens=self.common_config.get("translation", {}).get("track_tokens", False),
+            
             # Post-processing settings
             post_processing_scam_json_input=scam_conversation,
             post_processing_scam_json_output=scam_formatted,
@@ -408,10 +447,26 @@ class ConfigLoader:
             llm_provider=llm_config.get("provider", "openai"),
             llm_model=llm_config.get("model", "gpt-4o"),
             max_concurrent_requests=llm_config.get("max_concurrent_requests", 10),
+            
+            # Standard model parameters
             llm_temperature=llm_config.get("temperature", 1.0),
             llm_max_tokens=llm_config.get("max_tokens"),
             llm_top_p=llm_config.get("top_p", 0.95),
             llm_n=llm_config.get("n", 1),
+            llm_presence_penalty=llm_config.get("presence_penalty", 0.0),
+            llm_frequency_penalty=llm_config.get("frequency_penalty", 0.0),
+            
+            # Reasoning model parameters
+            llm_reasoning_effort=llm_config.get("reasoning_effort"),
+            llm_max_completion_tokens=llm_config.get("max_completion_tokens"),
+            
+            # Gemini-specific parameters
+            llm_thinking_budget=llm_config.get("thinking_budget"),
+            llm_max_output_tokens=llm_config.get("max_output_tokens"),
+            
+            # Features
+            llm_use_response_api=llm_config.get("use_response_api", False),
+            llm_track_tokens=llm_config.get("track_tokens", False),
             
             # Raw config data
             common_config=self.common_config,
@@ -444,6 +499,17 @@ class ConfigLoader:
         
         # Extract locale info
         locale_info = locale_config["locale"]
+        
+        # Load voice profiles if available
+        voice_profiles = None
+        voice_profiles_path = self.config_dir / "localizations" / locale_id / "voice_profiles.json"
+        if voice_profiles_path.exists():
+            try:
+                with open(voice_profiles_path, 'r', encoding='utf-8') as f:
+                    voice_profiles = json.load(f)
+                logger.info(f"Loaded voice profiles for {locale_id}")
+            except Exception as e:
+                logger.warning(f"Failed to load voice profiles: {e}")
         
         # Build paths using locale_id
         locale_output_dir = self.output_dir / locale_id
@@ -552,6 +618,13 @@ class ConfigLoader:
             background_volume_reduction_db=self.common_config["voice_generation"]["background_volume_reduction_db"],
             bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
             bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
+            audio_effects=self.common_config["voice_generation"].get("audio_effects", {
+                "enable_background_noise": True,
+                "enable_call_end_effect": True,
+                "enable_bandpass_filter": True,
+                "background_noise_level": 0.3,
+                "call_end_volume": 0.5
+            }),
             
             # Enhanced voice settings
             model_v3_enabled=self.common_config["voice_generation"]["model_v3_enabled"],
@@ -575,6 +648,9 @@ class ConfigLoader:
             translation_cache_service=self.common_config.get("translation_cache", {}).get("cache_service", "google"),
             force_translation_refresh=self.common_config.get("translation_cache", {}).get("force_refresh", False),
             
+            # Translation token tracking
+            translation_track_tokens=self.common_config.get("translation", {}).get("track_tokens", False),
+            
             # Post-processing settings
             post_processing_scam_json_input=scam_conversation,
             post_processing_scam_json_output=scam_formatted,
@@ -592,10 +668,32 @@ class ConfigLoader:
             llm_provider=llm_config.get("provider", "openai"),
             llm_model=llm_config.get("model", "gpt-4o"),
             max_concurrent_requests=llm_config.get("max_concurrent_requests", 10),
+            
+            # Standard model parameters
             llm_temperature=llm_config.get("temperature", 1.0),
             llm_max_tokens=llm_config.get("max_tokens"),
             llm_top_p=llm_config.get("top_p", 0.95),
             llm_n=llm_config.get("n", 1),
+            llm_presence_penalty=llm_config.get("presence_penalty", 0.0),
+            llm_frequency_penalty=llm_config.get("frequency_penalty", 0.0),
+            
+            # Reasoning model parameters
+            llm_reasoning_effort=llm_config.get("reasoning_effort"),
+            llm_max_completion_tokens=llm_config.get("max_completion_tokens"),
+            
+            # Gemini-specific parameters
+            llm_thinking_budget=llm_config.get("thinking_budget"),
+            llm_max_output_tokens=llm_config.get("max_output_tokens"),
+            
+            # Features
+            llm_use_response_api=llm_config.get("use_response_api", False),
+            llm_track_tokens=llm_config.get("track_tokens", False),
+            
+            # Voice profiles for intelligent voice assignment
+            voice_profiles=voice_profiles,
+            
+            # Locale identifier
+            locale=locale_id,
             
             # Raw config data
             common_config=self.common_config,
