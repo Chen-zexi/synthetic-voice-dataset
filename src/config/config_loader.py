@@ -111,10 +111,26 @@ class Config:
     llm_provider: str = "openai"
     llm_model: str = "gpt-4.1-mini"
     max_concurrent_requests: int = 10
+    
+    # Standard model parameters
     llm_temperature: float = 1.0
     llm_max_tokens: Optional[int] = None
     llm_top_p: float = 0.95
     llm_n: int = 1
+    llm_presence_penalty: float = 0.0
+    llm_frequency_penalty: float = 0.0
+    
+    # Reasoning model parameters
+    llm_reasoning_effort: Optional[str] = None  # "minimal", "low", "medium", "high"
+    llm_max_completion_tokens: Optional[int] = None
+    
+    # Gemini-specific parameters
+    llm_thinking_budget: Optional[int] = None
+    llm_max_output_tokens: Optional[int] = None
+    
+    # Features
+    llm_use_response_api: bool = False
+    llm_track_tokens: bool = False
     
     # Translation cache settings
     use_translation_cache: bool = False
@@ -122,6 +138,9 @@ class Config:
     translation_cache_dir: str = "data/translation_cache"
     translation_cache_service: str = "google"
     force_translation_refresh: bool = False
+    
+    # Translation token tracking
+    translation_track_tokens: bool = False
     
     # Output control
     verbose: bool = False
@@ -378,6 +397,9 @@ class ConfigLoader:
             translation_cache_service=self.common_config.get("translation_cache", {}).get("cache_service", "google"),
             force_translation_refresh=self.common_config.get("translation_cache", {}).get("force_refresh", False),
             
+            # Translation token tracking
+            translation_track_tokens=self.common_config.get("translation", {}).get("track_tokens", False),
+            
             # Post-processing settings
             post_processing_scam_json_input=scam_conversation,
             post_processing_scam_json_output=scam_formatted,
@@ -395,10 +417,26 @@ class ConfigLoader:
             llm_provider=llm_config.get("provider", "openai"),
             llm_model=llm_config.get("model", "gpt-4o"),
             max_concurrent_requests=llm_config.get("max_concurrent_requests", 10),
+            
+            # Standard model parameters
             llm_temperature=llm_config.get("temperature", 1.0),
             llm_max_tokens=llm_config.get("max_tokens"),
             llm_top_p=llm_config.get("top_p", 0.95),
             llm_n=llm_config.get("n", 1),
+            llm_presence_penalty=llm_config.get("presence_penalty", 0.0),
+            llm_frequency_penalty=llm_config.get("frequency_penalty", 0.0),
+            
+            # Reasoning model parameters
+            llm_reasoning_effort=llm_config.get("reasoning_effort"),
+            llm_max_completion_tokens=llm_config.get("max_completion_tokens"),
+            
+            # Gemini-specific parameters
+            llm_thinking_budget=llm_config.get("thinking_budget"),
+            llm_max_output_tokens=llm_config.get("max_output_tokens"),
+            
+            # Features
+            llm_use_response_api=llm_config.get("use_response_api", False),
+            llm_track_tokens=llm_config.get("track_tokens", False),
             
             # Raw config data
             common_config=self.common_config,
@@ -565,6 +603,9 @@ class ConfigLoader:
             translation_cache_service=self.common_config.get("translation_cache", {}).get("cache_service", "google"),
             force_translation_refresh=self.common_config.get("translation_cache", {}).get("force_refresh", False),
             
+            # Translation token tracking
+            translation_track_tokens=self.common_config.get("translation", {}).get("track_tokens", False),
+            
             # Post-processing settings
             post_processing_scam_json_input=scam_conversation,
             post_processing_scam_json_output=scam_formatted,
@@ -582,10 +623,26 @@ class ConfigLoader:
             llm_provider=llm_config.get("provider", "openai"),
             llm_model=llm_config.get("model", "gpt-4o"),
             max_concurrent_requests=llm_config.get("max_concurrent_requests", 10),
+            
+            # Standard model parameters
             llm_temperature=llm_config.get("temperature", 1.0),
             llm_max_tokens=llm_config.get("max_tokens"),
             llm_top_p=llm_config.get("top_p", 0.95),
             llm_n=llm_config.get("n", 1),
+            llm_presence_penalty=llm_config.get("presence_penalty", 0.0),
+            llm_frequency_penalty=llm_config.get("frequency_penalty", 0.0),
+            
+            # Reasoning model parameters
+            llm_reasoning_effort=llm_config.get("reasoning_effort"),
+            llm_max_completion_tokens=llm_config.get("max_completion_tokens"),
+            
+            # Gemini-specific parameters
+            llm_thinking_budget=llm_config.get("thinking_budget"),
+            llm_max_output_tokens=llm_config.get("max_output_tokens"),
+            
+            # Features
+            llm_use_response_api=llm_config.get("use_response_api", False),
+            llm_track_tokens=llm_config.get("track_tokens", False),
             
             # Voice profiles for intelligent voice assignment
             voice_profiles=voice_profiles,

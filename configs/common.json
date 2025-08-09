@@ -18,13 +18,14 @@
     "mapped_suffix": "_mapped.txt"
   },
   "translation": {
-    "service": "qwen",
+    "service": "google",
     "max_lines": 1000,
     "english_output": "scamGen_combined_first_20k_en.txt",
     "chinese_code": "zh-CN",
     "qwen_model": "qwen-mt-turbo",
     "qwen_base_url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-    "max_concurrent_translations": 20
+    "max_concurrent_translations": 20,
+    "track_tokens": true
   },
   "multi_turn": {
     "english_output": "scam_conversation_english.json",
@@ -70,16 +71,32 @@
   },
   "llm": {
     "provider": "openai",
-    "model": "gpt-4.1-mini",
+    "model": "gpt-5-nano",
     "max_concurrent_requests": 10,
+    
+    "comment": "Standard model parameters (ignored for reasoning models)",
     "temperature": 1.0,
     "max_tokens": null,
     "top_p": 0.95,
-    "n": 1
+    "n": 1,
+    "presence_penalty": 0.0,
+    "frequency_penalty": 0.0,
+    
+    "comment2": "Reasoning model parameters (ignored for standard models)",
+    "reasoning_effort": "minimal",
+    "max_completion_tokens": null,
+    
+    "comment3": "Gemini-specific parameters",
+    "thinking_budget": 0,
+    "max_output_tokens": null,
+    
+    "comment4": "Features (Response API defaults to true for OpenAI)",
+    "use_response_api": null,
+    "track_tokens": true
   },
   "translation_cache": {
     "enabled": true,
-    "use_cache": true,
+    "use_cache": false,
     "cache_dir": "data/translation_cache",
     "cache_service": "qwen",
     "force_refresh": false

@@ -36,6 +36,40 @@ class BaseTranslator(ABC):
         self.config = config
         self.placeholder_pattern = re.compile(r'\{\d{5}\}')
         self.clogger = ConditionalLogger(__name__, config.verbose)
+        
+        # Initialize token tracker if enabled
+        track_tokens = getattr(config, 'translation_track_tokens', False)
+        if track_tokens:
+            from llm_core.token_counter import TokenUsageTracker
+            self.token_tracker = TokenUsageTracker(verbose=False)
+        else:
+            self.token_tracker = None
+    
+    def _load_conversations_from_json(self, input_path: Path) -> List[Dict]:
+        """
+        Load conversations from JSON file, handling wrapped structures.
+        
+        Args:
+            input_path: Path to JSON file
+            
+        Returns:
+            List of conversation dictionaries
+        """
+        with open(input_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Handle different JSON structures (wrapped or plain array)
+        if isinstance(data, dict):
+            # If it's a wrapped structure (e.g., with token usage info), extract conversations
+            if "conversations" in data:
+                return data["conversations"]
+            else:
+                # Might be a single conversation
+                return [data]
+        elif isinstance(data, list):
+            return data
+        else:
+            raise ValueError(f"Unexpected JSON structure in {input_path}")
     
     @abstractmethod
     async def translate_text(self, text: str, from_code: str, to_code: str) -> str:
@@ -132,9 +166,8 @@ class BaseTranslator(ABC):
             
         self.clogger.info(f"Translating conversations using {service_info}: {input_path} ({from_code} -> {to_code})", force=True)
         
-        # Load conversations
-        with open(input_path, 'r', encoding='utf-8') as f:
-            conversations = json.load(f)
+        # Load conversations using helper method
+        conversations = self._load_conversations_from_json(input_path)
         
         # Load placeholder mapping with reconciliation if needed
         placeholder_map = self._load_placeholder_map()
@@ -144,6 +177,11 @@ class BaseTranslator(ABC):
         
         async def translate_conversation(conv_idx: int, conversation: Dict) -> Dict:
             async with semaphore:
+                # Validate conversation is a dictionary
+                if not isinstance(conversation, dict):
+                    logger.warning(f"Skipping non-dict conversation at index {conv_idx}: {type(conversation)}")
+                    return None
+                    
                 self.clogger.debug(f"Translating conversation {conv_idx + 1}/{len(conversations)}")
                 
                 # Create substitution cache for consistent replacements within conversation
@@ -192,9 +230,9 @@ class BaseTranslator(ABC):
                 results.append((index, translated_conv))
                 pbar.update(1)
         
-        # Sort by original index and extract conversations
+        # Sort by original index and extract conversations (filter out None results)
         results.sort(key=lambda x: x[0])
-        translated_conversations = [conv for _, conv in results]
+        translated_conversations = [conv for _, conv in results if conv is not None]
         
         # Save translated conversations
         with open(output_path, 'w', encoding='utf-8') as f:

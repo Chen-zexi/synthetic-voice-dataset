@@ -13,6 +13,7 @@ from tqdm import tqdm
 from config.config_loader import Config
 from llm_core.api_provider import LLM
 from llm_core.api_call import make_api_call
+from llm_core.token_counter import TokenUsageTracker
 from conversation.schemas import ScamConversationResponse, DialogueTurn
 from utils.logging_utils import ConditionalLogger
 
@@ -38,20 +39,28 @@ class ScamGenerator:
         self.llm_provider = getattr(config, 'llm_provider', 'openai')
         self.llm_model = getattr(config, 'llm_model', 'gpt-4o')
         
-        # Get LLM parameters from config
-        llm_temperature = getattr(config, 'llm_temperature', 1.0)
-        llm_max_tokens = getattr(config, 'llm_max_tokens', None)
-        llm_top_p = getattr(config, 'llm_top_p', 0.95)
-        llm_n = getattr(config, 'llm_n', 1)
+        # Check for Response API and token tracking settings
+        # Default to True for OpenAI models
+        use_response_api = getattr(config, 'llm_use_response_api', self.llm_provider == 'openai')
+        track_tokens = getattr(config, 'llm_track_tokens', False)
         
-        # Create LLM instance with parameters
+        # Initialize token tracker if enabled
+        self.token_tracker = TokenUsageTracker(verbose=False) if track_tokens else None
+        
+        # Collect all LLM parameters from config
+        llm_params = {}
+        for attr_name in dir(config):
+            if attr_name.startswith('llm_') and not attr_name.startswith('llm_provider') and not attr_name.startswith('llm_model') and not attr_name.startswith('llm_use_') and not attr_name.startswith('llm_track_'):
+                value = getattr(config, attr_name)
+                if value is not None:
+                    llm_params[attr_name] = value
+        
+        # Create LLM instance with all parameters
         llm_instance = LLM(
             provider=self.llm_provider, 
             model=self.llm_model,
-            temperature=llm_temperature,
-            max_tokens=llm_max_tokens,
-            top_p=llm_top_p,
-            n=llm_n
+            use_response_api=use_response_api,
+            **llm_params
         )
         self.llm = llm_instance.get_llm()
     
@@ -187,13 +196,29 @@ class ScamGenerator:
         user_prompt = self._create_user_prompt(first_turn, num_turns, victim_awareness)
         
         try:
-            # Use async structured output
-            response = await make_api_call(
-                llm=self.llm,
-                system_prompt=system_prompt,
-                user_prompt=user_prompt,
-                response_schema=ScamConversationResponse
-            )
+            # Check if we should track tokens
+            if self.token_tracker:
+                response, token_info = await make_api_call(
+                    llm=self.llm,
+                    system_prompt=system_prompt,
+                    user_prompt=user_prompt,
+                    response_schema=ScamConversationResponse,
+                    return_token_usage=True
+                )
+                # Track the token usage
+                # Use first_turn as identifier since we don't have conversation_id here
+                self.token_tracker.add_usage(
+                    token_info,
+                    self.llm_model,
+                    f"scam_dialogue_{first_turn[:20]}"
+                )
+            else:
+                response = await make_api_call(
+                    llm=self.llm,
+                    system_prompt=system_prompt,
+                    user_prompt=user_prompt,
+                    response_schema=ScamConversationResponse
+                )
             
             # Convert Pydantic models to dicts
             if hasattr(response, 'dialogue'):
@@ -324,7 +349,25 @@ Include a voice_mapping field with your selected voices:
         output_path = self.config.multi_turn_output_path
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
+        # Add token usage summary if tracking is enabled
+        output_data = conversations
+        if self.token_tracker:
+            # Create a wrapper with token usage info (without detailed breakdowns)
+            token_summary = self.token_tracker.get_summary(include_details=False)
+            cost_estimate = self.token_tracker.estimate_cost()
+            
+            output_data = {
+                "conversations": conversations,
+                "token_usage": token_summary,
+                "estimated_cost": cost_estimate
+            }
+            
+            # Print summary if verbose
+            if self.config.verbose:
+                self.token_tracker.print_summary()
+                self.token_tracker.print_cost_estimate()
+        
         with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(conversations, f, ensure_ascii=False, indent=2)
+            json.dump(output_data if self.token_tracker else conversations, f, ensure_ascii=False, indent=2)
         
         self.clogger.info(f"Saved conversations to {output_path}", force=True)
