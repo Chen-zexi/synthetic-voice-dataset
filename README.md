@@ -7,6 +7,25 @@ This pipeline generates realistic scam phone conversations with audio synthesis.
 
 ### Prerequisites
 
+#### Using uv (Recommended)
+```bash
+# Install uv if not already installed
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies from lock file (reproducible)
+uv pip sync uv.lock
+
+# Or install from requirements.txt (latest compatible versions)
+uv pip install -r requirements.txt
+
+# Update lock file after changing requirements.txt
+uv pip compile requirements.txt -o uv.lock
+
+# Activate virtual environment
+source .venv/bin/activate
+```
+
+#### Using pip (Alternative)
 ```bash
 pip install -r requirements.txt
 ```
@@ -44,7 +63,7 @@ python main.py --locale ar-ae
 # Available steps: preprocess, translate, conversation, legit, translate_final, tts, postprocess
 python main.py --locale ms-my --steps preprocess translate
 
-# Run all conversation-related steps with sample limit
+# Run all conversation-related steps with sample limit (using uv)
 uv run main.py --locale ms-my --steps preprocess translate conversation legit translate_final --sample-limit 1 --force
 
 # Run complete pipeline with all steps
