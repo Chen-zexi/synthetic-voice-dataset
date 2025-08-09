@@ -4,15 +4,6 @@ from pydantic import BaseModel
 import json
 
 
-def create_prompt_template(system_prompt: str, user_prompt: str) -> ChatPromptTemplate:
-    """Create a standardized prompt template."""
-    template = ChatPromptTemplate([
-        ("system", "{system_prompt}"),
-        ("user", "{user_prompt}")
-    ])
-    return template.invoke({"system_prompt": system_prompt, "user_prompt": user_prompt})
-
-
 def extract_token_usage(response: Any) -> Dict[str, Any]:
     """Extract token usage information from a response object.
     
@@ -105,7 +96,12 @@ async def make_api_call(
         Structured response as Pydantic model or raw string
         If return_token_usage=True, returns tuple of (response, token_usage)
     """
-    messages = create_prompt_template(system_prompt, user_prompt)
+    # Create prompt template inline
+    template = ChatPromptTemplate([
+        ("system", "{system_prompt}"),
+        ("user", "{user_prompt}")
+    ])
+    messages = template.invoke({"system_prompt": system_prompt, "user_prompt": user_prompt})
     
     # Case 1: No schema requested, return raw content
     if response_schema is None:
@@ -133,11 +129,15 @@ async def make_api_call(
                 # Fallback if include_raw didn't work
                 response = response_with_raw
                 token_info = {}
-        except:
+        except Exception as raw_error:
             # Fallback to regular structured output
             client = llm.with_structured_output(response_schema)
             response = await client.ainvoke(messages)
             token_info = {}
+        
+        # Check if response is valid
+        if response is None:
+            raise ValueError("Structured output returned None")
         
         if return_token_usage:
             return response, token_info
@@ -173,6 +173,8 @@ def extract_json(text: str) -> Dict[str, Any]:
     Returns:
         Parsed JSON as dictionary
     """
+    import re
+    
     # Try direct JSON parsing first
     try:
         return json.loads(text)
@@ -180,7 +182,6 @@ def extract_json(text: str) -> Dict[str, Any]:
         pass
     
     # Try to find JSON between code blocks
-    import re
     json_pattern = r'```(?:json)?\s*(\{.*?\}|\[.*?\])\s*```'
     matches = re.findall(json_pattern, text, re.DOTALL)
     if matches:
@@ -189,22 +190,14 @@ def extract_json(text: str) -> Dict[str, Any]:
         except json.JSONDecodeError:
             pass
     
-    # Try to find raw JSON object or array in the text
-    # Look for JSON that starts with { and ends with }
-    start_idx = text.find('{')
-    if start_idx != -1:
-        # Try to find matching closing brace
-        brace_count = 0
-        for i, char in enumerate(text[start_idx:], start_idx):
-            if char == '{':
-                brace_count += 1
-            elif char == '}':
-                brace_count -= 1
-                if brace_count == 0:
-                    try:
-                        return json.loads(text[start_idx:i+1])
-                    except json.JSONDecodeError:
-                        break
+    # Try to extract JSON object using regex
+    json_obj_pattern = r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}'
+    matches = re.findall(json_obj_pattern, text)
+    for match in matches:
+        try:
+            return json.loads(match)
+        except json.JSONDecodeError:
+            continue
     
     # If all else fails, raise an error
     raise ValueError(f"Could not extract valid JSON from response: {text[:200]}...")

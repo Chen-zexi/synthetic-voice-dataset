@@ -400,6 +400,13 @@
         "name": "Gemini 2.5 Pro",
         "is_reasoning": true,
         "description": "Google's advanced reasoning model with thinking capabilities",
+        "pricing": {
+          "input": 1.25,
+          "output": 10.00,
+          "cached_input": 0.31,
+          "unit": "per_1m_tokens",
+          "notes": "Context caching: $0.625/1M tokens <200k, $4.50/1M tokens per hour (storage)"
+        },
         "parameters": {
           "thinking_budget": {
             "type": "integer",
@@ -437,6 +444,13 @@
         "name": "Gemini 2.5 Flash",
         "is_reasoning": true,
         "description": "Fast reasoning model with thinking disabled by default",
+        "pricing": {
+          "input": 0.30,
+          "output": 2.50,
+          "cached_input": 0.075,
+          "unit": "per_1m_tokens",
+          "notes": "Context caching: $0.25/1M tokens (audio), $1.00/1M tokens per hour (storage)"
+        },
         "parameters": {
           "thinking_budget": {
             "type": "integer",
@@ -474,6 +488,13 @@
         "name": "Gemini 2.5 Flash-Lite",
         "is_reasoning": true,
         "description": "Cost-optimized model with thinking disabled by default",
+        "pricing": {
+          "input": 0.10,
+          "output": 0.40,
+          "cached_input": 0.025,
+          "unit": "per_1m_tokens",
+          "notes": "Context caching: $0.125/1M tokens (audio), $1.00/1M tokens per hour (storage)"
+        },
         "parameters": {
           "thinking_budget": {
             "type": "integer",

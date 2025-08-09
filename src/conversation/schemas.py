@@ -11,7 +11,6 @@ from pydantic import BaseModel, Field
 
 class DialogueTurn(BaseModel):
     """A single turn in a conversation."""
-    sent_id: int = Field(description="Sequential turn ID starting from 1")
     text: str = Field(description="The dialogue text for this turn")
     role: Literal["caller", "callee"] = Field(description="Speaker role")
 

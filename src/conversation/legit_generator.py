@@ -211,11 +211,17 @@ class LegitGenerator:
                     response_schema=LegitConversationResponse
                 )
             
-            # Convert Pydantic models to dicts
+            # Convert Pydantic models to dicts and add sent_id
             if hasattr(response, 'dialogue'):
-                result = {
-                    'dialogue': [turn.model_dump() for turn in response.dialogue]
-                }
+                # Add sent_id to each turn
+                dialogue_with_ids = []
+                for i, turn in enumerate(response.dialogue, 1):
+                    turn_dict = turn.model_dump()
+                    turn_dict['sent_id'] = i  # Add sequential ID
+                    dialogue_with_ids.append(turn_dict)
+                
+                result = {'dialogue': dialogue_with_ids}
+                
                 # Include voice_mapping if present
                 if hasattr(response, 'voice_mapping') and response.voice_mapping:
                     result['voice_mapping'] = response.voice_mapping
@@ -275,6 +281,10 @@ Based on the conversation category and context, select appropriate voices:
 Your task is to generate structured dialogues for legitimate (non-scam) phone calls with alternating turns between caller and callee.
 The conversations should be natural, contextually appropriate, and culturally relevant.
 
+IMPORTANT: Each dialogue turn must have exactly these fields:
+- text: The actual dialogue text
+- role: Either "caller" or "callee"
+
 When voice profiles are provided:
 1. Consider the professional context and select appropriate voices
 2. Ensure natural gender distribution for the scenario
@@ -311,7 +321,15 @@ To protect privacy, do not use real personal data. Instead, generate synthetic b
 
 Shorter sentences are preferred.
 
-Generate exactly {num_turns} dialogue turns, starting with "caller" role."""
+Generate exactly {num_turns} dialogue turns, starting with "caller" role.
+
+Example format for dialogue field:
+[
+  {{"text": "Hello, this is the delivery service...", "role": "caller"}},
+  {{"text": "Yes, I'm expecting a package...", "role": "callee"}},
+  {{"text": "Great, we'll deliver it tomorrow...", "role": "caller"}},
+  ...
+]"""
         
         # Add voice mapping instruction if profiles are available
         if voice_info:

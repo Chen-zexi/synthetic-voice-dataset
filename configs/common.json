@@ -72,7 +72,7 @@
   "llm": {
     "provider": "openai",
     "model": "gpt-5-nano",
-    "max_concurrent_requests": 10,
+    "max_concurrent_requests": 20,
     
     "comment": "Standard model parameters (ignored for reasoning models)",
     "temperature": 1.0,
@@ -96,7 +96,7 @@
   },
   "translation_cache": {
     "enabled": true,
-    "use_cache": false,
+    "use_cache": true,
     "cache_dir": "data/translation_cache",
     "cache_service": "qwen",
     "force_refresh": false

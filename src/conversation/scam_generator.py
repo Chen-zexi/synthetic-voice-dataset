@@ -118,6 +118,8 @@ class ScamGenerator:
         for idx, result in enumerate(results):
             if isinstance(result, Exception):
                 self.clogger.error(f"Task {idx} failed: {result}")
+                import traceback
+                self.clogger.error(f"Exception traceback: {traceback.format_exception(type(result), result, result.__traceback__)}")
             elif result:
                 all_conversations.append(result)
         
@@ -220,21 +222,35 @@ class ScamGenerator:
                     response_schema=ScamConversationResponse
                 )
             
-            # Convert Pydantic models to dicts
+            # Debug logging
+            self.clogger.info(f"API call returned response of type: {type(response)}")
+            
+            # Convert Pydantic models to dicts and add sent_id
             if hasattr(response, 'dialogue'):
-                result = {
-                    'dialogue': [turn.model_dump() for turn in response.dialogue]
-                }
+                self.clogger.info(f"Response has dialogue with {len(response.dialogue)} turns")
+                # Add sent_id to each turn
+                dialogue_with_ids = []
+                for i, turn in enumerate(response.dialogue, 1):
+                    turn_dict = turn.model_dump()
+                    turn_dict['sent_id'] = i  # Add sequential ID
+                    dialogue_with_ids.append(turn_dict)
+                
+                result = {'dialogue': dialogue_with_ids}
+                
                 # Include voice_mapping if present
                 if hasattr(response, 'voice_mapping') and response.voice_mapping:
                     result['voice_mapping'] = response.voice_mapping
                 return result
             else:
-                self.clogger.error("Response missing dialogue field")
+                self.clogger.error(f"Response missing dialogue field. Response type: {type(response)}, Provider: {self.llm_provider}")
+                if hasattr(response, '__dict__'):
+                    self.clogger.error(f"Response attributes: {response.__dict__}")
                 return None
             
         except Exception as e:
             self.clogger.error(f"LLM API error: {e}")
+            import traceback
+            self.clogger.error(f"Traceback: {traceback.format_exc()}")
             return None
     
     def _format_voice_profiles_for_prompt(self) -> str:
@@ -284,6 +300,10 @@ Based on the conversation context, select appropriate voices and include in your
 Your task is to generate structured dialogues with alternating turns between caller and callee.
 Follow all formatting requirements exactly and preserve any special codes in the input.
 
+IMPORTANT: Each dialogue turn must have exactly these fields:
+- text: The actual dialogue text
+- role: Either "caller" or "callee"
+
 When voice profiles are provided:
 1. Consider the gender and age implications from the conversation context
 2. Match authority figures with appropriate voice characteristics
@@ -325,7 +345,15 @@ Do **not** invent or introduce any new codes under any circumstances.
 
 Shorter sentences are preferred.
 
-Generate exactly {num_turns} dialogue turns, starting with "caller" role."""
+Generate exactly {num_turns} dialogue turns, starting with "caller" role.
+
+Example format for dialogue field:
+[
+  {{"text": "Your shortened first turn here", "role": "caller"}},
+  {{"text": "Victim's response", "role": "callee"}},
+  {{"text": "Scammer's next line", "role": "caller"}},
+  ...
+]"""
         
         # Add voice mapping instruction if profiles are available
         if voice_info:

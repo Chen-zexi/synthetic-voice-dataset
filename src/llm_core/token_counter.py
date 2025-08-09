@@ -235,6 +235,9 @@ class TokenUsageTracker:
                 'gpt-4.1': {'input': 0.002, 'output': 0.008},
                 'gpt-4.1-mini': {'input': 0.0004, 'output': 0.0016},
                 'gpt-4.1-nano': {'input': 0.0001, 'output': 0.0004},
+                'gemini-2.5-pro': {'input': 0.00125, 'output': 0.01},
+                'gemini-2.5-flash': {'input': 0.0003, 'output': 0.0025},
+                'gemini-2.5-flash-lite': {'input': 0.0001, 'output': 0.0004},
             }
         
         total_input_cost = 0.0
@@ -352,20 +355,3 @@ class TokenUsageTracker:
             
             print("="*60)
 
-
-# Global token tracker instance (optional, for convenience)
-_global_tracker: Optional[TokenUsageTracker] = None
-
-
-def get_global_tracker() -> TokenUsageTracker:
-    """Get or create the global token tracker instance."""
-    global _global_tracker
-    if _global_tracker is None:
-        _global_tracker = TokenUsageTracker()
-    return _global_tracker
-
-
-def reset_global_tracker() -> None:
-    """Reset the global token tracker."""
-    global _global_tracker
-    _global_tracker = TokenUsageTracker()

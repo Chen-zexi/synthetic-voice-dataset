@@ -216,24 +216,18 @@ class LLM:
             api_key = os.getenv("GEMINI_API_KEY")
             if not api_key:
                 raise ValueError("GEMINI_API_KEY environment variable is not set")
-            if self.model.startswith("gemini-2.5-flash"):
-                return ChatGoogleGenerativeAI(
-                    api_key=api_key, 
-                    model=self.model, 
-                    temperature=self.temperature,
-                    max_tokens=self.max_tokens,
-                    top_p=self.top_p,
-                    n=self.n
-                )
-            else:
-                return ChatGoogleGenerativeAI(
-                    api_key=api_key, 
-                    model=self.model, 
-                    temperature=self.temperature,
-                    max_tokens=self.max_tokens,
-                    top_p=self.top_p,
-                    n=self.n
-                )
+            
+            # Gemini uses max_output_tokens instead of max_tokens
+            max_output = self.max_tokens or self.model_parameters.get('max_output_tokens')
+            
+            return ChatGoogleGenerativeAI(
+                api_key=api_key, 
+                model=self.model, 
+                temperature=self.temperature,
+                max_output_tokens=max_output,  # Use max_output_tokens for Gemini
+                top_p=self.top_p,
+                n=self.n
+            )
         elif self.provider == "lm-studio":
             host_ip = os.getenv("HOST_IP")
             if not host_ip:
@@ -265,13 +259,8 @@ class LLM:
         else:
             raise ValueError(f"Unsupported provider: {self.provider}. Supported: openai, anthropic, gemini, lm-studio, vllm")
     
-    def _prepare_openai_params(self) -> Dict[str, Any]:
-        """Prepare parameters for OpenAI models."""
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY environment variable is not set")
-        
-        # Create custom httpx clients to fix async cleanup issues
+    def _create_http_clients(self) -> tuple:
+        """Create HTTP clients with proper connection handling."""
         http_client = httpx.Client(
             headers={"Connection": "close"},
             timeout=30.0
@@ -280,6 +269,16 @@ class LLM:
             headers={"Connection": "close"},
             timeout=30.0
         )
+        return http_client, http_async_client
+    
+    def _prepare_openai_params(self) -> Dict[str, Any]:
+        """Prepare parameters for OpenAI models."""
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError("OPENAI_API_KEY environment variable is not set")
+        
+        # Create custom httpx clients to fix async cleanup issues
+        http_client, http_async_client = self._create_http_clients()
         
         params = {
             "api_key": api_key,
@@ -337,28 +336,3 @@ class LLM:
                 params["n"] = self.model_parameters["n"]
         
         return params
-        
-    def get_structure_model(self, provider: str = None):
-        """Get a model for structure parsing. Defaults to OpenAI gpt-4.1-nano."""
-        # Always use OpenAI gpt-4.1-nano for structure parsing by default
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY is not set (required for structure model parsing)")
-        return ChatOpenAI(api_key=api_key, model="gpt-4.1-nano", temperature=0)
-        
-    def get_structure_model_legacy(self, provider: str):
-        """Legacy method for getting provider-specific structure models."""
-        if provider == "lm-studio":
-            host_ip = os.getenv("HOST_IP")
-            if not host_ip:
-                raise ValueError("HOST_IP is not set for legacy LM-Studio structure model")
-            return ChatOpenAI(base_url=f"http://{host_ip}:1234/v1", api_key='lm-studio', model='osmosis-structure-0.6b@f16', temperature=0)
-        elif provider == "vllm":
-            # Assume using lm-studio
-            host_ip = os.getenv("HOST_IP")
-            if not host_ip:
-                raise ValueError("HOST_IP is not set for legacy vLLM structure model")
-            print(f"http://{host_ip}:8000/v1")
-            return ChatOpenAI(base_url=f"http://{host_ip}:8000/v1", api_key='EMPTY', model='osmosis-structure-0.6b@f16', temperature=0)
-        else:
-            raise ValueError(f"Unsupported provider for structure model: {provider}")
