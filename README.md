@@ -41,7 +41,14 @@ python main.py --locale ar-sa
 python main.py --locale ar-ae
 
 # Run specific steps for Malaysia (Malay)
+# Available steps: preprocess, translate, conversation, legit, translate_final, tts, postprocess
 python main.py --locale ms-my --steps preprocess translate
+
+# Run all conversation-related steps with sample limit
+uv run main.py --locale ms-my --steps preprocess translate conversation legit translate_final --sample-limit 1 --force
+
+# Run complete pipeline with all steps
+python main.py --locale ms-my --steps preprocess translate conversation legit translate_final tts postprocess
 
 # List available locales
 python main.py --list-locales
@@ -100,13 +107,15 @@ python main.py --list-cached-translations
 
 ## Pipeline Overview
 
-The pipeline consists of five main steps:
+The pipeline consists of seven main steps:
 
-1. **Preprocessing**: Extract placeholder tags from Chinese source text
-2. **Translation**: Translate Chinese to English (intermediate language)  
-3. **Conversation Generation**: Generate multi-turn scam dialogues and legitimate conversations using LLM
-4. **Text-to-Speech**: Convert conversations to audio using ElevenLabs
-5. **Post-processing**: Format JSON files and package audio
+1. **preprocess**: Extract placeholder tags from Chinese source text
+2. **translate**: Translate Chinese to English (intermediate language)  
+3. **conversation**: Generate multi-turn scam dialogues using LLM
+4. **legit**: Generate legitimate (non-scam) conversations using LLM
+5. **translate_final**: Translate English conversations to target language
+6. **tts**: Convert conversations to audio using ElevenLabs
+7. **postprocess**: Format JSON files and package audio
 
 ## Project Structure
 
