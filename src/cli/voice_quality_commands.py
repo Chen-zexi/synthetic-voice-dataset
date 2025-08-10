@@ -23,116 +23,54 @@ class VoiceQualityManager:
         self.config_loader = config_loader
         self.common_config_path = Path("configs/common.json")
     
-    def enable_v3_features(self, enable_audio_tags: bool = True) -> bool:
+    def set_model(self, model_id: str) -> bool:
         """
-        Enable ElevenLabs v3 features.
+        Set the TTS model to use.
         
         Args:
-            enable_audio_tags: Whether to enable audio tags
+            model_id: ElevenLabs model ID (e.g., 'eleven_multilingual_v2', 'eleven_multilingual_v3', 'eleven_turbo_v2_5')
             
         Returns:
             True if successful, False otherwise
         """
         try:
             config = self._load_common_config()
-            
-            # Enable v3 model
-            config["voice_generation"]["model_v3_enabled"] = True
-            config["voice_generation"]["model_id"] = "eleven_multilingual_v3"
-            
-            # Enable audio tags if requested
-            if enable_audio_tags:
-                config["voice_generation"]["v3_features"]["use_audio_tags"] = True
-                config["voice_generation"]["v3_features"]["emotional_context"] = True
-                config["voice_generation"]["v3_features"]["conversation_context"] = True
-            
+            config["voice_generation"]["model_id"] = model_id
             self._save_common_config(config)
-            print("✓ ElevenLabs v3 features enabled")
-            print("  - Model: eleven_multilingual_v3")
-            if enable_audio_tags:
-                print("  - Audio tags: Enabled")
-                print("  - Emotional context: Enabled")
+            
+            print(f"✓ Model set to: {model_id}")
+            if 'v3' in model_id.lower():
+                print("  - V3 features will be active (if configured)")
+            else:
+                print("  - V3 features will be ignored (non-v3 model)")
             
             return True
             
         except Exception as e:
-            print(f"Error enabling v3 features: {e}")
+            print(f"Error setting model: {e}")
             return False
     
-    def disable_v3_features(self) -> bool:
+    def set_audio_format(self, output_format: str) -> bool:
         """
-        Disable ElevenLabs v3 features and revert to v2.
+        Set the audio output format.
         
+        Args:
+            output_format: Audio format (e.g., 'mp3_44100_128', 'mp3_22050_32')
+            
         Returns:
             True if successful, False otherwise
         """
         try:
             config = self._load_common_config()
-            
-            # Disable v3 model
-            config["voice_generation"]["model_v3_enabled"] = False
-            config["voice_generation"]["model_id"] = "eleven_multilingual_v2"
-            
-            # Disable audio tags
-            config["voice_generation"]["v3_features"]["use_audio_tags"] = False
+            config["voice_generation"]["output_format"] = output_format
             
             self._save_common_config(config)
-            print("✓ ElevenLabs v3 features disabled")
-            print("  - Model: eleven_multilingual_v2 (reverted)")
-            print("  - Audio tags: Disabled")
+            print(f"✓ Audio format set to: {output_format}")
             
             return True
             
         except Exception as e:
-            print(f"Error disabling v3 features: {e}")
-            return False
-    
-    def enable_high_quality_audio(self) -> bool:
-        """
-        Enable high-quality audio settings.
-        
-        Returns:
-            True if successful, False otherwise
-        """
-        try:
-            config = self._load_common_config()
-            
-            config["voice_generation"]["quality_settings"]["use_high_quality"] = True
-            config["voice_generation"]["quality_settings"]["high_quality_format"] = "pcm_44100"
-            config["voice_generation"]["output_format"] = "pcm_44100"
-            
-            self._save_common_config(config)
-            print("✓ High-quality audio enabled")
-            print("  - Format: PCM 44.1kHz (uncompressed)")
-            print("  - Note: File sizes will be larger but quality will be maximum")
-            
-            return True
-            
-        except Exception as e:
-            print(f"Error enabling high-quality audio: {e}")
-            return False
-    
-    def disable_high_quality_audio(self) -> bool:
-        """
-        Disable high-quality audio settings.
-        
-        Returns:
-            True if successful, False otherwise
-        """
-        try:
-            config = self._load_common_config()
-            
-            config["voice_generation"]["quality_settings"]["use_high_quality"] = False
-            config["voice_generation"]["output_format"] = "mp3_44100_128"
-            
-            self._save_common_config(config)
-            print("✓ High-quality audio disabled")
-            print("  - Format: MP3 44.1kHz 128kbps (default)")
-            
-            return True
-            
-        except Exception as e:
-            print(f"Error disabling high-quality audio: {e}")
+            print(f"Error setting audio format: {e}")
             return False
     
     def set_voice_settings(self, 
@@ -204,28 +142,32 @@ class VoiceQualityManager:
             
             # Model settings
             print(f"Model: {voice_gen['model_id']}")
-            print(f"V3 Features: {'Enabled' if voice_gen['model_v3_enabled'] else 'Disabled'}")
+            is_v3 = 'v3' in voice_gen['model_id'].lower()
+            print(f"V3 Model: {'Yes' if is_v3 else 'No'}")
             
-            # Quality settings
-            print(f"High Quality: {'Enabled' if voice_gen['quality_settings']['use_high_quality'] else 'Disabled'}")
+            # Audio format
             print(f"Output Format: {voice_gen['output_format']}")
             
             # Voice settings
             vs = voice_gen["voice_settings"]
             print(f"Stability: {vs['stability']}")
             print(f"Similarity Boost: {vs['similarity_boost']}")
-            print(f"Style: {vs['style']}")
+            print(f"Style: {vs['style']}{' (v3 only)' if not is_v3 else ''}")
             print(f"Speaker Boost: {'Enabled' if vs['speaker_boost'] else 'Disabled'}")
             
             # V3 features
-            if voice_gen['model_v3_enabled']:
-                v3_features = voice_gen["v3_features"]
-                print("\nV3 Features:")
+            v3_features = voice_gen["v3_features"]
+            if is_v3:
+                print("\nV3 Features (active):")
                 print(f"  Audio Tags: {'Enabled' if v3_features['use_audio_tags'] else 'Disabled'}")
                 print(f"  Emotional Context: {'Enabled' if v3_features['emotional_context'] else 'Disabled'}")
                 print(f"  Conversation Context: {'Enabled' if v3_features['conversation_context'] else 'Disabled'}")
                 print(f"  Default Scam Emotion: {v3_features['default_emotion_scam']}")
                 print(f"  Default Legit Emotion: {v3_features['default_emotion_legit']}")
+            else:
+                print("\nV3 Features (inactive - requires v3 model):")
+                print(f"  Audio Tags: {'Configured' if v3_features['use_audio_tags'] else 'Not configured'}")
+                print(f"  Emotional Context: {'Configured' if v3_features['emotional_context'] else 'Not configured'}")
             
         except Exception as e:
             print(f"Error displaying settings: {e}")
@@ -241,7 +183,6 @@ class VoiceQualityManager:
             config = self._load_common_config()
             
             # Reset to default v2 settings
-            config["voice_generation"]["model_v3_enabled"] = False
             config["voice_generation"]["model_id"] = "eleven_multilingual_v2"
             config["voice_generation"]["output_format"] = "mp3_44100_128"
             
@@ -253,16 +194,15 @@ class VoiceQualityManager:
                 "speaker_boost": True
             }
             
-            # Reset quality settings
-            config["voice_generation"]["quality_settings"]["use_high_quality"] = False
-            
             # Reset v3 features
             config["voice_generation"]["v3_features"]["use_audio_tags"] = False
+            config["voice_generation"]["v3_features"]["emotional_context"] = False
+            config["voice_generation"]["v3_features"]["conversation_context"] = False
             
             self._save_common_config(config)
             print("✓ Voice settings reset to defaults")
             print("  - Model: eleven_multilingual_v2")
-            print("  - Quality: Standard MP3")
+            print("  - Format: mp3_44100_128")
             print("  - V3 features: Disabled")
             
             return True

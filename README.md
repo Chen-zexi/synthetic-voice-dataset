@@ -197,7 +197,7 @@ voice_scam_dataset_gen/
 
 ## Adding a New Locale
 
-Adding support for a new region is straightforward. For comprehensive instructions, see the [Locale Implementation Guide](LOCALE_IMPLEMENTATION_GUIDE.md) and check the [Locale Roadmap](locale_road_map.md) for current status.
+Adding support for a new region is straightforward. For comprehensive instructions, see the [Locale Implementation Guide](doc/LOCALE_IMPLEMENTATION_GUIDE.md) and check the [Locale Roadmap](locale_road_map.md) for current status.
 
 ### Quick Start
 

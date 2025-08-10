@@ -95,14 +95,10 @@ class Config:
     audio_effects: dict  # Audio effects configuration
     
     # Enhanced voice settings
-    model_v3_enabled: bool
     voice_stability: float
     voice_similarity_boost: float
     voice_style: float
     voice_speaker_boost: bool
-    use_high_quality: bool
-    high_quality_format: str
-    optimize_streaming_latency: int
     use_audio_tags: bool
     emotional_context: bool
     conversation_context: bool
@@ -406,15 +402,11 @@ class ConfigLoader:
             }),
             
             # Enhanced voice settings
-            model_v3_enabled=self.common_config["voice_generation"]["model_v3_enabled"],
             voice_stability=self.common_config["voice_generation"]["voice_settings"]["stability"],
             voice_similarity_boost=self.common_config["voice_generation"]["voice_settings"]["similarity_boost"],
             voice_style=self.common_config["voice_generation"]["voice_settings"]["style"],
             voice_speaker_boost=self.common_config["voice_generation"]["voice_settings"]["speaker_boost"],
-            use_high_quality=self.common_config["voice_generation"]["quality_settings"]["use_high_quality"],
-            high_quality_format=self.common_config["voice_generation"]["quality_settings"]["high_quality_format"],
-            optimize_streaming_latency=self.common_config["voice_generation"]["quality_settings"]["optimize_streaming_latency"],
-            use_audio_tags=self.common_config["voice_generation"]["v3_features"]["use_audio_tags"],
+            use_audio_tags=self.common_config["voice_generation"].get("v3_features", {}).get("use_audio_tags", False),
             emotional_context=self.common_config["voice_generation"]["v3_features"]["emotional_context"],
             conversation_context=self.common_config["voice_generation"]["v3_features"]["conversation_context"],
             default_emotion_scam=self.common_config["voice_generation"]["v3_features"]["default_emotion_scam"],
@@ -627,15 +619,11 @@ class ConfigLoader:
             }),
             
             # Enhanced voice settings
-            model_v3_enabled=self.common_config["voice_generation"]["model_v3_enabled"],
             voice_stability=self.common_config["voice_generation"]["voice_settings"]["stability"],
             voice_similarity_boost=self.common_config["voice_generation"]["voice_settings"]["similarity_boost"],
             voice_style=self.common_config["voice_generation"]["voice_settings"]["style"],
             voice_speaker_boost=self.common_config["voice_generation"]["voice_settings"]["speaker_boost"],
-            use_high_quality=self.common_config["voice_generation"]["quality_settings"]["use_high_quality"],
-            high_quality_format=self.common_config["voice_generation"]["quality_settings"]["high_quality_format"],
-            optimize_streaming_latency=self.common_config["voice_generation"]["quality_settings"]["optimize_streaming_latency"],
-            use_audio_tags=self.common_config["voice_generation"]["v3_features"]["use_audio_tags"],
+            use_audio_tags=self.common_config["voice_generation"].get("v3_features", {}).get("use_audio_tags", False),
             emotional_context=self.common_config["voice_generation"]["v3_features"]["emotional_context"],
             conversation_context=self.common_config["voice_generation"]["v3_features"]["conversation_context"],
             default_emotion_scam=self.common_config["voice_generation"]["v3_features"]["default_emotion_scam"],

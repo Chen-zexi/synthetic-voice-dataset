@@ -36,8 +36,7 @@
   },
   "voice_generation": {
     "sample_limit": 25,
-    "model_id": "eleven_multilingual_v2",
-    "model_v3_enabled": false,
+    "model_id": "eleven_flash_v2_5",
     "output_format": "mp3_44100_128",
     "voice_speed": 1.08,
     "silence_duration_ms": 500,
@@ -58,11 +57,6 @@
       "similarity_boost": 0.5,
       "style": 0.0,
       "speaker_boost": true
-    },
-    "quality_settings": {
-      "use_high_quality": false,
-      "high_quality_format": "pcm_44100",
-      "optimize_streaming_latency": 0
     },
     "v3_features": {
       "use_audio_tags": false,

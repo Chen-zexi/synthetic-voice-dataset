@@ -52,30 +52,22 @@ class VoiceSynthesizer:
         self.audio_tag_manager = AudioTagManager()
         self.current_conversation_type = None  # Track if processing scam or legit conversations
         
-        # Determine model to use
-        self.model_id = self._get_model_id()
+        # Use configured model
+        self.model_id = config.voice_model_id
+        
+        # Check if using a v3 model
+        self.is_v3_model = "v3" in self.model_id.lower()
         
         # Log enhancement features being used
-        if config.model_v3_enabled:
-            self.clogger.info("ElevenLabs v3 features enabled: audio tags, enhanced expressiveness")
-        if config.use_audio_tags:
-            self.clogger.info("Audio tags enabled for emotional context")
-        if config.use_high_quality:
-            self.clogger.info(f"High-quality audio enabled: {config.high_quality_format}")
-    
-    def _get_model_id(self) -> str:
-        """
-        Determine which model to use based on configuration.
-        
-        Returns:
-            Model ID to use for TTS
-        """
-        if self.config.model_v3_enabled:
-            # Use v3 model if enabled
-            return "eleven_multilingual_v3"
+        if self.is_v3_model:
+            self.clogger.info(f"Using v3 model: {self.model_id}")
+            if config.use_audio_tags:
+                self.clogger.info("Audio tags enabled for emotional context")
         else:
-            # Use configured model (default v2)
-            return self.config.voice_model_id
+            # v3 features are ignored when not using a v3 model
+            if config.use_audio_tags:
+                self.clogger.info("Audio tags configured but ignored (requires v3 model)")
+    
     
     async def validate_voices(self) -> bool:
         """
@@ -476,8 +468,8 @@ class VoiceSynthesizer:
         # Enhance text with audio tags if enabled
         enhanced_text = self._enhance_text_with_tags(text, role, turn_position)
         
-        # Generate filename with quality indicator
-        file_extension = "wav" if self.config.use_high_quality else "mp3"
+        # Generate filename with correct extension based on format
+        file_extension = self._get_file_extension_from_format(self.config.voice_output_format)
         filename = f"turn_{sent_id:02d}_{role}.{file_extension}"
         filepath = conv_dir / filename
         
@@ -497,8 +489,8 @@ class VoiceSynthesizer:
             # Build enhanced voice settings
             voice_settings = self._build_voice_settings()
             
-            # Determine output format
-            output_format = self._get_output_format()
+            # Use configured output format
+            output_format = self.config.voice_output_format
             
             # Use the enhanced ElevenLabs SDK client
             audio_generator = self.client.text_to_speech.convert(
@@ -566,9 +558,8 @@ class VoiceSynthesizer:
             "audio_files": audio_files,
             "combined_audio_file": processed_path.name if processed_path else None,
             "model_used": self.model_id,
-            "v3_features_enabled": self.config.model_v3_enabled,
-            "audio_tags_enabled": self.config.use_audio_tags,
-            "high_quality_enabled": self.config.use_high_quality
+            "audio_tags_enabled": self.config.use_audio_tags and self.is_v3_model,
+            "output_format": self.config.voice_output_format
         }
         
         metadata_file = conv_dir / "metadata.json"
@@ -626,7 +617,8 @@ class VoiceSynthesizer:
         Returns:
             Enhanced text with audio tags
         """
-        if not self.config.use_audio_tags or not self.current_conversation_type:
+        # Audio tags only work with v3 models
+        if not self.is_v3_model or not self.config.use_audio_tags or not self.current_conversation_type:
             return text
         
         # Get contextual tags
@@ -662,23 +654,34 @@ class VoiceSynthesizer:
             "speaker_boost": self.config.voice_speaker_boost
         }
         
-        # Add style setting for v3 model
-        if self.config.model_v3_enabled:
+        # Add style setting for v3 models
+        if self.is_v3_model:
             settings["style"] = self.config.voice_style
         
         return settings
     
-    def _get_output_format(self) -> str:
+    def _get_file_extension_from_format(self, format_str: str) -> str:
         """
-        Get output format based on configuration.
+        Determine file extension from format string.
         
+        Args:
+            format_str: Format string like 'mp3_44100_128' or 'pcm_44100'
+            
         Returns:
-            Output format string
+            File extension without dot
         """
-        if self.config.use_high_quality:
-            return self.config.high_quality_format
+        format_lower = format_str.lower()
+        if 'pcm' in format_lower:
+            return 'wav'
+        elif 'mp3' in format_lower:
+            return 'mp3'
+        elif 'ulaw' in format_lower:
+            return 'ulaw'
+        elif 'opus' in format_lower:
+            return 'opus'
         else:
-            return self.config.voice_output_format
+            # Default to mp3 for unknown formats
+            return 'mp3'
     
     def _get_last_used_tags(self) -> List[str]:
         """

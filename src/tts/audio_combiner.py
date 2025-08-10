@@ -77,8 +77,11 @@ class AudioCombiner:
         Returns:
             List of audio file paths sorted by turn number
         """
-        # Find all turn files
-        turn_files = list(conversation_dir.glob("turn_*.mp3"))
+        # Find all turn files (mp3, wav, or other audio formats)
+        turn_files = list(conversation_dir.glob("turn_*.*"))
+        # Filter to only audio files
+        audio_extensions = {'.mp3', '.wav', '.opus', '.ulaw', '.m4a', '.flac'}
+        turn_files = [f for f in turn_files if f.suffix.lower() in audio_extensions]
         
         # Sort by turn number
         turn_files.sort(key=lambda x: int(x.stem.split('_')[1]))
@@ -95,15 +98,15 @@ class AudioCombiner:
         Returns:
             Combined AudioSegment
         """
-        # Load first audio file
-        combined_audio = AudioSegment.from_mp3(audio_files[0])
+        # Load first audio file (auto-detect format)
+        combined_audio = AudioSegment.from_file(audio_files[0])
         
         # Create silence for between turns
         silence = AudioSegment.silent(duration=self.config.silence_duration_ms)
         
         # Add remaining audio files with silence
         for audio_file in audio_files[1:]:
-            audio_segment = AudioSegment.from_mp3(audio_file)
+            audio_segment = AudioSegment.from_file(audio_file)
             combined_audio = combined_audio + silence + audio_segment
         
         return combined_audio

@@ -1110,21 +1110,19 @@ class InteractiveUI:
     
     def _voice_quality_menu(self):
         """Show voice quality and v3 features management menu."""
-        print_step_header("Voice Quality & ElevenLabs V3 Features")
+        print_step_header("Voice Quality & Model Settings")
         
         # Show current settings first
         self.voice_quality_manager.show_current_settings()
         print("\n" + "=" * 40)
         
-        print("Voice Quality Options:")
-        print("  1. Enable ElevenLabs V3 Features (with audio tags)")
-        print("  2. Enable ElevenLabs V3 Features (without audio tags)")
-        print("  3. Disable V3 Features (revert to V2)")
-        print("  4. Enable High-Quality Audio (PCM uncompressed)")
-        print("  5. Disable High-Quality Audio (standard MP3)")
-        print("  6. Configure Voice Settings")
-        print("  7. Show Current Settings")
-        print("  8. Reset All Settings to Defaults")
+        print("Voice Configuration Options:")
+        print("  1. Change TTS Model")
+        print("  2. Configure V3 Features (audio tags, emotional context)")
+        print("  3. Configure Voice Settings (stability, similarity, style)")
+        print("  4. Change Audio Format")
+        print("  5. Show Current Settings")
+        print("  6. Reset All Settings to Defaults")
         print("  0. Back to configuration menu")
         
         choice = input("\nEnter your choice: ").strip()
@@ -1132,43 +1130,170 @@ class InteractiveUI:
         if choice == '0':
             return
         elif choice == '1':
-            print_info("Enabling ElevenLabs V3 with audio tags...")
-            if self.voice_quality_manager.enable_v3_features(enable_audio_tags=True):
-                print_info("V3 features enabled! Your audio will now include:")
-                print("  • More expressive speech with emotional context")
-                print("  • Audio tags for enhanced conversational flow")
-                print("  • Better pronunciation and intonation")
-                print("  • Context-aware emotional responses")
+            self._change_tts_model()
         elif choice == '2':
-            print_info("Enabling ElevenLabs V3 without audio tags...")
-            if self.voice_quality_manager.enable_v3_features(enable_audio_tags=False):
-                print_info("V3 features enabled! Your audio will now include:")
-                print("  • More expressive speech")
-                print("  • Better pronunciation and intonation")
-                print("  • Note: Audio tags are disabled")
+            self._configure_v3_features()
         elif choice == '3':
-            print_info("Disabling V3 features...")
-            if self.voice_quality_manager.disable_v3_features():
-                print_info("Reverted to ElevenLabs V2 for compatibility")
-        elif choice == '4':
-            print_info("Enabling high-quality audio...")
-            if self.voice_quality_manager.enable_high_quality_audio():
-                print_warning("Note: High-quality audio will create larger files")
-                print_info("Recommended for final production datasets")
-        elif choice == '5':
-            print_info("Disabling high-quality audio...")
-            if self.voice_quality_manager.disable_high_quality_audio():
-                print_info("Audio will use standard MP3 compression")
-        elif choice == '6':
             self._configure_voice_settings()
-        elif choice == '7':
+        elif choice == '4':
+            self._change_audio_format()
+        elif choice == '5':
             self.voice_quality_manager.show_current_settings()
-        elif choice == '8':
+        elif choice == '6':
             if confirm_action("Reset all voice settings to defaults?"):
                 if self.voice_quality_manager.reset_to_defaults():
                     print_info("All voice settings have been reset to defaults")
         else:
             print_warning("Invalid choice.")
+    
+    def _change_tts_model(self):
+        """Change the TTS model."""
+        print_step_header("Change TTS Model")
+        
+        models = [
+            ("eleven_turbo_v2_5", "Turbo model for faster generation (Balanced)"),
+            ("eleven_flash_v2_5", "Low latency model, cost optimized (Best for testing)"),
+            ("eleven_multilingual_v2", "Standard multilingual model (high quality)"),
+            ("eleven_v3", "V3 model with enhanced expressiveness (In alpha, may not work)"),
+        ]
+        
+        print("Available models:")
+        for i, (model_id, description) in enumerate(models, 1):
+            print(f"  {i}. {model_id}")
+            print(f"     {description}")
+        
+        print("  0. Cancel")
+        
+        choice = input("\nSelect model (1-4): ").strip()
+        
+        if choice == '0':
+            return
+        
+        try:
+            idx = int(choice) - 1
+            if 0 <= idx < len(models):
+                model_id, _ = models[idx]
+                if self.voice_quality_manager.set_model(model_id):
+                    print_info(f"Model changed to: {model_id}")
+            else:
+                print_warning("Invalid selection")
+        except ValueError:
+            print_warning("Please enter a valid number")
+    
+    def _configure_v3_features(self):
+        """Configure V3-specific features."""
+        print_step_header("Configure V3 Features")
+        
+        try:
+            config = self.voice_quality_manager._load_common_config()
+            current_model = config["voice_generation"]["model_id"]
+            
+            if 'v3' not in current_model.lower():
+                print_warning(f"Current model ({current_model}) is not a v3 model.")
+                print_info("V3 features will only be active when using a v3 model.")
+                print("\nWould you like to switch to a v3 model? (y/n): ", end="")
+                if input().strip().lower() in ['y', 'yes']:
+                    self.voice_quality_manager.set_model("eleven_multilingual_v3")
+                    print_info("Switched to eleven_multilingual_v3")
+                else:
+                    print_info("You can still configure v3 features - they will activate when you switch to a v3 model")
+            
+            v3_features = config["voice_generation"]["v3_features"]
+            
+            print("\nCurrent V3 Feature Settings:")
+            print(f"  Audio Tags: {'Enabled' if v3_features['use_audio_tags'] else 'Disabled'}")
+            print(f"  Emotional Context: {'Enabled' if v3_features['emotional_context'] else 'Disabled'}")
+            print(f"  Conversation Context: {'Enabled' if v3_features['conversation_context'] else 'Disabled'}")
+            
+            print("\nOptions:")
+            print("  1. Enable all V3 features")
+            print("  2. Disable all V3 features")
+            print("  3. Configure individually")
+            print("  0. Cancel")
+            
+            choice = input("\nSelect option: ").strip()
+            
+            if choice == '0':
+                return
+            elif choice == '1':
+                v3_features["use_audio_tags"] = True
+                v3_features["emotional_context"] = True
+                v3_features["conversation_context"] = True
+                self.voice_quality_manager._save_common_config(config)
+                print_info("All V3 features enabled")
+            elif choice == '2':
+                v3_features["use_audio_tags"] = False
+                v3_features["emotional_context"] = False
+                v3_features["conversation_context"] = False
+                self.voice_quality_manager._save_common_config(config)
+                print_info("All V3 features disabled")
+            elif choice == '3':
+                # Individual configuration
+                audio_tags = input("Enable audio tags? (y/n, current: {}): ".format(
+                    'yes' if v3_features['use_audio_tags'] else 'no'
+                )).strip().lower()
+                if audio_tags in ['y', 'yes']:
+                    v3_features["use_audio_tags"] = True
+                elif audio_tags in ['n', 'no']:
+                    v3_features["use_audio_tags"] = False
+                
+                emotional = input("Enable emotional context? (y/n, current: {}): ".format(
+                    'yes' if v3_features['emotional_context'] else 'no'
+                )).strip().lower()
+                if emotional in ['y', 'yes']:
+                    v3_features["emotional_context"] = True
+                elif emotional in ['n', 'no']:
+                    v3_features["emotional_context"] = False
+                
+                conversation = input("Enable conversation context? (y/n, current: {}): ".format(
+                    'yes' if v3_features['conversation_context'] else 'no'
+                )).strip().lower()
+                if conversation in ['y', 'yes']:
+                    v3_features["conversation_context"] = True
+                elif conversation in ['n', 'no']:
+                    v3_features["conversation_context"] = False
+                
+                self.voice_quality_manager._save_common_config(config)
+                print_info("V3 features updated")
+                
+        except Exception as e:
+            print_error(f"Error configuring V3 features: {e}")
+    
+    def _change_audio_format(self):
+        """Change the audio output format."""
+        print_step_header("Change Audio Format")
+        
+        formats = [
+            ("mp3_44100_128", "MP3 44.1kHz 128kbps (default, recommended)"),
+            ("mp3_22050_32", "MP3 22kHz 32kbps (smaller files, lower quality)"),
+            ("mp3_44100_64", "MP3 44.1kHz 64kbps (balanced)"),
+            ("mp3_44100_192", "MP3 44.1kHz 192kbps (higher quality, larger files)")
+        ]
+        
+        print("Available formats:")
+        print("⚠️ Note: Some formats may cause API errors depending on your ElevenLabs plan")
+        print()
+        for i, (format_id, description) in enumerate(formats, 1):
+            print(f"  {i}. {format_id}")
+            print(f"     {description}")
+        
+        print("  0. Cancel")
+        
+        choice = input("\nSelect format (1-4): ").strip()
+        
+        if choice == '0':
+            return
+        
+        try:
+            idx = int(choice) - 1
+            if 0 <= idx < len(formats):
+                format_id, _ = formats[idx]
+                if self.voice_quality_manager.set_audio_format(format_id):
+                    print_info(f"Audio format changed to: {format_id}")
+            else:
+                print_warning("Invalid selection")
+        except ValueError:
+            print_warning("Please enter a valid number")
     
     def _configure_voice_settings(self):
         """Configure individual voice settings."""
