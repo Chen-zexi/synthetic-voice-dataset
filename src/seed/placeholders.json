@@ -1,0 +1,67 @@
+[
+    {
+        "placeholder_name": "<caller_name>",
+        "description": "Localized personal name for the person making the scam call, common in the target locale.",
+        "example": "Michael"
+    },
+    {
+        "placeholder_name": "<callee_name>",
+        "description": "Localized personal name for the person receiving the scam call, common in the target locale.",
+        "example": "Emily"
+    },
+    {
+        "placeholder_name": "<money_amount_small>",
+        "description": "Small amount of money relative to the target locale's purchasing power.",
+        "example": "$25"
+    },
+    {
+        "placeholder_name": "<money_amount_medium>",
+        "description": "Medium amount of money relative to the target locale's purchasing power.",
+        "example": "$250"
+    },
+    {
+        "placeholder_name": "<money_amount_large>",
+        "description": "Large amount of money relative to the target locale's purchasing power.",
+        "example": "$2,500"
+    },
+    {
+        "placeholder_name": "<national_tax_authority_name>",
+        "description": "The name of the national tax authority, which varies by country.",
+        "example": "IRS"
+    },
+    {
+        "placeholder_name": "<personal_identification_number>",
+        "description": "A personal identification number that varies by country, such as a Social Security Number in the United States.",
+        "example": "123-45-6789"
+    },
+    {
+        "placeholder_name": "<housing_authority_name>",
+        "description": "The name of the housing authority, which can vary by region or country.",
+        "example": "New York City Housing Authority"
+    },
+    {
+        "placeholder_name": "<payment_method>",
+        "description": "The method of payment requested, which can vary by region or culture.",
+        "example": "wire transfer"
+    },
+    {
+        "placeholder_name": "<law_enforcement_agency_name>",
+        "description": "Name of a law enforcement agency that varies by country or region.",
+        "example": "FBI"
+    },
+    {
+        "placeholder_name": "<utility_provider_name>",
+        "description": "The name of the local utility provider, which can vary by region or city.",
+        "example": "Pacific Gas and Electric"
+    },
+    {
+        "placeholder_name": "<utility_service_type>",
+        "description": "The type of utility service mentioned in the scam, which can vary by region or provider.",
+        "example": "electricity"
+    },
+    {
+        "placeholder_name": "<company_name>",
+        "description": "The name of the company where the callee works, which the scammer claims to be associated with.",
+        "example": "Acme Corporation"
+    }
+]
