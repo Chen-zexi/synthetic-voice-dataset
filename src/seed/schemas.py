@@ -1,6 +1,16 @@
 from typing import List, Dict
 from pydantic import BaseModel, Field
 
+class FilteredLines(BaseModel):
+    """Filtered lines from the dataset scamGen_20k_sampled."""
+    keep_indices: List[int] = Field(
+        description="List of 0-based indices of lines to keep from the original dataset"
+    )
+
+class SeedRecord(BaseModel):
+    type: str = Field(description="Short scam type, e.g., 'tax'")
+    summary: str = Field(description="One-sentence summary")
+    seed: str = Field(description="Conversation skeleton/description")
 
 class Placeholder(BaseModel):
     """Placeholder definition with description and example."""
