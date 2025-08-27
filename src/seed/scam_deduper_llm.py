@@ -82,20 +82,13 @@ Your tasks:
 
 2) Decide one of:
    - "duplicate": If they describe the same incident/details (essentially redundant).
-   - "merge": If they are the same scenario with only small differing details that can be compactly combined.
    - "distinct": If they are meaningfully different scenarios that should both remain.
 
-3) If "merge", produce:
-   - merged_summary: a concise line that keeps shared parts and uses "/" to separate differing spans.
-   - merged_seed: same idea: restate shared parts, and use "/" to separate the small differing details.
-
-4) Return STRICT JSON with keys:
+3) Return STRICT JSON with keys:
    {
      "summary_similarity": float,
      "seed_similarity": float,
-     "decision": "duplicate" | "merge" | "distinct",
-     "merged_summary": string,
-     "merged_seed": string,
+     "decision": "duplicate" | "distinct",
      "rationale": string
    }
 Do not include any extra keys. Keep merged_* empty strings if decision is not "merge".
@@ -136,7 +129,7 @@ def llm_compare(client, model: str, old_row: Dict[str, Any], new_row: Dict[str, 
             text = resp.choices[0].message.content
             data = json.loads(text)
             # Basic validation
-            for k in ["summary_similarity", "seed_similarity", "decision", "merged_summary", "merged_seed", "rationale"]:
+            for k in ["summary_similarity", "seed_similarity", "decision", "rationale"]:
                 if k not in data:
                     raise ValueError(f"LLM JSON missing key: {k}")
             # Coerce numeric
@@ -144,7 +137,7 @@ def llm_compare(client, model: str, old_row: Dict[str, Any], new_row: Dict[str, 
             data["seed_similarity"] = float(data["seed_similarity"])
             # Normalize decision
             data["decision"] = str(data["decision"]).lower().strip()
-            if data["decision"] not in {"duplicate", "merge", "distinct"}:
+            if data["decision"] not in {"duplicate", "distinct"}:
                 data["decision"] = "distinct"
             return data
         except Exception as e:
@@ -198,7 +191,6 @@ def main():
                         help="Use LLM's decision verbatim ('llm') or derive via thresholds ('auto').")
     parser.add_argument("--summary-threshold", type=float, default=0.80, help="Auto mode: min summary similarity to consider.")
     parser.add_argument("--seed-dup-threshold", type=float, default=0.92, help="Auto mode: seed >= this => duplicate.")
-    parser.add_argument("--seed-merge-threshold", type=float, default=0.85, help="Auto mode: seed >= this => merge (else distinct).")
     parser.add_argument("--max-candidates", type=int, default=0,
                         help="If >0, limit OLD comparisons per NEW to this number via a quick heuristic (same type only).")
     parser.add_argument("--temperature", type=float, default=0.0)
@@ -226,7 +218,6 @@ def main():
 
     # We will mark removed ids and collect appended merged rows
     removed: Set[int] = set()
-    appended: List[Dict[str, Any]] = []
     matches_report: List[Dict[str, Any]] = []  # for audit
 
     # Track "consumed" old rows that have been merged so they don't get reused
@@ -277,8 +268,6 @@ def main():
             if verdict["summary_similarity"] >= args.summary_threshold:
                 if verdict["seed_similarity"] >= args.seed_dup_threshold:
                     decision = "duplicate"
-                elif verdict["seed_similarity"] >= args.seed_merge_threshold:
-                    decision = "merge"
                 else:
                     decision = "distinct"
             else:
@@ -295,26 +284,6 @@ def main():
                 "llm_suggested": verdict
             })
 
-        elif decision == "merge":
-            merged = {
-                "id": max([r["id"] for r in old_rows + new_rows + appended]) + 1,
-                "type": t,
-                "summary": verdict.get("merged_summary", "").strip() or f'{old_row["summary"]} / {new_row["summary"]}',
-                "seed": verdict.get("merged_seed", "").strip() or f'{old_row["seed"]} / {new_row["seed"]}',
-            }
-            appended.append(merged)
-            removed.add(old_row["id"])
-            removed.add(new_row["id"])
-            consumed_old.add(old_row["id"])
-
-            matches_report.append({
-                "new_id": new_row["id"],
-                "matched_old_id": old_row["id"],
-                "decision_used": "merge",
-                "llm_suggested": verdict,
-                "merged_id": merged["id"]
-            })
-
         else:  # distinct
             matches_report.append({
                 "new_id": new_row["id"],
@@ -325,11 +294,9 @@ def main():
 
     # Build the final table:
     # Start with all rows
-    combined = old_rows + new_rows
+    combined = new_rows
     # Drop removed
     final_rows = [r for r in combined if r["id"] not in removed]
-    # Append merges
-    final_rows += appended
     # Sort by type then id for neatness
     final_rows.sort(key=lambda r: (str(r["type"]), int(r["id"]) if isinstance(r["id"], int) else 999999))
 
@@ -340,7 +307,6 @@ def main():
     if args.audit:
         audit = {
             "removed": sorted(list(removed)),
-            "appended": appended,
             "matches": matches_report
         }
         with open(args.audit, "w", encoding="utf-8") as f:
@@ -349,7 +315,6 @@ def main():
     # Console summary
     print(f"OLD rows: {len(old_rows)} | NEW rows: {len(new_rows)}")
     print(f"Removed: {len(removed)} -> {sorted(list(removed))[:10]}{'...' if len(removed) > 10 else ''}")
-    print(f"Merged appended: {len(appended)}")
     print(f"Final table size: {len(final_rows)}")
     print(f"Wrote: {args.output}")
     if args.audit:
