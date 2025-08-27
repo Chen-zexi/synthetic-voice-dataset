@@ -462,5 +462,309 @@
             "<charity_organization_name_local>",
             "<recent_disaster_event_local>"
         ]
+    },
+    {
+        "type": "Government Authority",
+        "summary": "Caller claims the callee’s identity is linked to an illegal border entry and demands immediate verification or payment to avoid arrest.",
+        "seed": "The caller pretends to be an officer from a government immigration or border agency, stating that the callee’s identity or passport number is connected to an illegal entry investigation. They create urgency by threatening arrest, deportation, or a court summons unless the callee complies immediately. The caller instructs the callee to verify identity by providing full name, date of birth, passport or national ID number, and bank or card details, and may demand a “clearance fee” or “bond” via wire transfer, prepaid vouchers, or cryptocurrency. If the callee hesitates, the caller transfers to a supposed “supervisor” and sends fake case numbers or emails to appear legitimate while pressuring the callee to keep the call private and stay on the line until payment is made.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<foreign_country_name>",
+            "<passport_authority_name_local>",
+            "<case_or_warrant_reference_format>",
+            "<immigration_agency_name_local>"
+        ]
+    },
+    {
+        "type": "Government Authority",
+        "summary": "Caller claims you are under investigation for misappropriating funds and demands immediate verification or payment to avoid arrest or account freezes.",
+        "seed": "The caller poses as an investigator from a government financial crimes division, stating that your name or account is linked to misappropriation of funds. They assert that your bank accounts are at risk of being frozen and that an arrest warrant or legal action is imminent unless you cooperate. The caller pressures you to confirm identity details and banking information, sometimes requesting a screen-share or one-time codes to “verify” your accounts. They then direct you to move money to a so-called secure holding account or to pay a refundable “clearance” fee via wire transfer, prepaid cards, or cryptocurrency to resolve the alleged case immediately.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<law_enforcement_agency_name>",
+            "<bank_name_local>",
+            "<remote_access_tool_name>",
+            "<financial_crimes_division_name_local>"
+        ]
+    },
+    {
+        "type": "Government Authority",
+        "summary": "Caller claims a contraband-filled package in your name has been intercepted and demands verification or payment to avoid legal trouble.",
+        "seed": "The caller pretends to be an officer from a customs or law enforcement unit, stating that a package addressed to the callee was intercepted and found to contain contraband or illegal documents. They assert the callee’s name and address are implicated and threaten arrest, court action, or asset freezes if the issue is not resolved immediately. The caller pressures the callee to confirm personal details, such as full name, national ID, and banking information, under the pretext of verifying innocence. They then direct the callee to pay a ‘verification’ or ‘clearance’ fee via wire transfer, prepaid vouchers, or cryptocurrency, or to follow instructions to move funds to a so-called ‘safe account’ while the investigation is conducted.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<law_enforcement_agency_name>",
+            "<case_or_warrant_reference_format>",
+            "<bank_name_local>",
+            "<parcel_tracking_number_format>",
+            "<customs_or_border_agency_name_local>"
+        ]
+    },
+    {
+        "type": "Technology",
+        "summary": "Scammer posing as a telecom operator claims the callee’s phone or account is involved in illegal activity and demands verification or payment to avoid disconnection or legal action.",
+        "seed": "The caller pretends to be from a telecom provider, stating that the callee’s number or SIM has been flagged for fraudulent calls, spam messages, or illegal internet use. They assert that the line will be suspended or handed to authorities unless the callee immediately verifies identity and account ownership. The caller pressures the callee to share one-time passwords, account PINs, or full payment details, and may demand an urgent “security deposit” via wire transfer, prepaid vouchers, or cryptocurrency. If the callee hesitates, the caller escalates with threats of immediate disconnection, legal consequences, or offers to remotely “secure” the device by installing an app that grants them control.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<caller_id_spoofed_number_format>",
+            "<remote_access_tool_name>",
+            "<urgent_payment_method_local>",
+            "<telecom_provider_name_local>",
+            "<mobile_number_format_local>"
+        ]
+    },
+    {
+        "type": "Government Authority",
+        "summary": "Caller impersonates embassy staff claiming the callee is involved in a criminal case and must verify identity or pay to avoid arrest or deportation.",
+        "seed": "The caller claims to be from an embassy or consulate and states the callee’s name has appeared in a criminal investigation related to suspicious documents or packages. They assert that the matter is urgent and confidential, warning of immediate arrest, visa cancellation, or deportation unless the callee cooperates. The caller demands verification by collecting passport numbers, national ID details, banking information, and sometimes asks the callee to stay on the line while they “open a case file.” They then pressure the callee to transfer funds as a “security deposit,” pay “case handling fees,” or move money to a so‑called “safe account,” and may send forged case numbers or documents to make the demand appear legitimate.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<immigration_agency_name_local>",
+            "<passport_authority_name_local>",
+            "<case_or_warrant_reference_format>",
+            "<embassy_or_consulate_name_local>"
+        ]
+    },
+    {
+        "type": "Consumer Services",
+        "summary": "Scammer claims a recalled product entitles you to urgent safety compensation and requests personal/banking details or a fee to process it.",
+        "seed": "The caller pretends to represent a product manufacturer or a consumer safety department, stating that an item you supposedly purchased has been recalled due to a serious safety defect. They say you are eligible for immediate compensation or a replacement but must first verify your purchase by confirming your full name, address, date of birth, and payment card or bank details. To add pressure, they warn of health risks or legal liability if you do not act right away and urge you to keep the call confidential to prevent delays. They then direct you to provide one-time codes, share card numbers, or pay a small “processing” or “courier” fee via transfer, prepaid vouchers, or cryptocurrency to release the compensation package.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<ecommerce_platform_name_local>",
+            "<urgent_payment_method_local>",
+            "<one_time_passcode_label_local>",
+            "<product_model_name_local>",
+            "<consumer_safety_authority_name_local>"
+        ]
+    },
+    {
+        "type": "Consumer Services",
+        "summary": "Scammer posing as a delivery company offers compensation for a “lost package” and demands fees or personal/banking details to process it.",
+        "seed": "The caller claims to be from a delivery company investigating a lost package in the callee’s name and apologizes for the inconvenience. They offer a compensation payout or expedited replacement but say it requires quick verification and a small processing fee. The caller pressures the callee to provide full name, address, date of birth, and card or bank details, or to pay the fee via wire transfer, prepaid cards, or a payment link sent by text. If the callee hesitates, the caller warns that the claim window will close or that the package will be reported as refused, urging immediate action to complete the “compensation” process.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<courier_company_name_local>",
+            "<parcel_tracking_number_format>",
+            "<prepaid_card_brand_local>",
+            "<compensation_amount_local>",
+            "<payment_link_domain_pattern_local>"
+        ]
+    },
+    {
+        "type": "Government Authority",
+        "summary": "Scammer posing as a government tax agency offering a surprise refund to steal personal and banking details or collect “processing” fees.",
+        "seed": "The caller claims to be from a government tax agency and says the callee is owed an unexpected tax refund due to a recent review. They create urgency by saying the refund must be claimed immediately and ask the callee to “verify” identity by providing full name, date of birth, national ID or tax number, and bank or card details. If the callee hesitates, the caller insists the refund will be cancelled or delayed and may offer to “expedite” it for a small processing fee paid via wire transfer, prepaid cards, or cryptocurrency. The caller may direct the callee to click a link or read out a one-time code, capturing credentials and payment information during the call.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<national_tax_agency_name>",
+            "<tax_identification_number_format>",
+            "<bank_routing_number_format>",
+            "<payment_expedite_fee_amount_local>",
+            "<authorized_wire_transfer_service_local>"
+        ]
+    },
+    {
+        "type": "Government Authority",
+        "summary": "Scammer posing as a government pension office offering a limited-time subsidy and demanding personal data or upfront fees to release funds.",
+        "seed": "The caller claims to be from a government pension department and says the callee qualifies for a new pension subsidy or arrears payout. They create urgency by stating the benefit expires today or the account will be locked without immediate verification. The caller asks for sensitive information such as full name, national ID number, pension account details, and bank card numbers, or instructs the callee to pay a small “processing” or “verification” fee via wire transfer, prepaid voucher, or cryptocurrency. If the callee hesitates, the caller escalates with threats of benefit suspension or offers to walk them through payment steps to quickly “activate” the subsidy.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<national_id_number_format>",
+            "<bank_routing_number_format>",
+            "<urgent_payment_method_local>",
+            "<pension_agency_name_local>",
+            "<pension_account_number_format_local>"
+        ]
+    },
+    {
+        "type": "Financial Service",
+        "summary": "Caller offers a pre-approved credit card with low rates and high limits, then pressures for upfront fees and sensitive information.",
+        "seed": "The caller claims to represent a well-known credit card issuer and says the callee is pre-approved for an exclusive low-interest card with a high limit. They emphasize limited-time approval and promise instant activation, then request personal details such as full name, date of birth, address, and full card or bank account numbers for a small “processing” or “verification” fee. When the callee hesitates, the caller increases pressure with claims of expiring offers and better rewards if paid immediately, steering payment to wire transfer, prepaid vouchers, or cryptocurrency. If questioned, the caller deflects by citing privacy or security policies, refuses to send written documentation, and pushes for immediate payment and disclosure on the call.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<bank_name_local>",
+            "<card_network_local>",
+            "<prepaid_card_brand_local>",
+            "<crypto_token_symbol_local>",
+            "<credit_card_issuer_brand_local>"
+        ]
+    },
+    {
+        "type": "Financial Service",
+        "summary": "Scammers pose as a reputable investment platform and pressure the victim to fund a fake trading app that shows fabricated profits before blocking withdrawals.",
+        "seed": "The caller claims to be an account manager from a well-known investment platform and says they have a limited-time opportunity in stocks or indices. They guide the victim to download a trading app or access a website, help them create an account, and persuade them to deposit a small initial amount via bank transfer, card, or cryptocurrency. During the call, the caller walks the victim through the app’s dashboard, points to fake live charts and profit figures, and urges additional deposits to “unlock higher returns” or “cover margin requirements.” When the victim requests a withdrawal, the caller insists on further payments for taxes, verification fees, or account upgrades, becomes evasive, and eventually stops responding once larger sums are deposited.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<investment_regulator_name>",
+            "<crypto_token_symbol_local>",
+            "<bank_name_local>",
+            "<trading_app_name_local>",
+            "<account_verification_fee_label_local>"
+        ]
+    },
+    {
+        "type": "Consumer Services",
+        "summary": "Scammer poses as a ticket seller or official box office to sell fake or non-existent concert/event tickets.",
+        "seed": "The caller claims to be from an official ticket office or a verified reseller with limited, high-demand tickets for a popular concert or event. They insist the tickets are nearly sold out and pressure the callee to act immediately, offering a special price or exclusive access if payment is made on the spot. The caller requests payment through bank transfer, gift cards, or a peer-to-peer app and asks for personal details to 'confirm the order,' promising to email or text the e-tickets shortly after payment. If the callee hesitates or asks for verification, the caller deflects with urgency, name-drops the venue or artist, and may send a fake confirmation link or PDF to appear legitimate before cutting contact once payment is sent.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<mobile_payment_service_local>",
+            "<prepaid_card_brand_local>",
+            "<payment_link_domain_pattern_local>",
+            "<event_name_local>",
+            "<venue_name_local>"
+        ]
+    },
+    {
+        "type": "Technology",
+        "summary": "Scammer posing as a service provider warns that your online account will be canceled unless you verify or secure it immediately.",
+        "seed": "The caller claims to be from a well-known online service and says your account is scheduled for cancellation due to suspicious activity or a billing issue. They pressure you to act immediately, asking you to confirm your identity or payment details, or to click a link they text or email during the call. If you hesitate, they warn you will permanently lose access, data, or subscriptions. They then guide you to share one-time passcodes, reveal passwords, or install remote support software to “secure” the account, ultimately capturing your credentials or payment information.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<ecommerce_platform_name_local>",
+            "<one_time_passcode_label_local>",
+            "<notification_channel_local>",
+            "<remote_access_tool_name>",
+            "<account_support_email_domain_local>"
+        ]
+    },
+    {
+        "type": "Technology",
+        "summary": "Scammer claims a popular online platform is shutting down and offers an urgent refund that requires remote access or payment info.",
+        "seed": "The caller poses as a representative of an online platform, stating the service is permanently shutting down and that the callee is eligible for a refund for unused subscription time. They pressure the callee to act immediately, asking them to verify their account by sharing login credentials or installing a remote support tool to “process” the refund. During the call, they guide the callee to enter banking details or a card number, or they attempt to move money while screen-sharing, sometimes claiming an overpayment occurred and demanding the callee return the excess via wire transfer, gift cards, or cryptocurrency. If the callee hesitates, the caller escalates urgency with claims the refund window will close and the funds will be forfeited unless instructions are followed right away.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<remote_access_tool_name>",
+            "<bank_name_local>",
+            "<authorized_wire_transfer_service_local>",
+            "<online_platform_name_local>",
+            "<gift_card_retailer_chain_local>"
+        ]
+    },
+    {
+        "type": "Consumer Services",
+        "summary": "Scammer posing as an airline or travel agency offers a refund for a canceled flight to steal payment details or process fake fees.",
+        "seed": "The caller claims to be from an airline or a travel agency informing the callee that their recent flight was canceled and they are eligible for an immediate refund or voucher. They ask the callee to “verify” booking details by providing full name, date of birth, ticket number, and payment card or bank information. The caller pressures the callee to act quickly, saying the refund window will expire soon, and may request a small “processing” or “rebooking” fee via wire transfer, prepaid card, or a payment link. If the callee hesitates, the caller escalates with scripted assurances, provides a fake employee ID, and urges the callee to read out one-time passcodes or install a remote access app to “process the refund,” enabling them to capture credentials and funds.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<remote_access_tool_name>",
+            "<one_time_passcode_label_local>",
+            "<payment_link_domain_pattern_local>",
+            "<airline_or_travel_agency_name_local>",
+            "<ticket_locator_code_format_local>"
+        ]
+    },
+    {
+        "type": "Consumer Services",
+        "summary": "Caller claims you have an overdue television subscription bill and demands immediate payment to avoid service disconnection or penalties.",
+        "seed": "The caller pretends to be from a television service provider and says the callee’s subscription is overdue and scheduled for immediate suspension. They create urgency by mentioning late fees, disconnection, or a technician already dispatched to cut service. The caller pressures the callee to verify account details—such as full name, address, and payment card or bank information—or to settle the balance right away via wire transfer, prepaid vouchers, or a payment link. If the callee hesitates, the caller escalates by threatening additional penalties or permanent account closure unless payment is made during the call.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<telecom_provider_name_local>",
+            "<customer_account_id_format>",
+            "<payment_link_domain_pattern_local>",
+            "<tv_service_provider_name_local>",
+            "<service_disconnection_fee_amount_local>"
+        ]
+    },
+    {
+        "type": "Consumer Services",
+        "summary": "Scammer posing as a delivery company offering compensation for a supposedly damaged package to steal payment or personal information.",
+        "seed": "The caller claims to be from a delivery company’s compensation department and says a recent package addressed to the callee was damaged in transit. They apologize and offer a refund or compensation, insisting it must be processed immediately to meet an internal deadline. The caller asks the callee to confirm shipment details and then requests sensitive data—such as full name, address, card number, or bank login—or directs them to a link to “verify” identity and choose a payout method. If the callee hesitates, the caller pressures them by saying the case will close and the compensation will be forfeited unless they provide details or make a small ‘verification’ payment.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<courier_company_name_local>",
+            "<parcel_tracking_number_format>",
+            "<payment_link_domain_pattern_local>",
+            "<compensation_department_title_local>",
+            "<verification_payment_amount_local>"
+        ]
+    },
+    {
+        "type": "Healthcare",
+        "summary": "Caller claims you are owed a medical reimbursement and needs your banking and personal details to process it immediately.",
+        "seed": "The caller pretends to represent a health insurer or a hospital billing department and says a recent overpayment or claim adjustment qualifies you for a reimbursement. They emphasize that the refund must be processed right away and ask for personal details such as full name, date of birth, policy number, and bank account or card information to “deposit” the funds. If hesitant, the caller pressures the callee by claiming the refund will expire or be forfeited, and may offer to “verify” legitimacy with fake reference numbers. They may then direct the callee to read one-time passcodes, install a remote support app, or approve a transfer, resulting in theft of funds or identity information.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<health_insurance_provider_name>",
+            "<health_insurance_member_id_format>",
+            "<bank_routing_number_format>",
+            "<remote_access_tool_name>",
+            "<policy_number_format_local>"
+        ]
+    },
+    {
+        "type": "Personal Relationships",
+        "summary": "A scammer impersonates a classmate messaging or calling for urgent financial help or sensitive info verification.",
+        "seed": "The caller claims to be a classmate from school or university, referencing a common course or teacher to sound familiar. They say they lost a phone or wallet and urgently need a short-term loan or a verification code sent to them. They pressure the callee to transfer money via instant payment, gift cards, or cryptocurrency, or to read out a one-time code they ‘accidentally’ sent. If questioned, the caller insists on secrecy and urgency, discouraging callbacks or independent verification with other classmates.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<university_or_school_name>",
+            "<one_time_passcode_label_local>",
+            "<mobile_payment_service_local>",
+            "<course_or_teacher_reference_local>",
+            "<urgent_payment_instrument_local>"
+        ]
+    },
+    {
+        "type": "Education",
+        "summary": "Caller impersonates a teacher, claiming an urgent school-related issue to extract money or sensitive information.",
+        "seed": "The caller pretends to be a teacher from the callee’s child’s school or a recent course, speaking confidently and referencing a fabricated class, assignment, or disciplinary incident. They claim an urgent situation—such as unpaid fees, a school trip emergency, exam registration problems, or a behavioral incident—requiring immediate resolution. The caller pressures the callee to provide student details, parent contact information, and payment via bank transfer, prepaid cards, or a payment link sent during the call. If questioned, the caller deflects by citing privacy policies, a busy school office, or time-sensitive deadlines, and urges the callee not to contact the school directly until the issue is “cleared.”",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<university_or_school_name>",
+            "<course_or_teacher_reference_local>",
+            "<urgent_payment_instrument_local>",
+            "<student_full_name_format_local>"
+        ]
+    },
+    {
+        "type": "Consumer Services",
+        "summary": "Scammer poses as a landlord or property manager to demand deposits, rent, or identity documents for a supposed rental.",
+        "seed": "The caller pretends to be a landlord or property manager about a rental listing the callee inquired about, claiming there is high demand and the unit must be secured immediately. They pressure the callee to pay a holding deposit or first month’s rent via wire transfer, prepaid card, or a payment app before any viewing, and request copies of ID and sensitive financial details for a “background check.” When the callee hesitates, the caller warns the unit will be given to the next applicant and may send forged lease documents or photos to appear legitimate. The caller insists all communication and payment stay off official platforms and pushes for instant confirmation of the transfer to finalize the lease.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<urgent_payment_method_local>",
+            "<proof_of_income_document>",
+            "<bank_name_local>",
+            "<rental_deposit_label_local>",
+            "<lease_agreement_document_title_local>"
+        ]
+    },
+    {
+        "type": "Personal Relationships",
+        "summary": "Scammer pretends a family member has been kidnapped and demands immediate ransom to secure their release.",
+        "seed": "The caller urgently claims they have a close relative of the callee and plays background screams or has an accomplice imitate the relative’s voice, using details scraped from social media to sound convincing. They demand immediate payment to prevent harm, insisting the callee stay on the line and not contact anyone else or law enforcement. The caller pressures for fast payment via wire transfer, prepaid gift cards, or cryptocurrency, and demands the callee read payment codes aloud. If questioned, the caller threatens escalating violence, short deadlines, and changes details to maintain fear and control until payment is made.",
+        "placeholders": [
+            "<caller_name>",
+            "<callee_name>",
+            "<urgent_payment_method_local>",
+            "<prepaid_card_brand_local>",
+            "<authorized_wire_transfer_service_local>",
+            "<relative_relationship_term_local>",
+            "<emergency_contact_prohibition_phrase_local>"
+        ]
     }
 ]

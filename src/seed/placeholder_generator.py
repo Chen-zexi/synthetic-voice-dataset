@@ -209,7 +209,7 @@ class PlaceholderGenerator:
 
 # Example usage:
 if __name__ == "__main__":
-    generator = PlaceholderGenerator(seeds_path="./seeds_llm.json")
+    generator = PlaceholderGenerator(seeds_path="./seeds_scamGen_filtered.json")
     asyncio.run(generator.generate_placeholders_for_seeds())
     with open(generator.placeholders_path, "w") as f:
         json.dump(generator.placeholders, f, indent=4, ensure_ascii=False)
