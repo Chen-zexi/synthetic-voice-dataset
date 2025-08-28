@@ -34,3 +34,15 @@ class PlaceholderCandidate(BaseModel):
         description="List of new placeholders proposed by the LLM, each with "
                     "a name, description, and example"
     )
+
+class PlaceholderSubstitution(BaseModel):
+    """Substitution values for a specific placeholder."""
+    placeholder_name: str = Field(
+        description="Name of the placeholder"
+    )
+    substitutions: List[str] = Field(
+        description="List of realistic substitution values for the placeholder"
+    )
+    english_translation_substitutions: List[str] = Field(
+        description="List of English translations for the substitutions"
+    )

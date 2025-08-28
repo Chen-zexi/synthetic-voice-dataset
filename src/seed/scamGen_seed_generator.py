@@ -1,22 +1,19 @@
-import random
-from math_utils import MathUtils
 from schemas import SeedRecord
 from llm_core.api_call import make_api_call
 from llm_core.api_provider import LLM
 import asyncio
-from tqdm import tqdm
-import os
-from typing import List
-import re
 import json
-from schemas import FilteredLines
+from utils_async import run_concurrent_tasks, save_json_array
 
 class ScamGenSeedGenerator:
     def __init__(self, max_concurrent=10):
         self.max_concurrent = max_concurrent
         llm_instance = LLM(model="gpt-5", provider="openai")
         self.llm = llm_instance.get_llm()
-        self.scam_categories = [
+        self.scam_categories = self.initialize_scam_categories()
+
+    def initialize_scam_categories(self):
+        return [
             "Government Authority",
             "Consumer Services",
             "Workplace",
@@ -45,7 +42,9 @@ class ScamGenSeedGenerator:
         tasks = [self._generate_seed_from_single_scenario(line) for line in lines]
 
         # Run with concurrency control
-        results = await self._run_concurrent_tasks(tasks, "Generating Seeds")
+        results = await run_concurrent_tasks(tasks,
+                                             max_concurrent=self.max_concurrent,
+                                             description="Generating Seeds")
 
         # Process results with error handling
         seeds = []
@@ -56,39 +55,10 @@ class ScamGenSeedGenerator:
                 seeds.append(result)
 
         # Save successful results
-        self._save_seeds(seeds, output_path)
+        save_json_array(seeds, output_path)
 
         print(f"Generated {len(seeds)} seeds from {input_path} to {output_path}.")
         return seeds
-
-    async def _run_concurrent_tasks(self, tasks, description):
-        """Run tasks with concurrency control and progress bar"""
-        semaphore = asyncio.Semaphore(self.max_concurrent)
-
-        async def limited_task(task):
-            async with semaphore:
-                return await task
-
-        pbar = tqdm(total=len(tasks), desc=description)
-
-        async def run_with_progress(task):
-            result = await limited_task(task)
-            pbar.update(1)
-            return result
-
-        results = await asyncio.gather(
-            *[run_with_progress(task) for task in tasks],
-            return_exceptions=True
-        )
-
-        pbar.close()
-        return results
-
-    def _save_seeds(self, seeds, output_path):
-        """Save seeds to output file as a single JSON array"""
-        with open(output_path, 'w', encoding='utf-8') as outfile:
-            json.dump([seed.model_dump() for seed in seeds], outfile, indent=4,
-                      ensure_ascii=False)
 
     async def _generate_seed_from_single_scenario(self, line):
         """
