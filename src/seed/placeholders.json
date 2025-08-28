@@ -25,43 +25,503 @@
         "example": "$2,500"
     },
     {
-        "placeholder_name": "<national_tax_authority_name>",
-        "description": "The name of the national tax authority, which varies by country.",
-        "example": "IRS"
+        "placeholder_name": "<national_tax_agency_name>",
+        "description": "Name of the country’s primary tax authority, which varies by country and shapes the scam’s credibility.",
+        "example": "Internal Revenue Service"
     },
     {
-        "placeholder_name": "<personal_identification_number>",
-        "description": "A personal identification number that varies by country, such as a Social Security Number in the United States.",
-        "example": "123-45-6789"
+        "placeholder_name": "<tax_identification_number_format>",
+        "description": "Localized label or format for the taxpayer’s unique ID used by the tax authority; different countries use different terms and structures.",
+        "example": "Social Security Number (SSN)"
+    },
+    {
+        "placeholder_name": "<urgent_payment_method_local>",
+        "description": "Common locally available urgent payment instrument scammers demand; varies by country/region and influences the script details.",
+        "example": "Walmart MoneyCard prepaid debit card"
     },
     {
         "placeholder_name": "<housing_authority_name>",
-        "description": "The name of the housing authority, which can vary by region or country.",
+        "description": "Name of the public or social housing agency varies by country and locality (national, state/provincial, or municipal authorities). Using the correct local agency name increases realism.",
         "example": "New York City Housing Authority"
     },
     {
-        "placeholder_name": "<payment_method>",
-        "description": "The method of payment requested, which can vary by region or culture.",
-        "example": "wire transfer"
+        "placeholder_name": "<proof_of_income_document>",
+        "description": "Accepted proof-of-income documents differ by country and program (e.g., payslip, benefits award letter, tax return form type).",
+        "example": "most recent W-2 or pay stub"
     },
     {
         "placeholder_name": "<law_enforcement_agency_name>",
-        "description": "Name of a law enforcement agency that varies by country or region.",
-        "example": "FBI"
+        "description": "Name of the local or national law enforcement entity the scammer impersonates; varies by country/region (e.g., police service, gendarmerie, sheriff’s office).",
+        "example": "Los Angeles County Sheriff’s Department"
     },
     {
-        "placeholder_name": "<utility_provider_name>",
-        "description": "The name of the local utility provider, which can vary by region or city.",
-        "example": "Pacific Gas and Electric"
+        "placeholder_name": "<case_or_warrant_reference_format>",
+        "description": "The style/format of a case or warrant reference number used by local authorities; numbering conventions differ across jurisdictions.",
+        "example": "Case #LA-23-584210"
     },
     {
-        "placeholder_name": "<utility_service_type>",
-        "description": "The type of utility service mentioned in the scam, which can vary by region or provider.",
-        "example": "electricity"
+        "placeholder_name": "<local_utility_provider_name>",
+        "description": "Utility company names are country- and city-specific (public vs. private, electricity vs. water). Scammers impersonate the locally recognized provider to sound credible.",
+        "example": "Con Edison"
     },
     {
-        "placeholder_name": "<company_name>",
-        "description": "The name of the company where the callee works, which the scammer claims to be associated with.",
-        "example": "Acme Corporation"
+        "placeholder_name": "<utility_account_number_format>",
+        "description": "Account number formats vary by country and provider (length, hyphens, prefix letters). Scammers cite a plausible-looking local account ID.",
+        "example": "Account # 123-456-789"
+    },
+    {
+        "placeholder_name": "<caller_id_spoofed_number_format>",
+        "description": "Displayed caller ID patterns differ by country/region (area codes, short codes, toll-free prefixes). Scammers often spoof a local-looking utility number.",
+        "example": "(212) 460-XXXX"
+    },
+    {
+        "placeholder_name": "<company_finance_contact_title>",
+        "description": "Role title the scammer references to pressure urgency and secrecy; titles and their authority vary by country and company structure (e.g., CFO vs. Finance Director).",
+        "example": "Chief Financial Officer"
+    },
+    {
+        "placeholder_name": "<company_it_department_name>",
+        "description": "Name of the internal IT/helpdesk organization varies by company and region (e.g., \"IT Help Desk,\" \"Technology Services,\" \"Service Desk\"). Using a specific label makes the impersonation believable.",
+        "example": "Enterprise Technology Service Desk"
+    },
+    {
+        "placeholder_name": "<remote_access_tool_name>",
+        "description": "Scammers reference locally common remote-support tools; the brand/tool varies by country and workplace norms.",
+        "example": "AnyDesk"
+    },
+    {
+        "placeholder_name": "<multi_factor_provider_name>",
+        "description": "MFA/2FA providers differ by region and company, and naming a specific provider increases realism.",
+        "example": "Okta Verify"
+    },
+    {
+        "placeholder_name": "<direct_deposit_portal_name>",
+        "description": "Name of the employer’s payroll/self-service system used for direct deposit management; varies by country and company (e.g., region-specific vendors and branding).",
+        "example": "Workday Employee Self-Service"
+    },
+    {
+        "placeholder_name": "<bank_routing_number_format>",
+        "description": "The typical way domestic bank routing/branch numbers are referenced and formatted, which differs by country (e.g., ABA routing number in the U.S., sort code in the U.K., BSB in Australia).",
+        "example": "9-digit ABA routing number"
+    },
+    {
+        "placeholder_name": "<payroll_provider_name>",
+        "description": "External payroll processor name that differs by market and company; scammers often invoke a recognizable local provider to gain credibility.",
+        "example": "ADP"
+    },
+    {
+        "placeholder_name": "<project_repository_platform_name>",
+        "description": "Name of the company’s code or document repository platform used for project collaboration; varies by country/industry (e.g., GitHub Enterprise, GitLab, Bitbucket, SharePoint) and dictates how access/sharing is requested.",
+        "example": "GitHub Enterprise"
+    },
+    {
+        "placeholder_name": "<shared_drive_or_workspace_name>",
+        "description": "Localized name of the internal shared drive or workspace where confidential project files are stored; naming conventions differ by company/region and influence how users reference locations.",
+        "example": "SharePoint Project Workspace ‘Apollo-ML’"
+    },
+    {
+        "placeholder_name": "<vendor_company_name>",
+        "description": "Name of the supposed vendor/partner varies by country and industry, influencing credibility. Different regions have well-known local suppliers or service providers scammers might impersonate.",
+        "example": "NorthStar Facilities Services"
+    },
+    {
+        "placeholder_name": "<invoice_reference_format>",
+        "description": "Invoice numbering schemes differ by country and company (prefixes, year-week, country codes). Including a realistic local format increases plausibility.",
+        "example": "INV-US-2025-08417"
+    },
+    {
+        "placeholder_name": "<job_title_localized>",
+        "description": "Role title varies by country/industry jargon and scam pitch (e.g., ‘remote package handler’ vs. ‘work-from-home compliance assistant’). Using a localized job title makes the offer believable in the target market.",
+        "example": "Remote Onboarding Coordinator"
+    },
+    {
+        "placeholder_name": "<equipment_purchase_vendor_local>",
+        "description": "Scammers often name a local or nationally familiar retailer/platform where the ‘training kit’ or ‘work laptop’ must be purchased, which differs by country/region.",
+        "example": "Best Buy Business Marketplace"
+    },
+    {
+        "placeholder_name": "<bank_name_local>",
+        "description": "Name of a recognizable bank or credit issuer varies by country and even region; using a local institution increases plausibility of the scam.",
+        "example": "Chase Bank"
+    },
+    {
+        "placeholder_name": "<card_network_local>",
+        "description": "Payment card networks differ by market; callers may reference a locally common network to sound credible.",
+        "example": "Visa"
+    },
+    {
+        "placeholder_name": "<national_id_number_format>",
+        "description": "Country-specific personal identification number format the scammer may request for credit checks (e.g., national ID, SSN, Aadhaar, NIN). Format and terminology vary by country and culture.",
+        "example": "9-digit Social Security Number (SSN)"
+    },
+    {
+        "placeholder_name": "<investment_regulator_name>",
+        "description": "Name of the national or regional financial regulator the scammer might invoke to appear legitimate; varies by country/market.",
+        "example": "U.S. Securities and Exchange Commission (SEC)"
+    },
+    {
+        "placeholder_name": "<debt_collection_agency_name>",
+        "description": "Scammers often impersonate well-known or locally operating debt collection agencies; the recognizable agency name varies by country and region, influencing plausibility.",
+        "example": "Atlantic Recovery Partners, LLC"
+    },
+    {
+        "placeholder_name": "<stock_ticker_symbol>",
+        "description": "Public-market ticker symbols vary by country and exchange conventions; using a realistic local ticker makes the pitch believable (e.g., U.S. uses short uppercase tickers on NYSE/Nasdaq).",
+        "example": "NVDA"
+    },
+    {
+        "placeholder_name": "<crypto_token_symbol_local>",
+        "description": "Cryptocurrency symbols and the popularity of specific tokens vary by region and exchange availability; scammers often cite locally popular tokens to sound credible.",
+        "example": "SOL"
+    },
+    {
+        "placeholder_name": "<health_insurance_provider_name>",
+        "description": "Health insurers vary widely by country/region; using the correct local insurer name makes the scam believable.",
+        "example": "Blue Cross Blue Shield"
+    },
+    {
+        "placeholder_name": "<health_insurance_member_id_format>",
+        "description": "Member ID formats differ by insurer and country; realistic formatting helps localization.",
+        "example": "Member ID: ABC123456789"
+    },
+    {
+        "placeholder_name": "<health_services_provider_name>",
+        "description": "The clinic/hospital or network name differs by locale and lends credibility to the call.",
+        "example": "Midtown Family Health Center"
+    },
+    {
+        "placeholder_name": "<public_health_agency_name>",
+        "description": "Name of the national or regional public health authority the scammer impersonates; varies by country/region (e.g., federal ministry vs. local health department).",
+        "example": "Centers for Disease Control and Prevention (CDC)"
+    },
+    {
+        "placeholder_name": "<medical_record_number_format>",
+        "description": "Format/name used by healthcare providers to identify a patient’s medical record; varies by country and hospital systems in structure and terminology (e.g., MRN, NHS number, hospital number).",
+        "example": "MRN: 00458329"
+    },
+    {
+        "placeholder_name": "<medical_billing_code_format>",
+        "description": "Local medical billing/claim code system referenced on invoices; varies by country (e.g., CPT/HCPCS in the U.S., ICD procedure codes elsewhere).",
+        "example": "CPT: 99213"
+    },
+    {
+        "placeholder_name": "<national_health_id_number_format>",
+        "description": "Format/name of a country-specific personal health identifier that scammers might ask for to 'verify eligibility'; varies widely by country (e.g., NHS number in the UK, RAMQ number in Quebec, Medicare number in Australia).",
+        "example": "Medicare Beneficiary Identifier (MBI): 11-character alphanumeric"
+    },
+    {
+        "placeholder_name": "<university_or_school_name>",
+        "description": "Name of the specific higher-education institution or school, which varies by country and region and signals legitimacy in the scam context.",
+        "example": "Midwest State University"
+    },
+    {
+        "placeholder_name": "<student_account_number_format>",
+        "description": "Localized format/label used by institutions to identify a student’s billing or bursar account; naming and formatting conventions vary across countries and schools.",
+        "example": "Student Account ID: MSU-2025-104382"
+    },
+    {
+        "placeholder_name": "<bursar_or_student_finance_office_name>",
+        "description": "The localized name of the office handling tuition/fees (e.g., Bursar, Student Accounts, Fees Office), which differs by country and institution.",
+        "example": "Office of the Bursar"
+    },
+    {
+        "placeholder_name": "<federal_student_loan_servicer_name>",
+        "description": "Name of the national or regional student loan servicer the scammer might impersonate; varies by country (e.g., U.S. servicers like Nelnet, MOHELA, Aidvantage).",
+        "example": "MOHELA"
+    },
+    {
+        "placeholder_name": "<scholarship_fund_name>",
+        "description": "Name of the purported scholarship or foundation; scholarship names vary widely by country/region and lend local credibility to the scam.",
+        "example": "National Merit Scholars Advancement Fund"
+    },
+    {
+        "placeholder_name": "<scholarship_award_letter_reference_format>",
+        "description": "Localized reference/ID format often cited from an award or notification letter/email; formats vary by institution and country.",
+        "example": "Award Ref: NMSAF-2025-CA-017493"
+    },
+    {
+        "placeholder_name": "<foreign_country_name>",
+        "description": "Country where the caller claims to be stranded or detained; varies by region based on common travel or diaspora ties.",
+        "example": "Mexico"
+    },
+    {
+        "placeholder_name": "<mobile_payment_service_local>",
+        "description": "Locally popular peer-to-peer payment app or wallet the scammer pressures the victim to use; varies by country and market penetration.",
+        "example": "Zelle"
+    },
+    {
+        "placeholder_name": "<urgent_medical_facility_name_local>",
+        "description": "Name of a local hospital/clinic the scammer might cite during a claimed medical emergency; varies by country and city for realism.",
+        "example": "Mount Sinai Hospital"
+    },
+    {
+        "placeholder_name": "<prepaid_card_brand_local>",
+        "description": "Locally common prepaid card or voucher brand the scammer requests for redemption; brands differ across countries and regions.",
+        "example": "Apple Gift Card"
+    },
+    {
+        "placeholder_name": "<passport_authority_name_local>",
+        "description": "Authority that issues passports varies by country and signals plausibility when the scammer claims their passport was lost or held; naming the local authority helps localize the story and replacement process details.",
+        "example": "U.S. Department of State — Passport Services"
+    },
+    {
+        "placeholder_name": "<bail_amount_local>",
+        "description": "Typical local currency amount requested to cover bail or release fees; bail practices and common amounts vary widely by country and jurisdiction.",
+        "example": "$3,000"
+    },
+    {
+        "placeholder_name": "<ecommerce_platform_name_local>",
+        "description": "Name of a well-known online shopping platform varies by country/region; using a locally familiar brand increases plausibility of the scam context.",
+        "example": "Amazon"
+    },
+    {
+        "placeholder_name": "<shipping_address_format_local>",
+        "description": "Residential address formats differ by country (ordering of street number, unit, city, postal code). Including a localized example ensures natural address verification prompts.",
+        "example": "742 Evergreen Terrace, Apt 2B, Springfield, IL 62704"
+    },
+    {
+        "placeholder_name": "<parcel_tracking_number_format>",
+        "description": "Format of shipment tracking numbers varies by carrier and country; using a localized pattern makes the delivery-scam pretext believable.",
+        "example": "1Z 999 AA1 01 2345 6784"
+    },
+    {
+        "placeholder_name": "<courier_company_name_local>",
+        "description": "Name of a commonly used domestic courier or postal service varies by country/region and strongly influences realism in delivery-related scams.",
+        "example": "UPS"
+    },
+    {
+        "placeholder_name": "<subscription_service_name_local>",
+        "description": "Name of a popular local streaming or entertainment subscription service that varies by country/region and makes the scam sound credible.",
+        "example": "Hulu"
+    },
+    {
+        "placeholder_name": "<customer_account_id_format>",
+        "description": "Typical format used by local entertainment services for customer account identifiers; varies by provider/region.",
+        "example": "Account ID: HU-4837-22914"
+    },
+    {
+        "placeholder_name": "<big_tech_support_brand_name_local>",
+        "description": "Name of a widely recognized local tech company whose brand scammers impersonate for tech-support scams; varies by country and market presence.",
+        "example": "Microsoft Support"
+    },
+    {
+        "placeholder_name": "<limited_time_sale_name_local>",
+        "description": "Name of a culturally recognizable sale or promo that varies by country/region (e.g., holiday events, shopping days). Helps the scam feel locally authentic.",
+        "example": "July 4th Mega Savings Event"
+    },
+    {
+        "placeholder_name": "<sextortion_payment_wallet_address_format>",
+        "description": "Format of a cryptocurrency wallet address used to collect payments; varies by country/exchange preference and token network (e.g., Bitcoin vs. Ethereum vs. local-popular chains).",
+        "example": "BTC Address: bc1q0l9x7t0s9d4q9y5h3w2n8k0j4c6m7p5r8f2z9d"
+    },
+    {
+        "placeholder_name": "<social_platform_name_local>",
+        "description": "Locally popular social or messaging platform where threats to post or share content would be credible; varies by region and culture.",
+        "example": "Instagram"
+    },
+    {
+        "placeholder_name": "<one_time_passcode_label_local>",
+        "description": "Name/label commonly used by services in the locale for login verification codes (e.g., OTP, verification code, security code). Terminology varies by country and platform, influencing how users recognize the request.",
+        "example": "verification code"
+    },
+    {
+        "placeholder_name": "<notification_channel_local>",
+        "description": "Typical channel in the locale through which services send one-time codes (e.g., SMS text, email, WhatsApp). This varies by country and carrier norms.",
+        "example": "SMS text message"
+    },
+    {
+        "placeholder_name": "<lottery_or_sweepstakes_name_local>",
+        "description": "Name of a well-known local lottery or sweepstakes used to lend credibility varies by country/region (e.g., state lottery, national lottery, or brand-run sweepstakes).",
+        "example": "Publishers Clearing House"
+    },
+    {
+        "placeholder_name": "<charity_organization_name_local>",
+        "description": "Name of the purported local charity or well-known national nonprofit varies by country/region, affecting credibility and recognition in scam calls.",
+        "example": "American Red Cross"
+    },
+    {
+        "placeholder_name": "<recent_disaster_event_local>",
+        "description": "Locally salient disaster or crisis used to solicit donations differs by geography and time, influencing urgency and plausibility.",
+        "example": "Hurricane Idalia relief"
+    },
+    {
+        "placeholder_name": "<immigration_agency_name_local>",
+        "description": "Name of the government immigration or border agency varies by country or region and signals legitimacy in the scam context.",
+        "example": "U.S. Citizenship and Immigration Services (USCIS)"
+    },
+    {
+        "placeholder_name": "<financial_crimes_division_name_local>",
+        "description": "Specific name used in a country for a government financial-crime or anti-fraud unit that scammers impersonate; varies by jurisdiction and agency structure.",
+        "example": "U.S. Treasury — Financial Crimes Enforcement Network (FinCEN)"
+    },
+    {
+        "placeholder_name": "<customs_or_border_agency_name_local>",
+        "description": "Name of the national customs/border authority that would plausibly intercept international parcels; varies by country and jurisdiction.",
+        "example": "U.S. Customs and Border Protection (CBP)"
+    },
+    {
+        "placeholder_name": "<telecom_provider_name_local>",
+        "description": "Name of the local/mobile carrier being impersonated; varies by country and even region (e.g., national vs. regional carriers). Using a recognizable provider increases scam plausibility.",
+        "example": "AT&T"
+    },
+    {
+        "placeholder_name": "<mobile_number_format_local>",
+        "description": "Typical local mobile number structure used to reference the callee’s line; formats differ widely by country and dialing conventions.",
+        "example": "(415) 555-0134"
+    },
+    {
+        "placeholder_name": "<embassy_or_consulate_name_local>",
+        "description": "Specific embassy or consulate name used by scammers; varies by country and city (e.g., the caller may claim to be from the local consulate of the callee’s nationality or residence).",
+        "example": "People’s Republic of China Consulate General in San Francisco"
+    },
+    {
+        "placeholder_name": "<product_model_name_local>",
+        "description": "Specific product name/model tied to local market releases and branding; varies by country due to different SKUs, safety standards, and naming conventions.",
+        "example": "AeroBrew Smart Kettle Pro (Model ABK-700US)"
+    },
+    {
+        "placeholder_name": "<consumer_safety_authority_name_local>",
+        "description": "Local government or quasi-government body responsible for consumer product recalls; differs by country and sometimes by region.",
+        "example": "U.S. Consumer Product Safety Commission (CPSC)"
+    },
+    {
+        "placeholder_name": "<compensation_amount_local>",
+        "description": "Monetary payout amount mentioned for the lost-package compensation; varies by country/currency conventions and typical carrier reimbursement policies.",
+        "example": "$75"
+    },
+    {
+        "placeholder_name": "<payment_link_domain_pattern_local>",
+        "description": "Domain pattern used for the texted payment/verification link; varies by country-specific courier brands and common phishing lookalikes.",
+        "example": "ups-claims-help.com"
+    },
+    {
+        "placeholder_name": "<payment_expedite_fee_amount_local>",
+        "description": "Typical small ‘processing/expedite’ fee amount cited by scammers varies by country and currency conventions; using a locally plausible figure increases realism.",
+        "example": "$35"
+    },
+    {
+        "placeholder_name": "<authorized_wire_transfer_service_local>",
+        "description": "Common domestic wire service or network name differs by country; callers may reference it to request immediate transfers.",
+        "example": "Fedwire"
+    },
+    {
+        "placeholder_name": "<pension_agency_name_local>",
+        "description": "Official name of the government pension authority varies by country/region and gives the scam localized credibility.",
+        "example": "Social Security Administration (SSA)"
+    },
+    {
+        "placeholder_name": "<pension_account_number_format_local>",
+        "description": "Format/label for a government pension or benefits account differs by jurisdiction and program.",
+        "example": "SSA Benefit Claim Number: BNC 12-345-6789"
+    },
+    {
+        "placeholder_name": "<credit_card_issuer_brand_local>",
+        "description": "Well-known credit card brand names vary by country or region (e.g., local co-brands or national issuers). Using a localized issuer name makes the scam sound plausible in that market.",
+        "example": "Capital One"
+    },
+    {
+        "placeholder_name": "<trading_app_name_local>",
+        "description": "Name of a locally popular trading or brokerage app/website the scammer directs the victim to; varies by country and market presence.",
+        "example": "AmeriTradeX"
+    },
+    {
+        "placeholder_name": "<account_verification_fee_label_local>",
+        "description": "Localized label the scammer cites for extra charges required before withdrawals (e.g., tax, compliance, KYC, upgrade); naming conventions and terminology vary by jurisdiction.",
+        "example": "KYC compliance verification fee"
+    },
+    {
+        "placeholder_name": "<event_name_local>",
+        "description": "Name of the high-demand concert or event varies by country and culture, reflecting locally popular artists, teams, or festivals used to build urgency and credibility.",
+        "example": "Taylor Swift | The Eras Tour"
+    },
+    {
+        "placeholder_name": "<venue_name_local>",
+        "description": "Well-known venue names differ by city/region and are often name-dropped to seem legitimate.",
+        "example": "Madison Square Garden"
+    },
+    {
+        "placeholder_name": "<account_support_email_domain_local>",
+        "description": "Domain used by the purported service’s support emails or links varies by country/brand and helps localize phishing URLs or sender addresses.",
+        "example": "support@amazon.com"
+    },
+    {
+        "placeholder_name": "<online_platform_name_local>",
+        "description": "Name of the supposedly shutting-down online subscription platform; varies by country and market presence, influencing credibility of the scam.",
+        "example": "Hulu"
+    },
+    {
+        "placeholder_name": "<gift_card_retailer_chain_local>",
+        "description": "Common local retailer brand the scammer demands gift cards from; varies by country and retail landscape.",
+        "example": "Target"
+    },
+    {
+        "placeholder_name": "<airline_or_travel_agency_name_local>",
+        "description": "The airline or travel agency brand varies by country/region and strongly affects realism (e.g., national carriers vs. low-cost airlines, local travel agency chains).",
+        "example": "Delta Air Lines"
+    },
+    {
+        "placeholder_name": "<ticket_locator_code_format_local>",
+        "description": "Airline booking reference formats differ across carriers/regions (e.g., 6-character alphanumeric PNR vs. longer agency-issued record locators).",
+        "example": "Record Locator: ABC1D2"
+    },
+    {
+        "placeholder_name": "<tv_service_provider_name_local>",
+        "description": "Localized brand name of the television or cable/satellite streaming provider the scammer impersonates; varies by country and market (e.g., Sky in the UK, Foxtel in Australia, DSTV in South Africa).",
+        "example": "Spectrum TV"
+    },
+    {
+        "placeholder_name": "<service_disconnection_fee_amount_local>",
+        "description": "Locally typical fee amount quoted for late payment or technician dispatch, which varies by country, provider policies, and currency conventions.",
+        "example": "$49"
+    },
+    {
+        "placeholder_name": "<compensation_department_title_local>",
+        "description": "Localized internal-sounding department/title name used by delivery firms for claims, which varies by company and country branding and terminology.",
+        "example": "Claims & Compensation Resolution Team"
+    },
+    {
+        "placeholder_name": "<verification_payment_amount_local>",
+        "description": "Small, locally plausible amount the caller requests for a ‘verification’ or ‘processing’ charge; amounts and currency formatting vary by locale.",
+        "example": "$1.95"
+    },
+    {
+        "placeholder_name": "<policy_number_format_local>",
+        "description": "Health insurance policy/plan number formats vary by country and insurer; using a localized format makes the scam sound authentic in different regions.",
+        "example": "Policy #: HMO-PLA-7843291"
+    },
+    {
+        "placeholder_name": "<course_or_teacher_reference_local>",
+        "description": "A locally familiar course name or teacher/professor that varies by country and institution, used to establish credibility (e.g., course naming conventions, honorifics).",
+        "example": "Professor Nguyen’s Intro to Microeconomics"
+    },
+    {
+        "placeholder_name": "<urgent_payment_instrument_local>",
+        "description": "A country- or region-specific instant payment instrument or gift card/crypto route commonly exploited in scams; differs by locale in brand and terminology.",
+        "example": "Target gift cards"
+    },
+    {
+        "placeholder_name": "<student_full_name_format_local>",
+        "description": "Full student name format and common naming conventions vary by country (order, middle initials, patronymics). Needed so the caller can reference the child/student naturally in a school context.",
+        "example": "Aiden M. Rodriguez"
+    },
+    {
+        "placeholder_name": "<rental_deposit_label_local>",
+        "description": "Localized term for the upfront rental payment being demanded (e.g., holding deposit, security deposit, first month’s rent) varies by country and region in naming and legal meaning.",
+        "example": "holding deposit"
+    },
+    {
+        "placeholder_name": "<lease_agreement_document_title_local>",
+        "description": "Localized title of the standard residential lease or tenancy agreement used to make forged documents appear legitimate; naming conventions differ by jurisdiction.",
+        "example": "Residential Lease Agreement"
+    },
+    {
+        "placeholder_name": "<relative_relationship_term_local>",
+        "description": "Kinship term the caller uses for the supposed victim; varies by language and culture (e.g., cousin vs. mate’s kid vs. auntie) and affects believability.",
+        "example": "daughter"
+    },
+    {
+        "placeholder_name": "<emergency_contact_prohibition_phrase_local>",
+        "description": "Localized phrasing the scammer uses to deter contacting others or police; wording and references to law enforcement vary by country/region.",
+        "example": "Do not hang up or call 911—keep me on the line now."
     }
 ]
