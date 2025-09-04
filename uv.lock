@@ -141,6 +141,7 @@ numpy==2.2.6
     # via
     #   -r requirements.txt
     #   ctranslate2
+    #   scipy
     #   stanza
 nvidia-cublas-cu12==12.8.4.1
     # via
@@ -256,11 +257,14 @@ rsa==4.9.1
     # via google-auth
 sacremoses==0.0.53
     # via argostranslate
+scipy==1.16.1
+    # via -r requirements.txt
 sentencepiece==0.2.0
     # via argostranslate
 setuptools==80.9.0
     # via
     #   ctranslate2
+    #   torch
     #   triton
 six==1.17.0
     # via sacremoses
