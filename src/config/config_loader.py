@@ -162,6 +162,15 @@ class Config:
     # Locale identifier (e.g., 'ms-my', 'ar-sa')
     locale: Optional[str] = None
     
+    # Character profiles and generation settings
+    generation_source_type: str = "legacy_text"  # "seeds" or "legacy_text" 
+    generation_seeds_file: Optional[str] = None
+    generation_profiles_file: Optional[str] = None
+    generation_enable_character_profiles: bool = False
+    generation_scenarios_per_seed: int = 1
+    generation_min_seed_quality: int = 70
+    generation_enable_dynamic_placeholders: bool = False
+    
     # Raw config data
     common_config: dict = field(default_factory=dict)
     lang_config: dict = field(default_factory=dict)
@@ -319,6 +328,9 @@ class ConfigLoader:
         # Add LLM settings
         llm_config = self.common_config.get("llm", {})
         
+        # Add generation settings
+        generation_config = self.common_config.get("generation", {})
+        
         return Config(
             # Environment variables
             openai_api_key=openai_api_key,
@@ -460,6 +472,15 @@ class ConfigLoader:
             llm_use_response_api=llm_config.get("use_response_api", False),
             llm_track_tokens=llm_config.get("track_tokens", False),
             
+            # Character profiles and generation settings
+            generation_source_type=generation_config.get("source_type", "legacy_text"),
+            generation_seeds_file=generation_config.get("seeds_file"),
+            generation_profiles_file=generation_config.get("profiles_file"),
+            generation_enable_character_profiles=generation_config.get("enable_character_profiles", False),
+            generation_scenarios_per_seed=generation_config.get("scenarios_per_seed", 1),
+            generation_min_seed_quality=generation_config.get("min_seed_quality", 70),
+            generation_enable_dynamic_placeholders=generation_config.get("enable_dynamic_placeholders", False),
+            
             # Raw config data
             common_config=self.common_config,
             lang_config=lang_config
@@ -535,6 +556,9 @@ class ConfigLoader:
         
         # Add LLM settings
         llm_config = self.common_config.get("llm", {})
+        
+        # Add generation settings
+        generation_config = self.common_config.get("generation", {})
         
         return Config(
             # Environment variables
@@ -682,6 +706,15 @@ class ConfigLoader:
             
             # Locale identifier
             locale=locale_id,
+            
+            # Character profiles and generation settings
+            generation_source_type=generation_config.get("source_type", "legacy_text"),
+            generation_seeds_file=generation_config.get("seeds_file"),
+            generation_profiles_file=generation_config.get("profiles_file"),
+            generation_enable_character_profiles=generation_config.get("enable_character_profiles", False),
+            generation_scenarios_per_seed=generation_config.get("scenarios_per_seed", 1),
+            generation_min_seed_quality=generation_config.get("min_seed_quality", 70),
+            generation_enable_dynamic_placeholders=generation_config.get("enable_dynamic_placeholders", False),
             
             # Raw config data
             common_config=self.common_config,

@@ -232,7 +232,24 @@ class PipelineRunner:
     
     async def run_conversation_generation(self):
         """Run conversation generation: create multi-turn scam dialogues."""
-        logger.info("Generating scam conversations")
+        # Determine generation mode
+        generation_mode = getattr(self.config, 'generation_source_type', 'legacy_text')
+        
+        if generation_mode == 'seeds':
+            logger.info("Generating scam conversations using scenario-based system with character profiles")
+            if hasattr(self.config, 'generation_enable_character_profiles') and self.config.generation_enable_character_profiles:
+                logger.info(f"Character profiles enabled from: {getattr(self.config, 'generation_profiles_file', 'default profiles')}")
+            else:
+                logger.info("Using default character profiles")
+            
+            seeds_file = getattr(self.config, 'generation_seeds_file', 'scam_samples.json')
+            logger.info(f"Loading scam seeds from: {seeds_file}")
+            
+            scenarios_per_seed = getattr(self.config, 'generation_scenarios_per_seed', 1)
+            min_quality = getattr(self.config, 'generation_min_seed_quality', 70)
+            logger.info(f"Generation settings: {scenarios_per_seed} scenarios per seed, minimum quality {min_quality}")
+        else:
+            logger.info("Generating scam conversations using legacy line-by-line system")
         
         generator = ScamGenerator(self.config)
         await generator.generate_conversations()
