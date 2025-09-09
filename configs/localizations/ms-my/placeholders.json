@@ -1,713 +1,1268 @@
-{
-  "{00001}": {
-    "tag": "<person_name>",
-    "substitutions": [
-      "Ahmad",
-      "Siti",
-      "Ali",
-      "Fatimah",
-      "Hassan"
-    ],
-    "translations": [
-      "Ahmad",
-      "Siti",
-      "Ali",
-      "Fatimah",
-      "Hassan"
-    ]
-  },
-  "{00002}": {
-    "tag": "<city_name>",
-    "substitutions": [
-      "Kuala Lumpur",
-      "Penang",
-      "Johor Bahru",
-      "Ipoh",
-      "Shah Alam"
-    ],
-    "translations": [
-      "Kuala Lumpur",
-      "Penang",
-      "Johor Bahru",
-      "Ipoh",
-      "Shah Alam"
-    ]
-  },
-  "{00003}": {
-    "tag": "<money_amount_medium>",
-    "substitutions": [
-      "RM1,000 (MYR)",
-      "RM2,000 (MYR)",
-      "RM3,000 (MYR)",
-      "RM5,000 (MYR)"
-    ],
-    "translations": [
-      "RM1,000",
-      "RM2,000",
-      "RM3,000",
-      "RM5,000"
-    ]
-  },
-  "{00004}": {
-    "tag": "<tutoring_center>",
-    "substitutions": [
-      "Pusat Tuisyen Bijak",
-      "Smart Academy",
-      "Genius Learning Centre"
-    ],
-    "translations": [
-      "Bijak Tuition Centre",
-      "Smart Academy",
-      "Genius Learning Centre"
-    ]
-  },
-  "{00005}": {
-    "tag": "<credit_card_agency>",
-    "substitutions": [
-      "Visa",
-      "Mastercard",
-      "AMEX"
-    ],
-    "translations": [
-      "Visa",
-      "Mastercard",
-      "AMEX"
-    ]
-  },
-  "{00006}": {
-    "tag": "<money_amount_small>",
-    "substitutions": [
-      "RM50 (MYR)",
-      "RM100 (MYR)",
-      "RM200 (MYR)"
-    ],
-    "translations": [
-      "RM50",
-      "RM100",
-      "RM200"
-    ]
-  },
-  "{00007}": {
-    "tag": "<credit_union>",
-    "substitutions": [
-      "Bank Simpanan Nasional",
-      "Bank Rakyat",
-      "Agrobank"
-    ],
-    "translations": [
-      "National Savings Bank",
-      "Bank Rakyat",
-      "Agrobank"
-    ]
-  },
-  "{00008}": {
-    "tag": "<airport_name>",
-    "substitutions": [
-      "KLIA",
-      "Lapangan Terbang Pulau Pinang",
-      "Lapangan Terbang Senai"
-    ],
-    "translations": [
-      "KLIA",
-      "Penang International Airport",
-      "Senai International Airport"
-    ]
-  },
-  "{00009}": {
-    "tag": "<credit_union_card>",
-    "substitutions": [
-      "kad Maybank",
-      "kad CIMB",
-      "kad Public Bank"
-    ],
-    "translations": [
-      "Maybank card",
-      "CIMB card",
-      "Public Bank card"
-    ]
-  },
-  "{00010}": {
-    "tag": "<gov_housing_agency>",
-    "substitutions": [
-      "Kementerian Perumahan dan Kerajaan Tempatan"
-    ],
-    "translations": [
-      "Ministry of Housing and Local Government"
-    ]
-  },
-  "{00011}": {
-    "tag": "<housing_purchase_benefit>",
-    "substitutions": [
-      "PR1MA",
-      "Rumah Selangorku",
-      "MyHome"
-    ],
-    "translations": [
-      "PR1MA",
-      "Rumah Selangorku",
-      "MyHome"
-    ]
-  },
-  "{00012}": {
-    "tag": "<telecom_regulator>",
-    "substitutions": [
-      "MCMC",
-      "Suruhanjaya Komunikasi dan Multimedia Malaysia"
-    ],
-    "translations": [
-      "MCMC",
-      "Malaysian Communications and Multimedia Commission"
-    ]
-  },
-  "{00013}": {
-    "tag": "<courier_service>",
-    "substitutions": [
-      "Pos Laju",
-      "DHL",
-      "FedEx",
-      "J&T Express"
-    ],
-    "translations": [
-      "Pos Laju",
-      "DHL",
-      "FedEx",
-      "J&T Express"
-    ]
-  },
-  "{00014}": {
-    "tag": "<social_media>",
-    "substitutions": [
-      "Facebook",
-      "WhatsApp",
-      "Instagram",
-      "TikTok"
-    ],
-    "translations": [
-      "Facebook",
-      "WhatsApp",
-      "Instagram",
-      "TikTok"
-    ]
-  },
-  "{00015}": {
-    "tag": "<gov_health_agency>",
-    "substitutions": [
-      "Kementerian Kesihatan Malaysia",
-      "KKM"
-    ],
-    "translations": [
-      "Ministry of Health Malaysia",
-      "MOH"
-    ]
-  },
-  "{00016}": {
-    "tag": "<marketplace>",
-    "substitutions": [
-      "Shopee",
-      "Lazada",
-      "Tesco",
-      "Giant"
-    ],
-    "translations": [
-      "Shopee",
-      "Lazada",
-      "Tesco",
-      "Giant"
-    ]
-  },
-  "{00017}": {
-    "tag": "<money_amount_very_small>",
-    "substitutions": [
-      "RM10 (MYR)",
-      "RM20 (MYR)",
-      "RM30 (MYR)"
-    ],
-    "translations": [
-      "RM10",
-      "RM20",
-      "RM30"
-    ]
-  },
-  "{00018}": {
-    "tag": "<brokerage_firm>",
-    "substitutions": [
-      "Bursa Malaysia",
-      "CIMB Securities",
-      "Maybank Investment Bank"
-    ],
-    "translations": [
-      "Bursa Malaysia",
-      "CIMB Securities",
-      "Maybank Investment Bank"
-    ]
-  },
-  "{00019}": {
-    "tag": "<real_estate_company>",
-    "substitutions": [
-      "Mah Sing Group",
-      "SP Setia",
-      "Sime Darby Property"
-    ],
-    "translations": [
-      "Mah Sing Group",
-      "SP Setia",
-      "Sime Darby Property"
-    ]
-  },
-  "{00020}": {
-    "tag": "<singer_name>",
-    "substitutions": [
-      "Siti Nurhaliza",
-      "Yuna",
-      "Sudirman",
-      "P. Ramlee"
-    ],
-    "translations": [
-      "Siti Nurhaliza",
-      "Yuna",
-      "Sudirman",
-      "P. Ramlee"
-    ]
-  },
-  "{00021}": {
-    "tag": "<important_contact>",
-    "substitutions": [
-      "Encik",
-      "Puan",
-      "Datuk"
-    ],
-    "translations": [
-      "Mr.",
-      "Mrs./Ms.",
-      "Datuk (honorific title)"
-    ]
-  },
-  "{00022}": {
-    "tag": "<bank_name>",
-    "substitutions": [
-      "Maybank",
-      "CIMB Bank",
-      "Public Bank",
-      "RHB Bank",
-      "Bank Islam"
-    ],
-    "translations": [
-      "Maybank",
-      "CIMB Bank",
-      "Public Bank",
-      "RHB Bank",
-      "Bank Islam"
-    ]
-  },
-  "{00023}": {
-    "tag": "<telecom_service_provider>",
-    "substitutions": [
-      "Maxis",
-      "Celcom",
-      "Digi",
-      "U Mobile"
-    ],
-    "translations": [
-      "Maxis",
-      "Celcom",
-      "Digi",
-      "U Mobile"
-    ]
-  },
-  "{00024}": {
-    "tag": "<telecom_authority>",
-    "substitutions": [
-      "MCMC"
-    ],
-    "translations": [
-      "MCMC"
-    ]
-  },
-  "{00025}": {
-    "tag": "<cosmetic_brand>",
-    "substitutions": [
-      "Watson",
-      "Guardian",
-      "Sephora",
-      "The Body Shop"
-    ],
-    "translations": [
-      "Watson",
-      "Guardian",
-      "Sephora",
-      "The Body Shop"
-    ]
-  },
-  "{00026}": {
-    "tag": "<consumer_protection_agency>",
-    "substitutions": [
-      "Kementerian Perdagangan Dalam Negeri dan Kos Sara Hidup",
-      "Tribunal Tuntutan Pengguna"
-    ],
-    "translations": [
-      "Ministry of Domestic Trade and Cost of Living",
-      "Consumer Claims Tribunal"
-    ]
-  },
-  "{00027}": {
-    "tag": "<payment_app>",
-    "substitutions": [
-      "Touch 'n Go eWallet",
-      "GrabPay",
-      "Boost"
-    ],
-    "translations": [
-      "Touch 'n Go eWallet",
-      "GrabPay",
-      "Boost"
-    ]
-  },
-  "{00028}": {
-    "tag": "<card_network_loyalty>",
-    "substitutions": [
-      "AEON Points",
-      "BonusLink",
-      "Mesra"
-    ],
-    "translations": [
-      "AEON Points",
-      "BonusLink",
-      "Mesra"
-    ]
-  },
-  "{00029}": {
-    "tag": "<motor_vehicle_authority>",
-    "substitutions": [
-      "JPJ",
-      "Jabatan Pengangkutan Jalan"
-    ],
-    "translations": [
-      "JPJ",
-      "Road Transport Department"
-    ]
-  },
-  "{00030}": {
-    "tag": "<car_brand>",
-    "substitutions": [
-      "Proton",
-      "Perodua",
-      "Honda",
-      "Toyota",
-      "Nissan"
-    ],
-    "translations": [
-      "Proton",
-      "Perodua",
-      "Honda",
-      "Toyota",
-      "Nissan"
-    ]
-  },
-  "{00031}": {
-    "tag": "<dairy_store>",
-    "substitutions": [
-      "Farm Fresh",
-      "Dutch Lady",
-      "Nestle"
-    ],
-    "translations": [
-      "Farm Fresh",
-      "Dutch Lady",
-      "Nestle"
-    ]
-  },
-  "{00032}": {
-    "tag": "<student_loan_office>",
-    "substitutions": [
-      "PTPTN",
-      "Perbadanan Tabung Pendidikan Tinggi Nasional"
-    ],
-    "translations": [
-      "PTPTN",
-      "National Higher Education Fund Corporation"
-    ]
-  },
-  "{00033}": {
-    "tag": "<internet_service_provider>",
-    "substitutions": [
-      "TM Unifi",
-      "Maxis Fibre",
-      "TIME",
-      "Celcom Home"
-    ],
-    "translations": [
-      "TM Unifi",
-      "Maxis Fibre",
-      "TIME",
-      "Celcom Home"
-    ]
-  },
-  "{00034}": {
-    "tag": "<state_name>",
-    "substitutions": [
-      "Selangor",
-      "Kuala Lumpur",
-      "Johor",
-      "Pulau Pinang",
-      "Perak",
-      "Sabah",
-      "Sarawak"
-    ],
-    "translations": [
-      "Selangor",
-      "Kuala Lumpur",
-      "Johor",
-      "Penang",
-      "Perak",
-      "Sabah",
-      "Sarawak"
-    ]
-  },
-  "{00035}": {
-    "tag": "<region_name>",
-    "substitutions": [
-      "Lembah Klang",
-      "Pantai Timur",
-      "Pantai Barat",
-      "Malaysia Timur"
-    ],
-    "translations": [
-      "Klang Valley",
-      "East Coast",
-      "West Coast",
-      "East Malaysia"
-    ]
-  },
-  "{00036}": {
-    "tag": "<country_name>",
-    "substitutions": [
-      "Malaysia",
-      "Negara Malaysia"
-    ],
-    "translations": [
-      "Malaysia",
-      "Country of Malaysia"
-    ]
-  },
-  "{00037}": {
-    "tag": "<police>",
-    "substitutions": [
-      "Polis Diraja Malaysia",
-      "PDRM",
-      "Polis"
-    ],
-    "translations": [
-      "Royal Malaysia Police",
-      "PDRM",
-      "Police"
-    ]
-  },
-  "{00038}": {
-    "tag": "<criminal_investigation_department>",
-    "substitutions": [
-      "Jabatan Siasatan Jenayah",
-      "Bahagian Jenayah Komersial",
-      "Unit Jenayah Siber"
-    ],
-    "translations": [
-      "Criminal Investigation Department",
-      "Commercial Crime Division",
-      "Cyber Crime Unit"
-    ]
-  },
-  "{00039}": {
-    "tag": "<police_station>",
-    "substitutions": [
-      "Balai Polis Dang Wangi",
-      "Balai Polis Petaling Jaya",
-      "Balai Polis Subang Jaya"
-    ],
-    "translations": [
-      "Dang Wangi Police Station",
-      "Petaling Jaya Police Station",
-      "Subang Jaya Police Station"
-    ]
-  },
-  "{00040}": {
-    "tag": "<police_station_name>",
-    "substitutions": [
-      "Balai Polis Cheras",
-      "Balai Polis Ampang",
-      "Balai Polis Shah Alam"
-    ],
-    "translations": [
-      "Cheras Police Station",
-      "Ampang Police Station",
-      "Shah Alam Police Station"
-    ]
-  },
-  "{00041}": {
-    "tag": "<education_institution>",
-    "substitutions": [
-      "Universiti Malaya",
-      "Universiti Kebangsaan Malaysia",
-      "Universiti Putra Malaysia",
-      "Universiti Teknologi Malaysia"
-    ],
-    "translations": [
-      "University of Malaya",
-      "National University of Malaysia",
-      "Putra University Malaysia",
-      "Malaysia University of Technology"
-    ]
-  },
-  "{00042}": {
-    "tag": "<education_agency>",
-    "substitutions": [
-      "Kementerian Pendidikan Malaysia",
-      "Jabatan Pendidikan Tinggi"
-    ],
-    "translations": [
-      "Ministry of Education Malaysia",
-      "Department of Higher Education"
-    ]
-  },
-  "{00043}": {
-    "tag": "<loan_department>",
-    "substitutions": [
-      "Jabatan Pinjaman Peribadi",
-      "Bahagian Pembiayaan"
-    ],
-    "translations": [
-      "Personal Loan Department",
-      "Financing Division"
-    ]
-  },
-  "{00044}": {
-    "tag": "<telecom_tv_provider>",
-    "substitutions": [
-      "Astro",
-      "HyppTV",
-      "Njoi"
-    ],
-    "translations": [
-      "Astro",
-      "HyppTV",
-      "Njoi"
-    ]
-  },
-  "{00045}": {
-    "tag": "<telecom_tv_service>",
-    "substitutions": [
-      "Pakej TV",
-      "Perkhidmatan Siaran"
-    ],
-    "translations": [
-      "TV Package",
-      "Broadcasting Service"
-    ]
-  },
-  "{00046}": {
-    "tag": "<ISP_name>",
-    "substitutions": [
-      "TM",
-      "Maxis",
-      "Celcom",
-      "Digi"
-    ],
-    "translations": [
-      "TM",
-      "Maxis",
-      "Celcom",
-      "Digi"
-    ]
-  },
-  "{00047}": {
-    "tag": "<ecommerce_platform_name>",
-    "substitutions": [
-      "Shopee",
-      "Lazada",
-      "Zalora",
-      "PG Mall"
-    ],
-    "translations": [
-      "Shopee",
-      "Lazada",
-      "Zalora",
-      "PG Mall"
-    ]
-  },
-  "{00048}": {
-    "tag": "<product_name>",
-    "substitutions": [
-      "iPhone",
-      "Samsung Galaxy",
-      "Huawei",
-      "Xiaomi"
-    ],
-    "translations": [
-      "iPhone",
-      "Samsung Galaxy",
-      "Huawei",
-      "Xiaomi"
-    ]
-  },
-  "{00049}": {
-    "tag": "<fruit>",
-    "substitutions": [
-      "durian",
-      "mangga",
-      "rambutan",
-      "limau"
-    ],
-    "translations": [
-      "durian",
-      "mango",
-      "rambutan",
-      "orange"
-    ]
-  },
-  "{00050}": {
-    "tag": "<gov_agency_housing>",
-    "substitutions": [
-      "Kementerian Perumahan dan Kerajaan Tempatan",
-      "Lembaga Perumahan dan Hartanah Selangor"
-    ],
-    "translations": [
-      "Ministry of Housing and Local Government",
-      "Selangor Housing and Property Board"
-    ]
-  },
-  "{00051}": {
-    "tag": "<vehicle_department>",
-    "substitutions": [
-      "Jabatan Pengangkutan Jalan",
-      "JPJ"
-    ],
-    "translations": [
-      "Road Transport Department",
-      "JPJ"
-    ]
-  },
-  "{00052}": {
-    "tag": "<rigion_name>",
-    "substitutions": [
-      "Asia Tenggara",
-      "ASEAN",
-      "Rantau Asia Pasifik"
-    ],
-    "translations": [
-      "Southeast Asia",
-      "ASEAN",
-      "Asia Pacific Region"
-    ]
-  },
-  "{00053}": {
-    "tag": "<police_station>",
-    "substitutions": [
-      "Balai Polis Trafik",
-      "Balai Polis Lapangan Terbang",
-      "Balai Polis Pelabuhan"
-    ],
-    "translations": [
-      "Traffic Police Station",
-      "Airport Police Station",
-      "Port Police Station"
-    ]
-  }
-}
+[
+    {
+        "placeholder_name": "<caller_name>",
+        "description": "Localized personal name for the person making the scam call, common in the target locale.",
+        "substitutions": [
+            "Azman",
+            "Hafiz",
+            "Syafiq",
+            "Farah",
+            "Aina",
+            "Kumar",
+            "Mei Ling"
+        ]
+    },
+    {
+        "placeholder_name": "<callee_name>",
+        "description": "Localized personal name for the person receiving the scam call, common in the target locale.",
+        "substitutions": [
+            "Aisyah",
+            "Farah",
+            "Siti",
+            "Nurul",
+            "Haziq",
+            "Ahmad",
+            "Kumar"
+        ]
+    },
+    {
+        "placeholder_name": "<money_amount_small>",
+        "description": "Small amount of money relative to the target locale's purchasing power.",
+        "substitutions": [
+            "dua puluh ringgit",
+            "tiga puluh ringgit",
+            "empat puluh ringgit",
+            "lima puluh ringgit",
+            "enam puluh ringgit"
+        ]
+    },
+    {
+        "placeholder_name": "<money_amount_medium>",
+        "description": "Medium amount of money relative to the target locale's purchasing power.",
+        "substitutions": [
+            "lima ratus ringgit",
+            "tujuh ratus lima puluh ringgit",
+            "seribu ringgit",
+            "lapan ratus ringgit",
+            "sembilan ratus sembilan puluh ringgit"
+        ]
+    },
+    {
+        "placeholder_name": "<money_amount_large>",
+        "description": "Large amount of money relative to the target locale's purchasing power.",
+        "substitutions": [
+            "lima puluh ribu ringgit",
+            "seratus ribu ringgit",
+            "dua ratus lima puluh ribu ringgit",
+            "setengah juta ringgit",
+            "tujuh ratus ribu ringgit"
+        ]
+    },
+    {
+        "placeholder_name": "<national_tax_agency_name>",
+        "description": "Name of the country’s primary tax authority, which varies by country and shapes the scam’s credibility.",
+        "substitutions": [
+            "Lembaga Hasil Dalam Negeri",
+            "LHDN",
+            "Jabatan Hasil",
+            "Inland Revenue Board Malaysia"
+        ]
+    },
+    {
+        "placeholder_name": "<tax_identification_number_format>",
+        "description": "Localized label or format for the taxpayer’s unique ID used by the tax authority; different countries use different terms and structures.",
+        "substitutions": [
+            "Nombor Cukai Pendapatan",
+            "Nombor Rujukan Cukai",
+            "Nombor Pengenalan Cukai",
+            "Nombor Fail Cukai",
+            "TIN Malaysia"
+        ]
+    },
+    {
+        "placeholder_name": "<urgent_payment_method_local>",
+        "description": "Common locally available urgent payment instrument scammers demand; varies by country/region and influences the script details.",
+        "substitutions": [
+            "Touch ’n Go eWallet",
+            "GrabPay",
+            "Boost",
+            "Maybank2u",
+            "CIMB Clicks",
+            "pemindahan IBG",
+            "pemindahan DuitNow"
+        ]
+    },
+    {
+        "placeholder_name": "<housing_authority_name>",
+        "description": "Name of the public or social housing agency varies by country and locality (national, state/provincial, or municipal authorities). Using the correct local agency name increases realism.",
+        "substitutions": [
+            "Jabatan Perumahan Negara",
+            "Kementerian Perumahan dan Kerajaan Tempatan",
+            "Perbadanan PR1MA Malaysia",
+            "Syarikat Perumahan Negara Berhad",
+            "Dewan Bandaraya Kuala Lumpur",
+            "Majlis Bandaraya Shah Alam",
+            "Majlis Perbandaran Johor Bahru Tengah"
+        ]
+    },
+    {
+        "placeholder_name": "<proof_of_income_document>",
+        "description": "Accepted proof-of-income documents differ by country and program (e.g., payslip, benefits award letter, tax return form type).",
+        "substitutions": [
+            "slip gaji",
+            "penyata bank",
+            "penyata EA",
+            "borang BE",
+            "surat pengesahan gaji",
+            "penyata KWSP"
+        ]
+    },
+    {
+        "placeholder_name": "<law_enforcement_agency_name>",
+        "description": "Name of the local or national law enforcement entity the scammer impersonates; varies by country/region (e.g., police service, gendarmerie, sheriff’s office).",
+        "substitutions": [
+            "Polis Diraja Malaysia",
+            "Bukit Aman",
+            "IPD Petaling Jaya",
+            "IPK Selangor",
+            "Polis Trafik",
+            "Jabatan Siasatan Jenayah Komersil"
+        ]
+    },
+    {
+        "placeholder_name": "<case_or_warrant_reference_format>",
+        "description": "The style/format of a case or warrant reference number used by local authorities; numbering conventions differ across jurisdictions.",
+        "substitutions": [
+            "Kes JSJ-2024-34781",
+            "Nombor Rujukan SP3-118/2023",
+            "Fail Siasatan IPD-PT-09/2024",
+            "Waran Tangkapan WT-12/2024",
+            "Kes Komersil CCID-2023-7742"
+        ]
+    },
+    {
+        "placeholder_name": "<local_utility_provider_name>",
+        "description": "Utility company names are country- and city-specific (public vs. private, electricity vs. water). Scammers impersonate the locally recognized provider to sound credible.",
+        "substitutions": [
+            "TNB",
+            "Air Selangor",
+            "Indah Water",
+            "Syabas",
+            "Sada",
+            "JBA Sabah",
+            "Sesb"
+        ]
+    },
+    {
+        "placeholder_name": "<utility_account_number_format>",
+        "description": "Account number formats vary by country and provider (length, hyphens, prefix letters). Scammers cite a plausible-looking local account ID.",
+        "substitutions": [
+            "Akaun 123456789",
+            "No. Akaun 12-3456-7890",
+            "ID Pelanggan TNB 8765-4321",
+            "No. Bil Air 0012345678",
+            "Akaun Syabas 98-765432",
+            "No. Akaun Gas 730-112-458",
+            "ID Tenaga 45-6789-0123"
+        ]
+    },
+    {
+        "placeholder_name": "<caller_id_spoofed_number_format>",
+        "description": "Displayed caller ID patterns differ by country/region (area codes, short codes, toll-free prefixes). Scammers often spoof a local-looking utility number.",
+        "substitutions": [
+            "03-2788-XXXX",
+            "03-2287-XXXX",
+            "04-2270-XXXX",
+            "07-3318-XXXX",
+            "1-800-88-XXXX",
+            "1300-88-XXXX",
+            "03-8888-XXXX"
+        ]
+    },
+    {
+        "placeholder_name": "<company_finance_contact_title>",
+        "description": "Role title the scammer references to pressure urgency and secrecy; titles and their authority vary by country and company structure (e.g., CFO vs. Finance Director).",
+        "substitutions": [
+            "Pengarah Kewangan",
+            "Ketua Kewangan",
+            "Pengurus Kewangan",
+            "Akauntan Kanan",
+            "Pegawai Kewangan",
+            "Ketua Akaun"
+        ]
+    },
+    {
+        "placeholder_name": "<company_it_department_name>",
+        "description": "Name of the internal IT/helpdesk organization varies by company and region (e.g., \"IT Help Desk,\" \"Technology Services,\" \"Service Desk\"). Using a specific label makes the impersonation believable.",
+        "substitutions": [
+            "Meja Bantuan IT",
+            "Perkhidmatan Teknologi",
+            "Pusat Servis IT",
+            "Jabatan Sokongan IT",
+            "Pusat Bantuan Teknologi",
+            "Meja Servis IT"
+        ]
+    },
+    {
+        "placeholder_name": "<remote_access_tool_name>",
+        "description": "Scammers reference locally common remote-support tools; the brand/tool varies by country and workplace norms.",
+        "substitutions": [
+            "AnyDesk",
+            "TeamViewer",
+            "UltraViewer",
+            "Chrome Remote Desktop",
+            "Zoho Assist"
+        ]
+    },
+    {
+        "placeholder_name": "<multi_factor_provider_name>",
+        "description": "MFA/2FA providers differ by region and company, and naming a specific provider increases realism.",
+        "substitutions": [
+            "Duo Mobile",
+            "Google Authenticator",
+            "Microsoft Authenticator",
+            "Authy",
+            "Secure2u",
+            "Maybank TAC",
+            "CIMB Clicks SecureTAC"
+        ]
+    },
+    {
+        "placeholder_name": "<direct_deposit_portal_name>",
+        "description": "Name of the employer’s payroll/self-service system used for direct deposit management; varies by country and company (e.g., region-specific vendors and branding).",
+        "substitutions": [
+            "Maybank2u HR Portal",
+            "i-Akaun Majikan KWSP",
+            "JPA ePayslip",
+            "HRIS Synergy",
+            "SAP SuccessFactors",
+            "Workday Malaysia",
+            "Unit4 Payroll"
+        ]
+    },
+    {
+        "placeholder_name": "<bank_routing_number_format>",
+        "description": "The typical way domestic bank routing/branch numbers are referenced and formatted, which differs by country (e.g., ABA routing number in the U.S., sort code in the U.K., BSB in Australia).",
+        "substitutions": [
+            "nombor cawangan",
+            "kod cawangan",
+            "kod BSN",
+            "kod SWIFT bank",
+            "kod bank",
+            "nombor RHB",
+            "kod Maybank"
+        ]
+    },
+    {
+        "placeholder_name": "<payroll_provider_name>",
+        "description": "External payroll processor name that differs by market and company; scammers often invoke a recognizable local provider to gain credibility.",
+        "substitutions": [
+            "HR Asia Payroll",
+            "PayrollPanda",
+            "Kakitangan",
+            "AutoCount Payroll",
+            "Ramco",
+            "Sage",
+            "QuickHR"
+        ]
+    },
+    {
+        "placeholder_name": "<project_repository_platform_name>",
+        "description": "Name of the company’s code or document repository platform used for project collaboration; varies by country/industry (e.g., GitHub Enterprise, GitLab, Bitbucket, SharePoint) and dictates how access/sharing is requested.",
+        "substitutions": [
+            "GitHub Enterprise",
+            "GitLab",
+            "Bitbucket",
+            "SharePoint",
+            "Confluence",
+            "OneDrive",
+            "Google Drive"
+        ]
+    },
+    {
+        "placeholder_name": "<shared_drive_or_workspace_name>",
+        "description": "Localized name of the internal shared drive or workspace where confidential project files are stored; naming conventions differ by company/region and influence how users reference locations.",
+        "substitutions": [
+            "Drive Projek Lotus",
+            "Folder Bersama Kewangan HQ",
+            "Ruang Kerja MyProjek",
+            "SharePoint Jabatan Operasi",
+            "Pemacu Pasukan Delta",
+            "Arkib Projek Setia",
+            "Portal Dalaman Vendor MSB"
+        ]
+    },
+    {
+        "placeholder_name": "<vendor_company_name>",
+        "description": "Name of the supposed vendor/partner varies by country and industry, influencing credibility. Different regions have well-known local suppliers or service providers scammers might impersonate.",
+        "substitutions": [
+            "Tenaga Nasional",
+            "Maxis Business",
+            "TM One",
+            "CelcomDigi Enterprise",
+            "Air Selangor",
+            "Pos Laju",
+            "Shopee Xpress"
+        ]
+    },
+    {
+        "placeholder_name": "<invoice_reference_format>",
+        "description": "Invoice numbering schemes differ by country and company (prefixes, year-week, country codes). Including a realistic local format increases plausibility.",
+        "substitutions": [
+            "INV-MY-2025-00483",
+            "IN-2025-08-00127",
+            "MY-INV-25-0729",
+            "INV-KL-2025-0915",
+            "BIL-2025-07-4582",
+            "INV-MY-24-10321"
+        ]
+    },
+    {
+        "placeholder_name": "<job_title_localized>",
+        "description": "Role title varies by country/industry jargon and scam pitch (e.g., ‘remote package handler’ vs. ‘work-from-home compliance assistant’). Using a localized job title makes the offer believable in the target market.",
+        "substitutions": [
+            "Penyelaras Onboarding Jarak Jauh",
+            "Ejen Khidmat Pelanggan Dari Rumah",
+            "Pembantu Pematuhan Dalam Talian",
+            "Penyusun Data Sambilan",
+            "Penyelaras Logistik E-dagang",
+            "Ejen Pengesahan Akaun",
+            "Pegawai Sokongan Aplikasi"
+        ]
+    },
+    {
+        "placeholder_name": "<equipment_purchase_vendor_local>",
+        "description": "Scammers often name a local or nationally familiar retailer/platform where the ‘training kit’ or ‘work laptop’ must be purchased, which differs by country/region.",
+        "substitutions": [
+            "Shopee",
+            "Lazada",
+            "Harvey Norman",
+            "Senheng",
+            "Machines",
+            "All IT Hypermarket"
+        ]
+    },
+    {
+        "placeholder_name": "<bank_name_local>",
+        "description": "Name of a recognizable bank or credit issuer varies by country and even region; using a local institution increases plausibility of the scam.",
+        "substitutions": [
+            "Maybank",
+            "CIMB",
+            "Public Bank",
+            "RHB Bank",
+            "Bank Islam",
+            "Hong Leong Bank",
+            "Ambank"
+        ]
+    },
+    {
+        "placeholder_name": "<card_network_local>",
+        "description": "Payment card networks differ by market; callers may reference a locally common network to sound credible.",
+        "substitutions": [
+            "Visa",
+            "Mastercard",
+            "American Express",
+            "UnionPay",
+            "MyDebit"
+        ]
+    },
+    {
+        "placeholder_name": "<national_id_number_format>",
+        "description": "Country-specific personal identification number format the scammer may request for credit checks (e.g., national ID, SSN, Aadhaar, NIN). Format and terminology vary by country and culture.",
+        "substitutions": [
+            "nombor MyKad 12 digit",
+            "nombor kad pengenalan Malaysia 12 digit",
+            "IC 12 digit",
+            "nombor NRIC 12 digit",
+            "nombor KP 12 digit"
+        ]
+    },
+    {
+        "placeholder_name": "<investment_regulator_name>",
+        "description": "Name of the national or regional financial regulator the scammer might invoke to appear legitimate; varies by country/market.",
+        "substitutions": [
+            "Suruhanjaya Sekuriti Malaysia",
+            "Bank Negara Malaysia",
+            "Suruhanjaya Syarikat Malaysia",
+            "Bursa Malaysia"
+        ]
+    },
+    {
+        "placeholder_name": "<debt_collection_agency_name>",
+        "description": "Scammers often impersonate well-known or locally operating debt collection agencies; the recognizable agency name varies by country and region, influencing plausibility.",
+        "substitutions": [
+            "Collectius Malaysia",
+            "i-Serve Recovery",
+            "AKPK Collections",
+            "Serba Recovery Services",
+            "Prime Credit Management",
+            "MBSB Collections",
+            "PDRM Unit Siasatan Hutang"
+        ]
+    },
+    {
+        "placeholder_name": "<stock_ticker_symbol>",
+        "description": "Public-market ticker symbols vary by country and exchange conventions; using a realistic local ticker makes the pitch believable (e.g., U.S. uses short uppercase tickers on NYSE/Nasdaq).",
+        "substitutions": [
+            "MAYBANK",
+            "TENAGA",
+            "PETDAG",
+            "TOPGLOVE",
+            "GENTING",
+            "AIRASIA",
+            "HIBISCS"
+        ]
+    },
+    {
+        "placeholder_name": "<crypto_token_symbol_local>",
+        "description": "Cryptocurrency symbols and the popularity of specific tokens vary by region and exchange availability; scammers often cite locally popular tokens to sound credible.",
+        "substitutions": [
+            "BTC",
+            "ETH",
+            "USDT",
+            "BNB",
+            "XRP"
+        ]
+    },
+    {
+        "placeholder_name": "<health_insurance_provider_name>",
+        "description": "Health insurers vary widely by country/region; using the correct local insurer name makes the scam believable.",
+        "substitutions": [
+            "Prudential",
+            "AIA",
+            "Great Eastern",
+            "Etiqa",
+            "Zurich Takaful",
+            "Allianz",
+            "Takaful Malaysia"
+        ]
+    },
+    {
+        "placeholder_name": "<health_insurance_member_id_format>",
+        "description": "Member ID formats differ by insurer and country; realistic formatting helps localization.",
+        "substitutions": [
+            "ID ahli: MYH 3287645",
+            "Nombor ahli: PRS-78451239",
+            "ID keahlian: 45 77 9382",
+            "Nombor polisi: MY-HE 0098743",
+            "ID ahli: HLT 5529 7813",
+            "Nombor ahli: 7 3 6 5 9 2 1 8",
+            "ID keahlian: MHS8723451"
+        ]
+    },
+    {
+        "placeholder_name": "<health_services_provider_name>",
+        "description": "The clinic/hospital or network name differs by locale and lends credibility to the call.",
+        "substitutions": [
+            "Klinik Kesihatan Bandar Baru",
+            "Hospital Sungai Buloh",
+            "KPJ Damansara Specialist",
+            "Columbia Asia Cheras",
+            "Klinik Pakar Putra Heights",
+            "Hospital Kuala Lumpur",
+            "Klinik Rakyat Setia Alam"
+        ]
+    },
+    {
+        "placeholder_name": "<public_health_agency_name>",
+        "description": "Name of the national or regional public health authority the scammer impersonates; varies by country/region (e.g., federal ministry vs. local health department).",
+        "substitutions": [
+            "Kementerian Kesihatan Malaysia",
+            "Jabatan Kesihatan Negeri Selangor",
+            "Pejabat Kesihatan Daerah Petaling",
+            "Jabatan Kesihatan Wilayah Persekutuan Kuala Lumpur",
+            "Klinik Kesihatan Putrajaya"
+        ]
+    },
+    {
+        "placeholder_name": "<medical_record_number_format>",
+        "description": "Format/name used by healthcare providers to identify a patient’s medical record; varies by country and hospital systems in structure and terminology (e.g., MRN, NHS number, hospital number).",
+        "substitutions": [
+            "nombor rekod perubatan",
+            "nombor MRN",
+            "nombor hospital",
+            "nombor kad pesakit",
+            "nombor fail klinik"
+        ]
+    },
+    {
+        "placeholder_name": "<medical_billing_code_format>",
+        "description": "Local medical billing/claim code system referenced on invoices; varies by country (e.g., CPT/HCPCS in the U.S., ICD procedure codes elsewhere).",
+        "substitutions": [
+            "Kod CPT 99213",
+            "Kod CPT 93000",
+            "Kod ICD-10 J06.9",
+            "Kod ICD-10 E11.9",
+            "Kod HCPCS A0429"
+        ]
+    },
+    {
+        "placeholder_name": "<national_health_id_number_format>",
+        "description": "Format/name of a country-specific personal health identifier that scammers might ask for to 'verify eligibility'; varies widely by country (e.g., NHS number in the UK, RAMQ number in Quebec, Medicare number in Australia).",
+        "substitutions": [
+            "nombor MySejahtera",
+            "nombor MySJID",
+            "nombor KP untuk kesihatan",
+            "nombor MyKad untuk kesihatan",
+            "nombor ID KKM",
+            "nombor eKesihatan"
+        ]
+    },
+    {
+        "placeholder_name": "<university_or_school_name>",
+        "description": "Name of the specific higher-education institution or school, which varies by country and region and signals legitimacy in the scam context.",
+        "substitutions": [
+            "Universiti Malaya",
+            "Universiti Kebangsaan Malaysia",
+            "Universiti Putra Malaysia",
+            "Universiti Sains Malaysia",
+            "Universiti Teknologi Malaysia",
+            "UiTM Shah Alam",
+            "SMK Damansara Utama"
+        ]
+    },
+    {
+        "placeholder_name": "<student_account_number_format>",
+        "description": "Localized format/label used by institutions to identify a student’s billing or bursar account; naming and formatting conventions vary across countries and schools.",
+        "substitutions": [
+            "Nombor Akaun Pelajar UTM 2025 104382",
+            "ID Akaun Pelajar UKM 23 567890",
+            "No. Akaun Pelajar UM A24 001256",
+            "Kod Akaun Pelajar UiTM 2024 778912",
+            "ID Pelajar UNIMAS B2023 045671"
+        ]
+    },
+    {
+        "placeholder_name": "<bursar_or_student_finance_office_name>",
+        "description": "The localized name of the office handling tuition/fees (e.g., Bursar, Student Accounts, Fees Office), which differs by country and institution.",
+        "substitutions": [
+            "Pejabat Bendahari",
+            "Pejabat Kewangan Pelajar",
+            "Unit Yuran Pelajar",
+            "Kaunter Hasil Universiti",
+            "Bahagian Akaun Pelajar"
+        ]
+    },
+    {
+        "placeholder_name": "<federal_student_loan_servicer_name>",
+        "description": "Name of the national or regional student loan servicer the scammer might impersonate; varies by country (e.g., U.S. servicers like Nelnet, MOHELA, Aidvantage).",
+        "substitutions": [
+            "PTPTN",
+            "MyHelp PTPTN",
+            "UiTM Bendahari",
+            "JPA Biasiswa",
+            "MARA Education Loan"
+        ]
+    },
+    {
+        "placeholder_name": "<scholarship_fund_name>",
+        "description": "Name of the purported scholarship or foundation; scholarship names vary widely by country/region and lend local credibility to the scam.",
+        "substitutions": [
+            "Dana Biasiswa Prihatin Anak Malaysia",
+            "Yayasan Cemerlang BumiPutera",
+            "Tabung Biasiswa Harapan Negeri Selangor",
+            "Yayasan Pendidikan Amanah Nusantara",
+            "Dana Anugerah Pelajar Sabah Sarawak",
+            "Tabung Inspirasi Siswa Malaysia"
+        ]
+    },
+    {
+        "placeholder_name": "<scholarship_award_letter_reference_format>",
+        "description": "Localized reference/ID format often cited from an award or notification letter/email; formats vary by institution and country.",
+        "substitutions": [
+            "Ruj: KPT/BSH/2025/017493",
+            "No. Rujukan: JPA-PT/2025-CA/01452",
+            "Ruj. Tawaran: MARA/HEP/SL/2025-0891",
+            "Ruj: PTPTN-SKP/2025/MY-11234",
+            "No. Fail: UiTM-AR/BS/2025/00376"
+        ]
+    },
+    {
+        "placeholder_name": "<foreign_country_name>",
+        "description": "Country where the caller claims to be stranded or detained; varies by region based on common travel or diaspora ties.",
+        "substitutions": [
+            "Australia",
+            "Singapura",
+            "Thailand",
+            "Indonesia",
+            "China",
+            "United Kingdom",
+            "Arab Saudi"
+        ]
+    },
+    {
+        "placeholder_name": "<mobile_payment_service_local>",
+        "description": "Locally popular peer-to-peer payment app or wallet the scammer pressures the victim to use; varies by country and market penetration.",
+        "substitutions": [
+            "DuitNow",
+            "Touch ’n Go eWallet",
+            "GrabPay",
+            "Boost",
+            "ShopeePay",
+            "MAE",
+            "Setel"
+        ]
+    },
+    {
+        "placeholder_name": "<urgent_medical_facility_name_local>",
+        "description": "Name of a local hospital/clinic the scammer might cite during a claimed medical emergency; varies by country and city for realism.",
+        "substitutions": [
+            "Hospital Kuala Lumpur",
+            "Hospital Shah Alam",
+            "Hospital Sultanah Aminah",
+            "Hospital Seberang Jaya",
+            "Hospital Sungai Buloh",
+            "Hospital Queen Elizabeth",
+            "Hospital Putrajaya"
+        ]
+    },
+    {
+        "placeholder_name": "<prepaid_card_brand_local>",
+        "description": "Locally common prepaid card or voucher brand the scammer requests for redemption; brands differ across countries and regions.",
+        "substitutions": [
+            "Touch ’n Go eWallet PIN",
+            "Razer Gold Pin",
+            "Google Play Gift Card",
+            "Apple Gift Card",
+            "Steam Wallet Code"
+        ]
+    },
+    {
+        "placeholder_name": "<passport_authority_name_local>",
+        "description": "Authority that issues passports varies by country and signals plausibility when the scammer claims their passport was lost or held; naming the local authority helps localize the story and replacement process details.",
+        "substitutions": [
+            "Jabatan Imigresen Malaysia",
+            "Imigresen Malaysia",
+            "Pejabat Imigresen Putrajaya",
+            "Pejabat Imigresen Negeri",
+            "Pusat Sevisa Imigresen"
+        ]
+    },
+    {
+        "placeholder_name": "<bail_amount_local>",
+        "description": "Typical local currency amount requested to cover bail or release fees; bail practices and common amounts vary widely by country and jurisdiction.",
+        "substitutions": [
+            "seribu ringgit",
+            "seribu lima ratus ringgit",
+            "dua ribu ringgit",
+            "tiga ribu ringgit",
+            "lima ribu ringgit",
+            "tujuh ribu ringgit"
+        ]
+    },
+    {
+        "placeholder_name": "<ecommerce_platform_name_local>",
+        "description": "Name of a well-known online shopping platform varies by country/region; using a locally familiar brand increases plausibility of the scam context.",
+        "substitutions": [
+            "Shopee",
+            "Lazada",
+            "PG Mall",
+            "Mudah",
+            "Zalora"
+        ]
+    },
+    {
+        "placeholder_name": "<shipping_address_format_local>",
+        "description": "Residential address formats differ by country (ordering of street number, unit, city, postal code). Including a localized example ensures natural address verification prompts.",
+        "substitutions": [
+            "No 27 Jalan Merpati 3 Taman Sri Muda 40400 Shah Alam Selangor",
+            "Blok B-12-05 Kondominium Damai Jaya Jalan Damai 56000 Kuala Lumpur",
+            "No 15 Lorong Bukit Setia 2 Taman Bukit Setia 14000 Bukit Mertajam Pulau Pinang",
+            "Lot 102 Kampung Alor Lintang 22000 Jerteh Terengganu",
+            "Unit 3A-08 Residensi Sutera Jalan Sutera 81300 Skudai Johor"
+        ]
+    },
+    {
+        "placeholder_name": "<parcel_tracking_number_format>",
+        "description": "Format of shipment tracking numbers varies by carrier and country; using a localized pattern makes the delivery-scam pretext believable.",
+        "substitutions": [
+            "EF123456789MY",
+            "MY123456789CN",
+            "LZ123456789MY",
+            "CP123456789MY",
+            "JNT1234567890",
+            "SHP123456789",
+            "NJA123456789MY"
+        ]
+    },
+    {
+        "placeholder_name": "<courier_company_name_local>",
+        "description": "Name of a commonly used domestic courier or postal service varies by country/region and strongly influences realism in delivery-related scams.",
+        "substitutions": [
+            "Pos Laju",
+            "J&T Express",
+            "GD Express",
+            "City-Link Express",
+            "Ninja Van",
+            "DHL eCommerce"
+        ]
+    },
+    {
+        "placeholder_name": "<subscription_service_name_local>",
+        "description": "Name of a popular local streaming or entertainment subscription service that varies by country/region and makes the scam sound credible.",
+        "substitutions": [
+            "Astro",
+            "Tonton",
+            "iQIYI",
+            "Viu",
+            "Netflix",
+            "Disney Plus Hotstar"
+        ]
+    },
+    {
+        "placeholder_name": "<customer_account_id_format>",
+        "description": "Typical format used by local entertainment services for customer account identifiers; varies by provider/region.",
+        "substitutions": [
+            "ID Akaun MY-4821-7392",
+            "Nombor Pelanggan KL-2278-1145",
+            "ID Pengguna PG-5610-8834",
+            "No Akaun JB-9342-2107",
+            "ID Pelanggan SB-3105-6679"
+        ]
+    },
+    {
+        "placeholder_name": "<big_tech_support_brand_name_local>",
+        "description": "Name of a widely recognized local tech company whose brand scammers impersonate for tech-support scams; varies by country and market presence.",
+        "substitutions": [
+            "Microsoft",
+            "Apple",
+            "Samsung",
+            "Huawei",
+            "TM Unifi",
+            "Maxis",
+            "Digi"
+        ]
+    },
+    {
+        "placeholder_name": "<limited_time_sale_name_local>",
+        "description": "Name of a culturally recognizable sale or promo that varies by country/region (e.g., holiday events, shopping days). Helps the scam feel locally authentic.",
+        "substitutions": [
+            "Jualan Merdeka",
+            "Jualan Raya Aidilfitri",
+            "Jualan Akhir Tahun",
+            "Jualan 11.11",
+            "Jualan 12.12",
+            "Jualan Tahun Baru Cina",
+            "Jualan Gaji Hujung Bulan"
+        ]
+    },
+    {
+        "placeholder_name": "<sextortion_payment_wallet_address_format>",
+        "description": "Format of a cryptocurrency wallet address used to collect payments; varies by country/exchange preference and token network (e.g., Bitcoin vs. Ethereum vs. local-popular chains).",
+        "substitutions": [
+            "alamat Bitcoin bc1q…",
+            "alamat USDT TRC dua puluh alamat T…",
+            "alamat Ethereum 0x…",
+            "alamat Binance Smart Chain 0x…",
+            "alamat Solana bermula dengan 3…",
+            "alamat Litecoin ltc1…"
+        ]
+    },
+    {
+        "placeholder_name": "<social_platform_name_local>",
+        "description": "Locally popular social or messaging platform where threats to post or share content would be credible; varies by region and culture.",
+        "substitutions": [
+            "Facebook",
+            "Instagram",
+            "WhatsApp",
+            "Telegram",
+            "TikTok",
+            "X",
+            "WeChat"
+        ]
+    },
+    {
+        "placeholder_name": "<one_time_passcode_label_local>",
+        "description": "Name/label commonly used by services in the locale for login verification codes (e.g., OTP, verification code, security code). Terminology varies by country and platform, influencing how users recognize the request.",
+        "substitutions": [
+            "kod pengesahan",
+            "OTP",
+            "kod sekali guna",
+            "kod keselamatan",
+            "kod TAC",
+            "kod verifikasi"
+        ]
+    },
+    {
+        "placeholder_name": "<notification_channel_local>",
+        "description": "Typical channel in the locale through which services send one-time codes (e.g., SMS text, email, WhatsApp). This varies by country and carrier norms.",
+        "substitutions": [
+            "SMS",
+            "e-mel",
+            "WhatsApp",
+            "Telegram",
+            "panggilan suara automatik",
+            "aplikasi bank"
+        ]
+    },
+    {
+        "placeholder_name": "<lottery_or_sweepstakes_name_local>",
+        "description": "Name of a well-known local lottery or sweepstakes used to lend credibility varies by country/region (e.g., state lottery, national lottery, or brand-run sweepstakes).",
+        "substitutions": [
+            "Magnum 4D",
+            "Sports Toto",
+            "Damacai 1+3D",
+            "Big Sweep",
+            "Nombor Ekor",
+            "Jackpot Toto"
+        ]
+    },
+    {
+        "placeholder_name": "<charity_organization_name_local>",
+        "description": "Name of the purported local charity or well-known national nonprofit varies by country/region, affecting credibility and recognition in scam calls.",
+        "substitutions": [
+            "Yayasan Kebajikan Negara",
+            "Tabung Haji",
+            "Mercy Malaysia",
+            "Yayasan Food Bank Malaysia",
+            "Pertubuhan Bulan Sabit Merah Malaysia",
+            "MAIWP",
+            "Rumah Anak Yatim Darul Izzah"
+        ]
+    },
+    {
+        "placeholder_name": "<recent_disaster_event_local>",
+        "description": "Locally salient disaster or crisis used to solicit donations differs by geography and time, influencing urgency and plausibility.",
+        "substitutions": [
+            "banjir besar di Johor",
+            "banjir kilat di Kuala Lumpur",
+            "tanah runtuh di Batang Kali",
+            "gempa bumi di Sumatera",
+            "kemarau teruk di Kelantan",
+            "jerebu teruk di Lembah Klang"
+        ]
+    },
+    {
+        "placeholder_name": "<immigration_agency_name_local>",
+        "description": "Name of the government immigration or border agency varies by country or region and signals legitimacy in the scam context.",
+        "substitutions": [
+            "Jabatan Imigresen Malaysia",
+            "Imigresen Malaysia",
+            "Agensi Penguatkuasaan Maritim Malaysia",
+            "Jabatan Pendaftaran Negara",
+            "Kementerian Dalam Negeri"
+        ]
+    },
+    {
+        "placeholder_name": "<financial_crimes_division_name_local>",
+        "description": "Specific name used in a country for a government financial-crime or anti-fraud unit that scammers impersonate; varies by jurisdiction and agency structure.",
+        "substitutions": [
+            "Jabatan Siasatan Jenayah Komersil",
+            "Unit Siasatan Pengubahan Wang Haram",
+            "Suruhanjaya Pencegahan Rasuah Malaysia",
+            "Bahagian Pencegahan Jenayah Kewangan Bank Negara",
+            "Unit Anti-Scam Polis Diraja Malaysia"
+        ]
+    },
+    {
+        "placeholder_name": "<customs_or_border_agency_name_local>",
+        "description": "Name of the national customs/border authority that would plausibly intercept international parcels; varies by country and jurisdiction.",
+        "substitutions": [
+            "Jabatan Kastam Diraja Malaysia",
+            "Kastam Malaysia",
+            "Imigresen Malaysia",
+            "Agensi Penguatkuasaan Maritim Malaysia",
+            "Pihak Kastam KLIA"
+        ]
+    },
+    {
+        "placeholder_name": "<telecom_provider_name_local>",
+        "description": "Name of the local/mobile carrier being impersonated; varies by country and even region (e.g., national vs. regional carriers). Using a recognizable provider increases scam plausibility.",
+        "substitutions": [
+            "Maxis",
+            "Celcom",
+            "Digi",
+            "U Mobile",
+            "Unifi Mobile",
+            "Yes"
+        ]
+    },
+    {
+        "placeholder_name": "<mobile_number_format_local>",
+        "description": "Typical local mobile number structure used to reference the callee’s line; formats differ widely by country and dialing conventions.",
+        "substitutions": [
+            "017 234 5678",
+            "012 345 6789",
+            "013 889 4421",
+            "016 773 2109",
+            "011 2626 4588"
+        ]
+    },
+    {
+        "placeholder_name": "<embassy_or_consulate_name_local>",
+        "description": "Specific embassy or consulate name used by scammers; varies by country and city (e.g., the caller may claim to be from the local consulate of the callee’s nationality or residence).",
+        "substitutions": [
+            "Kedutaan Besar China di Kuala Lumpur",
+            "Konsulat Jeneral China di Penang",
+            "Kedutaan Besar Indonesia di Kuala Lumpur",
+            "Kedutaan Besar Singapura di Kuala Lumpur",
+            "Konsulat Jeneral India di Johor Bahru",
+            "Kedutaan Besar Bangladesh di Kuala Lumpur"
+        ]
+    },
+    {
+        "placeholder_name": "<product_model_name_local>",
+        "description": "Specific product name/model tied to local market releases and branding; varies by country due to different SKUs, safety standards, and naming conventions.",
+        "substitutions": [
+            "Periuk Nasi Khind Anshin 1.8L KRC180",
+            "Xiaomi Redmi Note 13 Pro 5G",
+            "Proton X50 Flagship",
+            "Samsung Galaxy A15 5G",
+            "Panasonic Econavi Inverter 1.5HP",
+            "Tefal Air Fryer Easy Fry 4.2L EY2018",
+            "Sharp Aquos 40 inci LC40LE380M"
+        ]
+    },
+    {
+        "placeholder_name": "<consumer_safety_authority_name_local>",
+        "description": "Local government or quasi-government body responsible for consumer product recalls; differs by country and sometimes by region.",
+        "substitutions": [
+            "KPDN",
+            "Kementerian Perdagangan Dalam Negeri",
+            "Suruhanjaya Syarikat Malaysia",
+            "MCMC",
+            "Kementerian Kesihatan Malaysia",
+            "Jabatan Standard Malaysia"
+        ]
+    },
+    {
+        "placeholder_name": "<compensation_amount_local>",
+        "description": "Monetary payout amount mentioned for the lost-package compensation; varies by country/currency conventions and typical carrier reimbursement policies.",
+        "substitutions": [
+            "RM80",
+            "RM120",
+            "RM150",
+            "RM200",
+            "RM250",
+            "RM300"
+        ]
+    },
+    {
+        "placeholder_name": "<payment_link_domain_pattern_local>",
+        "description": "Domain pattern used for the texted payment/verification link; varies by country-specific courier brands and common phishing lookalikes.",
+        "substitutions": [
+            "poslaju-track-my.com",
+            "jnt-malaysia-update.com",
+            "dhl-verifikasi-my.com",
+            "track-parcel-my.net",
+            "skmm-amanah.my",
+            "maybank-securepay.com"
+        ]
+    },
+    {
+        "placeholder_name": "<payment_expedite_fee_amount_local>",
+        "description": "Typical small ‘processing/expedite’ fee amount cited by scammers varies by country and currency conventions; using a locally plausible figure increases realism.",
+        "substitutions": [
+            "RM30",
+            "RM50",
+            "RM80",
+            "RM120",
+            "RM150"
+        ]
+    },
+    {
+        "placeholder_name": "<authorized_wire_transfer_service_local>",
+        "description": "Common domestic wire service or network name differs by country; callers may reference it to request immediate transfers.",
+        "substitutions": [
+            "DuitNow",
+            "FPX",
+            "IBG",
+            "Instant Transfer",
+            "MEPS",
+            "Rentas"
+        ]
+    },
+    {
+        "placeholder_name": "<pension_agency_name_local>",
+        "description": "Official name of the government pension authority varies by country/region and gives the scam localized credibility.",
+        "substitutions": [
+            "Kumpulan Wang Persaraan",
+            "Jabatan Perkhidmatan Awam",
+            "Jabatan Hal Ehwal Pencen",
+            "Bahagian Pencen Persekutuan",
+            "Kumpulan Wang Simpanan Pekerja",
+            "Perkeso"
+        ]
+    },
+    {
+        "placeholder_name": "<pension_account_number_format_local>",
+        "description": "Format/label for a government pension or benefits account differs by jurisdiction and program.",
+        "substitutions": [
+            "Nombor Akaun Pencen KWAP",
+            "Nombor Rujukan Pencen Pesara",
+            "Nombor Fail Pencen JPA",
+            "Nombor Akaun Baitulmal Warga Emas",
+            "ID Penerima Bantuan OKU",
+            "Nombor Rujukan Bantuan Sara Hidup",
+            "Nombor Akaun eKasih"
+        ]
+    },
+    {
+        "placeholder_name": "<credit_card_issuer_brand_local>",
+        "description": "Well-known credit card brand names vary by country or region (e.g., local co-brands or national issuers). Using a localized issuer name makes the scam sound plausible in that market.",
+        "substitutions": [
+            "Maybank",
+            "CIMB",
+            "RHB",
+            "Public Bank",
+            "Hong Leong Bank",
+            "Bank Islam",
+            "Ambank"
+        ]
+    },
+    {
+        "placeholder_name": "<trading_app_name_local>",
+        "description": "Name of a locally popular trading or brokerage app/website the scammer directs the victim to; varies by country and market presence.",
+        "substitutions": [
+            "Rakuten Trade",
+            "MIDF Invest",
+            "Kenanga OneTrade",
+            "Bursa Anywhere",
+            "Moomoo",
+            "Tiger Brokers"
+        ]
+    },
+    {
+        "placeholder_name": "<account_verification_fee_label_local>",
+        "description": "Localized label the scammer cites for extra charges required before withdrawals (e.g., tax, compliance, KYC, upgrade); naming conventions and terminology vary by jurisdiction.",
+        "substitutions": [
+            "yuran pengesahan akaun",
+            "yuran KYC",
+            "yuran pematuhan",
+            "yuran pengaktifan pengeluaran",
+            "yuran pengesahan identiti",
+            "caj verifikasi",
+            "yuran naik taraf akaun"
+        ]
+    },
+    {
+        "placeholder_name": "<event_name_local>",
+        "description": "Name of the high-demand concert or event varies by country and culture, reflecting locally popular artists, teams, or festivals used to build urgency and credibility.",
+        "substitutions": [
+            "Coldplay Music of the Spheres Kuala Lumpur",
+            "BLACKPINK Born Pink Kuala Lumpur",
+            "Anugerah Juara Lagu",
+            "Konsert Dato Sri Siti Nurhaliza",
+            "Harimau Malaya vs Indonesia",
+            "Good Vibes Festival",
+            "BTS Yet To Come in Busan Viewing Party Kuala Lumpur"
+        ]
+    },
+    {
+        "placeholder_name": "<venue_name_local>",
+        "description": "Well-known venue names differ by city/region and are often name-dropped to seem legitimate.",
+        "substitutions": [
+            "Menara KL",
+            "KLCC",
+            "Bukit Jalil",
+            "Dataran Merdeka",
+            "Komtar",
+            "Stadium Larkin",
+            "Gurney Plaza"
+        ]
+    },
+    {
+        "placeholder_name": "<account_support_email_domain_local>",
+        "description": "Domain used by the purported service’s support emails or links varies by country/brand and helps localize phishing URLs or sender addresses.",
+        "substitutions": [
+            "support@maybank2u.com.my",
+            "help@touchngo.com.my",
+            "care@astro.com.my",
+            "support@lazada.com.my",
+            "cs@shopee.com",
+            "support@tm.com.my",
+            "support@cimb.com.my"
+        ]
+    },
+    {
+        "placeholder_name": "<online_platform_name_local>",
+        "description": "Name of the supposedly shutting-down online subscription platform; varies by country and market presence, influencing credibility of the scam.",
+        "substitutions": [
+            "iflix",
+            "Tonton",
+            "Astro GO",
+            "Viu",
+            "Netflix",
+            "Disney Plus Hotstar"
+        ]
+    },
+    {
+        "placeholder_name": "<gift_card_retailer_chain_local>",
+        "description": "Common local retailer brand the scammer demands gift cards from; varies by country and retail landscape.",
+        "substitutions": [
+            "7-Eleven",
+            "Tesco",
+            "Giant",
+            "AEON",
+            "Watsons",
+            "Guardian"
+        ]
+    },
+    {
+        "placeholder_name": "<airline_or_travel_agency_name_local>",
+        "description": "The airline or travel agency brand varies by country/region and strongly affects realism (e.g., national carriers vs. low-cost airlines, local travel agency chains).",
+        "substitutions": [
+            "Malaysia Airlines",
+            "AirAsia",
+            "Firefly",
+            "Malindo Air",
+            "Airasia X",
+            "MASwings",
+            "Apple Vacations"
+        ]
+    },
+    {
+        "placeholder_name": "<ticket_locator_code_format_local>",
+        "description": "Airline booking reference formats differ across carriers/regions (e.g., 6-character alphanumeric PNR vs. longer agency-issued record locators).",
+        "substitutions": [
+            "ABC1D2",
+            "MK3F7Z",
+            "Q8R2LP",
+            "9X7H3C",
+            "T4V8BN"
+        ]
+    },
+    {
+        "placeholder_name": "<tv_service_provider_name_local>",
+        "description": "Localized brand name of the television or cable/satellite streaming provider the scammer impersonates; varies by country and market (e.g., Sky in the UK, Foxtel in Australia, DSTV in South Africa).",
+        "substitutions": [
+            "Astro",
+            "Unifi TV",
+            "NJOI",
+            "myFreeview",
+            "Sooka"
+        ]
+    },
+    {
+        "placeholder_name": "<service_disconnection_fee_amount_local>",
+        "description": "Locally typical fee amount quoted for late payment or technician dispatch, which varies by country, provider policies, and currency conventions.",
+        "substitutions": [
+            "RM50",
+            "RM80",
+            "RM120",
+            "RM150",
+            "RM200"
+        ]
+    },
+    {
+        "placeholder_name": "<compensation_department_title_local>",
+        "description": "Localized internal-sounding department/title name used by delivery firms for claims, which varies by company and country branding and terminology.",
+        "substitutions": [
+            "Unit Tuntutan dan Pampasan",
+            "Bahagian Pengurusan Pampasan",
+            "Pasukan Resolusi Tuntutan",
+            "Jabatan Khidmat Pampasan",
+            "Pusat Sokongan Tuntutan",
+            "Unit Penyelesaian Pampasan"
+        ]
+    },
+    {
+        "placeholder_name": "<verification_payment_amount_local>",
+        "description": "Small, locally plausible amount the caller requests for a ‘verification’ or ‘processing’ charge; amounts and currency formatting vary by locale.",
+        "substitutions": [
+            "RM1.50",
+            "RM2",
+            "RM3",
+            "RM4.90",
+            "RM5",
+            "RM6.80"
+        ]
+    },
+    {
+        "placeholder_name": "<policy_number_format_local>",
+        "description": "Health insurance policy/plan number formats vary by country and insurer; using a localized format makes the scam sound authentic in different regions.",
+        "substitutions": [
+            "Polisi No. MY-HEALTH-284731",
+            "No. Polisi PRU-MED-45291876",
+            "Nombor Polisi AIA-HP-0093742",
+            "No. Polisi ETIQA-MC-5638214",
+            "Polisi No. MANULIFE-MED-2210479"
+        ]
+    },
+    {
+        "placeholder_name": "<course_or_teacher_reference_local>",
+        "description": "A locally familiar course name or teacher/professor that varies by country and institution, used to establish credibility (e.g., course naming conventions, honorifics).",
+        "substitutions": [
+            "Kursus Kenegaraan UPM",
+            "Asas Perakaunan UiTM",
+            "Dr Farah dari UKM",
+            "Pensyarah Razak UM",
+            "Kelas Statistik UTM",
+            "Profesor Lim USM"
+        ]
+    },
+    {
+        "placeholder_name": "<urgent_payment_instrument_local>",
+        "description": "A country- or region-specific instant payment instrument or gift card/crypto route commonly exploited in scams; differs by locale in brand and terminology.",
+        "substitutions": [
+            "Touch ’n Go eWallet",
+            "DuitNow",
+            "GrabPay",
+            "BigPay",
+            "ShopeePay",
+            "Boost",
+            "Bitcoin"
+        ]
+    },
+    {
+        "placeholder_name": "<student_full_name_format_local>",
+        "description": "Full student name format and common naming conventions vary by country (order, middle initials, patronymics). Needed so the caller can reference the child/student naturally in a school context.",
+        "substitutions": [
+            "Aisyah binti Ahmad",
+            "Muhammad Danish bin Razak",
+            "Nurul Iman binti Zulkifli",
+            "Hakim bin Salleh",
+            "Siti Nabila binti Ismail",
+            "Arif bin Rahman"
+        ]
+    },
+    {
+        "placeholder_name": "<rental_deposit_label_local>",
+        "description": "Localized term for the upfront rental payment being demanded (e.g., holding deposit, security deposit, first month’s rent) varies by country and region in naming and legal meaning.",
+        "substitutions": [
+            "deposit booking",
+            "deposit keselamatan",
+            "sewa bulan pertama",
+            "deposit kunci",
+            "deposit utiliti",
+            "deposit pendahuluan"
+        ]
+    },
+    {
+        "placeholder_name": "<lease_agreement_document_title_local>",
+        "description": "Localized title of the standard residential lease or tenancy agreement used to make forged documents appear legitimate; naming conventions differ by jurisdiction.",
+        "substitutions": [
+            "Perjanjian Sewa Rumah",
+            "Perjanjian Sewaan Kediaman",
+            "Perjanjian Penyewaan Kediaman",
+            "Perjanjian Tenansi Kediaman",
+            "Perjanjian Sewa-Menyewa Rumah"
+        ]
+    },
+    {
+        "placeholder_name": "<relative_relationship_term_local>",
+        "description": "Kinship term the caller uses for the supposed victim; varies by language and culture (e.g., cousin vs. mate’s kid vs. auntie) and affects believability.",
+        "substitutions": [
+            "anak",
+            "abang",
+            "kakak",
+            "adik",
+            "makcik",
+            "pakcik",
+            "sepupu"
+        ]
+    },
+    {
+        "placeholder_name": "<emergency_contact_prohibition_phrase_local>",
+        "description": "Localized phrasing the scammer uses to deter contacting others or police; wording and references to law enforcement vary by country/region.",
+        "substitutions": [
+            "Jangan letak telefon dulu, jangan hubungi sesiapa",
+            "Jangan call polis, terus cakap dengan saya sekarang",
+            "Jangan beritahu sesiapa, ini rahsia antara kita",
+            "Jangan hubungi keluarga atau kawan, ikut arahan saya",
+            "Jangan putuskan talian, jangan buat laporan",
+            "Jangan cuba call 999, nanti keadaan jadi lebih teruk",
+            "Jangan mesej sesiapa, tunggu arahan saya seterusnya"
+        ]
+    }
+]

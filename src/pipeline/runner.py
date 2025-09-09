@@ -20,7 +20,6 @@ warnings.filterwarnings("ignore", message=".*Event loop is closed.*")
 logging.getLogger("asyncio").setLevel(logging.CRITICAL)
 
 # Import modules (to be implemented)
-from preprocessing.tag_extractor import TagExtractor
 from translation.translator import TranslatorFactory
 from conversation.scam_generator import ScamGenerator
 from conversation.legit_generator import LegitGenerator
@@ -40,8 +39,6 @@ class PipelineRunner:
     
     # Define pipeline steps and their execution order
     PIPELINE_STEPS = {
-        'preprocess': 'run_preprocessing',
-        'translate': 'run_translation',
         'conversation': 'run_conversation_generation',
         'translate_final': 'run_final_translation',
         'legit': 'run_legit_generation',
@@ -116,7 +113,7 @@ class PipelineRunner:
         
         # Check if token tracking is enabled for conversation or translation steps
         conversation_steps = {'conversation', 'legit'}
-        translation_steps = {'translate', 'translate_final'}
+        translation_steps = {'translate_final'}
         has_conversation_steps = bool(conversation_steps.intersection(set(self.steps)))
         has_translation_steps = bool(translation_steps.intersection(set(self.steps)))
         
@@ -133,7 +130,7 @@ class PipelineRunner:
             
             try:
                 # Conversation, legit generation, translation, and TTS are async methods
-                if step in ['conversation', 'legit', 'tts', 'translate', 'translate_final']:
+                if step in ['conversation', 'legit', 'tts', 'translate_final']:
                     # Use asyncio.run with debug=False to suppress warnings
                     loop = asyncio.new_event_loop()
                     asyncio.set_event_loop(loop)
@@ -157,78 +154,6 @@ class PipelineRunner:
         # Print token usage summary if any token tracking was enabled
         if track_any_tokens and (self.scam_token_tracker or self.legit_token_tracker or self.translation_token_trackers):
             self._print_combined_token_summary()
-    
-    def run_preprocessing(self):
-        """Run preprocessing step: extract tags and create mappings."""
-        if self.config.verbose:
-            logger.info("Running preprocessing")
-        
-        extractor = TagExtractor(self.config)
-        extractor.extract_tags()
-    
-    async def run_translation(self):
-        """Run initial translation: Chinese to English."""
-        # Check if translation cache is enabled
-        use_cache = getattr(self.config, 'use_translation_cache', False)
-        cache_service = getattr(self.config, 'translation_cache_service', 'google')
-        force_refresh = getattr(self.config, 'force_translation_refresh', False)
-        
-        
-        if use_cache and not force_refresh:
-            # Try to use cached translation
-            from translation.cache_translator import CacheTranslator
-            
-            logger.info(f"Checking for cached Chinese to English translation from {cache_service}")
-            
-            # Check if cache exists and is valid
-            # For Qwen, get the model from config
-            cache_model = None
-            if cache_service == "qwen":
-                cache_model = getattr(self.config, 'qwen_model', 'qwen-mt-turbo')
-            
-            translator = CacheTranslator(self.config, cache_service, cache_model)
-            cached_path = translator.get_cached_translation_path()
-            
-            if cached_path:
-                # Update config paths to point to cached file instead of copying/linking
-                self.config.translation_output_path = cached_path
-                self.config.multi_turn_input_path = cached_path
-                
-                if cache_model:
-                    logger.info(f"Using cached translation from {cache_service} (model: {cache_model})")
-                else:
-                    logger.info(f"Using cached translation from {cache_service}")
-                logger.info(f"Cache file: {cached_path}")
-                # Skip actual translation - config now points to cached file
-                return
-            else:
-                logger.warning(f"No valid cache found for {cache_service}, running fresh translation")
-        
-        # Build service info string
-        service_info = f"service: {self.config.translation_service}"
-        if self.config.translation_service == "qwen":
-            service_info += f" (model: {getattr(self.config, 'qwen_model', 'qwen-mt-turbo')})"
-        
-        logger.info(f"Running Chinese to English translation using {service_info}")
-        
-        translator = TranslatorFactory.create(
-            self.config.translation_service,
-            self.config
-        )
-        await translator.translate_file(
-            input_path=self.config.translation_input_path,
-            output_path=self.config.translation_output_path,
-            from_code=self.config.translation_from_code,
-            to_code=self.config.translation_intermediate_code,
-            max_lines=self.config.max_lines
-        )
-        
-        # Capture token tracker if available
-        if hasattr(translator, 'token_tracker') and translator.token_tracker:
-            self.translation_token_trackers.append((
-                'Chinese to English Translation',
-                translator.token_tracker
-            ))
     
     async def run_conversation_generation(self):
         """Run conversation generation: create multi-turn scam dialogues."""

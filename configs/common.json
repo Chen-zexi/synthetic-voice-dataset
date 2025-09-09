@@ -28,6 +28,7 @@
     "track_tokens": true
   },
   "multi_turn": {
+    "input_file": "deduplicated_seeds_no_email.json",
     "english_output": "scam_conversation_english.json",
     "max_conversation": 25
   },

@@ -15,7 +15,6 @@ from tqdm import tqdm
 from config.config_loader import Config
 from translation.language_codes import get_language_code
 from utils.logging_utils import ConditionalLogger
-from utils.placeholder_reconciler import PlaceholderReconciler
 
 
 logger = logging.getLogger(__name__)

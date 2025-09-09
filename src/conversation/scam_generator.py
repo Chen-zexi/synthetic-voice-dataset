@@ -63,6 +63,124 @@ class ScamGenerator:
             **llm_params
         )
         self.llm = llm_instance.get_llm()
+        
+        # Load placeholder mappings for the current locale
+        self.placeholder_mappings = self._load_placeholder_mappings()
+        self.clogger.info(f"Loaded {len(self.placeholder_mappings)} placeholder mappings for locale {config.language}")
+    
+    def _load_placeholder_mappings(self) -> Dict[str, Dict]:
+        """
+        Load placeholder mappings for the current locale.
+        
+        Returns:
+            Dictionary mapping placeholder names to their descriptions and substitutions
+        """
+        # Build path to placeholders.json for the current locale
+        locale_id = self.config.language  # e.g., "ms-my", "ar-sa"
+        placeholders_path = self.config.config_dir / "localizations" / locale_id / "placeholders.json"
+        
+        if not placeholders_path.exists():
+            self.clogger.warning(f"No placeholder mappings found at {placeholders_path}")
+            return {}
+        
+        try:
+            with open(placeholders_path, 'r', encoding='utf-8') as f:
+                placeholder_data = json.load(f)
+            
+            # Convert to dictionary for easy lookup
+            mappings = {}
+            for item in placeholder_data:
+                placeholder_name = item.get('placeholder_name')
+                if placeholder_name:
+                    mappings[placeholder_name] = {
+                        'description': item.get('description', ''),
+                        'substitutions': item.get('substitutions', [])
+                    }
+            
+            return mappings
+            
+        except Exception as e:
+            self.clogger.error(f"Error loading placeholder mappings: {e}")
+            return {}
+    
+    def _build_placeholder_context(self, placeholders: List[str]) -> str:
+        """
+        Build placeholder context string for the prompt.
+        
+        Args:
+            placeholders: List of placeholder names used in the seed
+            
+        Returns:
+            Formatted context string for the prompt
+        """
+        if not self.placeholder_mappings:
+            return ""
+        
+        # If no specific placeholders provided, use ALL available placeholders
+        if not placeholders:
+            placeholders = list(self.placeholder_mappings.keys())
+            use_all = True
+        else:
+            use_all = False
+        
+        context_parts = []
+        for placeholder_name in placeholders:
+            if placeholder_name in self.placeholder_mappings:
+                mapping = self.placeholder_mappings[placeholder_name]
+                substitutions = mapping.get('substitutions', [])
+                if substitutions:
+                    # Provide all available substitutions for LLM to choose from
+                    context_parts.append(
+                        f"- When you see {placeholder_name} in the scenario, select and use one of these localized values:\n"
+                        f"  Options: {', '.join(substitutions)}\n"
+                        f"  ({mapping.get('description', 'No description')})"
+                    )
+        
+        if context_parts:
+            if use_all:
+                return (
+                    "\n**LOCALIZED VALUES FOR CONVERSATION**:\n"
+                    "The scenario may reference various placeholders. For any that appear, "
+                    "select and use appropriate values from these options:\n\n" +
+                    "\n".join(context_parts) + "\n\n"
+                    "IMPORTANT: Use the actual localized values directly in the dialogue, "
+                    "not the placeholder tags. Choose contextually appropriate options."
+                )
+            else:
+                return (
+                    "\n**LOCALIZED VALUES FOR CONVERSATION**:\n"
+                    "The scenario contains placeholders that need to be replaced with localized values. "
+                    "For each placeholder mentioned:\n\n" +
+                    "\n".join(context_parts) + "\n\n"
+                    "IMPORTANT: Replace each placeholder with an actual value from the options provided. "
+                    "Use these localized values directly in the dialogue text."
+                )
+        return ""
+    
+    def _select_placeholder_substitutions(self, placeholders: List[str]) -> Dict[str, str]:
+        """
+        Select specific substitutions for each placeholder in this conversation.
+        
+        Args:
+            placeholders: List of placeholder names
+            
+        Returns:
+            Dictionary mapping placeholder names to selected substitutions
+        """
+        substitutions = {}
+        
+        # If no specific placeholders provided, don't pre-select any substitutions
+        # The LLM will choose which placeholders to use from the full list
+        if not placeholders:
+            return substitutions
+            
+        for placeholder_name in placeholders:
+            if placeholder_name in self.placeholder_mappings:
+                mapping = self.placeholder_mappings[placeholder_name]
+                available_substitutions = mapping.get('substitutions', [])
+                if available_substitutions:
+                    substitutions[placeholder_name] = random.choice(available_substitutions)
+        return substitutions
     
     async def generate_conversations(self) -> List[Dict]:
         """
@@ -73,19 +191,35 @@ class ScamGenerator:
         """
         self.clogger.info(f"Generating scam conversations from {self.config.multi_turn_input_path}", force=True)
         
-        # Load first turns
+        # Load seed data from JSON
         with open(self.config.multi_turn_input_path, 'r', encoding='utf-8') as f:
-            first_turns = [line.strip() for line in f if line.strip()]
+            seed_data = json.load(f)
         
-        self.clogger.info(f"Loaded {len(first_turns)} first turns")
+        self.clogger.info(f"Loaded {len(seed_data)} scam scenarios")
         
-        # Prepare tasks
+        # Prepare tasks with seed data
         tasks = []
-        for idx, first_turn in enumerate(first_turns[:self.config.sample_limit]):
+        for idx, entry in enumerate(seed_data[:self.config.sample_limit]):
             if idx >= self.config.max_conversation:
                 break
             
-            task = self._generate_single_conversation(idx + 1, first_turn)
+            # Extract relevant fields from seed entry with new field names
+            seed_id = entry.get('seed_id', f'seed_{idx:03d}')
+            seed_text = entry.get('conversation_seed', '')
+            scam_tag = entry.get('scam_tag', 'Unknown')
+            scam_category = entry.get('scam_category', 'Unknown')
+            summary = entry.get('scam_summary', '')
+            placeholders = entry.get('placeholders', [])
+            
+            task = self._generate_single_conversation(
+                conversation_id=idx + 1,
+                seed_id=seed_id,
+                seed_text=seed_text,
+                scam_tag=scam_tag,
+                scam_category=scam_category,
+                summary=summary,
+                placeholders=placeholders
+            )
             tasks.append(task)
         
         # Run tasks concurrently with progress bar
@@ -132,13 +266,21 @@ class ScamGenerator:
         self.clogger.info(f"Generated {len(all_conversations)} conversations", force=True)
         return all_conversations
     
-    async def _generate_single_conversation(self, conversation_id: int, first_turn: str) -> Optional[Dict]:
+    async def _generate_single_conversation(self, conversation_id: int, seed_id: str,
+                                           seed_text: str, scam_tag: str, 
+                                           scam_category: str, summary: str, 
+                                           placeholders: List[str]) -> Optional[Dict]:
         """
         Generate a single conversation asynchronously.
         
         Args:
             conversation_id: Unique conversation ID
-            first_turn: Opening line of the scam
+            seed_id: Unique identifier for the seed (e.g., "seed001")
+            seed_text: Full seed description of the scam scenario
+            scam_tag: Tag/type of scam (e.g., "government", "romance")
+            scam_category: Category of scam (e.g., "government_legal")
+            summary: Brief summary of the scam
+            placeholders: List of placeholder tags for localization
             
         Returns:
             Conversation dictionary or None if generation failed
@@ -150,18 +292,27 @@ class ScamGenerator:
         )
         victim_awareness = random.choice(self.config.victim_awareness_levels)
         
-        # Generate dialogue
-        dialogue = await self._generate_dialogue(first_turn, num_turns, victim_awareness)
+        # Select specific substitutions for this conversation
+        selected_substitutions = self._select_placeholder_substitutions(placeholders)
+        
+        # Generate dialogue using the seed text with placeholder context
+        dialogue = await self._generate_dialogue(seed_text, num_turns, victim_awareness, scam_tag, placeholders)
         
         if dialogue:
             # Check if dialogue is a dict with voice_mapping (from LLM response)
             if isinstance(dialogue, dict) and 'dialogue' in dialogue:
                 conversation = {
                     "conversation_id": conversation_id,
-                    "first_turn": first_turn,
+                    "seed_id": seed_id,
+                    "scam_tag": scam_tag,
+                    "scam_category": scam_category,
+                    "summary": summary,
+                    "seed": seed_text,
                     "num_turns": num_turns,
                     "victim_awareness": victim_awareness,
-                    "dialogue": dialogue['dialogue']
+                    "dialogue": dialogue['dialogue'],
+                    "placeholders": placeholders,
+                    "placeholder_substitutions": selected_substitutions
                 }
                 # Add voice mapping if provided by LLM
                 if 'voice_mapping' in dialogue:
@@ -171,31 +322,40 @@ class ScamGenerator:
                 # Legacy format - just dialogue list
                 conversation = {
                     "conversation_id": conversation_id,
-                    "first_turn": first_turn,
+                    "seed_id": seed_id,
+                    "scam_tag": scam_tag,
+                    "scam_category": scam_category,
+                    "summary": summary,
+                    "seed": seed_text,
                     "num_turns": num_turns,
                     "victim_awareness": victim_awareness,
-                    "dialogue": dialogue
+                    "dialogue": dialogue,
+                    "placeholders": placeholders,
+                    "placeholder_substitutions": selected_substitutions
                 }
             
             return conversation
         
         return None
     
-    async def _generate_dialogue(self, first_turn: str, num_turns: int, 
-                                victim_awareness: str) -> Optional[List[Dict]]:
+    async def _generate_dialogue(self, seed_text: str, num_turns: int, 
+                                victim_awareness: str, scam_type: str = None, 
+                                placeholders: List[str] = None) -> Optional[List[Dict]]:
         """
         Generate dialogue turns asynchronously using LLM.
         
         Args:
-            first_turn: Opening line
+            seed_text: Full seed description of the scam scenario
             num_turns: Number of turns to generate
             victim_awareness: Victim's awareness level
+            scam_type: Category of scam for additional context
+            placeholders: List of placeholder names to use
             
         Returns:
             List of dialogue turns or None if generation failed
         """
         system_prompt = self._create_system_prompt()
-        user_prompt = self._create_user_prompt(first_turn, num_turns, victim_awareness)
+        user_prompt = self._create_user_prompt(seed_text, num_turns, victim_awareness, scam_type, placeholders)
         
         try:
             # Check if we should track tokens
@@ -208,11 +368,11 @@ class ScamGenerator:
                     return_token_usage=True
                 )
                 # Track the token usage
-                # Use first_turn as identifier since we don't have conversation_id here
+                # Use seed_text snippet as identifier
                 self.token_tracker.add_usage(
                     token_info,
                     self.llm_model,
-                    f"scam_dialogue_{first_turn[:20]}"
+                    f"scam_dialogue_{seed_text[:20] if seed_text else 'unknown'}"
                 )
             else:
                 response = await make_api_call(
@@ -296,13 +456,24 @@ Based on the conversation context, select appropriate voices and include in your
     
     def _create_system_prompt(self) -> str:
         """Create the system prompt for conversation generation."""
-        return """You are a dialogue generator for creating realistic phone conversations.
+        return """You are a multilingual dialogue generator for creating realistic phone conversations.
+You can generate natural conversations in multiple languages including English, Malay, Arabic, Japanese, Korean, Chinese, Vietnamese, Thai, and others.
 Your task is to generate structured dialogues with alternating turns between caller and callee.
-Follow all formatting requirements exactly and preserve any special codes in the input.
+
+KEY CAPABILITIES:
+1. Generate conversations directly in the target language specified
+2. Use provided localized values (names, organizations, amounts) naturally in the dialogue
+3. Create culturally appropriate dialogue patterns for the target language
+4. Maintain natural conversation flow in the target language
 
 IMPORTANT: Each dialogue turn must have exactly these fields:
-- text: The actual dialogue text
+- text: The actual dialogue text (in the target language)
 - role: Either "caller" or "callee"
+
+When localized placeholder values are provided:
+1. Select appropriate values from the options given
+2. Use the actual values directly in the dialogue, not placeholder tags
+3. Ensure the values fit naturally within the target language sentences
 
 When voice profiles are provided:
 1. Consider the gender and age implications from the conversation context
@@ -310,15 +481,18 @@ When voice profiles are provided:
 3. Ensure realistic voice assignments based on the scenario
 4. Output voice_mapping with selected voice names (use just the name, not the full description)"""
 
-    def _create_user_prompt(self, first_turn: str, num_turns: int, 
-                           victim_awareness: str) -> str:
+    def _create_user_prompt(self, seed_text: str, num_turns: int, 
+                           victim_awareness: str, scam_type: str = None, 
+                           placeholders: List[str] = None) -> str:
         """
         Create the user prompt for conversation generation.
         
         Args:
-            first_turn: Opening line
+            seed_text: Full seed description of the scam scenario
             num_turns: Number of turns
             victim_awareness: Victim's awareness level
+            scam_type: Category of scam for additional context
+            placeholders: List of placeholder names to use
             
         Returns:
             Formatted prompt
@@ -326,24 +500,48 @@ When voice profiles are provided:
         # Get voice profile information if available
         voice_info = self._format_voice_profiles_for_prompt()
         
-        prompt = f"""Continue the scam phone call dialogue between the caller (scammer) and callee (victim). The victim is {victim_awareness} aware of the scam.
+        # Include scam type in the prompt if available
+        type_context = f"This is a {scam_type} scam.\n" if scam_type else ""
+        
+        # Build placeholder context if placeholders are provided
+        placeholder_context = self._build_placeholder_context(placeholders) if placeholders else ""
+        
+        # Determine target language for generation
+        target_language = getattr(self.config, 'language_name', 'English')
+        target_region = getattr(self.config, 'region', '')
+        
+        # Create language instruction
+        if target_language.lower() != 'english':
+            language_instruction = f"""
+**LANGUAGE REQUIREMENT**:
+Generate the entire conversation in {target_language}{f' as spoken in {target_region}' if target_region else ''}. 
+Use natural, colloquial {target_language} expressions and dialogue patterns.
+When using the localized values provided, incorporate them naturally into {target_language} sentences.
+"""
+        else:
+            language_instruction = ""
+        
+        prompt = f"""Generate a realistic scam phone call dialogue based on the following scenario:
+
+{type_context}
+**SCENARIO**:
+{seed_text}
+{placeholder_context}{language_instruction}
+**DIALOGUE REQUIREMENTS**:
+- Create a conversation between the caller (scammer) and callee (victim)
+- The victim is {victim_awareness} aware that this might be a scam
+- The total number of turns must be exactly {num_turns} individual turns (lines), alternating between caller and callee
+- The first turn should be the scammer's opening line based on the scenario
+- Make the dialogue natural and realistic based on the scenario description
+- When placeholders appear in the scenario, replace them with appropriate values from the localized options provided
+- Generate all dialogue text in {target_language}
 
 {voice_info}
 
-The total number of turns must be exactly {num_turns} individual turns (i.e., lines), alternating between caller and callee.
-
-**STRICT RULE - FIRST SENTENCE**:  
-The conversation **must begin** with a **shortened version** of the first sentence below.  
-This means using fewer words while preserving the original intent and **keeping all special codes unchanged and in the same position**.
-First sentence to shorten and use as Turn 1: "{first_turn}"
-
-**STRICT RULE - SPECIAL CODE**: 
-Special codes (e.g., {{00001}}, {{00002}}, etc.) represent fixed values (e.g., names, organizations, or amounts).
-If the first sentence includes special codes, you **must reuse** the exact same codes from the first sentence throughout the dialogue - but only in the same types of places where they were originally used, and they must appear in those places. 
-If the first sentence does not include special codes, that's okay. Do **not** use any codes in this case.
-Do **not** invent or introduce any new codes under any circumstances.
-
-Shorter sentences are preferred.
+**IMPORTANT RULES**: 
+1. Use the actual localized values from the options provided, not placeholder tags
+2. Generate the conversation directly in {target_language}
+3. Keep sentences short and natural for phone conversations
 
 Generate exactly {num_turns} dialogue turns, starting with "caller" role.
 

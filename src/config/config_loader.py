@@ -48,16 +48,8 @@ class Config:
     sample_limit: int
     victim_awareness_levels: list
     
-    # Preprocessing settings
-    preprocessing_input_file: str
-    preprocessing_input_path: Path
-    preprocessing_output_path: Path
-    preprocessing_map_path: Path
-    
     # Translation settings
     translation_english_output: str
-    translation_input_path: Path
-    translation_output_path: Path
     
     # Multi-turn paths
     multi_turn_input_path: Path
@@ -143,12 +135,6 @@ class Config:
     llm_use_response_api: bool = False
     llm_track_tokens: bool = False
     
-    # Translation cache settings
-    use_translation_cache: bool = False
-    translation_cache_enabled: bool = True
-    translation_cache_dir: str = "data/translation_cache"
-    translation_cache_service: str = "google"
-    force_translation_refresh: bool = False
     
     # Translation token tracking
     translation_track_tokens: bool = False
@@ -291,13 +277,9 @@ class ConfigLoader:
         audio_dir = lang_output_dir / "audio"
         final_dir = lang_output_dir / "final"
         
-        # Preprocessing paths
-        preprocessing_input = self.base_dir / "data" / "input" / self.common_config["preprocessing"]["input_file"]
-        preprocessing_output = intermediate_dir / "preprocessed" / (preprocessing_input.stem + self.common_config["preprocessing"]["mapped_suffix"])
-        preprocessing_map = self.base_dir / "data" / "input" / "placeholder_maps" / lang_config["placeholder_map"]
-        
-        # Translation paths
-        translation_output = intermediate_dir / "translated" / self.common_config["translation"]["english_output"]
+        # Get input file from config
+        input_filename = self.common_config.get("multi_turn", {}).get("input_file", "seeds_and_placeholders.json")
+        scam_seeds_input = self.base_dir / "data" / "input" / input_filename
         
         # Multi-turn paths
         multi_turn_output = intermediate_dir / "conversations" / self.common_config["multi_turn"]["english_output"]
@@ -349,19 +331,11 @@ class ConfigLoader:
             sample_limit=self.common_config["followup_turns"]["sample_limit"],
             victim_awareness_levels=self.common_config["followup_turns"]["victim_awareness_levels"],
             
-            # Preprocessing settings
-            preprocessing_input_file=self.common_config["preprocessing"]["input_file"],
-            preprocessing_input_path=preprocessing_input,
-            preprocessing_output_path=preprocessing_output,
-            preprocessing_map_path=preprocessing_map,
-            
             # Translation settings
             translation_english_output=self.common_config["translation"]["english_output"],
-            translation_input_path=preprocessing_output,
-            translation_output_path=translation_output,
             
             # Multi-turn paths
-            multi_turn_input_path=translation_output,
+            multi_turn_input_path=scam_seeds_input,
             multi_turn_output_path=multi_turn_output,
             max_conversation=self.common_config["multi_turn"]["max_conversation"],
             
@@ -412,12 +386,6 @@ class ConfigLoader:
             default_emotion_scam=self.common_config["voice_generation"]["v3_features"]["default_emotion_scam"],
             default_emotion_legit=self.common_config["voice_generation"]["v3_features"]["default_emotion_legit"],
             
-            # Translation cache configuration
-            use_translation_cache=self.common_config.get("translation_cache", {}).get("use_cache", False),
-            translation_cache_enabled=self.common_config.get("translation_cache", {}).get("enabled", True),
-            translation_cache_dir=self.common_config.get("translation_cache", {}).get("cache_dir", "data/translation_cache"),
-            translation_cache_service=self.common_config.get("translation_cache", {}).get("cache_service", "google"),
-            force_translation_refresh=self.common_config.get("translation_cache", {}).get("force_refresh", False),
             
             # Translation token tracking
             translation_track_tokens=self.common_config.get("translation", {}).get("track_tokens", False),
@@ -509,12 +477,9 @@ class ConfigLoader:
         audio_dir = locale_output_dir / "audio"
         final_dir = locale_output_dir / "final"
         
-        # Preprocessing paths
-        preprocessing_input = self.base_dir / "data" / "input" / self.common_config["preprocessing"]["input_file"]
-        preprocessing_output = intermediate_dir / "preprocessed" / (preprocessing_input.stem + self.common_config["preprocessing"]["mapped_suffix"])
-        
-        # Translation paths
-        translation_output = intermediate_dir / "translated" / self.common_config["translation"]["english_output"]
+        # Get input file from config
+        input_filename = self.common_config.get("multi_turn", {}).get("input_file", "seeds_and_placeholders.json")
+        scam_seeds_input = self.base_dir / "data" / "input" / input_filename
         
         # Multi-turn paths
         multi_turn_output = intermediate_dir / "conversations" / self.common_config["multi_turn"]["english_output"]
@@ -566,19 +531,11 @@ class ConfigLoader:
             sample_limit=self.common_config["followup_turns"]["sample_limit"],
             victim_awareness_levels=self.common_config["followup_turns"]["victim_awareness_levels"],
             
-            # Preprocessing settings
-            preprocessing_input_file=self.common_config["preprocessing"]["input_file"],
-            preprocessing_input_path=preprocessing_input,
-            preprocessing_output_path=preprocessing_output,
-            preprocessing_map_path=placeholders_path,  # Use co-located placeholders
-            
             # Translation settings
             translation_english_output=self.common_config["translation"]["english_output"],
-            translation_input_path=preprocessing_output,
-            translation_output_path=translation_output,
             
             # Multi-turn paths
-            multi_turn_input_path=translation_output,
+            multi_turn_input_path=scam_seeds_input,
             multi_turn_output_path=multi_turn_output,
             max_conversation=self.common_config["multi_turn"]["max_conversation"],
             
@@ -629,12 +586,6 @@ class ConfigLoader:
             default_emotion_scam=self.common_config["voice_generation"]["v3_features"]["default_emotion_scam"],
             default_emotion_legit=self.common_config["voice_generation"]["v3_features"]["default_emotion_legit"],
             
-            # Translation cache configuration
-            use_translation_cache=self.common_config.get("translation_cache", {}).get("use_cache", False),
-            translation_cache_enabled=self.common_config.get("translation_cache", {}).get("enabled", True),
-            translation_cache_dir=self.common_config.get("translation_cache", {}).get("cache_dir", "data/translation_cache"),
-            translation_cache_service=self.common_config.get("translation_cache", {}).get("cache_service", "google"),
-            force_translation_refresh=self.common_config.get("translation_cache", {}).get("force_refresh", False),
             
             # Translation token tracking
             translation_track_tokens=self.common_config.get("translation", {}).get("track_tokens", False),

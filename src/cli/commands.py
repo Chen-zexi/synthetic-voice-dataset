@@ -14,7 +14,6 @@ from pipeline.runner import PipelineRunner
 from tts.voice_validator import VoiceValidator
 from tts.models import ValidationSummary, VoiceSuggestion
 from config.locale_manager import LocaleConfigManager
-from translation.cache_translator import CacheTranslator
 from cli.utils import (
     print_error, print_info, print_warning,
     print_step_header, format_language_info,
@@ -378,8 +377,6 @@ def show_pipeline_steps() -> int:
     print_step_header("Pipeline Steps")
     
     steps = [
-        ("preprocess", "Extract tags and create placeholder mappings from Chinese source"),
-        ("translate", "Translate Chinese text to English intermediate format"),
         ("conversation", "Generate multi-turn scam conversations using GPT-4"),
         ("translate_final", "Translate conversations from English to target language"),
         ("legit", "Generate legitimate (non-scam) conversations"),
@@ -392,130 +389,9 @@ def show_pipeline_steps() -> int:
         print(f"  {step:<15} - {description}")
     
     print("\nUsage examples:")
-    print("  python main.py --language arabic --steps preprocess translate")
+    print("  python main.py --language arabic --steps conversation translate_final")
     print("  python main.py --language malay --steps tts postprocess")
     print("  python main.py --language arabic  # Run all steps")
-    
-    return 0
-
-
-def cache_translation(
-    service: str = "google",
-    model: Optional[str] = None,
-    force_refresh: bool = False,
-    config_dir: str = "./configs",
-    verbose: bool = False
-) -> int:
-    """
-    Run standalone Chinese to English translation and cache the results.
-    
-    Args:
-        service: Translation service to use (google, qwen, argos)
-        model: Optional model name for services that support it
-        force_refresh: Force new translation even if cache exists
-        config_dir: Path to configuration directory
-        verbose: Enable verbose output
-        
-    Returns:
-        Exit code (0 for success, 1 for error)
-    """
-    try:
-        # Load base configuration
-        config_loader = ConfigLoader(config_dir)
-        # Use a locale to load config
-        config = config_loader.load_localization("ar-sa")
-        
-        # Override translation service
-        config.translation_service = service
-        
-        # For Qwen, use model from parameter or fall back to config
-        if service == "qwen":
-            if model:
-                config.qwen_model = model
-            else:
-                # Use model from config (already loaded)
-                model = getattr(config, 'qwen_model', 'qwen-mt-turbo')
-        
-        print_step_header("Translation Cache")
-        
-        # Create cache translator
-        translator = CacheTranslator(config, service, model)
-        
-        # Check existing caches
-        if not force_refresh:
-            cached = CacheTranslator.list_cached_translations()
-            if cached:
-                print("Existing cached translations:")
-                for svc_key, metadata in cached.items():
-                    display_name = svc_key
-                    if metadata.get('model'):
-                        display_name = f"{svc_key} ({metadata['model']})"
-                    print(f"  - {display_name}: {metadata['line_count']} lines, "
-                          f"cached on {metadata['timestamp'][:10]}")
-                print()
-        
-        # Run translation
-        print(f"Service: {service}")
-        if model:
-            print(f"Model: {model}")
-        print(f"Force refresh: {force_refresh}")
-        print()
-        
-        metadata = translator.run_cached_translation_sync(force_refresh)
-        
-        print_info(f"\nTranslation cached successfully!")
-        print(f"Lines translated: {metadata['line_count']}")
-        print(f"Cache location: data/translation_cache/{service}/")
-        
-        return 0
-        
-    except Exception as e:
-        print_error(f"Translation cache failed: {e}")
-        logger.exception("Translation cache error")
-        return 1
-
-
-def list_cached_translations(verbose: bool = False) -> int:
-    """
-    List all available cached translations.
-    
-    Args:
-        verbose: Enable verbose output
-        
-    Returns:
-        Exit code (0 for success)
-    """
-    print_step_header("Cached Translations")
-    
-    cached = CacheTranslator.list_cached_translations()
-    
-    if not cached:
-        print("No cached translations found.")
-        print("\nTo create a cache, run:")
-        print("  python main.py --cache-translation --service google")
-        return 0
-    
-    print("Available cached translations:\n")
-    
-    for service_key, metadata in cached.items():
-        # Handle service/model format for Qwen
-        if '/' in service_key:
-            service, model = service_key.split('/', 1)
-            print(f"Service: {service}")
-            print(f"  Model: {model}")
-        else:
-            print(f"Service: {service_key}")
-            if metadata.get('model'):
-                print(f"  Model: {metadata['model']}")
-        print(f"  Lines: {metadata['line_count']}")
-        print(f"  Cached: {metadata['timestamp'][:19]}")
-        print(f"  Source: {metadata['source_file']}")
-        print()
-    
-    print("To use a cached translation in the pipeline:")
-    print("  1. Set 'use_cache': true in configs/common.json")
-    print("  2. Set 'cache_service' to the desired service")
-    print("  3. Run the pipeline normally")
     
     return 0
 
