@@ -110,5 +110,16 @@
     "cache_dir": "data/translation_cache",
     "cache_service": "qwen",
     "force_refresh": false
+  },
+  "generation": {
+    "source_type": "seeds",
+    "seeds_file": "scam_samples.json",
+    "profiles_file": "configs/character_profiles.json",
+    "enable_character_profiles": true,
+    "scenarios_per_seed": 2,
+    "min_seed_quality": 70,
+    "enable_dynamic_placeholders": true,
+    "batch_size": 10,
+    "enable_conversation_caching": false
   }
 }

@@ -26,6 +26,16 @@ class ScamConversationResponse(BaseModel):
     )
 
 
+class ScenarioMetadata(BaseModel):
+    """Metadata about the scenario used to generate a conversation."""
+    scenario_id: str = Field(description="Unique scenario identifier")
+    seed_tag: str = Field(description="The scam tag that was used")
+    seed_record_id: Optional[int] = Field(default=None, description="Original seed record ID")
+    scammer_profile_id: str = Field(description="ID of the scammer character profile")
+    victim_profile_id: str = Field(description="ID of the victim character profile")
+    locale: str = Field(description="Target locale for the conversation")
+
+
 class LegitConversationResponse(BaseModel):
     """Structured response for legitimate conversation generation."""
     dialogue: List[DialogueTurn] = Field(
