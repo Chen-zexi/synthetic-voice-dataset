@@ -498,8 +498,7 @@ class VoiceSynthesizer:
                 voice_id=voice_id,
                 model_id=self.model_id,
                 voice_settings=voice_settings,
-                output_format=output_format,
-                optimize_streaming_latency=self.config.optimize_streaming_latency
+                output_format=output_format
             )
             
             # Collect audio bytes
