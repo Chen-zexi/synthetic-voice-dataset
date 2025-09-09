@@ -26,39 +26,6 @@
         ]
     },
     {
-        "placeholder_name": "<money_amount_small>",
-        "description": "Small amount of money relative to the target locale's purchasing power.",
-        "substitutions": [
-            "dua puluh ringgit",
-            "tiga puluh ringgit",
-            "empat puluh ringgit",
-            "lima puluh ringgit",
-            "enam puluh ringgit"
-        ]
-    },
-    {
-        "placeholder_name": "<money_amount_medium>",
-        "description": "Medium amount of money relative to the target locale's purchasing power.",
-        "substitutions": [
-            "lima ratus ringgit",
-            "tujuh ratus lima puluh ringgit",
-            "seribu ringgit",
-            "lapan ratus ringgit",
-            "sembilan ratus sembilan puluh ringgit"
-        ]
-    },
-    {
-        "placeholder_name": "<money_amount_large>",
-        "description": "Large amount of money relative to the target locale's purchasing power.",
-        "substitutions": [
-            "lima puluh ribu ringgit",
-            "seratus ribu ringgit",
-            "dua ratus lima puluh ribu ringgit",
-            "setengah juta ringgit",
-            "tujuh ratus ribu ringgit"
-        ]
-    },
-    {
         "placeholder_name": "<national_tax_agency_name>",
         "description": "Name of the country’s primary tax authority, which varies by country and shapes the scam’s credibility.",
         "substitutions": [
@@ -164,19 +131,6 @@
             "Akaun Syabas 98-765432",
             "No. Akaun Gas 730-112-458",
             "ID Tenaga 45-6789-0123"
-        ]
-    },
-    {
-        "placeholder_name": "<caller_id_spoofed_number_format>",
-        "description": "Displayed caller ID patterns differ by country/region (area codes, short codes, toll-free prefixes). Scammers often spoof a local-looking utility number.",
-        "substitutions": [
-            "03-2788-XXXX",
-            "03-2287-XXXX",
-            "04-2270-XXXX",
-            "07-3318-XXXX",
-            "1-800-88-XXXX",
-            "1300-88-XXXX",
-            "03-8888-XXXX"
         ]
     },
     {
@@ -578,19 +532,6 @@
         ]
     },
     {
-        "placeholder_name": "<foreign_country_name>",
-        "description": "Country where the caller claims to be stranded or detained; varies by region based on common travel or diaspora ties.",
-        "substitutions": [
-            "Australia",
-            "Singapura",
-            "Thailand",
-            "Indonesia",
-            "China",
-            "United Kingdom",
-            "Arab Saudi"
-        ]
-    },
-    {
         "placeholder_name": "<mobile_payment_service_local>",
         "description": "Locally popular peer-to-peer payment app or wallet the scammer pressures the victim to use; varies by country and market penetration.",
         "substitutions": [
@@ -926,18 +867,6 @@
         ]
     },
     {
-        "placeholder_name": "<compensation_amount_local>",
-        "description": "Monetary payout amount mentioned for the lost-package compensation; varies by country/currency conventions and typical carrier reimbursement policies.",
-        "substitutions": [
-            "RM80",
-            "RM120",
-            "RM150",
-            "RM200",
-            "RM250",
-            "RM300"
-        ]
-    },
-    {
         "placeholder_name": "<payment_link_domain_pattern_local>",
         "description": "Domain pattern used for the texted payment/verification link; varies by country-specific courier brands and common phishing lookalikes.",
         "substitutions": [
@@ -947,17 +876,6 @@
             "track-parcel-my.net",
             "skmm-amanah.my",
             "maybank-securepay.com"
-        ]
-    },
-    {
-        "placeholder_name": "<payment_expedite_fee_amount_local>",
-        "description": "Typical small ‘processing/expedite’ fee amount cited by scammers varies by country and currency conventions; using a locally plausible figure increases realism.",
-        "substitutions": [
-            "RM30",
-            "RM50",
-            "RM80",
-            "RM120",
-            "RM150"
         ]
     },
     {

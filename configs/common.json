@@ -1,7 +1,7 @@
 {
   "followup_turns": {
-    "num_turns_lower_limit": 2,
-    "num_turns_upper_limit": 4,
+    "num_turns_lower_limit": 7,
+    "num_turns_upper_limit": 10,
     "sample_limit": 25,
     "victim_awareness_levels": [
       "not",
