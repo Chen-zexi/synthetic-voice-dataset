@@ -233,7 +233,7 @@ Select contextually appropriate values from the arrays and incorporate them natu
         
         # Get seeds with quality filtering
         min_quality = getattr(self.config, 'generation_min_seed_quality', 70)
-        limit = min(self.config.max_conversation, self.config.sample_limit) if self.config.sample_limit else self.config.max_conversation
+        limit = self.config.sample_limit
         
         # Filter and limit seeds
         seeds = self.seed_manager.filter_and_limit_seeds(

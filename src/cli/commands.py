@@ -180,14 +180,10 @@ def run_pipeline(
         # Create output directories
         ensure_directory(config.output_dir)
         
-        # Override sample limits if specified
+        # Override sample limit if specified
         if sample_limit:
             config.sample_limit = sample_limit
-            config.max_lines = sample_limit
-            config.max_conversation = sample_limit
-            config.num_legit_conversation = sample_limit
-            config.voice_sample_limit = sample_limit
-            print_info(f"Sample limit set to {sample_limit} for testing")
+            print_info(f"Sample limit set to {sample_limit}")
         
         # Initialize and run pipeline
         runner = PipelineRunner(config, steps)
@@ -377,8 +373,7 @@ def show_pipeline_steps() -> int:
     print_step_header("Pipeline Steps")
     
     steps = [
-        ("conversation", "Generate multi-turn scam conversations using GPT-4"),
-        ("translate_final", "Translate conversations from English to target language"),
+        ("conversation", "Generate multi-turn scam conversations using LLM"),
         ("legit", "Generate legitimate (non-scam) conversations"),
         ("tts", "Convert text conversations to audio using ElevenLabs TTS"),
         ("postprocess", "Format JSON files and package audio into ZIP archives"),
@@ -389,9 +384,9 @@ def show_pipeline_steps() -> int:
         print(f"  {step:<15} - {description}")
     
     print("\nUsage examples:")
-    print("  python main.py --language arabic --steps conversation translate_final")
-    print("  python main.py --language malay --steps tts postprocess")
-    print("  python main.py --language arabic  # Run all steps")
+    print("  python main.py --locale ms-my --steps conversation legit")
+    print("  python main.py --locale ar-sa --steps tts postprocess")
+    print("  python main.py --locale ja-jp  # Run all steps")
     
     return 0
 

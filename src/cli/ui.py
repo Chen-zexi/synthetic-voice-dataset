@@ -52,9 +52,8 @@ class InteractiveUI:
         self.voice_quality_manager = VoiceQualityManager(self.config_loader)
         self.current_locale = None
         self.pipeline_steps = [
-            'preprocess',
-            'translate', 
             'conversation',
+            'legit',
             'tts',
             'postprocess'
         ]
@@ -379,9 +378,7 @@ class InteractiveUI:
             print(f"  Voice IDs: {', '.join(config.voice_ids[config.language_code])}")
             
             print(f"\nConversation Settings:")
-            print(f"  Max Conversations: {config.max_conversation}")
-            print(f"  Legit Conversations: {config.num_legit_conversation}")
-            print(f"  Sample Limit: {config.sample_limit}")
+            print(f"  Sample Limit: {config.sample_limit} (applies to all generation steps)")
             
             print(f"\nPaths:")
             print(f"  Input: {config.multi_turn_input_path}")

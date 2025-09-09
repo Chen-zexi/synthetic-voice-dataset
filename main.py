@@ -38,13 +38,13 @@ def main():
 Examples:
   %(prog)s                                      # Run in interactive mode
   %(prog)s --interactive                        # Run in interactive mode
-  %(prog)s --language arabic                    # Run full pipeline for Arabic
-  %(prog)s --language malay --steps preprocess  # Run only preprocessing for Malay
-  %(prog)s --list-languages                     # Show available languages
-  %(prog)s --validate-config arabic             # Validate Arabic configuration
-  %(prog)s --validate-voices japanese           # Validate ElevenLabs voices for Japanese
+  %(prog)s --locale ms-my                       # Run full pipeline for Malay (Malaysia)
+  %(prog)s --locale ar-sa --steps conversation  # Generate only scam conversations for Arabic (Saudi)
+  %(prog)s --locale ja-jp --steps conversation legit  # Generate both conversation types for Japanese
+  %(prog)s --list-locales                       # Show available locales
+  %(prog)s --validate-config ms-my              # Validate Malay configuration
+  %(prog)s --validate-voices ja-jp              # Validate ElevenLabs voices for Japanese
   %(prog)s --validate-all-voices                # Validate all voice IDs across all locales
-  %(prog)s --update-voice-configs               # Update configs to remove invalid voice IDs
   %(prog)s --ensure-minimum-voices              # Check all locales have ≥2 voices
   %(prog)s --suggest-voices ar-sa               # Get voice suggestions for Arabic Saudi
         """
@@ -67,7 +67,7 @@ Examples:
         '--steps', '-s',
         type=str,
         nargs='+',
-        help='Pipeline steps to run (default: all). Available: preprocess, translate, conversation, tts, postprocess'
+        help='Pipeline steps to run (default: all). Available: conversation, legit, tts, postprocess'
     )
     
     # Configuration arguments

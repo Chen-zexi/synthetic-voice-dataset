@@ -160,7 +160,7 @@ class VoiceSynthesizer:
         self.clogger.info(f"Found {len(conversations)} conversations to process")
         
         # Limit conversations based on config
-        conversations_to_process = conversations[:self.config.voice_sample_limit]
+        conversations_to_process = conversations[:self.config.sample_limit] if hasattr(self.config, 'sample_limit') else conversations
         
         # Create simplified progress bar
         audio_type = "scam" if is_scam else "legit" 

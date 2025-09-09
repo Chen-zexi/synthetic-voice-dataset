@@ -10,7 +10,6 @@ COMMON_SCHEMA = {
     "followup_turns": {
         "num_turns_lower_limit": int,
         "num_turns_upper_limit": int,
-        "sample_limit": int,
         "victim_awareness_levels": List[str]
     },
     "preprocessing": {
@@ -27,14 +26,11 @@ COMMON_SCHEMA = {
         "max_concurrent_translations": int
     },
     "multi_turn": {
-        "english_output": str,
-        "max_conversation": int
+        "english_output": str
     },
     "legit_call": {
-        "num_conversations": int
     },
     "voice_generation": {
-        "sample_limit": int,
         "model_id": str,
         "output_format": str,
         "voice_speed": float,

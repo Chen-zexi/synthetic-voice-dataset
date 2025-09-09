@@ -74,11 +74,12 @@ class LegitGenerator:
         Returns:
             List of conversation dictionaries
         """
-        self.clogger.debug(f"Generating {self.config.num_legit_conversation} legitimate conversations")
+        num_conversations = self.config.sample_limit
+        self.clogger.debug(f"Generating {num_conversations} legitimate conversations")
         
         # Prepare tasks
         tasks = []
-        for idx in range(self.config.num_legit_conversation):
+        for idx in range(num_conversations):
             # Randomly select parameters
             num_turns = random.randint(
                 self.config.num_turns_lower_limit,

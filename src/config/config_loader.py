@@ -38,19 +38,16 @@ class Config:
     # Followup turns settings
     num_turns_lower_limit: int
     num_turns_upper_limit: int
-    sample_limit: int
     victim_awareness_levels: list
     
     
     # Multi-turn paths
     multi_turn_input_path: Path
     multi_turn_output_path: Path
-    max_conversation: int
     
     
     # Legit call settings
     legit_call_output_path: Path
-    num_legit_conversation: int
     legit_call_region: str
     legit_call_language: str
     legit_call_categories: list
@@ -62,7 +59,6 @@ class Config:
     voice_output_dir_scam: Path
     voice_input_file_legit: Path
     voice_output_dir_legit: Path
-    voice_sample_limit: int
     voice_model_id: str
     voice_output_format: str
     voice_speed: float
@@ -125,6 +121,9 @@ class Config:
     
     # Output control
     verbose: bool = False
+    
+    # Fields with default values (must be at the end)
+    sample_limit: int = 100  # Default value, overridden by CLI
     
     # Voice profiles for intelligent voice assignment (optional)
     voice_profiles: Optional[Dict] = None
@@ -310,18 +309,16 @@ class ConfigLoader:
             # Followup turns settings
             num_turns_lower_limit=self.common_config["followup_turns"]["num_turns_lower_limit"],
             num_turns_upper_limit=self.common_config["followup_turns"]["num_turns_upper_limit"],
-            sample_limit=self.common_config["followup_turns"]["sample_limit"],
+            sample_limit=100,  # Default value, overridden by CLI --sample-limit
             victim_awareness_levels=self.common_config["followup_turns"]["victim_awareness_levels"],
             
             
             # Multi-turn paths (no translation needed)
             multi_turn_input_path=scam_seeds_input,
             multi_turn_output_path=scam_conversation,  # Direct to final output
-            max_conversation=self.common_config["multi_turn"]["max_conversation"],
             
             # Legitimate call settings
             legit_call_output_path=legit_conversation,
-            num_legit_conversation=self.common_config["legit_call"]["num_conversations"],
             legit_call_region=locale_info["region_name"],
             legit_call_language=locale_info["language_name"],
             legit_call_categories=locale_config["conversation"]["legit_categories"],
@@ -333,7 +330,6 @@ class ConfigLoader:
             voice_input_file_legit=legit_conversation,
             voice_output_dir_scam=scam_audio_dir,
             voice_output_dir_legit=legit_audio_dir,
-            voice_sample_limit=self.common_config["voice_generation"]["sample_limit"],
             voice_model_id=self.common_config["voice_generation"]["model_id"],
             voice_output_format=self.common_config["voice_generation"]["output_format"],
             voice_speed=self.common_config["voice_generation"]["voice_speed"],
