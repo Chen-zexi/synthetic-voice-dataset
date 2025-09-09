@@ -1,0 +1,22 @@
+{
+  "conversation_id": 7,
+  "caller_voice_id": "u0TsaWvt0v8migutHM3M",
+  "callee_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "أنا ، أنا! لقد حصلت على موعد مع أحد أعضاء اللجنة وأحتاج إلى تقديم هدايا للقادة والرفاق. أرسل لي أحمد نقدًا ، أنا قلق.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "حسنًا ، يمكنني المساعدة. هل يجب أن أرسل أحمد الآن أم أحدث؟",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_007_combined_final.wav"
+}

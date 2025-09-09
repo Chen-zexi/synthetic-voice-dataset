@@ -1,0 +1,53 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "王淑娟Hello, 高雄市Police: Your son-in-law was arrested for prostitution yesterday. Pay 20,000元 bail now.",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "王淑娟Hello, 高雄市Police: Your son-in-law was arrested for prostitution yesterday. Pay 20,000元 bail now.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "What? Are you sure it's really my son-in-law? This must be a mistake!",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Yes, ma'am. We have records and witnesses. You must pay 20,000元 quickly to avoid worse consequences.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Alright, please tell me how I can pay the bail immediately to resolve this.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "first_turn": "Hello, this is manual customer service of 何嘉仁美語. Exam coming, need exam questions? Please fill the sent link to reserve.",
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is manual customer service of 何嘉仁美語. Exam coming, need exam questions? Please fill the sent link to reserve.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, I didn't know about this service. Is it really from 何嘉仁美語?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Yes, 何嘉仁美語 provides it. Just complete the link quickly to secure your exam questions.",
+        "role": "caller"
+      }
+    ]
+  }
+]

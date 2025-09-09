@@ -1,0 +1,457 @@
+[
+  {
+    "is_vp": 0,
+    "conversation_id": 1,
+    "region": "United Arab Emirates",
+    "category": "product_feedback_survey",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحباً، معك أحمد من شركة الإمارات للإلكترونيات. هل يمكنني أخذ دقيقة من وقتك لاستطلاع رأيك عن منتجنا الأخير؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "مرحباً أحمد، بالطبع، تفضل واسأل ما تشاء.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 2,
+    "region": "United Arab Emirates",
+    "category": "insurance_claim_followup",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، أنا محمد من أبوظبي وأرغب في متابعة طلب تعويضي رقم 458922.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، سيد محمد. سأراجع حالتك الآن وأعود لك بخبر في دقائق.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "شكرًا جزيلاً، أنتظر تواصلكم، تحياتي.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 3,
+    "region": "United Arab Emirates",
+    "category": "restaurant_reservation",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل يمكنني حجز طاولة لثلاثة أشخاص في مطعمكم يوم الجمعة مساء؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، بالتأكيد، في أي وقت تفضلون الحضور؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "الساعة الثامنة مساءً مناسبة، من فضلك.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 4,
+    "region": "United Arab Emirates",
+    "category": "bank_verification_call",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل هذا رقم حسابكم البنكي في بنك الإمارات؟ نود تأكيد بعض التفاصيل.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "نعم، وعليكم السلام. تفضل، كيف أساعدك؟",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 5,
+    "region": "United Arab Emirates",
+    "category": "visa_status_update",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحباً، هل يمكنني معرفة تحديث حالة طلب تأشيرة رقم 478395؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "أهلاً وسهلاً، تأشيرتك في المرحلة النهائية وستكون جاهزة خلال يومين.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "شكراً جزيلاً لك على التحديث. سأنتظر الإشعار.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 6,
+    "region": "United Arab Emirates",
+    "category": "clinic_test_results",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل يمكنني الاستفسار عن نتائج تحاليل الدم التي أجريتها الأسبوع الماضي؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، نعم، النتائج جاهزة. هل تود معرفة التفاصيل الآن؟",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 7,
+    "region": "United Arab Emirates",
+    "category": "customer_support_callback",
+    "num_turns": 4,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحباً، هل يمكنني التحدث مع خدمة العملاء؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "مرحباً، كيف يمكنني مساعدتك اليوم؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "تلقيت اتصالًا يفيد بوجود مشكلة في حسابي وأرغب في توضيح الأمر.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "بالتأكيد، من فضلك أعطني رقم حسابك لنتمكن من المساعدة.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 8,
+    "region": "United Arab Emirates",
+    "category": "clinic_test_results",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل يمكنني معرفة نتائج تحاليل الدم التي أجريتها الأسبوع الماضي؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، نعم بالطبع، اسمك الكامل من فضلك؟",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 9,
+    "region": "United Arab Emirates",
+    "category": "family_checkin",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل يمكنني التحدث إلى أختي فاطمة؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، نعم هي هنا، كيف يمكنني مساعدتك؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "أردت التأكد من أن جميع أفراد العائلة بخير بعد العاصفة الأخيرة.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 10,
+    "region": "United Arab Emirates",
+    "category": "relationship_talk",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحبا، كنت أفكر إننا بحاجة نتكلم عن علاقتنا قليلاً.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "صحيح، أشعر أنه صار في بعض الفجوة بيننا.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "نعم، خلينا نحدد وقت نلتقي ونتفاهم بشكل أعمق.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 11,
+    "region": "United Arab Emirates",
+    "category": "emergency_help_request",
+    "num_turns": 4,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، أحتاج مساعدة طبية عاجلة في شارع الكرامة، هناك شخص فقد وعيه.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، هل يمكن أن تعطيني اسم الشارع ورقم المبنى؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "نعم، الشارع هو شارع الكرامة، رقم المبنى 25 بالقرب من المول الكبير.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "شكرًا للتوضيح، أرسلنا فريق الإسعاف إليكم فورًا، هل الشخص يتنفس؟",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 12,
+    "region": "United Arab Emirates",
+    "category": "account_security_verification",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل أنا أتحدث مع السيد أحمد؟ هذا اتصال من بنك الإمارات.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، نعم، معك أحمد. كيف يمكنني مساعدتك؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "نحن نتحقق من أمان حسابك، هل يمكنك تأكيد آخر رقم للمعاملة التي قمت بها؟",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 13,
+    "region": "United Arab Emirates",
+    "category": "repair_scheduling",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، أريد تحديد موعد لصيانة التكييف في شقتي بمدينة دبي.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، متى يناسبك موعد الفحص؟ لدينا مواعيد متاحة يوم الخميس بعد الظهر.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 14,
+    "region": "United Arab Emirates",
+    "category": "school_event_reminder",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، معك مريم من مدرسة الروضة. حبيت أذكركم بموعد يوم الرياضة الأسبوع القادم.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، شكراً على التذكير مريم. إن شاء الله بنكون حاضرين جميعاً.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 15,
+    "region": "United Arab Emirates",
+    "category": "school_event_reminder",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحبًا، هذا مكتب مدرسة النخبة. أردنا تذكيركم بفعالية اليوم المفتوح غدًا الساعة الرابعة مساءً.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "شكرًا على التذكير، هل الفعالية مفتوحة لجميع الأهالي؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "نعم، كل أولياء الأمور مدعوون للحضور والمشاركة.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 16,
+    "region": "United Arab Emirates",
+    "category": "hotel_booking_confirmation",
+    "num_turns": 4,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، أريد التأكد من حجز الغرفة في فندق النخيل لأسبوع المقبل.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، اسمكم من فضلك؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "اسمي محمد عبد الله والحجز تحت رقم 456789.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "تم التأكيد يا أستاذ محمد، غرفتك محجوزة من 10 إلى 17 يونيو.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 17,
+    "region": "United Arab Emirates",
+    "category": "exam_results_notification",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحباً، هل يمكنني معرفة نتيجة امتحاني في مادة الرياضيات؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "بالتأكيد، رقم هويتك رجاءً؟",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 18,
+    "region": "United Arab Emirates",
+    "category": "emergency_help_request",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحبًا، أحتاج مساعدة عاجلة. هناك حريق في شقة بجانب منزلي في شارع 12 في دبي.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "شكرًا للإبلاغ، هل الجميع بأمان؟ هل هناك إصابات؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "لا أعرف بعد، النار بدأت قبل قليل وأريد الإسعاف والإطفاء بسرعة.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 19,
+    "region": "United Arab Emirates",
+    "category": "academic_advising",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل يمكنني التحدث إلى مستشار أكاديمي بخصوص جدول الدورات؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، نعم بالطبع، كيف يمكنني مساعدتك في اختيار المواد؟",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 20,
+    "region": "United Arab Emirates",
+    "category": "academic_advising",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل أستطيع التحدث مع مستشار الأكاديمي بجامعة الإمارات؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، نعم تفضل، كيف يمكنني مساعدتك؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "أريد الاستفسار عن شروط التسجيل في فصل الصيف للعام الحالي.",
+        "role": "caller"
+      }
+    ]
+  }
+]

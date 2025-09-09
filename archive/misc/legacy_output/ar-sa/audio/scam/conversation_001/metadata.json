@@ -1,0 +1,22 @@
+{
+  "conversation_id": 1,
+  "caller_voice_id": "R6nda3uM038xEEKi7GFl",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "عبداللهمرحباً، هذا فرع الدمام١٠٠٠ ريال. تم القبض على صهرك بتهمة التوسط في الدعارة أمس. للحفاظ على سرية الأمر، قم بدفع كفالة قدرها 30,000 يوان بسرعة.",
+      "voice_id": "R6nda3uM038xEEKi7GFl",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "ماذا؟ هل أنت جاد؟ كيف يمكنني دفع الكفالة؟ من فضلك أخبرني ماذا أفعل.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_001_combined_final.wav"
+}

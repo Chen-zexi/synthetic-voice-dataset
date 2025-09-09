@@ -1,0 +1,15 @@
+{
+  "conversation_id": 1,
+  "caller_voice_id": "u0TsaWvt0v8migutHM3M",
+  "callee_voice_id": "VwC51uc4PUblWEJSPzeo",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "محمد مرحبًا ، هذه هي شرطة الدمام. تم القبض على صهرك بسبب الدعارة. دفع ١٠٠٠ ريال بكفالة قريبا.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_01_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_001_combined_final.wav"
+}

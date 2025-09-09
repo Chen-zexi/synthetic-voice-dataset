@@ -1,0 +1,46 @@
+{
+  "conversations": [
+    {
+      "conversation_id": 1,
+      "region": "Malaysia",
+      "category": "coworker_sync",
+      "num_turns": 3,
+      "dialogue": [
+        {
+          "text": "Assalamualaikum, saya daripada pejabat HR. Kita adakan sesi Coworker Sync minggu ini. Boleh kongsi jadual dan topik utama yang perlu dikongsi? ",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Waalaikumsalam. Ya, kita perlu update projek semasa, tugasan siapa dengan tarikh akhir, dan kalau ada halangan saya akan maklumkan segera.",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Baik. Bila kita boleh adakan perbincangan ringkas antara semua ahli? Saya cadangkan esok petang sekitar jam 3. ",
+          "role": "caller",
+          "sent_id": 3
+        }
+      ],
+      "voice_mapping": {
+        "caller": "afifah",
+        "callee": "athira"
+      }
+    }
+  ],
+  "token_usage": {
+    "session_duration_seconds": 1.987427,
+    "total_calls": 1,
+    "total_input_tokens": 636,
+    "total_output_tokens": 199,
+    "total_tokens": 835,
+    "total_reasoning_tokens": 0,
+    "total_cached_tokens": 0,
+    "average_tokens_per_call": 835.0
+  },
+  "estimated_cost": {
+    "total_cost": 0.00011140000000000001,
+    "input_cost": 3.18e-05,
+    "output_cost": 7.960000000000001e-05
+  }
+}

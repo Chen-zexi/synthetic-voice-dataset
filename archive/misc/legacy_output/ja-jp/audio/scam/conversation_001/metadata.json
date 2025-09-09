@@ -1,0 +1,15 @@
+{
+  "conversation_id": 1,
+  "caller_voice_id": "XrExE9yKIg1WjnnlVkGX",
+  "callee_voice_id": "pFZP5JQG7iQjIQuC4Mw2",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "中村優子こんにちは、横浜警察はこちら。あなたの義理の息子は売春で逮捕されました。トラブルを避けるために、すぐに3万円保釈金を支払う。",
+      "voice_id": "XrExE9yKIg1WjnnlVkGX",
+      "filename": "turn_01_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_001_combined_final.wav"
+}

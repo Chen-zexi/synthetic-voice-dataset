@@ -1,0 +1,29 @@
+{
+  "conversation_id": 9,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "السلام عليكم، هل يمكنني التحدث إلى أختي فاطمة؟",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "وعليكم السلام، نعم هي هنا، كيف يمكنني مساعدتك؟",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "أردت التأكد من أن جميع أفراد العائلة بخير بعد العاصفة الأخيرة.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_009_combined_final.wav"
+}

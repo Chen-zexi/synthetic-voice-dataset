@@ -1,0 +1,167 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [],
+    "translations": []
+  }
+}

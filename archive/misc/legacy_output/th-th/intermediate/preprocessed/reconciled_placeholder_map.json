@@ -1,0 +1,632 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "สมชาย จันทร์",
+      "สมศรี แสงดาว",
+      "สมศักดิ์ พิมพ์ใจ",
+      "สมหญิง ทองคำ",
+      "นพดล สุขสันต์",
+      "ศิริพร วงศ์ไทย",
+      "ประสิทธิ์ ศรีสุข",
+      "มาลี รัตนา"
+    ],
+    "translations": [
+      "Somchai Chan",
+      "Somsri Saengdao",
+      "Somsak Phimjai",
+      "Somying Thongkham",
+      "Noppadol Suksant",
+      "Siriporn Wongthai",
+      "Prasit Srisuk",
+      "Malee Ratana"
+    ],
+    "description": ""
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "กรุงเทพมหานคร",
+      "เชียงใหม่",
+      "ภูเก็ต",
+      "พัทยา",
+      "หาดใหญ่",
+      "นนทบุรี",
+      "ขอนแก่น",
+      "นครราชสีมา"
+    ],
+    "translations": [
+      "Bangkok",
+      "Chiang Mai",
+      "Phuket",
+      "Pattaya",
+      "Hat Yai",
+      "Nonthaburi",
+      "Khon Kaen",
+      "Nakhon Ratchasima"
+    ],
+    "description": ""
+  },
+  "{00003}": {
+    "tag": "<police>",
+    "substitutions": [
+      "สำนักงานตำรวจแห่งชาติ",
+      "ตำรวจ",
+      "สภ."
+    ],
+    "translations": [
+      "Royal Thai Police",
+      "Police",
+      "Police Station"
+    ],
+    "description": ""
+  },
+  "{00004}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "จุฬาลงกรณ์มหาวิทยาลัย",
+      "มหาวิทยาลัยธรรมศาสตร์",
+      "มหาวิทยาลัยมหิดล",
+      "มหาวิทยาลัยเกษตรศาสตร์"
+    ],
+    "translations": [
+      "Chulalongkorn University",
+      "Thammasat University",
+      "Mahidol University",
+      "Kasetsart University"
+    ],
+    "description": ""
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "วีซ่า",
+      "มาสเตอร์การ์ด",
+      "เจซีบี",
+      "อเมริกัน เอ็กซ์เพรส"
+    ],
+    "translations": [
+      "Visa",
+      "Mastercard",
+      "JCB",
+      "American Express"
+    ],
+    "description": ""
+  },
+  "{00006}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "ธนาคารกรุงเทพ",
+      "ธนาคารกสิกรไทย",
+      "ธนาคารไทยพาณิชย์",
+      "ธนาคารกรุงศรีอยุธยา",
+      "ธนาคารกรุงไทย"
+    ],
+    "translations": [
+      "Bangkok Bank",
+      "Kasikornbank",
+      "Siam Commercial Bank",
+      "Bank of Ayudhya",
+      "Krungthai Bank"
+    ],
+    "description": ""
+  },
+  "{00007}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "สนามบินสุวรรณภูมิ",
+      "สนามบินดอนเมือง",
+      "สนามบินเชียงใหม่",
+      "สนามบินภูเก็ต"
+    ],
+    "translations": [
+      "Suvarnabhumi Airport",
+      "Don Mueang Airport",
+      "Chiang Mai Airport",
+      "Phuket Airport"
+    ],
+    "description": ""
+  },
+  "{00008}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "บัตรธนาคารกรุงเทพ",
+      "บัตรเคแบงก์",
+      "บัตรเอสซีบี",
+      "บัตรกรุงศรี",
+      "บัตรเคทีซี"
+    ],
+    "translations": [
+      "Bangkok Bank Card",
+      "K-Bank Card",
+      "SCB Card",
+      "Krungsri Card",
+      "KTC Card"
+    ],
+    "description": ""
+  },
+  "{00009}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "การเคหะแห่งชาติ",
+      "ธนาคารอาคารสงเคราะห์"
+    ],
+    "translations": [
+      "National Housing Authority",
+      "Government Housing Bank"
+    ],
+    "description": ""
+  },
+  "{00010}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "โครงการบ้านประชารัฐ",
+      "สินเชื่อบ้านแรกหลัง",
+      "โครงการบ้านล้านหลัง",
+      "กองทุนอาคารสงเคราะห์"
+    ],
+    "translations": [
+      "Pracharath Housing Project",
+      "First Home Loan",
+      "Million Homes Project",
+      "Housing Fund"
+    ],
+    "description": ""
+  },
+  "{00011}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "กองบัญชาการตำรวจสอบสวนกลาง",
+      "ตำรวจสืบสวนสอบสวน",
+      "ปคบ."
+    ],
+    "translations": [
+      "Central Investigation Bureau",
+      "Criminal Investigation Division",
+      "Crime Suppression Division"
+    ],
+    "description": ""
+  },
+  "{00012}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "ไปรษณีย์ไทย",
+      "เคอร์รี่ เอ็กซ์เพรส",
+      "เจแอนด์ที เอ็กซ์เพรส",
+      "แฟลช เอ็กซ์เพรส",
+      "ดีเอชแอล"
+    ],
+    "translations": [
+      "Thailand Post",
+      "Kerry Express",
+      "J&T Express",
+      "Flash Express",
+      "DHL"
+    ],
+    "description": ""
+  },
+  "{00013}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "กรุงเทพมหานคร",
+      "เชียงใหม่",
+      "ภูเก็ต",
+      "ชลบุรี",
+      "สงขลา",
+      "นครราชสีมา",
+      "ขอนแก่น"
+    ],
+    "translations": [
+      "Bangkok",
+      "Chiang Mai",
+      "Phuket",
+      "Chonburi",
+      "Songkhla",
+      "Nakhon Ratchasima",
+      "Khon Kaen"
+    ],
+    "description": ""
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "เฟซบุ๊ก",
+      "ไลน์",
+      "ทิกท็อก",
+      "อินสตาแกรม"
+    ],
+    "translations": [
+      "Facebook",
+      "LINE",
+      "TikTok",
+      "Instagram"
+    ],
+    "description": ""
+  },
+  "{00015}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "ช้อปปี้",
+      "ลาซาด้า",
+      "เซ็นทรัล",
+      "บิ๊กซี",
+      "โลตัส"
+    ],
+    "translations": [
+      "Shopee",
+      "Lazada",
+      "Central",
+      "Big C",
+      "Lotus's"
+    ],
+    "description": ""
+  },
+  "{00016}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "บล.บัวหลวง",
+      "บล.กสิกรไทย",
+      "บล.ไทยพาณิชย์",
+      "บล.ฟินันเซีย ไซรัส",
+      "บล.เอเซีย พลัส"
+    ],
+    "translations": [
+      "Bualuang Securities",
+      "Kasikorn Securities",
+      "SCB Securities",
+      "Finansia Syrus",
+      "Asia Plus Securities"
+    ],
+    "description": ""
+  },
+  "{00017}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "ลิซ่า BLACKPINK",
+      "แบมแบม GOT7",
+      "บอดี้สแลม",
+      "บิ๊กแอส",
+      "แสตมป์ อภิวัชร์",
+      "ปาล์มมี่"
+    ],
+    "translations": [
+      "Lisa BLACKPINK",
+      "BamBam GOT7",
+      "Bodyslam",
+      "Big Ass",
+      "Stamp Apiwat",
+      "Palmy"
+    ],
+    "description": ""
+  },
+  "{00018}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "ธนาคารกรุงเทพ",
+      "ธนาคารกสิกรไทย",
+      "ธนาคารไทยพาณิชย์",
+      "ธนาคารกรุงศรีอยุธยา",
+      "ธนาคารกรุงไทย",
+      "ธนาคารทหารไทยธนชาต"
+    ],
+    "translations": [
+      "Bangkok Bank",
+      "Kasikornbank",
+      "Siam Commercial Bank",
+      "Bank of Ayudhya",
+      "Krungthai Bank",
+      "TMBThanachart Bank"
+    ],
+    "description": ""
+  },
+  "{00019}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "ประเทศไทย",
+      "ราชอาณาจักรไทย"
+    ],
+    "translations": [
+      "Thailand",
+      "Kingdom of Thailand"
+    ],
+    "description": ""
+  },
+  "{00020}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "สำนักงาน กสทช.",
+      "คณะกรรมการกิจการกระจายเสียง กิจการโทรทัศน์ และกิจการโทรคมนาคมแห่งชาติ"
+    ],
+    "translations": [
+      "NBTC Office",
+      "National Broadcasting and Telecommunications Commission"
+    ],
+    "description": ""
+  },
+  "{00021}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "มิสทีน",
+      "คิวท์เพรส",
+      "โอเรียนทอล พริ๊นเซส",
+      "บิวตี้ บุฟเฟต์",
+      "สมูท อี"
+    ],
+    "translations": [
+      "Mistine",
+      "Cute Press",
+      "Oriental Princess",
+      "Beauty Buffet",
+      "Smooth E"
+    ],
+    "description": ""
+  },
+  "{00022}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "พร้อมเพย์",
+      "ทรูมันนี่ วอลเล็ท",
+      "ลาซาด้า วอลเล็ท",
+      "ช้อปปี้เพย์"
+    ],
+    "translations": [
+      "PromptPay",
+      "TrueMoney Wallet",
+      "Lazada Wallet",
+      "ShopeePay"
+    ],
+    "description": ""
+  },
+  "{00023}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "เดอะวัน รีวอร์ด",
+      "เค พลัส รีวอร์ด",
+      "เอสซีบี รีวอร์ด พลัส",
+      "กรุงศรี รีวอร์ด"
+    ],
+    "translations": [
+      "The 1 Rewards",
+      "K Plus Rewards",
+      "SCB Rewards Plus",
+      "Krungsri Rewards"
+    ],
+    "description": ""
+  },
+  "{00024}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "กรมการขนส่งทางบก",
+      "สำนักงานขนส่งกรุงเทพมหานคร"
+    ],
+    "translations": [
+      "Department of Land Transport",
+      "Bangkok Transport Office"
+    ],
+    "description": ""
+  },
+  "{00025}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "โตโยต้า",
+      "ฮอนด้า",
+      "มาสด้า",
+      "นิสสัน",
+      "อีซูซุ",
+      "มิตซูบิชิ"
+    ],
+    "translations": [
+      "Toyota",
+      "Honda",
+      "Mazda",
+      "Nissan",
+      "Isuzu",
+      "Mitsubishi"
+    ],
+    "description": ""
+  },
+  "{00026}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "ดัชมิลล์",
+      "โฟร์โมสต์",
+      "มะลิ",
+      "เนสเล่"
+    ],
+    "translations": [
+      "Dutch Mill",
+      "Foremost",
+      "Mali",
+      "Nestle"
+    ],
+    "description": ""
+  },
+  "{00027}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "แผนกสินเชื่อส่วนบุคคล",
+      "ศูนย์อนุมัติสินเชื่อ"
+    ],
+    "translations": [
+      "Personal Loan Department",
+      "Loan Approval Center"
+    ],
+    "description": ""
+  },
+  "{00028}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "ทรู อินเทอร์เน็ต",
+      "เอไอเอส ไฟเบอร์",
+      "3BB",
+      "เอ็นที"
+    ],
+    "translations": [
+      "True Internet",
+      "AIS Fiber",
+      "3BB",
+      "NT"
+    ],
+    "description": ""
+  },
+  "{00029}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "ภาคกลาง",
+      "ภาคเหนือ",
+      "ภาคใต้",
+      "ภาคตะวันออกเฉียงเหนือ"
+    ],
+    "translations": [
+      "Central Thailand",
+      "Northern Thailand",
+      "Southern Thailand",
+      "Northeastern Thailand"
+    ],
+    "description": ""
+  },
+  "{00030}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "ภาคอีสาน",
+      "ภาคตะวันตก",
+      "ภาคตะวันออก"
+    ],
+    "translations": [
+      "Isan Region",
+      "Western Thailand",
+      "Eastern Thailand"
+    ],
+    "description": ""
+  },
+  "{00031}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "มะม่วง",
+      "ทุเรียน",
+      "มังคุด",
+      "ลำไย"
+    ],
+    "translations": [
+      "mango",
+      "durian",
+      "mangosteen",
+      "longan"
+    ],
+    "description": ""
+  },
+  "{00032}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "ทรูวิชั่นส์",
+      "เคเบิลทีวี",
+      "PSI",
+      "AIS Play"
+    ],
+    "translations": [
+      "TrueVisions",
+      "Cable TV",
+      "PSI",
+      "AIS Play"
+    ],
+    "description": ""
+  },
+  "{00033}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "แพ็กเกจพื้นฐาน",
+      "แพ็กเกจพรีเมียม",
+      "แพ็กเกจกีฬา"
+    ],
+    "translations": [
+      "Basic Package",
+      "Premium Package",
+      "Sports Package"
+    ],
+    "description": ""
+  },
+  "{00034}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "ไอโฟน",
+      "ซัมซุง กาแล็กซี่",
+      "โอปโป้"
+    ],
+    "translations": [
+      "iPhone",
+      "Samsung Galaxy",
+      "OPPO"
+    ],
+    "description": ""
+  },
+  "{00035}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "ช้อปปี้",
+      "ลาซาด้า",
+      "ทิกท็อกช็อป",
+      "เจดี เซ็นทรัล"
+    ],
+    "translations": [
+      "Shopee",
+      "Lazada",
+      "TikTok Shop",
+      "JD Central"
+    ],
+    "description": ""
+  },
+  "{00036}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "สถานีตำรวจนครบาลบางรัก",
+      "สถานีตำรวจนครบาลทองหล่อ",
+      "สถานีตำรวจนครบาลคลองตัน"
+    ],
+    "translations": [
+      "Bang Rak Police Station",
+      "Thong Lo Police Station",
+      "Khlong Tan Police Station"
+    ],
+    "description": ""
+  },
+  "{00037}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "สถานีตำรวจท่องเที่ยว",
+      "สถานีตำรวจทางหลวง",
+      "สถานีตำรวจน้ำ"
+    ],
+    "translations": [
+      "Tourist Police Station",
+      "Highway Police Station",
+      "Marine Police Station"
+    ],
+    "description": ""
+  },
+  "{00038}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "กระทรวงศึกษาธิการ",
+      "สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน"
+    ],
+    "translations": [
+      "Ministry of Education",
+      "Office of the Basic Education Commission"
+    ],
+    "description": ""
+  },
+  "{00039}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "ทรู",
+      "เอไอเอส",
+      "3BB"
+    ],
+    "translations": [
+      "True",
+      "AIS",
+      "3BB"
+    ],
+    "description": ""
+  }
+}

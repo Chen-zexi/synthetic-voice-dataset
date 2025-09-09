@@ -1,0 +1,15 @@
+{
+  "conversation_id": 1,
+  "caller_voice_id": "ODq5zmih8GrVes37Dizd",
+  "callee_voice_id": "pFZP5JQG7iQjIQuC4Mw2",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "こんばんは、田中です。今週の数学の家庭教師の予約をお願いしたいのですが。",
+      "voice_id": "ODq5zmih8GrVes37Dizd",
+      "filename": "turn_01_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_001_combined_final.wav"
+}

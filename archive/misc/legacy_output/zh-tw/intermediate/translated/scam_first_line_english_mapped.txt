@@ -1,0 +1,1 @@
+/Users/chen/Library/Mobile Documents/com~apple~CloudDocs/ScamAI/voice_scam_dataset_gen/data/translation_cache/google/scam_first_line_english_mapped.txt

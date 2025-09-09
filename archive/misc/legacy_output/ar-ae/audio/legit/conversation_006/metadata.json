@@ -1,0 +1,22 @@
+{
+  "conversation_id": 6,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "السلام عليكم، هل يمكنني الاستفسار عن نتائج تحاليل الدم التي أجريتها الأسبوع الماضي؟",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "وعليكم السلام، نعم، النتائج جاهزة. هل تود معرفة التفاصيل الآن؟",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_006_combined_final.wav"
+}

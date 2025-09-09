@@ -1,0 +1,29 @@
+{
+  "conversation_id": 1,
+  "caller_voice_id": "pqHfZKP75CvOlQylNhV4",
+  "callee_voice_id": "9BWtsMINqrJLrRacOk9x",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "Trần Thị LanXin chào, đây là chi nhánh Cần Thơ20 triệu đồng (VND). Con rể của bạn đã bị bắt vì tội môi giới mại dâm. Để tránh rắc rối, vui lòng nhanh chóng nộp tiền bảo lãnh là Hệ thống giáo dục Hocmai30.000 nhân dân tệ.",
+      "voice_id": "pqHfZKP75CvOlQylNhV4",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "Cái gì? Bạn chắc chắn điều này đã xảy ra à? Tôi không hề biết. Làm thế nào tôi có thể trả tiền bảo lãnh?",
+      "voice_id": "9BWtsMINqrJLrRacOk9x",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "Vâng, điều đó đúng. Bạn có thể chuyển khoản trực tiếp Hệ thống giáo dục Hocmai30.000 nhân dân tệ vào tài khoản bảo mật của chúng tôi để thả anh ấy ngay hôm nay.",
+      "voice_id": "pqHfZKP75CvOlQylNhV4",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_001_combined_final.wav"
+}

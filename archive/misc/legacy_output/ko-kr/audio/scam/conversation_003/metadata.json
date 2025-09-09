@@ -1,0 +1,15 @@
+{
+  "conversation_id": 3,
+  "caller_voice_id": "pqHfZKP75CvOlQylNhV4",
+  "callee_voice_id": "onwK4e9ZLuTAKqWW03F9",
+  "audio_files": [
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "약간 떨리지만 최선을 다하고 있어요.",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_003_combined_final.wav"
+}

@@ -1,0 +1,108 @@
+[
+  {
+    "region": "South Korea",
+    "is_vp": 1,
+    "conversation_id": 1,
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "장민지안녕하세요, 경찰입니다. 당신의 사위가 성매매 알선 혐의로 체포되었습니다. 문제를 피하려면 보석금을 100만원 빨리 납부해 주십시오.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "뭐라고요? 확실한가요? 분명히 실수일 거예요. 좀 더 자세히 말씀해 주실 수 있으세요?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "네, 확정되었습니다. 사건을 조용히 해결하려면 100만원이 즉시 필요합니다.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "알겠습니다. 빠르게 송금하는 방법을 알려주세요. 상황이 더 악화되길 원하지 않습니다.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "region": "South Korea",
+    "is_vp": 1,
+    "conversation_id": 2,
+    "num_turns": 2,
+    "victim_awareness": "tiny",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "안녕하세요, 대성학원 수동 서비스입니다. 기출 문제지를 원하시나요? 예약을 위해 링크를 보내드리겠습니다.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "좋아요, 링크를 보내주세요. 시험을 위해 그 자료가 필요할 수도 있어요.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "region": "South Korea",
+    "is_vp": 1,
+    "conversation_id": 3,
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "시험은 며칠 후에 있습니다. 준비는 어떻게 되어가고 있나요?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "약간 떨리지만 최선을 다하고 있어요.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "도움이 될 만한 독점적인 준비 자료를 보내드릴 수 있습니다.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "그렇게 해주시면 정말 좋겠어요, 감사합니다!",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "region": "South Korea",
+    "is_vp": 1,
+    "conversation_id": 4,
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "안녕하세요, 비자 에이전시 센터 고객 서비스입니다. 저희는 3만원 수수료에 대한 새로운 신용카드 서비스를 제공합니다.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "아, 그렇군요. 이 서비스가 정확히 어떻게 작동하는지 설명해 주실 수 있나요?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "물론입니다! 단 한 번 3만원을 결제하시면, 저희가 모든 절차를 번거롭지 않게 처리해 드리겠습니다.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "좋아요, 괜찮네요. 시작하려면 무엇을 제공해야 하나요?",
+        "role": "callee"
+      }
+    ]
+  }
+]

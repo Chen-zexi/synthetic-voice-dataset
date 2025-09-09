@@ -1,0 +1,29 @@
+{
+  "conversation_id": 2,
+  "caller_voice_id": "u0TsaWvt0v8migutHM3M",
+  "callee_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "السلام عليكم، أنا محمد من أبوظبي وأرغب في متابعة طلب تعويضي رقم 458922.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "وعليكم السلام، سيد محمد. سأراجع حالتك الآن وأعود لك بخبر في دقائق.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "شكرًا جزيلاً، أنتظر تواصلكم، تحياتي.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_002_combined_final.wav"
+}

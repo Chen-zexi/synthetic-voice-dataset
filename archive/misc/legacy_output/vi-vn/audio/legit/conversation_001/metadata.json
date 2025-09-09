@@ -1,0 +1,22 @@
+{
+  "conversation_id": 1,
+  "caller_voice_id": "9BWtsMINqrJLrRacOk9x",
+  "callee_voice_id": "pqHfZKP75CvOlQylNhV4",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "Chào anh Nam, em là Mai từ nhóm tình nguyện Hoa Sen. Anh có thể tham gia buổi họp cuối tuần này không?",
+      "voice_id": "9BWtsMINqrJLrRacOk9x",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "Chào Mai, cảm ơn em đã gọi. Anh có thể tham gia lúc 9 giờ sáng thứ Bảy được nhé.",
+      "voice_id": "pqHfZKP75CvOlQylNhV4",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_001_combined_final.wav"
+}

@@ -1,0 +1,29 @@
+{
+  "conversation_id": 11,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "السلام عليكم، أحتاج مساعدة طبية عاجلة في شارع الكرامة، هناك شخص فقد وعيه.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "وعليكم السلام، هل يمكن أن تعطيني اسم الشارع ورقم المبنى؟",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 4,
+      "role": "callee",
+      "text": "شكرًا للتوضيح، أرسلنا فريق الإسعاف إليكم فورًا، هل الشخص يتنفس؟",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_04_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_011_combined_final.wav"
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "{00001}Hello, this is the {00002}{00003} branch. Your son-in-law was arrested yesterday for soliciting prostitution. This matter has had a rather negative impact. If you don't want many people to know about it, please pay the bail of 30,000 yuan as soon as possible.",
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "{00001}Hello, this is the {00002}{00003} branch. Your son-in-law was arrested for soliciting prostitution. To avoid trouble, pay {00004}30,000 yuan bail quickly.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "What? Are you sure this happened? I had no idea. How can I pay the bail?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Yes, it's true. You can transfer the {00004}30,000 yuan directly to our secure account to release him today.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "first_turn": "Hello, this is the customer service representative from {00004}. With exams approaching, I'm not sure if your classmates need exam practice questions. Could you please fill in a moment to give you the link for ordering?",
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is {00004} customer service. With exams near, do your classmates want exam practice questions? Can I send you the ordering link?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Yes, that sounds helpful. Please send me the link so I can share it with them.",
+        "role": "callee"
+      }
+    ]
+  }
+]

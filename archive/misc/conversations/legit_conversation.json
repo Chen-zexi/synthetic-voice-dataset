@@ -1,0 +1,119 @@
+[
+  {
+    "conversation_id": 1,
+    "scenario": "Shopee COD Delivery Confirmation",
+    "region": "Malaysia",
+    "category": "delivery_confirmation",
+    "num_turns": 10,
+    "voice_mapping": {
+      "caller": "faizal",
+      "callee": "hasnan"
+    },
+    "dialogue": [
+      {
+        "role": "caller",
+        "content": "Hello boss, saya rider J&T Express untuk order Shopee anda. Barang COD RM185. Anda ada kat rumah sekarang tak?"
+      },
+      {
+        "role": "callee",
+        "content": "Ada, saya kat rumah. Eh tapi COD RM185? Alamak, saya ingat dalam RM30 je order saya. Apa barang tu sebenarnya?"
+      },
+      {
+        "role": "caller",
+        "content": "Dalam sistem saya, ada 3 parcel untuk anda. Satu elektronik accessories, dua baju. Total dengan shipping jadi RM185. Anda Encik Hafiz tinggal di Taman Melati, Setapak kan?"
+      },
+      {
+        "role": "callee",
+        "content": "Ya betul nama dan alamat lah. Oh ya ke, mungkin wife saya order sekali kot. Dalam berapa minit sampai?"
+      },
+      {
+        "role": "caller",
+        "content": "Saya baru kat Jalan Genting Klang, dalam 10-15 minit sampai. Tapi hujan lebat ni, jalan jam sikit. Anda ada duit kecil tak? Saya tak cukup balance nak bagi change kalau anda bayar pakai duit besar."
+      },
+      {
+        "role": "callee",
+        "content": "Ada kot duit kecil. Kalau tak cukup, boleh transfer pakai TnG ewallet tak? Senang sikit lah macam tu."
+      },
+      {
+        "role": "caller",
+        "content": "Boleh, saya terima TnG atau bank transfer pun boleh. Nanti saya bagi QR code atau account number. Eh boss, rumah anda yang ada pagar hitam, kereta Perodua Myvi depan tu kan?"
+      },
+      {
+        "role": "callee",
+        "content": "Ha ah, betul tu memang. Pagar hitam automatic, Myvi merah depan. Nanti saya keluar ambil kat pagar je lah, senang sikit. You dah dekat mana sekarang boss?"
+      },
+      {
+        "role": "caller",
+        "content": "Ok baik. Oh ya, satu parcel tu fragile, barang kaca. Saya akan bagi slow-slow. Kalau rosak masa terima, anda boleh reject terus, saya bawa balik untuk claim."
+      },
+      {
+        "role": "callee",
+        "content": "Ok steady, nanti kita check sama-sama sebelum saya bayar lah. Thanks bagi tahu. Drive careful ye boss, jalan licin! Nanti WhatsApp bila dah sampai."
+      }
+    ],
+    "metadata": {
+      "location_alignment": "Taman Melati and Jalan Genting Klang are real adjacent areas in Setapak, KL - realistic delivery route",
+      "cultural_authenticity": "Very High - Natural Malaysian speech, mentions Perodua Myvi (Malaysia's most popular car), TnG ewallet",
+      "realism": "Authentic casual interaction between delivery rider and customer"
+    }
+  },
+  {
+    "conversation_id": 2,
+    "scenario": "Property Agent Condo Viewing Follow-up",
+    "region": "Malaysia",
+    "category": "business_followup",
+    "num_turns": 10,
+    "voice_mapping": {
+      "caller": "jawaid",
+      "callee": "athira"
+    },
+    "dialogue": [
+      {
+        "role": "caller",
+        "content": "Hi Puan Nurul, saya Jason dari IQI Realty. Anda datang viewing condo kat Mont Kiara last weekend kan? Saya nak follow up, apa pendapat anda tentang unit tu?"
+      },
+      {
+        "role": "callee",
+        "content": "Oh hi Jason! Ya lah, saya suka layout dia, tapi honestly harga RM950,000 tu macam mahal sikit untuk size 1200 sqft kan?"
+      },
+      {
+        "role": "caller",
+        "content": "Saya faham concern anda. Tapi area Mont Kiara ni memang premium location, dekat dengan MRT Semantan, Publika mall, dan Garden International School. Property value akan naik lagi 20% dalam 3 tahun. Owner sebenarnya minta RM980,000 tapi saya boleh cuba negotiate."
+      },
+      {
+        "role": "callee",
+        "content": "Kalau dapat kurangkan ke RM900,000 mungkin saya consider lah. Parking ada berapa lot? Maintenance fee berapa sebulan pula?"
+      },
+      {
+        "role": "caller",
+        "content": "Dapat 2 parking lot side by side, bagus untuk family. Maintenance fee RM450 sebulan, include security 24 jam, swimming pool, gym, dan function hall. Sinking fund dah fully paid by owner, anda tak perlu bayar."
+      },
+      {
+        "role": "callee",
+        "content": "Ok lah tu reasonable jugak. Tapi saya perlu discuss dengan husband dulu. Loan bank maximum berapa percent ya untuk property macam ni?"
+      },
+      {
+        "role": "caller",
+        "content": "Untuk first time buyer, boleh dapat 90% loan. Kalau second property, maximum 70%. Saya ada contact banker dari Public Bank yang boleh bagi special rate. Interest serendah 3.85% setahun. Nak saya arrange appointment dengan banker sekali?"
+      },
+      {
+        "role": "callee",
+        "content": "Boleh juga tu. Tapi saya nak tengok 2-3 unit lain dulu lah untuk compare. Ada tak unit lain dalam building sama dengan harga lebih murah sikit?"
+      },
+      {
+        "role": "caller",
+        "content": "Ada satu lagi di tingkat 8, harga RM850,000. Tapi facing DUKE highway, bising sikit dan view tak cantik. Unit yang anda tengok haritu tingkat 18, facing pool, paling best dalam building ni. Bila anda free nak tengok unit lain?"
+      },
+      {
+        "role": "callee",
+        "content": "Weekend ni boleh, Saturday morning lah. Kalau owner yang haritu tu boleh turun ke RM900,000, saya memang serious nak proceed. Boleh tolong tanyakan tak?"
+      }
+    ],
+    "metadata": {
+      "location_alignment": "Mont Kiara is actual premium area in KL, near MRT Semantan, Publika mall exists, Garden International School is real",
+      "price_accuracy": "RM950,000 for 1200sqft in Mont Kiara is realistic 2024 market price",
+      "cultural_authenticity": "Mixed names (Jason - Chinese agent, Puan Nurul - Malay buyer) reflects Malaysian multicultural property market",
+      "details": "DUKE highway is real and does pass near Mont Kiara, Public Bank is major Malaysian bank"
+    }
+  }
+]

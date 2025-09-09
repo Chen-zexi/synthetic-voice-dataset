@@ -1,0 +1,22 @@
+{
+  "conversation_id": 2,
+  "caller_voice_id": "JBFqnCBsd6RMkjVDRZzb",
+  "callee_voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "Good afternoon, this is Emily from TechPlus. Could I have a moment of your time for a quick product feedback survey?",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "Hi Emily, sure, I just bought your latest smartphone and would be happy to share my thoughts.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_002_combined_final.wav"
+}

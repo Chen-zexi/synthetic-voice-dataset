@@ -1,0 +1,29 @@
+{
+  "conversation_id": 2,
+  "caller_voice_id": "XB0fDUnXU5powFXDhCwa",
+  "callee_voice_id": "onwK4e9ZLuTAKqWW03F9",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "Hello, this is manual customer service of 何嘉仁美語. Exam coming, need exam questions? Please fill the sent link to reserve.",
+      "voice_id": "XB0fDUnXU5powFXDhCwa",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "Oh, I didn't know about this service. Is it really from 何嘉仁美語?",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "Yes, 何嘉仁美語 provides it. Just complete the link quickly to secure your exam questions.",
+      "voice_id": "XB0fDUnXU5powFXDhCwa",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_002_combined_final.wav"
+}

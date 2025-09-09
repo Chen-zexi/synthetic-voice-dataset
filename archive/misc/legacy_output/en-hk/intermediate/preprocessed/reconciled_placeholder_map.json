@@ -1,0 +1,790 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "David Chan",
+      "Jessica Li",
+      "Michael Cheung",
+      "Michelle Wong",
+      "Kenneth Leung",
+      "Amy Ho",
+      "Raymond Lau",
+      "Vivian Wong"
+    ],
+    "translations": [
+      "David Chan",
+      "Jessica Li",
+      "Michael Cheung",
+      "Michelle Wong",
+      "Kenneth Leung",
+      "Amy Ho",
+      "Raymond Lau",
+      "Vivian Wong"
+    ],
+    "description": "Common names in Hong Kong"
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "Central",
+      "Causeway Bay",
+      "Tsim Sha Tsui",
+      "Mong Kok",
+      "Sha Tin",
+      "Tsuen Wan",
+      "Tuen Mun",
+      "Yuen Long"
+    ],
+    "translations": [
+      "Central",
+      "Causeway Bay",
+      "Tsim Sha Tsui",
+      "Mong Kok",
+      "Sha Tin",
+      "Tsuen Wan",
+      "Tuen Mun",
+      "Yuen Long"
+    ],
+    "description": "Districts in Hong Kong"
+  },
+  "{00003}": {
+    "tag": "<police>",
+    "substitutions": [
+      "Hong Kong Police Force",
+      "Police Station",
+      "Major Crime Unit",
+      "Anti-Deception Coordination Centre",
+      "Commercial Crime Bureau",
+      "Cyber Security and Technology Crime Bureau"
+    ],
+    "translations": [
+      "Hong Kong Police Force",
+      "Police Station",
+      "Major Crime Unit",
+      "Anti-Deception Coordination Centre",
+      "Commercial Crime Bureau",
+      "Cyber Security and Technology Crime Bureau"
+    ],
+    "description": "Police forces"
+  },
+  "{00004}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "HKU",
+      "CUHK",
+      "HKUST",
+      "PolyU",
+      "CityU",
+      "HKBU"
+    ],
+    "translations": [
+      "HKU",
+      "CUHK",
+      "HKUST",
+      "PolyU",
+      "CityU",
+      "HKBU"
+    ],
+    "description": "Universities"
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "UnionPay",
+      "JCB",
+      "Hang Seng Card"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "UnionPay",
+      "JCB",
+      "Hang Seng Card"
+    ],
+    "description": "Credit card companies"
+  },
+  "{00006}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "HSBC",
+      "Hang Seng Bank",
+      "Bank of China",
+      "Standard Chartered",
+      "Bank of East Asia",
+      "Citibank"
+    ],
+    "translations": [
+      "HSBC",
+      "Hang Seng Bank",
+      "Bank of China",
+      "Standard Chartered",
+      "Bank of East Asia",
+      "Citibank"
+    ],
+    "description": "Banks in Hong Kong"
+  },
+  "{00007}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "Hong Kong International Airport",
+      "Chek Lap Kok Airport",
+      "Terminal 1",
+      "Terminal 2",
+      "Airport Express Hong Kong Station",
+      "Airport Express Kowloon Station"
+    ],
+    "translations": [
+      "Hong Kong International Airport",
+      "Chek Lap Kok Airport",
+      "Terminal 1",
+      "Terminal 2",
+      "Airport Express Hong Kong Station",
+      "Airport Express Kowloon Station"
+    ],
+    "description": "Airports"
+  },
+  "{00008}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "HSBC Red Card",
+      "Hang Seng enJoy Card",
+      "SCB Simply Cash Card",
+      "BOC i-card",
+      "DBS Black Card",
+      "BEA i-Titanium Card"
+    ],
+    "translations": [
+      "HSBC Red Card",
+      "Hang Seng enJoy Card",
+      "SCB Simply Cash Card",
+      "BOC i-card",
+      "DBS Black Card",
+      "BEA i-Titanium Card"
+    ],
+    "description": "Bank card names"
+  },
+  "{00009}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "Housing Authority",
+      "Housing Department",
+      "Housing Society",
+      "URA",
+      "Lands Department",
+      "Rating and Valuation Department"
+    ],
+    "translations": [
+      "Housing Authority",
+      "Housing Department",
+      "Housing Society",
+      "URA",
+      "Lands Department",
+      "Rating and Valuation Department"
+    ],
+    "description": "Housing agency variant"
+  },
+  "{00010}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "Green Form Subsidised Home Ownership Scheme",
+      "White Form Secondary Market Scheme",
+      "Tenants Purchase Scheme",
+      "Home Starter Loan Scheme",
+      "Home Ownership Scheme",
+      "Public Housing Queue"
+    ],
+    "translations": [
+      "Green Form Subsidised Home Ownership Scheme",
+      "White Form Secondary Market Scheme",
+      "Tenants Purchase Scheme",
+      "Home Starter Loan Scheme",
+      "Home Ownership Scheme",
+      "Public Housing Queue"
+    ],
+    "description": "Housing schemes"
+  },
+  "{00011}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "Criminal Investigation Department",
+      "Organized Crime and Triad Bureau",
+      "Commercial Crime Bureau",
+      "Anti-Deception Coordination Centre",
+      "Narcotics Bureau",
+      "OCTB"
+    ],
+    "translations": [
+      "Criminal Investigation Department",
+      "Organized Crime and Triad Bureau",
+      "Commercial Crime Bureau",
+      "Anti-Deception Coordination Centre",
+      "Narcotics Bureau",
+      "OCTB"
+    ],
+    "description": "Investigation units"
+  },
+  "{00012}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "SF Express",
+      "Hongkong Post",
+      "DHL",
+      "FedEx",
+      "Kerry Logistics",
+      "Takkyubin"
+    ],
+    "translations": [
+      "SF Express",
+      "Hongkong Post",
+      "DHL",
+      "FedEx",
+      "Kerry Logistics",
+      "Takkyubin"
+    ],
+    "description": "Courier services"
+  },
+  "{00013}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "Hong Kong Island",
+      "Kowloon",
+      "New Territories",
+      "Islands District",
+      "HK Island Region",
+      "Kowloon Region"
+    ],
+    "translations": [
+      "Hong Kong Island",
+      "Kowloon",
+      "New Territories",
+      "Islands District",
+      "HK Island Region",
+      "Kowloon Region"
+    ],
+    "description": "HK regions"
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "WhatsApp",
+      "Facebook",
+      "Instagram",
+      "WeChat",
+      "LIHKG",
+      "Telegram"
+    ],
+    "translations": [
+      "WhatsApp",
+      "Facebook",
+      "Instagram",
+      "WeChat",
+      "LIHKG",
+      "Telegram"
+    ],
+    "description": "Social media platforms"
+  },
+  "{00015}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "PARKnSHOP",
+      "Wellcome",
+      "YATA",
+      "AEON",
+      "HKTVmall",
+      "Taobao"
+    ],
+    "translations": [
+      "PARKnSHOP",
+      "Wellcome",
+      "YATA",
+      "AEON",
+      "HKTVmall",
+      "Taobao"
+    ],
+    "description": "Popular marketplaces"
+  },
+  "{00016}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "Futu Securities",
+      "Bright Smart Securities",
+      "Phillip Securities",
+      "Guotai Junan",
+      "BOCI Securities",
+      "Haitong International"
+    ],
+    "translations": [
+      "Futu Securities",
+      "Bright Smart Securities",
+      "Phillip Securities",
+      "Guotai Junan",
+      "BOCI Securities",
+      "Haitong International"
+    ],
+    "description": "Brokerage firms"
+  },
+  "{00017}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "Jacky Cheung",
+      "Eason Chan",
+      "Joey Yung",
+      "Kay Tse",
+      "G.E.M.",
+      "William Chan"
+    ],
+    "translations": [
+      "Jacky Cheung",
+      "Eason Chan",
+      "Joey Yung",
+      "Kay Tse",
+      "G.E.M.",
+      "William Chan"
+    ],
+    "description": "Popular singers"
+  },
+  "{00018}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "HSBC",
+      "Hang Seng",
+      "BOC Hong Kong",
+      "Standard Chartered",
+      "BEA",
+      "DBS"
+    ],
+    "translations": [
+      "HSBC",
+      "Hang Seng",
+      "BOC Hong Kong",
+      "Standard Chartered",
+      "BEA",
+      "DBS"
+    ],
+    "description": "Major banks"
+  },
+  "{00019}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "Hong Kong",
+      "Hong Kong SAR",
+      "HKSAR",
+      "Hong Kong Special Administrative Region",
+      "HK",
+      "Hong Kong China"
+    ],
+    "translations": [
+      "Hong Kong",
+      "Hong Kong SAR",
+      "HKSAR",
+      "Hong Kong Special Administrative Region",
+      "HK",
+      "Hong Kong China"
+    ],
+    "description": "Country/region names"
+  },
+  "{00020}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "Communications Authority",
+      "OFCA",
+      "Telecommunications Authority",
+      "Office of Communications Authority",
+      "Broadcasting Authority",
+      "Telecom Bureau"
+    ],
+    "translations": [
+      "Communications Authority",
+      "OFCA",
+      "Telecommunications Authority",
+      "Office of Communications Authority",
+      "Broadcasting Authority",
+      "Telecom Bureau"
+    ],
+    "description": "Same as telecom_regulator"
+  },
+  "{00021}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "Sasa",
+      "Bonjour",
+      "Mannings",
+      "Watsons",
+      "SK-II",
+      "Lancôme"
+    ],
+    "translations": [
+      "Sasa",
+      "Bonjour",
+      "Mannings",
+      "Watsons",
+      "SK-II",
+      "Lancôme"
+    ],
+    "description": "Cosmetic brands"
+  },
+  "{00022}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "PayMe",
+      "FPS",
+      "AlipayHK",
+      "WeChat Pay HK",
+      "Octopus",
+      "Tap & Go"
+    ],
+    "translations": [
+      "PayMe",
+      "FPS",
+      "AlipayHK",
+      "WeChat Pay HK",
+      "Octopus",
+      "Tap & Go"
+    ],
+    "description": "Payment apps"
+  },
+  "{00023}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "Asia Miles",
+      "Avios",
+      "yuu Points",
+      "The Club Points",
+      "RC Points",
+      "MoneyBack"
+    ],
+    "translations": [
+      "Asia Miles",
+      "Avios",
+      "yuu Points",
+      "The Club Points",
+      "RC Points",
+      "MoneyBack"
+    ],
+    "description": "Loyalty programs"
+  },
+  "{00024}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "TD Licensing Division",
+      "Vehicle Examination Centre",
+      "Vehicle Inspection Centre",
+      "Driving Test Appointment Office",
+      "Vehicle Registration and Examination Division",
+      "Transfer Office"
+    ],
+    "translations": [
+      "TD Licensing Division",
+      "Vehicle Examination Centre",
+      "Vehicle Inspection Centre",
+      "Driving Test Appointment Office",
+      "Vehicle Registration and Examination Division",
+      "Transfer Office"
+    ],
+    "description": "Vehicle registration"
+  },
+  "{00025}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "Toyota",
+      "Honda",
+      "Nissan",
+      "Mercedes-Benz",
+      "BMW",
+      "Tesla"
+    ],
+    "translations": [
+      "Toyota",
+      "Honda",
+      "Nissan",
+      "Mercedes-Benz",
+      "BMW",
+      "Tesla"
+    ],
+    "description": "Car brands"
+  },
+  "{00026}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "Vitasoy",
+      "Kowloon Dairy",
+      "Dairy Farm",
+      "Nestle Dairy Farm",
+      "Meadow Fresh",
+      "Dutch Lady"
+    ],
+    "translations": [
+      "Vitasoy",
+      "Kowloon Dairy",
+      "Dairy Farm",
+      "Nestle Dairy Farm",
+      "Meadow Fresh",
+      "Dutch Lady"
+    ],
+    "description": "Dairy brands"
+  },
+  "{00027}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "Mortgage Department",
+      "Loan Department",
+      "Credit Approval Department",
+      "Personal Loan Department",
+      "SME Loan Department",
+      "Property Mortgage Department"
+    ],
+    "translations": [
+      "Mortgage Department",
+      "Loan Department",
+      "Credit Approval Department",
+      "Personal Loan Department",
+      "SME Loan Department",
+      "Property Mortgage Department"
+    ],
+    "description": "Loan departments"
+  },
+  "{00028}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "Netvigator",
+      "HKBN",
+      "i-Cable",
+      "HGC",
+      "3 Broadband",
+      "SmarTone Broadband"
+    ],
+    "translations": [
+      "Netvigator",
+      "HKBN",
+      "i-Cable",
+      "HGC",
+      "3 Broadband",
+      "SmarTone Broadband"
+    ],
+    "description": "ISPs"
+  },
+  "{00029}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "Greater Bay Area",
+      "Pearl River Delta",
+      "South China",
+      "Asia Pacific",
+      "Greater China",
+      "Southeast Asia"
+    ],
+    "translations": [
+      "Greater Bay Area",
+      "Pearl River Delta",
+      "South China",
+      "Asia Pacific",
+      "Greater China",
+      "Southeast Asia"
+    ],
+    "description": "Broader regions"
+  },
+  "{00030}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "Hong Kong Island",
+      "Kowloon Peninsula",
+      "New Territories East",
+      "New Territories West",
+      "Lantau Island",
+      "Outlying Islands"
+    ],
+    "translations": [
+      "Hong Kong Island",
+      "Kowloon Peninsula",
+      "New Territories East",
+      "New Territories West",
+      "Lantau Island",
+      "Outlying Islands"
+    ],
+    "description": "Region (typo)"
+  },
+  "{00031}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "apple",
+      "orange",
+      "banana",
+      "grapes",
+      "mango",
+      "durian"
+    ],
+    "translations": [
+      "apple",
+      "orange",
+      "banana",
+      "grapes",
+      "mango",
+      "durian"
+    ],
+    "description": "Common fruits"
+  },
+  "{00032}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "Now TV",
+      "Cable TV",
+      "TVB",
+      "ViuTV",
+      "myTV SUPER",
+      "Netflix"
+    ],
+    "translations": [
+      "Now TV",
+      "Cable TV",
+      "TVB",
+      "ViuTV",
+      "myTV SUPER",
+      "Netflix"
+    ],
+    "description": "TV providers"
+  },
+  "{00033}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "Basic Channels",
+      "Sports Pack",
+      "Movie Pack",
+      "News Pack",
+      "Entertainment Pack",
+      "4K Channels"
+    ],
+    "translations": [
+      "Basic Channels",
+      "Sports Pack",
+      "Movie Pack",
+      "News Pack",
+      "Entertainment Pack",
+      "4K Channels"
+    ],
+    "description": "TV packages"
+  },
+  "{00034}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "iPhone 15",
+      "Samsung Galaxy",
+      "AirPods",
+      "PlayStation 5",
+      "Nintendo Switch",
+      "Dyson Vacuum"
+    ],
+    "translations": [
+      "iPhone 15",
+      "Samsung Galaxy",
+      "AirPods",
+      "PlayStation 5",
+      "Nintendo Switch",
+      "Dyson Vacuum"
+    ],
+    "description": "Popular products"
+  },
+  "{00035}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "HKTVmall",
+      "Taobao",
+      "Amazon",
+      "Yoho",
+      "Fortress Online",
+      "Broadway Online"
+    ],
+    "translations": [
+      "HKTVmall",
+      "Taobao",
+      "Amazon",
+      "Yoho",
+      "Fortress Online",
+      "Broadway Online"
+    ],
+    "description": "E-commerce sites"
+  },
+  "{00036}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "Sha Tin Police Station",
+      "Tsuen Wan Police Station",
+      "Tuen Mun Police Station",
+      "Yuen Long Police Station",
+      "Tai Po Police Station",
+      "Kwai Chung Police Station"
+    ],
+    "translations": [
+      "Sha Tin Police Station",
+      "Tsuen Wan Police Station",
+      "Tuen Mun Police Station",
+      "Yuen Long Police Station",
+      "Tai Po Police Station",
+      "Kwai Chung Police Station"
+    ],
+    "description": "More stations"
+  },
+  "{00037}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "Airport Police Station",
+      "Marine Police Headquarters",
+      "Police Headquarters",
+      "Railway District",
+      "Border District",
+      "Traffic Headquarters"
+    ],
+    "translations": [
+      "Airport Police Station",
+      "Marine Police Headquarters",
+      "Police Headquarters",
+      "Railway District",
+      "Border District",
+      "Traffic Headquarters"
+    ],
+    "description": "Special stations"
+  },
+  "{00038}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "Education Bureau",
+      "HKEAA",
+      "UGC",
+      "Student Finance Office",
+      "VTC",
+      "QF Secretariat"
+    ],
+    "translations": [
+      "Education Bureau",
+      "HKEAA",
+      "UGC",
+      "Student Finance Office",
+      "VTC",
+      "QF Secretariat"
+    ],
+    "description": "Education departments"
+  },
+  "{00039}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "Netvigator",
+      "HKBN",
+      "HGC Broadband",
+      "i-Cable Broadband",
+      "CMHK Broadband",
+      "3 Home Broadband"
+    ],
+    "translations": [
+      "Netvigator",
+      "HKBN",
+      "HGC Broadband",
+      "i-Cable Broadband",
+      "CMHK Broadband",
+      "3 Home Broadband"
+    ],
+    "description": "ISP names"
+  }
+}

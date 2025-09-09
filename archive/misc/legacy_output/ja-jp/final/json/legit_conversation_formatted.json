@@ -1,0 +1,50 @@
+[
+  {
+    "is_vp": 0,
+    "conversation_id": 1,
+    "region": "Japan",
+    "category": "tutoring_session",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "こんばんは、田中です。今週の数学の家庭教師の予約をお願いしたいのですが。",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "こんばんは、田中様。はい、今週の金曜日午後5時から空いておりますが、ご都合はいかがでしょうか？",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 2,
+    "region": "Japan",
+    "category": "clinic_test_results",
+    "num_turns": 4,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "こんにちは、田中です。先日受けた血液検査の結果を伺いたいのですが。",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "田中様、お電話ありがとうございます。検査結果は正常範囲内でした。特に問題はありません。",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "そうですか、安心しました。薬の変更などは必要ありませんか？",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "今のところ薬の変更はありません。体調に変わりがあればご連絡ください。",
+        "role": "callee"
+      }
+    ]
+  }
+]

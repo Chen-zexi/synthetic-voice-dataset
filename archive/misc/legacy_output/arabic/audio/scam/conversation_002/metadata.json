@@ -1,0 +1,36 @@
+{
+  "conversation_id": 2,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "مرحبًا ، خدمة العملاء اليدوية ياسارية. هل تحتاج إلى أسئلة الامتحان؟",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "مرحبًا ، أسئلة ياسارية تبدو مفيدة. كيف أحصل عليهم؟",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "فقط املأ الرابط الذي أرسلته. حجز سهل.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_03_caller.mp3"
+    },
+    {
+      "turn_id": 4,
+      "role": "callee",
+      "text": "سأحتاج إلى التحقق من هذا الرابط أولاً. السلامة هي الأولوية.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_04_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_002_combined_final.wav"
+}

@@ -1,0 +1,452 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "{00001}Hello, here is {00002}{00003}Base Your son-in-law was arrested by us yesterday for prostitution. This incident is not a good thing. If you want many people to know, pay 30,000 yuan in bail as soon as possible",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "{00001}Hello, {00002}{00003}Base. Your son-in-law was arrested yesterday for prostitution. Pay 30,000 yuan bail ASAP.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "What? Are you sure? Is he really arrested? I need details.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Yes, confirmed. To avoid public scandal, transfer 30,000 yuan bail immediately.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Alright, I will arrange the payment now. Please hold on.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "first_turn": "Hello, here is the manual customer service of {00004}. As the exam is approaching, I don’t know if the students in the same class need the exam questions. You can fill in the links that you spread to you and finish booking.",
+    "num_turns": 3,
+    "victim_awareness": "very",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is {00004} manual service. With exams near, do classmates need exam questions? Fill links you got and book.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "I know this is a scam. I won't click any links or provide info. Stop calling.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Please don't be upset. This is a legitimate chance for exam help. Just a quick sign-up.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 3,
+    "first_turn": "I'll take the exam in a few days. How are you preparing? I'll take the exam next week. I'm so nervous",
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "I'll take the exam next week. How are you preparing?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "I'm quite nervous too, trying to study every day. Any tips?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "I can send you some exclusive study material for a small fee, it really helps.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 4,
+    "first_turn": "Hello, it takes you a few minutes. This is the customer service of the {00005} agency center. Our agency recently launched a high-value credit card acceptance service. There is no need for too many procedures. You will pay a 1,000 yuan handling fee to deal with it for you.",
+    "num_turns": 2,
+    "victim_awareness": "very",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is {00005} agency's customer service. We offer a credit card service for a 1,000 yuan fee.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "I'm aware of scams like this. Please remove my number from your list immediately.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 5,
+    "first_turn": "Sorry to bother you, I am a staff member of the Venezuelan Embassy. The passport accepted with your ID is suspected of illegal entry. An arrest warrant has been issued to you, and you need to pay £1,000 to avoid being arrested.",
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is {00001} from the Venezuelan Embassy. Your ID passport is suspected, and there's an arrest warrant. Pay £1,000 to avoid arrest.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh no, I didn't know about this. How can I make the payment to clear this up?",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 6,
+    "first_turn": "Hello, this is an office worker of the Swiss Embassy. Someone stolen your identity information and applied for a bank card at {00006} and used this card to abscond with the money. He is currently arrested at {00002}{00007}. Now you need to connect to the designated police station to explain the situation. Otherwise, it will affect your credit situation.",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is Swiss Embassy staff. Someone stole your identity and got a bank card at {00006}, then fled with the money. He's arrested at {00002}{00007}. You must contact the police to explain or your credit may be affected.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh no, I had no idea! What should I do to contact them?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "I will connect you now to the designated police station. Please stay on the line to resolve this quickly.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Alright, I'm waiting. I hope this can be sorted out fast.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 7,
+    "first_turn": "Me, it's me, it's me! That's right, I have made an appointment with a committee member and need to give gifts to the leaders and comrades. I'll send me 10,000 yuan in cash. I'm anxious",
+    "num_turns": 2,
+    "victim_awareness": "tiny",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Me, it's me! I've got an appointment with a committee member and need to give gifts to leaders and comrades. Send me {00001} in cash, I'm anxious.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Alright, I can help. Should I send the {00001} now or later?",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 8,
+    "first_turn": "It's me, can you hear it clearly? I just made an appointment with a leader and needed to give gifts to the leader to do something. Can you use {00008} to help me transfer some money?",
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "It's me, can you hear clearly? I set an appointment with a leader and need gifts. Can you use {00008} to transfer money?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Yes, I can help. How much should I transfer using {00008}?",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 9,
+    "first_turn": "Hello, it will take you a few minutes. I am {00009}. According to the latest relevant policies issued by the country, the house you bought can now enjoy the preferential policies of {00010}. You need to cooperate with me to do facial recognition.",
+    "num_turns": 4,
+    "victim_awareness": "very",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, I am {00009}. Your house purchase qualifies for {00010} policies; facial recognition is needed.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Nice try. I know this is a scam. Why do you think I'd give you facial data?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Please cooperate; this is a legitimate process under {00010} rules for your benefit.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "No thanks. I’ll report this call to the authorities instead.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 10,
+    "first_turn": "Hello, it will take you a few minutes. I am {00009} from {0009}. The latest country has issued relevant policies. The house you purchased can now enjoy {00010} discount. You need to go to the nearby {00006} ATM to launch a tax refund according to my needs.",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, I am {00009} from {0009}. The latest policies let your house enjoy {00010} discount. Please go to {00006} ATM to start your tax refund.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, that sounds great! How do I start the process at the {00006} ATM?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Just insert your card and follow the prompts I will guide you through to claim the {00010} discount.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Alright, I'm at the {00006} ATM now. Please tell me what to do next.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 11,
+    "first_turn": "Hello, I am an office worker of the Communications Administration Bureau. Someone used your identity information to accept a mobile phone card at {00002} and used this mobile phone number to deceive citizens' property at {00002}. If it is not done by yourself, you need to prove to the {00002} police station that these messages were sent were not sent by you.",
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, I'm an office worker from Communications Administration Bureau. Someone used your identity at {00002} to get a phone card and used the number for fraud at {00002}. If not you, you must prove to {00002} police the messages weren't sent by you.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh no, I had no idea! What do I need to do to prove it wasn't me?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Please provide your ID details now so we can file the case with {00002} police and prevent further fraud.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 12,
+    "first_turn": "Sorry to bother you, this is {00002}{00011} Criminals use your identity information to transfer stolen money. You are currently wanted by the police online. You need to click the link I sent you to update your personal information.",
+    "num_turns": 3,
+    "victim_awareness": "very",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Sorry to bother you, this is {00002}{00011}. Criminals used your identity to transfer stolen money. You're wanted by police online. Click the link I sent to update info.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "I know this is a scam. I never shared my info and won't click any links from unknown numbers.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Please, it's urgent for your safety. Confirm your details now or legal action will follow.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 13,
+    "first_turn": "You remember the school loan you applied for. If you pay it back, remember to cancel your account; if you haven't paid it back, remember to log in to your account every month. I'm worried that we will be stolen.",
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "You remember the school loan {00001} you applied for? If paid, cancel your account; if not, log in monthly. I'm worried we will be stolen.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, I didn't know about the cancellation. Can you help me check my account {00001} status?",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 14,
+    "first_turn": "Sorry to bother you, here is the office staff of the {00005} agency workstation. There is a good high-value credit card agency service recommended to you. This service is free of certificates and is processed very quickly. This service requires a deposit of 1,000 yuan.",
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is {00005} agency. We offer a high-value credit card service that requires a 1,000 yuan deposit and is processed quickly without certificates.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "That sounds interesting. Could you explain how I can make the deposit and get started?",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 15,
+    "first_turn": "Hello, I am a staff member of the {00012} service department. We found that a courier package sent to you seemed to contain contraband. If this courier was not sent by you, you need to report the case to the {00013} police and explain that this matter has nothing to do with you.",
+    "num_turns": 4,
+    "victim_awareness": "very",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, I am from the {00012} service. A courier to you had contraband. If not from you, report to {00013} police.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "I know this is a scam. I never ordered any courier, and I will report you to the authorities.",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Please calm down, this is official. Your cooperation is needed to solve this issue immediately.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "No, I'm hanging up now. Don't waste my time with these fake calls.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 16,
+    "first_turn": "Hello customer, I am an office staff member of the {00012} site service station. Sorry, due to the mistakes of our staff, your express delivery was lost. We will accept compensation for you here. We have arranged a special claim staff for you, and you need to add {00014} to carry out specific claims operations.",
+    "num_turns": 3,
+    "victim_awareness": "tiny",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello customer, I am staff from {00012} site. Due to our mistake, your express was lost. We will compensate and have a claim staff; please add {00014} for claims.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, I see. What exactly do I need to do after adding {00014}?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "After adding {00014}, our claim staff will guide you through the process to ensure quick compensation.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 17,
+    "first_turn": "Hello? Is it {00001}? I am your high school mathematics teacher. I will give you a bank account. I need to make money for this account. But it is not convenient for me now. I will give you an account. You can transfer it to this account.",
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello? Is it {00001}? I'm your old math teacher. I'll give you a bank account to make money, but can't now.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, hi! Sure, what do I need to do with the account?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Just transfer money to it when I send you details. It's safe and easy, trust me.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 18,
+    "first_turn": "Hello, I am from the Ministry of Human Resources and Social Security. Do you ask if you have applied for medical reimbursement before? It has not been issued yet. I can help you transfer it to the Ministry of Finance. Please ask them for details.",
+    "num_turns": 2,
+    "victim_awareness": "very",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, I'm from {00001}. Did you apply for medical reimbursement? It hasn't been issued yet. I can help transfer it to {00002}. Please ask them for details.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "I know this is a scam. I never applied for any reimbursement, and {00001} never calls like this. Please stop bothering me.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 19,
+    "first_turn": "Hello, this is the British health department. Your health situation is not declared in time. You will have bad credit registration.",
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is the British health department. Your health status isn't declared on time. Bad credit registration will follow.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, I wasn't aware of this. What should I do now to fix it?",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 20,
+    "first_turn": "Sorry to bother you. I am the customer service of {00015}. I contacted you because I am very sorry. Many people have reported that the milk you bought some time ago has diarrhea after drinking it. There may be problems. We will compensate you 100 yuan. If you want to make a claim, you need to add my {00014}. This will help you to guide you in the next step.",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Sorry to bother you. I am customer service of {00015}. Some reported diarrhea after drinking the milk you bought. We will compensate 100 yuan. Please add my {00014} for claim guidance.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh no, I didn't know that. Is it really necessary to add your {00014} to proceed with the claim?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Yes, adding my {00014} is the fastest way to help you get your compensation. Otherwise, you might face delays.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Alright, please send me the details on how to add your {00014} so I can start the process.",
+        "role": "callee"
+      }
+    ]
+  }
+]

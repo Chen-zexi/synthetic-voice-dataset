@@ -1,0 +1,22 @@
+{
+  "conversation_id": 2,
+  "caller_voice_id": "pqHfZKP75CvOlQylNhV4",
+  "callee_voice_id": "onwK4e9ZLuTAKqWW03F9",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "안녕하세요, 대성학원 수동 서비스입니다. 기출 문제지를 원하시나요? 예약을 위해 링크를 보내드리겠습니다.",
+      "voice_id": "pqHfZKP75CvOlQylNhV4",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "좋아요, 링크를 보내주세요. 시험을 위해 그 자료가 필요할 수도 있어요.",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_002_combined_final.wav"
+}

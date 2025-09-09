@@ -1,0 +1,22 @@
+{
+  "conversation_id": 3,
+  "caller_voice_id": "JBFqnCBsd6RMkjVDRZzb",
+  "callee_voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "Hello, this is Lisa Chan calling to confirm our family check-in for this Saturday at the Harbourview Hotel.",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "Hi Lisa, yes, your reservation for four at 3 PM on Saturday is confirmed. Looking forward to welcoming you all!",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_003_combined_final.wav"
+}

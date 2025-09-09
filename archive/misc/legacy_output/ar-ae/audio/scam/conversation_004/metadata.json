@@ -1,0 +1,22 @@
+{
+  "conversation_id": 4,
+  "caller_voice_id": "u0TsaWvt0v8migutHM3M",
+  "callee_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "مرحبًا ، هذه هي خدمة عملاء الوكالة أمريكان إكسبريس. نحن نقدم خدمة بطاقة ائتمان مقابل 1000 يوان.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "أنا على دراية بالاحتيال مثل هذا. الرجاء إزالة رقمي من قائمتك على الفور.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_004_combined_final.wav"
+}

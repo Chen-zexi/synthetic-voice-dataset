@@ -1,0 +1,118 @@
+[
+  {
+    "conversation_id": 1,
+    "scenario": "PDRM Money Laundering Impersonation",
+    "first_turn": "Selamat pagi, saya Inspektor dari Jabatan Siasatan Jenayah PDRM.",
+    "num_turns": 10,
+    "victim_awareness": "not",
+    "voice_mapping": {
+      "caller": "jawaid",
+      "callee": "afifah"
+    },
+    "dialogue": [
+      {
+        "role": "caller",
+        "content": "Selamat pagi, saya Inspektor Rahman dari Jabatan Siasatan Jenayah Komersial PDRM Dang Wangi. Adakah saya bercakap dengan pemilik kad pengenalan yang berakhir dengan nombor 5678?"
+      },
+      {
+        "role": "callee",
+        "content": "Ya, saya sendiri. Err... ada apa masalahnya encik? Kenapa polis telefon saya ni? Betul ke ni polis?"
+      },
+      {
+        "role": "caller",
+        "content": "Puan, kami telah mengesan kad pengenalan anda telah digunakan untuk membuka akaun bank di Maybank cawangan Bukit Bintang yang terlibat dalam kes pengubahan wang haram bernilai RM3,500,000. Anda kena bekerjasama sekarang untuk elakkan tangkapan."
+      },
+      {
+        "role": "callee",
+        "content": "Apa?! Saya tak pernah buka akaun kat sana lah! Ini mesti ada silap faham. Saya kerja biasa je, mana ada buat benda macam tu! Boleh tak saya verify dengan balai polis dulu?"
+      },
+      {
+        "role": "caller",
+        "content": "Puan jangan panik, tapi situasi ini sangat serius. Kami ada bukti transaksi mencurigakan dari akaun anda ke beberapa akaun di luar negara. Mahkamah dah keluarkan waran tangkap atas nama anda. Tapi saya boleh bantu kalau puan bekerjasama sekarang juga."
+      },
+      {
+        "role": "callee",
+        "content": "Ya Allah, macam mana ni? Saya betul-betul tak tahu apa-apa pasal ni lah. Wait, wait... macam mana saya tahu ini betul dari polis? Ada nombor kes ke? Saya takut kena tipu pula..."
+      },
+      {
+        "role": "caller",
+        "content": "Puan, saya faham kebimbangan puan. Nombor kes: KL/2024/ML-8847. Dengar baik-baik, puan ada dua jam sahaja sebelum kami terpaksa bekukan semua akaun bank anda. Untuk bantuan segera, puan perlu pindahkan semua wang dalam akaun anda ke akaun keselamatan yang disediakan oleh Bank Negara. Ini untuk lindungi wang puan daripada disita."
+      },
+      {
+        "role": "callee",
+        "content": "Akaun keselamatan? Hmm... tapi kenapa kena pindah wang pula? Betul ke ni? Saya ada dalam RM800 je dalam akaun untuk bayar sewa dan bil bulan ni. Takkan semua kena pindah kot?"
+      },
+      {
+        "role": "caller",
+        "content": "Semua wang perlu dipindahkan segera untuk siasatan. Saya akan berikan nombor akaun keselamatan sekarang. Tulis betul-betul: CIMB Bank nombor akaun 1644789523. Nama akaun: Amanah Siasatan PDRM. Selepas transfer, hantar resit ke nombor saya di WhatsApp 013-8874521 untuk pengesahan."
+      },
+      {
+        "role": "callee",
+        "content": "Eh kejap, macam mana saya tahu ini betul? Saya rasa saya better pergi balai polis dulu lah untuk sahkan. Saya takut ni... Atau saya call balik guna nombor hotline PDRM boleh tak?"
+      }
+    ],
+    "metadata": {
+      "actual_case_similarity": "Very High - Matches actual PDRM impersonation cases reported in 2024 with RM1.6 billion losses",
+      "location_alignment": "Dang Wangi is actual KL police district, Bukit Bintang is major commercial area with many bank branches",
+      "cultural_authenticity": "High - Uses proper Malaysian police terminology and realistic amounts"
+    }
+  },
+  {
+    "conversation_id": 2,
+    "scenario": "KWSP/EPF COVID Recovery Refund Scam",
+    "first_turn": "Assalamualaikum, saya dari Bahagian Pengeluaran Khas KWSP.",
+    "num_turns": 10,
+    "victim_awareness": "not",
+    "voice_mapping": {
+      "caller": "hasnan",
+      "callee": "athira"
+    },
+    "dialogue": [
+      {
+        "role": "caller",
+        "content": "Assalamualaikum, saya Azman bin Abdullah dari Bahagian Pengeluaran Khas KWSP. Tahniah! Anda layak untuk pengeluaran khas i-Saraan Pemulihan COVID sebanyak RM8,000 berdasarkan caruman anda."
+      },
+      {
+        "role": "callee",
+        "content": "Waalaikumsalam. Eh, pengeluaran khas? Saya tak mohon apa-apa pun dari KWSP baru-baru ni. Macam mana ni boleh dapat automatik?"
+      },
+      {
+        "role": "caller",
+        "content": "Ini inisiatif kerajaan terbaru untuk bantu rakyat hadapi kos sara hidup. Semua pencarum yang ada baki melebihi RM10,000 dalam Akaun 2 layak secara automatik. Anda hanya perlu kemaskini maklumat i-Akaun untuk proses pembayaran."
+      },
+      {
+        "role": "callee",
+        "content": "Oh ya ke? Hmm... tapi biasanya KWSP ada announce dulu kan kalau ada pengeluaran khas? Berapa lama nak dapat duit tu? Memang tengah susah lah sekarang ni dengan harga barang naik."
+      },
+      {
+        "role": "caller",
+        "content": "Pembayaran boleh dibuat hari ini juga, terus masuk akaun bank anda. Saya perlukan beberapa maklumat untuk pengesahan. Pertama, boleh berikan nombor KWSP anda dan tarikh lahir untuk saya semak kelayakan?"
+      },
+      {
+        "role": "callee",
+        "content": "Err... kejap, kenapa perlu nombor KWSP? Bukankah anda yang call saya, sepatutnya dah ada maklumat tu? Saya lahir 15 Mac 1985 lah, tapi... RM8,000 tu banyak sangat, macam tak percaya pula."
+      },
+      {
+        "role": "caller",
+        "content": "Ya betul, rekod menunjukkan anda layak. Sekarang saya perlukan TAC code dari i-Akaun anda untuk sahkan identiti. Saya akan hantar permintaan TAC sekarang, nanti anda terima dalam telefon, berikan nombor tu pada saya."
+      },
+      {
+        "role": "callee",
+        "content": "TAC code?! Eh tak boleh lah, TAC code tak boleh bagi orang lain kan? Untuk keselamatan... Saya rasa ini macam scam je. Better saya check sendiri kat i-Akaun."
+      },
+      {
+        "role": "caller",
+        "content": "Puan, saya faham kerisauan puan. Ini prosedur standard KWSP untuk pengeluaran khas one-time sahaja. TAC diperlukan untuk verify identiti, bukan untuk transfer. Sistem akan auto-cancel permohonan anda kalau tak verify dalam 30 minit dan anda kena tunggu pusingan seterusnya tahun depan. Rugi tau kalau lepaskan RM8,000 ni, ramai dah claim hari ni."
+      },
+      {
+        "role": "callee",
+        "content": "Hmm... saya still ragu-ragu ni. Macam ni lah, saya nak call KWSP hotline dulu untuk confirm, boleh? Atau... err, kalau betul urgent sangat, boleh tak saya pergi KWSP office terus? Takut lah kalau kena scam, duit tu untuk yuran sekolah anak saya..."
+      }
+    ],
+    "metadata": {
+      "actual_case_similarity": "Very High - KWSP explicitly warns about this exact scam type offering fake early withdrawals via social media",
+      "name_alignment": "Azman bin Abdullah - common Malay Muslim name appropriate for KWSP officer",
+      "cultural_authenticity": "High - References actual KWSP i-Akaun system and realistic withdrawal amounts"
+    }
+  }
+]

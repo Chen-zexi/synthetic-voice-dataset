@@ -1,0 +1,30 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "{00001}Hello, this is {00002}Police Department Your son-in-law was arrested by us yesterday for prostitution. This incident is not a good thing. If you want many people to know, pay {00003} bail as soon as possible",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "{00001}Hello, this is {00002}Police Department Your son-in-law was arrested. Pay {00003} bail soon.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh no, what happened exactly?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "He was involved in a case last night. You need to act quickly.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "How do I pay the {00003} bail?",
+        "role": "callee"
+      }
+    ]
+  }
+]

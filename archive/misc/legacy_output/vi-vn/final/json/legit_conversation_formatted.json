@@ -1,0 +1,40 @@
+[
+  {
+    "is_vp": 0,
+    "conversation_id": 1,
+    "region": "Vietnam",
+    "category": "volunteering_coordination",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Chào anh Nam, em là Mai từ nhóm tình nguyện Hoa Sen. Anh có thể tham gia buổi họp cuối tuần này không?",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Chào Mai, cảm ơn em đã gọi. Anh có thể tham gia lúc 9 giờ sáng thứ Bảy được nhé.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 2,
+    "region": "Vietnam",
+    "category": "customer_support_callback",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Chào anh/chị, tôi gọi lại theo yêu cầu hỗ trợ kỹ thuật từ trung tâm khách hàng.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Dạ, cảm ơn anh/chị đã gọi lại. Tôi cần được hỗ trợ về đăng ký dịch vụ mới.",
+        "role": "callee"
+      }
+    ]
+  }
+]

@@ -1,0 +1,53 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "{00001}Hello, this is the {00002}{00003} branch. Your son-in-law was arrested yesterday for soliciting prostitution. This matter has had a rather negative impact. If you don't want many people to know about it, please pay the bail of 30,000 yuan as soon as possible.",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "{00001}Hello, this is the {00002}{00003} branch. Your son-in-law was arrested for soliciting prostitution yesterday. This is serious. Pay 30,000 yuan bail quickly to avoid trouble.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh no, that sounds terrible! Is he okay? What happens if we don't pay the bail?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "If you don't pay, the case becomes public and damages reputation. Paying 30,000 yuan secures his release and keeps this quiet.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "I understand. How can I send the 30,000 yuan to you? Please help him get out fast.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "first_turn": "Hello, this is the customer service representative from {00004}. With exams approaching, I'm not sure if your classmates need exam papers. Could you please fill in the form so that I can send you the link for ordering?",
+    "num_turns": 3,
+    "victim_awareness": "tiny",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is customer service from {00004}. Do your classmates need exam papers? Please fill the form to get the order link.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Uh, I’m not sure. What’s this form about exactly? Is it safe?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "It's completely safe and quick. Just a few details, and you’ll get instant access to all papers for {00004} exams.",
+        "role": "caller"
+      }
+    ]
+  }
+]

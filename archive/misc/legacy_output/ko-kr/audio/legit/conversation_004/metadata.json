@@ -1,0 +1,29 @@
+{
+  "conversation_id": 4,
+  "caller_voice_id": "onwK4e9ZLuTAKqWW03F9",
+  "callee_voice_id": "pqHfZKP75CvOlQylNhV4",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "안녕하세요, 김민준입니다. 내일 오후 3시에 예약한 진료 확인하고 싶어서요.",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "안녕하세요 김민준님, 네 내일 오후 3시 정형외과 진료 예약 확인되었습니다.",
+      "voice_id": "pqHfZKP75CvOlQylNhV4",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "감사합니다. 준비물 따로 챙겨야 할 것 있을까요?",
+      "voice_id": "onwK4e9ZLuTAKqWW03F9",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_004_combined_final.wav"
+}

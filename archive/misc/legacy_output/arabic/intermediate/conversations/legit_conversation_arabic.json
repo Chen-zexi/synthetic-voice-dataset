@@ -1,0 +1,53 @@
+[
+  {
+    "conversation_id": 1,
+    "region": "Saudi Arabia",
+    "category": "product_feedback_survey",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحباً، معك خالد من شركة التسويق، هل يمكنني أخذ دقيقتين من وقتك لتعبئة استبيان حول منتج جديد؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "مرحباً، بالطبع، ما هو المنتج الذي ترغب في الاستفسار عنه؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "شكرًا لتعاونك، نود معرفة رأيك عن جهاز القهوة الأخير لدينا.",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "region": "Saudi Arabia",
+    "category": "friend_chat",
+    "num_turns": 4,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحبًا خالد! كيف حالك؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "هلا عبدالله، الحمد لله تمام. وأنت كيف أمورك؟",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "الحمد لله، كنت أفكر نزور محمد الأسبوع القادم. وش رأيك؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "فكرة حلوة، خلينا نتواصل معه ونحدد وقت يناسب الجميع.",
+        "role": "callee"
+      }
+    ]
+  }
+]

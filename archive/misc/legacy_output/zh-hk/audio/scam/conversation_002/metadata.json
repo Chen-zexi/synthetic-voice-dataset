@@ -1,0 +1,29 @@
+{
+  "conversation_id": 2,
+  "caller_voice_id": "XB0fDUnXU5powFXDhCwa",
+  "callee_voice_id": "IKne3meq5aSn9XLyUdCD",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "餵你好，這邊是理工大學人工客服，考試臨近，不知道你同學需不需要考試真題",
+      "voice_id": "XB0fDUnXU5powFXDhCwa",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "哦，是的，我們確實有考試需要，您這邊可以提供什麼幫助嗎？",
+      "voice_id": "IKne3meq5aSn9XLyUdCD",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "你只需填寫鏈接信息，稍後我給你發預訂的真題資料。",
+      "voice_id": "XB0fDUnXU5powFXDhCwa",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_002_combined_final.wav"
+}

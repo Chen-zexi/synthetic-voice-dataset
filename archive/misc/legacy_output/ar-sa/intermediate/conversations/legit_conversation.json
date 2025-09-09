@@ -1,0 +1,42 @@
+[
+  {
+    "conversation_id": 1,
+    "region": "Saudi Arabia",
+    "category": "doctor_appointment_confirmation",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "السلام عليكم، هل يمكنني التأكد من موعدي مع الدكتور محمد غانم يوم الاثنين القادم؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "وعليكم السلام، نعم موعدك يوم الاثنين الساعة ٣ مساءً في العيادة رقم ٢.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "region": "Saudi Arabia",
+    "category": "freelance_client_call",
+    "num_turns": 2,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "مرحبًا، هل يمكننا مناقشة تفاصيل مشروع التصميم الذي طلبته؟",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "مرحبًا، نعم بالطبع، أنا جاهز للاستماع لمتطلباتك وتحديد المدة والتكلفة.",
+        "role": "callee"
+      }
+    ],
+    "voice_mapping": {
+      "caller": "Male_Arabic_Saudi",
+      "callee": "Female_Arabic_Saudi"
+    }
+  }
+]

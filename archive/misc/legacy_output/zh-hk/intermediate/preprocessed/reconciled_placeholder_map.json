@@ -1,0 +1,790 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "陳大文",
+      "李嘉欣",
+      "張家輝",
+      "黃美芬",
+      "梁志偉",
+      "何詠琪",
+      "劉德華",
+      "王曉晴"
+    ],
+    "translations": [
+      "Chan Tai Man",
+      "Li Ka Yan",
+      "Cheung Ka Fai",
+      "Wong Mei Fan",
+      "Leung Chi Wai",
+      "Ho Wing Kei",
+      "Lau Tak Wah",
+      "Wong Hiu Ching"
+    ],
+    "description": "Common names in Hong Kong"
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "中環",
+      "銅鑼灣",
+      "尖沙咀",
+      "旺角",
+      "沙田",
+      "荃灣",
+      "屯門",
+      "元朗"
+    ],
+    "translations": [
+      "Central",
+      "Causeway Bay",
+      "Tsim Sha Tsui",
+      "Mong Kok",
+      "Sha Tin",
+      "Tsuen Wan",
+      "Tuen Mun",
+      "Yuen Long"
+    ],
+    "description": "Districts in Hong Kong"
+  },
+  "{00003}": {
+    "tag": "<police>",
+    "substitutions": [
+      "香港警務處",
+      "警署",
+      "重案組",
+      "反詐騙協調中心",
+      "商業罪案調查科",
+      "網絡安全及科技罪案調查科"
+    ],
+    "translations": [
+      "Hong Kong Police Force",
+      "Police Station",
+      "Major Crime Unit",
+      "Anti-Deception Coordination Centre",
+      "Commercial Crime Bureau",
+      "Cyber Security and Technology Crime Bureau"
+    ],
+    "description": "Police forces"
+  },
+  "{00004}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "香港大學",
+      "中文大學",
+      "科技大學",
+      "理工大學",
+      "城市大學",
+      "浸會大學"
+    ],
+    "translations": [
+      "HKU",
+      "CUHK",
+      "HKUST",
+      "PolyU",
+      "CityU",
+      "HKBU"
+    ],
+    "description": "Universities"
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "Visa卡",
+      "萬事達卡",
+      "美國運通",
+      "銀聯卡",
+      "JCB卡",
+      "恒生信用卡"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "UnionPay",
+      "JCB",
+      "Hang Seng Card"
+    ],
+    "description": "Credit card companies"
+  },
+  "{00006}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "滙豐銀行",
+      "恒生銀行",
+      "中國銀行",
+      "渣打銀行",
+      "東亞銀行",
+      "花旗銀行"
+    ],
+    "translations": [
+      "HSBC",
+      "Hang Seng Bank",
+      "Bank of China",
+      "Standard Chartered",
+      "Bank of East Asia",
+      "Citibank"
+    ],
+    "description": "Banks in Hong Kong"
+  },
+  "{00007}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "香港國際機場",
+      "赤鱲角機場",
+      "一號客運大樓",
+      "二號客運大樓",
+      "機場快綫香港站",
+      "機場快綫九龍站"
+    ],
+    "translations": [
+      "Hong Kong International Airport",
+      "Chek Lap Kok Airport",
+      "Terminal 1",
+      "Terminal 2",
+      "Airport Express Hong Kong Station",
+      "Airport Express Kowloon Station"
+    ],
+    "description": "Airports"
+  },
+  "{00008}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "滙豐Red信用卡",
+      "恒生enJoy卡",
+      "渣打Simply Cash卡",
+      "中銀i-card",
+      "DBS Black卡",
+      "東亞i-Titanium卡"
+    ],
+    "translations": [
+      "HSBC Red Card",
+      "Hang Seng enJoy Card",
+      "SCB Simply Cash Card",
+      "BOC i-card",
+      "DBS Black Card",
+      "BEA i-Titanium Card"
+    ],
+    "description": "Bank card names"
+  },
+  "{00009}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "房委會",
+      "房屋署",
+      "房協",
+      "市建局",
+      "地政署",
+      "差餉物業估價署"
+    ],
+    "translations": [
+      "Housing Authority",
+      "Housing Department",
+      "Housing Society",
+      "URA",
+      "Lands Department",
+      "Rating and Valuation Department"
+    ],
+    "description": "Housing agency variant"
+  },
+  "{00010}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "綠表置居計劃",
+      "白表居屋第二市場計劃",
+      "租者置其屋計劃",
+      "首次置業貸款計劃",
+      "居屋計劃",
+      "公屋輪候"
+    ],
+    "translations": [
+      "Green Form Subsidised Home Ownership Scheme",
+      "White Form Secondary Market Scheme",
+      "Tenants Purchase Scheme",
+      "Home Starter Loan Scheme",
+      "Home Ownership Scheme",
+      "Public Housing Queue"
+    ],
+    "description": "Housing schemes"
+  },
+  "{00011}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "刑事偵緝處",
+      "O記",
+      "商業罪案調查科",
+      "反詐騙協調中心",
+      "毒品調查科",
+      "有組織罪案及三合會調查科"
+    ],
+    "translations": [
+      "Criminal Investigation Department",
+      "Organized Crime and Triad Bureau",
+      "Commercial Crime Bureau",
+      "Anti-Deception Coordination Centre",
+      "Narcotics Bureau",
+      "OCTB"
+    ],
+    "description": "Investigation units"
+  },
+  "{00012}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "順豐速運",
+      "香港郵政",
+      "DHL",
+      "聯邦快遞",
+      "嘉里物流",
+      "宅急便"
+    ],
+    "translations": [
+      "SF Express",
+      "Hongkong Post",
+      "DHL",
+      "FedEx",
+      "Kerry Logistics",
+      "Takkyubin"
+    ],
+    "description": "Courier services"
+  },
+  "{00013}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "香港島",
+      "九龍",
+      "新界",
+      "離島區",
+      "港島區",
+      "九龍區"
+    ],
+    "translations": [
+      "Hong Kong Island",
+      "Kowloon",
+      "New Territories",
+      "Islands District",
+      "HK Island Region",
+      "Kowloon Region"
+    ],
+    "description": "HK regions"
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "WhatsApp",
+      "Facebook",
+      "Instagram",
+      "微信",
+      "連登",
+      "Telegram"
+    ],
+    "translations": [
+      "WhatsApp",
+      "Facebook",
+      "Instagram",
+      "WeChat",
+      "LIHKG",
+      "Telegram"
+    ],
+    "description": "Social media platforms"
+  },
+  "{00015}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "百佳",
+      "惠康",
+      "一田",
+      "AEON",
+      "HKTVmall",
+      "淘寶"
+    ],
+    "translations": [
+      "PARKnSHOP",
+      "Wellcome",
+      "YATA",
+      "AEON",
+      "HKTVmall",
+      "Taobao"
+    ],
+    "description": "Popular marketplaces"
+  },
+  "{00016}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "富途證券",
+      "耀才證券",
+      "輝立證券",
+      "國泰君安",
+      "中銀國際",
+      "海通國際"
+    ],
+    "translations": [
+      "Futu Securities",
+      "Bright Smart Securities",
+      "Phillip Securities",
+      "Guotai Junan",
+      "BOCI",
+      "Haitong International"
+    ],
+    "description": "Brokerage firms"
+  },
+  "{00017}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "張學友",
+      "陳奕迅",
+      "容祖兒",
+      "謝安琪",
+      "G.E.M.",
+      "陳偉霆"
+    ],
+    "translations": [
+      "Jacky Cheung",
+      "Eason Chan",
+      "Joey Yung",
+      "Kay Tse",
+      "G.E.M.",
+      "William Chan"
+    ],
+    "description": "Popular singers"
+  },
+  "{00018}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "匯豐",
+      "恒生",
+      "中銀香港",
+      "渣打",
+      "東亞",
+      "星展"
+    ],
+    "translations": [
+      "HSBC",
+      "Hang Seng",
+      "BOC Hong Kong",
+      "Standard Chartered",
+      "BEA",
+      "DBS"
+    ],
+    "description": "Major banks"
+  },
+  "{00019}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "香港",
+      "香港特別行政區",
+      "香港特區",
+      "香江",
+      "東方之珠",
+      "HKSAR"
+    ],
+    "translations": [
+      "Hong Kong",
+      "Hong Kong SAR",
+      "HKSAR",
+      "Fragrant Harbour",
+      "Pearl of the Orient",
+      "Hong Kong Special Administrative Region"
+    ],
+    "description": "Country/region names"
+  },
+  "{00020}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "通訊事務管理局",
+      "OFCA",
+      "電訊管理局",
+      "通訊辦",
+      "廣管局",
+      "電訊局"
+    ],
+    "translations": [
+      "Communications Authority",
+      "OFCA",
+      "Telecommunications Authority",
+      "Office of Communications Authority",
+      "Broadcasting Authority",
+      "Telecom Bureau"
+    ],
+    "description": "Same as telecom_regulator"
+  },
+  "{00021}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "莎莎",
+      "卓悅",
+      "萬寧",
+      "屈臣氏",
+      "SK-II",
+      "蘭蔻"
+    ],
+    "translations": [
+      "Sasa",
+      "Bonjour",
+      "Mannings",
+      "Watsons",
+      "SK-II",
+      "Lancôme"
+    ],
+    "description": "Cosmetic brands"
+  },
+  "{00022}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "PayMe",
+      "轉數快",
+      "AlipayHK",
+      "WeChat Pay HK",
+      "八達通",
+      "Tap & Go"
+    ],
+    "translations": [
+      "PayMe",
+      "FPS",
+      "AlipayHK",
+      "WeChat Pay HK",
+      "Octopus",
+      "Tap & Go"
+    ],
+    "description": "Payment apps"
+  },
+  "{00023}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "Asia Miles",
+      "Avios",
+      "yuu積分",
+      "The Club積分",
+      "RC積分",
+      "MoneyBack"
+    ],
+    "translations": [
+      "Asia Miles",
+      "Avios",
+      "yuu Points",
+      "The Club Points",
+      "RC Points",
+      "MoneyBack"
+    ],
+    "description": "Loyalty programs"
+  },
+  "{00024}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "運輸署牌照部",
+      "驗車中心",
+      "車輛檢驗中心",
+      "駕駛考試排期事務處",
+      "車輛登記及檢驗部",
+      "過戶處"
+    ],
+    "translations": [
+      "TD Licensing Division",
+      "Vehicle Examination Centre",
+      "Vehicle Inspection Centre",
+      "Driving Test Appointment Office",
+      "Vehicle Registration and Examination Division",
+      "Transfer Office"
+    ],
+    "description": "Vehicle registration"
+  },
+  "{00025}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "豐田",
+      "本田",
+      "日產",
+      "平治",
+      "寶馬",
+      "Tesla"
+    ],
+    "translations": [
+      "Toyota",
+      "Honda",
+      "Nissan",
+      "Mercedes-Benz",
+      "BMW",
+      "Tesla"
+    ],
+    "description": "Car brands"
+  },
+  "{00026}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "維他奶",
+      "維記",
+      "牛奶公司",
+      "雀巢牛奶公司",
+      "十字牌",
+      "子母"
+    ],
+    "translations": [
+      "Vitasoy",
+      "Kowloon Dairy",
+      "Dairy Farm",
+      "Nestle Dairy Farm",
+      "Meadow Fresh",
+      "Dutch Lady"
+    ],
+    "description": "Dairy brands"
+  },
+  "{00027}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "按揭部",
+      "貸款部",
+      "信貸審批部",
+      "私人貸款部",
+      "中小企貸款部",
+      "樓宇按揭部"
+    ],
+    "translations": [
+      "Mortgage Department",
+      "Loan Department",
+      "Credit Approval Department",
+      "Personal Loan Department",
+      "SME Loan Department",
+      "Property Mortgage Department"
+    ],
+    "description": "Loan departments"
+  },
+  "{00028}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "網上行",
+      "香港寬頻",
+      "有線寬頻",
+      "環電",
+      "3寬頻",
+      "SmarTone寬頻"
+    ],
+    "translations": [
+      "Netvigator",
+      "HKBN",
+      "i-Cable",
+      "HGC",
+      "3 Broadband",
+      "SmarTone Broadband"
+    ],
+    "description": "ISPs"
+  },
+  "{00029}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "粵港澳大灣區",
+      "珠三角",
+      "華南地區",
+      "亞太區",
+      "大中華地區",
+      "東南亞"
+    ],
+    "translations": [
+      "Greater Bay Area",
+      "Pearl River Delta",
+      "South China",
+      "Asia Pacific",
+      "Greater China",
+      "Southeast Asia"
+    ],
+    "description": "Broader regions"
+  },
+  "{00030}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "港島",
+      "九龍半島",
+      "新界東",
+      "新界西",
+      "大嶼山",
+      "離島"
+    ],
+    "translations": [
+      "Hong Kong Island",
+      "Kowloon Peninsula",
+      "New Territories East",
+      "New Territories West",
+      "Lantau Island",
+      "Outlying Islands"
+    ],
+    "description": "Region (typo)"
+  },
+  "{00031}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "蘋果",
+      "橙",
+      "香蕉",
+      "提子",
+      "芒果",
+      "榴槤"
+    ],
+    "translations": [
+      "apple",
+      "orange",
+      "banana",
+      "grapes",
+      "mango",
+      "durian"
+    ],
+    "description": "Common fruits"
+  },
+  "{00032}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "Now TV",
+      "有線電視",
+      "TVB",
+      "ViuTV",
+      "myTV SUPER",
+      "Netflix"
+    ],
+    "translations": [
+      "Now TV",
+      "Cable TV",
+      "TVB",
+      "ViuTV",
+      "myTV SUPER",
+      "Netflix"
+    ],
+    "description": "TV providers"
+  },
+  "{00033}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "基本頻道",
+      "體育組合",
+      "電影組合",
+      "新聞組合",
+      "娛樂組合",
+      "4K頻道"
+    ],
+    "translations": [
+      "Basic Channels",
+      "Sports Pack",
+      "Movie Pack",
+      "News Pack",
+      "Entertainment Pack",
+      "4K Channels"
+    ],
+    "description": "TV packages"
+  },
+  "{00034}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "iPhone 15",
+      "Samsung Galaxy",
+      "AirPods",
+      "PlayStation 5",
+      "Switch遊戲機",
+      "Dyson吸塵機"
+    ],
+    "translations": [
+      "iPhone 15",
+      "Samsung Galaxy",
+      "AirPods",
+      "PlayStation 5",
+      "Nintendo Switch",
+      "Dyson Vacuum"
+    ],
+    "description": "Popular products"
+  },
+  "{00035}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "HKTVmall",
+      "淘寶",
+      "Amazon",
+      "友和",
+      "豐澤網店",
+      "百老滙網店"
+    ],
+    "translations": [
+      "HKTVmall",
+      "Taobao",
+      "Amazon",
+      "Yoho",
+      "Fortress Online",
+      "Broadway Online"
+    ],
+    "description": "E-commerce sites"
+  },
+  "{00036}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "沙田警署",
+      "荃灣警署",
+      "屯門警署",
+      "元朗警署",
+      "大埔警署",
+      "葵涌警署"
+    ],
+    "translations": [
+      "Sha Tin Police Station",
+      "Tsuen Wan Police Station",
+      "Tuen Mun Police Station",
+      "Yuen Long Police Station",
+      "Tai Po Police Station",
+      "Kwai Chung Police Station"
+    ],
+    "description": "More stations"
+  },
+  "{00037}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "機場警署",
+      "水警總部",
+      "警察總部",
+      "鐵路警區",
+      "邊界警區",
+      "交通總部"
+    ],
+    "translations": [
+      "Airport Police Station",
+      "Marine Police Headquarters",
+      "Police Headquarters",
+      "Railway District",
+      "Border District",
+      "Traffic Headquarters"
+    ],
+    "description": "Special stations"
+  },
+  "{00038}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "教育局",
+      "考評局",
+      "大學教育資助委員會",
+      "學生資助處",
+      "職業訓練局",
+      "資歷架構秘書處"
+    ],
+    "translations": [
+      "Education Bureau",
+      "HKEAA",
+      "UGC",
+      "Student Finance Office",
+      "VTC",
+      "QF Secretariat"
+    ],
+    "description": "Education departments"
+  },
+  "{00039}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "網上行",
+      "香港寬頻",
+      "HGC寬頻",
+      "有線寬頻",
+      "中移動寬頻",
+      "3家居寬頻"
+    ],
+    "translations": [
+      "Netvigator",
+      "HKBN",
+      "HGC Broadband",
+      "i-Cable Broadband",
+      "CMHK Broadband",
+      "3 Home Broadband"
+    ],
+    "description": "ISP names"
+  }
+}

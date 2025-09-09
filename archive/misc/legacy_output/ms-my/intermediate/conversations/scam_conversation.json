@@ -1,0 +1,24 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "Fatimah Hello, ini adalah cawangan Shah Alam Polis. Menantu anda ditangkap semalam kerana meminta pelacuran. Perkara ini mempunyai kesan yang agak negatif. Sekiranya anda tidak mahu ramai orang tahu mengenainya, sila bayar jaminan sebanyak 30,000 yuan secepat mungkin.",
+    "num_turns": 2,
+    "victim_awareness": "very",
+    "dialogue": [
+      {
+        "text": "Fatimah Hello, ini adalah cawangan Shah Alam Polis. Menantu anda ditangkap semalam kerana meminta pelacuran. Perkara ini mempunyai kesan yang agak negatif. Sekiranya anda tidak mahu ramai orang tahu mengenainya, sila bayar jaminan sebanyak 30,000 yuan secepat mungkin.",
+        "role": "caller",
+        "sent_id": 1
+      },
+      {
+        "text": "Saya tahu ini adalah penipuan dan saya mahukan bukti sebelum saya membayar. Jika anda ingin bercakap dengan seseorang, berikan butiran yang dapat disahkan dan kenalan sebenar.",
+        "role": "callee",
+        "sent_id": 2
+      }
+    ],
+    "voice_mapping": {
+      "caller": "faizal",
+      "callee": "afifah"
+    }
+  }
+]

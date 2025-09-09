@@ -1,0 +1,36 @@
+{
+  "conversation_id": 6,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "مرحبًا ، هذا هو فريق السفارة السويسري. سرق شخص ما هويتك وحصل على بطاقة مصرفية على ٢٠٠ درهم (AED) ، ثم فر بالمال. تم القبض عليه في الشارقة بنك أبوظبي الأول. يجب عليك الاتصال بالشرطة لشرح أو قد يتأثر الائتمان.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "أوه لا ، لم يكن لدي أي فكرة! ماذا علي أن أفعل للاتصال بهم؟",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "سأربطك الآن بمركز الشرطة المعين. يرجى البقاء على الخط لحل هذا بسرعة.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_03_caller.mp3"
+    },
+    {
+      "turn_id": 4,
+      "role": "callee",
+      "text": "حسنًا ، أنا أنتظر. آمل أن يتم حل هذا بسرعة.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_04_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_006_combined_final.wav"
+}

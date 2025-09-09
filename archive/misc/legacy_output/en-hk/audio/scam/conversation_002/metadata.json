@@ -1,0 +1,29 @@
+{
+  "conversation_id": 2,
+  "caller_voice_id": "JBFqnCBsd6RMkjVDRZzb",
+  "callee_voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "Hello, this is manual customer service of HKBU. With the exam near, do your classmates need the exam questions? Fill the links we sent to finish booking.",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "Oh, I didn't know about this. Where can I find the links to complete the booking?",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "The links are sent to your email. Just follow the steps and complete payment to get access to the questions.",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_002_combined_final.wav"
+}

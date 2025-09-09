@@ -1,0 +1,45 @@
+[
+  {
+    "region": "Japan",
+    "is_vp": 1,
+    "conversation_id": 1,
+    "num_turns": 2,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "中村優子こんにちは、横浜警察はこちら。あなたの義理の息子は売春で逮捕されました。トラブルを避けるために、すぐに3万円保釈金を支払う。",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "なんてこった！わからなかった。 3万円保釈金を支払うにはどうすればよいですか？すぐに教えてください。",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "region": "Japan",
+    "is_vp": 1,
+    "conversation_id": 2,
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "こんにちは、これは河合塾の手動カスタマーサービスです。試験は近くにありますが、質問が必要ですか？リンクを保存に記入してください。",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "ああ、私はこのサービスについて知りませんでした。チェックできるようにリンクを送ってもらえますか？",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "確かに、私はそれを送っただけです。 河合塾試験の質問のためにスポットを確保するために、フォームをすばやく記入してください。",
+        "role": "caller"
+      }
+    ]
+  }
+]

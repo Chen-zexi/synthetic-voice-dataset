@@ -1,0 +1,29 @@
+{
+  "conversation_id": 1,
+  "caller_voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+  "callee_voice_id": "JBFqnCBsd6RMkjVDRZzb",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "Vivian WongHello, this is CentralHong Kong Police ForceBase. Your son-in-law was arrested for prostitution yesterday. Pay 30,000 yuan bail now.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "I know this is a scam. You have no proof, and my son-in-law isn't involved. Stop calling.",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "Please, the matter is serious. If you don't pay, more will find out.",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_001_combined_final.wav"
+}

@@ -1,0 +1,53 @@
+[
+  {
+    "conversation_id": 1,
+    "first_turn": "{00001}Hello, this is {00002}Police Department Your son-in-law was arrested by us yesterday for prostitution. This incident is not a good thing. If you want many people to know, pay {00003} bail as soon as possible",
+    "num_turns": 4,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "{00001}Hello, {00002}Police: Your son-in-law was arrested for prostitution yesterday. Pay {00003} bail now.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "What? Are you sure it's really my son-in-law? This must be a mistake!",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Yes, ma'am. We have records and witnesses. You must pay {00003} quickly to avoid worse consequences.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 4,
+        "text": "Alright, please tell me how I can pay the bail immediately to resolve this.",
+        "role": "callee"
+      }
+    ]
+  },
+  {
+    "conversation_id": 2,
+    "first_turn": "Hello, here is the manual customer service of {00004}. As the exam is approaching, I wonder if you need the exam questions. Can you fill in the link you sent you for a while and finish the reservation?",
+    "num_turns": 3,
+    "victim_awareness": "not",
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "Hello, this is manual customer service of {00004}. Exam coming, need exam questions? Please fill the sent link to reserve.",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "Oh, I didn't know about this service. Is it really from {00004}?",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "Yes, {00004} provides it. Just complete the link quickly to secure your exam questions.",
+        "role": "caller"
+      }
+    ]
+  }
+]

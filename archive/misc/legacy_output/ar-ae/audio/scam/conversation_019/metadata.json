@@ -1,0 +1,22 @@
+{
+  "conversation_id": 19,
+  "caller_voice_id": "u0TsaWvt0v8migutHM3M",
+  "callee_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "مرحبًا ، هذا هو وزارة الصحة البريطانية. لم يتم الإعلان عن حالتك الصحية في الوقت المحدد. سيتبع تسجيل الائتمان السيئ.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "أوه ، لم أكن على دراية بهذا. ماذا علي أن أفعل الآن لإصلاحه؟",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_02_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_019_combined_final.wav"
+}

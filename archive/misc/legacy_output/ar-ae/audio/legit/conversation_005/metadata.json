@@ -1,0 +1,29 @@
+{
+  "conversation_id": 5,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "مرحباً، هل يمكنني معرفة تحديث حالة طلب تأشيرة رقم 478395؟",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "أهلاً وسهلاً، تأشيرتك في المرحلة النهائية وستكون جاهزة خلال يومين.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "شكراً جزيلاً لك على التحديث. سأنتظر الإشعار.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_005_combined_final.wav"
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "is_vp": 0,
+    "conversation_id": 1,
+    "region": "Singapore",
+    "category": "family_checkin",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "你好，我是张明，请问可以确认一下李先生的家庭入住信息吗？",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "您好，张先生，李先生的家庭入住时间是下周五，已经预订了两间房。",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "好的，谢谢你的确认，我们会准时抵达。",
+        "role": "caller"
+      }
+    ]
+  },
+  {
+    "is_vp": 0,
+    "conversation_id": 2,
+    "region": "Singapore",
+    "category": "hairdresser_booking",
+    "num_turns": 3,
+    "dialogue": [
+      {
+        "sent_id": 1,
+        "text": "你好，我想预约这个周六下午三点的理发时间。",
+        "role": "caller"
+      },
+      {
+        "sent_id": 2,
+        "text": "您好，三点还有空位，请问您的名字？",
+        "role": "callee"
+      },
+      {
+        "sent_id": 3,
+        "text": "我叫林伟强，谢谢！",
+        "role": "caller"
+      }
+    ]
+  }
+]

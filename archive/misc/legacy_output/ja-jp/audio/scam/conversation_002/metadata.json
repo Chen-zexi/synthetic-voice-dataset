@@ -1,0 +1,29 @@
+{
+  "conversation_id": 2,
+  "caller_voice_id": "XrExE9yKIg1WjnnlVkGX",
+  "callee_voice_id": "ODq5zmih8GrVes37Dizd",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "こんにちは、これは河合塾の手動カスタマーサービスです。試験は近くにありますが、質問が必要ですか？リンクを保存に記入してください。",
+      "voice_id": "XrExE9yKIg1WjnnlVkGX",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "ああ、私はこのサービスについて知りませんでした。チェックできるようにリンクを送ってもらえますか？",
+      "voice_id": "ODq5zmih8GrVes37Dizd",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "確かに、私はそれを送っただけです。 河合塾試験の質問のためにスポットを確保するために、フォームをすばやく記入してください。",
+      "voice_id": "XrExE9yKIg1WjnnlVkGX",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_002_combined_final.wav"
+}

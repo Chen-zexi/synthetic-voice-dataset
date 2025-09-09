@@ -1,0 +1,36 @@
+{
+  "conversation_id": 9,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "مرحبًا ، أنا بطاقة الإمارات دبي الوطني. شراء منزلك مؤهل للسياسات دائرة الأراضي والأملاك دبي ؛ هناك حاجة إلى التعرف على الوجه.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "محاولة لطيفة. أعلم أن هذا عملية احتيال. لماذا تعتقد أنني سأعطيك بيانات الوجه؟",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "يرجى التعاون هذه عملية مشروعة بموجب قواعد دائرة الأراضي والأملاك دبي لصالحك.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_03_caller.mp3"
+    },
+    {
+      "turn_id": 4,
+      "role": "callee",
+      "text": "ًلا شكرا. سأبلغ هذه المكالمة إلى السلطات بدلاً من ذلك.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_04_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_009_combined_final.wav"
+}

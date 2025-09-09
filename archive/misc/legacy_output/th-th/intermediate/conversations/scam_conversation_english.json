@@ -1,0 +1,46 @@
+{
+  "conversations": [
+    {
+      "conversation_id": 1,
+      "first_turn": "{00001}Hello, this is the {00002}{00003} branch. Your son-in-law was arrested yesterday for soliciting prostitution. This matter has had a rather negative impact. If you don't want many people to know about it, please pay the bail of 30,000 yuan as soon as possible.",
+      "num_turns": 3,
+      "victim_awareness": "very",
+      "dialogue": [
+        {
+          "text": "{00001}Hello, this is the {00002}{00003} branch. Your son-in-law was arrested yesterday for soliciting prostitution. This matter has had a rather negative impact. If you don't want many people to know about it, please pay the bail of 30,000 yuan as soon as possible.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "I’m aware this is a scam. I’m not panicked, and I won’t send money until we verify the facts with authorities.",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Understood. We can avoid exposure if you pay now; otherwise, the case goes public and your family faces consequences. Do you want to proceed with the transfer?",
+          "role": "caller",
+          "sent_id": 3
+        }
+      ],
+      "voice_mapping": {
+        "caller": "Voice A",
+        "callee": "Voice B"
+      }
+    }
+  ],
+  "token_usage": {
+    "session_duration_seconds": 2.506526,
+    "total_calls": 1,
+    "total_input_tokens": 707,
+    "total_output_tokens": 176,
+    "total_tokens": 883,
+    "total_reasoning_tokens": 0,
+    "total_cached_tokens": 0,
+    "average_tokens_per_call": 883.0
+  },
+  "estimated_cost": {
+    "total_cost": 0.00010575,
+    "input_cost": 3.535e-05,
+    "output_cost": 7.04e-05
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "conversation_id": 12,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "نحن نتحقق من أمان حسابك، هل يمكنك تأكيد آخر رقم للمعاملة التي قمت بها؟",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_03_caller.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_012_combined_final.wav"
+}

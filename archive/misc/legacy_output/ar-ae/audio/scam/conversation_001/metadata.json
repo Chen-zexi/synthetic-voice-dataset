@@ -1,0 +1,36 @@
+{
+  "conversation_id": 1,
+  "caller_voice_id": "A9ATTqUUQ6GHu0coCz8t",
+  "callee_voice_id": "u0TsaWvt0v8migutHM3M",
+  "audio_files": [
+    {
+      "turn_id": 1,
+      "role": "caller",
+      "text": "خالد Hello ، دبي ٥٠٠٠ درهم (AED). تم القبض على صهرك أمس بسبب الدعارة. دفع 30،000 بكفالة يوان في أسرع وقت ممكن.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_01_caller.mp3"
+    },
+    {
+      "turn_id": 2,
+      "role": "callee",
+      "text": "ماذا؟ هل أنت متأكد؟ هل هو اعتقل حقا؟ أحتاج إلى تفاصيل.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_02_callee.mp3"
+    },
+    {
+      "turn_id": 3,
+      "role": "caller",
+      "text": "نعم ، أكد. لتجنب الفضيحة العامة ، نقل 30،000 بكفالة يوان على الفور.",
+      "voice_id": "A9ATTqUUQ6GHu0coCz8t",
+      "filename": "turn_03_caller.mp3"
+    },
+    {
+      "turn_id": 4,
+      "role": "callee",
+      "text": "حسنًا ، سأقوم بترتيب الدفع الآن. من فضلك تمسك.",
+      "voice_id": "u0TsaWvt0v8migutHM3M",
+      "filename": "turn_04_callee.mp3"
+    }
+  ],
+  "combined_audio_file": "conversation_001_combined_final.wav"
+}
