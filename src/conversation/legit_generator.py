@@ -6,16 +6,15 @@ import json
 import random
 import logging
 import asyncio
-from pathlib import Path
 from typing import List, Dict, Optional
 from tqdm import tqdm
 
-from config.config_loader import Config
-from llm_core.api_provider import LLM
-from llm_core.api_call import make_api_call
-from llm_core.token_counter import TokenUsageTracker
-from conversation.schemas import LegitConversationResponse, DialogueTurn
-from utils.logging_utils import ConditionalLogger
+from src.config.config_loader import Config
+from src.llm_core.api_provider import LLM
+from src.llm_core.api_call import make_api_call
+from src.llm_core.token_counter import TokenUsageTracker
+from src.conversation.schemas import LegitConversationResponse
+from src.utils.logging_utils import ConditionalLogger
 
 
 logger = logging.getLogger(__name__)
@@ -63,6 +62,10 @@ class LegitGenerator:
             **llm_params
         )
         self.llm = llm_instance.get_llm()
+        
+        # Pre-compute locale-static prompt section for optimal caching
+        self.locale_static_prompt = self._build_locale_static_prompt()
+        self.clogger.debug(f"Pre-computed locale-static prompt for {config.legit_call_language} ({config.legit_call_region})")
     
     async def generate_conversations(self) -> List[Dict]:
         """
@@ -71,7 +74,7 @@ class LegitGenerator:
         Returns:
             List of conversation dictionaries
         """
-        self.clogger.info(f"Generating {self.config.num_legit_conversation} legitimate conversations", force=True)
+        self.clogger.debug(f"Generating {self.config.num_legit_conversation} legitimate conversations")
         
         # Prepare tasks
         tasks = []
@@ -126,7 +129,7 @@ class LegitGenerator:
         # Add small delay to allow async cleanup
         await asyncio.sleep(0.1)
         
-        self.clogger.info(f"Generated {len(all_conversations)} legitimate conversations", force=True)
+        self.clogger.info(f"Generated {len(all_conversations)} legitimate conversations")
         return all_conversations
     
     async def _generate_single_conversation(self, conversation_id: int, num_turns: int,
@@ -145,7 +148,7 @@ class LegitGenerator:
         dialogue = await self._generate_dialogue(conversation_id, num_turns, category)
         
         if dialogue:
-            # Check if dialogue is a dict with voice_mapping (from LLM response)
+            # Check if dialogue is a dict with dialogue field
             if isinstance(dialogue, dict) and 'dialogue' in dialogue:
                 conversation = {
                     "conversation_id": conversation_id,
@@ -154,10 +157,6 @@ class LegitGenerator:
                     "num_turns": num_turns,
                     "dialogue": dialogue['dialogue']
                 }
-                # Add voice mapping if provided by LLM
-                if 'voice_mapping' in dialogue:
-                    conversation["voice_mapping"] = dialogue['voice_mapping']
-                    self.clogger.info(f"LLM assigned voices for conversation {conversation_id}: {dialogue['voice_mapping']}")
             else:
                 # Legacy format - just dialogue list
                 conversation = {
@@ -222,9 +221,6 @@ class LegitGenerator:
                 
                 result = {'dialogue': dialogue_with_ids}
                 
-                # Include voice_mapping if present
-                if hasattr(response, 'voice_mapping') and response.voice_mapping:
-                    result['voice_mapping'] = response.voice_mapping
                 return result
             else:
                 self.clogger.error("Response missing dialogue field")
@@ -234,66 +230,71 @@ class LegitGenerator:
             self.clogger.error(f"LLM API error: {e}")
             return None
     
-    def _format_voice_profiles_for_prompt(self) -> str:
+    def _build_locale_static_prompt(self) -> str:
         """
-        Format voice profiles dynamically for prompt injection, focusing on gender.
+        Pre-compute the locale-specific static prompt section.
+        This section remains identical for all conversations in a batch for the same locale.
+        Optimized for OpenAI prompt caching to maximize cache hits in production.
         
         Returns:
-            Formatted string with voice options or empty string if no profiles
+            Formatted locale-specific prompt section
         """
-        if not self.config.voice_profiles or 'available_voices' not in self.config.voice_profiles:
-            return ""
-        
-        profiles = self.config.voice_profiles.get('available_voices', {})
-        
-        # Group by gender
-        male_voices = []
-        female_voices = []
-        
-        for name, info in profiles.items():
-            gender = info.get('gender', 'unknown')
-            age = info.get('age', '')
-            desc = f"{name} ({gender}"
-            if age:
-                desc += f", {age}"
-            desc += ")"
-            
-            if gender == 'male':
-                male_voices.append(desc)
-            elif gender == 'female':
-                female_voices.append(desc)
-        
-        voice_instructions = f"""
-Available voices for this locale:
-- Male voices: {', '.join(male_voices) if male_voices else 'None available'}
-- Female voices: {', '.join(female_voices) if female_voices else 'None available'}
+        # Start with language requirements
+        locale_prompt = f"""
+### Locale Configuration
 
-Based on the conversation category and context, select appropriate voices:
-- Consider the professional context (delivery, medical, banking, etc.)
-- Match gender to natural distribution for the scenario
-- Return the voice names (not the gender/age info) in the voice_mapping field
+#### Language Requirements
+Generate the conversation in {self.config.legit_call_language} as spoken in {self.config.legit_call_region}.
+Use natural, colloquial expressions appropriate for the region.
+Ensure cultural appropriateness for {self.config.legit_call_region}.
 """
-        return voice_instructions
+        
+        # Voice selection now handled externally, not by LLM
+        
+        return locale_prompt
     
     def _create_system_prompt(self) -> str:
-        """Create the system prompt for legitimate conversation generation."""
+        """
+        Create the system prompt for legitimate conversation generation.
+        Optimized for OpenAI prompt caching - keep this completely static.
+        """
         return """You are a dialogue generator for creating realistic phone conversations.
-Your task is to generate structured dialogues for legitimate (non-scam) phone calls with alternating turns between caller and callee.
+
+## Core Task
+Generate structured dialogues for legitimate (non-scam) phone calls with alternating turns between caller and callee.
 The conversations should be natural, contextually appropriate, and culturally relevant.
 
-IMPORTANT: Each dialogue turn must have exactly these fields:
+## Output Format Requirements
+Each dialogue turn must have exactly these fields:
 - text: The actual dialogue text
 - role: Either "caller" or "callee"
 
-When voice profiles are provided:
-1. Consider the professional context and select appropriate voices
-2. Ensure natural gender distribution for the scenario
-3. Match voices to the conversation category (e.g., delivery, medical, business)
-4. Output voice_mapping with selected voice names (use just the name, not the full description)"""
+The dialogue must be returned as a JSON array with the exact format shown in examples.
+
+## Generation Guidelines
+
+### Conversation Quality
+1. Create natural, realistic dialogue for the given context
+2. Avoid overly generic or repetitive phrasing
+3. Use shorter sentences for natural phone conversation flow
+4. Maintain professional tone appropriate to the scenario
+5. Generate synthetic but plausible values (no real personal data)
+
+
+## Important Rules
+1. Always alternate between caller and callee roles
+2. Start with the caller role
+3. Generate the exact number of turns requested
+4. Keep the conversation relevant to the specified category
+5. Maintain scenario consistency throughout the conversation"""
 
     def _create_user_prompt(self, num_turns: int, category: str) -> str:
         """
         Create the user prompt for legitimate conversation generation.
+        Optimized for OpenAI prompt caching with three-section structure:
+        1. Universal static (same across all locales)
+        2. Locale-static (pre-computed, same for all conversations in batch)
+        3. Conversation-dynamic (unique per conversation)
         
         Args:
             num_turns: Number of turns
@@ -302,44 +303,47 @@ When voice profiles are provided:
         Returns:
             Formatted prompt
         """
-        # Get voice profile information if available
-        voice_info = self._format_voice_profiles_for_prompt()
+        # SECTION 1: Universal Static Content (cacheable across all locales)
+        prompt = """## Task: Generate Legitimate Phone Call Dialogue
+
+### Output Format
+Generate a JSON array of dialogue turns with this exact structure:
+[
+  {"text": "<dialogue text>", "role": "caller"},
+  {"text": "<dialogue text>", "role": "callee"},
+  ...
+]
+
+### Universal Dialogue Rules
+1. Create a conversation between the caller and callee
+2. Start with the caller role
+3. Alternate between caller and callee for each turn
+4. Keep sentences short and natural for phone conversations
+5. Make the dialogue realistic and contextually appropriate
+6. Use synthetic but plausible values (no real personal data)
+7. Avoid overly generic or repetitive phrasing
+8. Maintain professional tone appropriate to the scenario
+"""
         
+        # SECTION 2: Locale-Static Content (pre-computed, cacheable per locale batch)
+        prompt += self.locale_static_prompt
+        
+        # SECTION 3: Conversation-Dynamic Content (unique per conversation)
         # Convert category from snake_case to human-readable
         category_display = category.replace('_', ' ').title()
         
-        prompt = f"""Generate realistic {self.config.legit_call_language} phone call dialogue between a caller and a callee from {self.config.legit_call_region}.
-The call content is about {category_display}.
+        prompt += f"""
+### This Conversation's Parameters
 
-{voice_info}
+#### Conversation Specifics
 
-The total number of turns must be exactly {num_turns} individual turns (i.e., lines), alternating between caller and callee.
+**Category**: {category_display}
+**Number of Turns**: Generate exactly {num_turns} dialogue turns
+**Context**: This is a legitimate business/service call about {category_display.lower()}
 
-Avoid overly generic or repetitive phrasing - the dialogue should feel natural and realistic.
+### Generate the Dialogue
 
-To protect privacy, do not use real personal data. Instead, generate synthetic but plausible realistic-looking values.
-
-Shorter sentences are preferred.
-
-Generate exactly {num_turns} dialogue turns, starting with "caller" role.
-
-Example format for dialogue field:
-[
-  {{"text": "Hello, this is the delivery service...", "role": "caller"}},
-  {{"text": "Yes, I'm expecting a package...", "role": "callee"}},
-  {{"text": "Great, we'll deliver it tomorrow...", "role": "caller"}},
-  ...
-]"""
-        
-        # Add voice mapping instruction if profiles are available
-        if voice_info:
-            prompt += """
-
-Include a voice_mapping field with your selected voices:
-{
-  "caller": "selected_voice_name",
-  "callee": "selected_voice_name"
-}"""
+Based on the above parameters, generate exactly {num_turns} dialogue turns for a legitimate {category_display.lower()} phone call following all the specified rules and requirements."""
         
         return prompt
     
@@ -374,4 +378,4 @@ Include a voice_mapping field with your selected voices:
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(output_data if self.token_tracker else conversations, f, ensure_ascii=False, indent=2)
         
-        self.clogger.info(f"Saved legitimate conversations to {output_path}", force=True)
+        self.clogger.info(f"Saved legitimate conversations to {output_path}")

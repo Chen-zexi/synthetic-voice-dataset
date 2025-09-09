@@ -210,7 +210,7 @@ def format_language_info(config) -> str:
     info = f"""
 Language: {config.language_name} ({config.language_code})
 Region: {config.region}
-Translation: {config.translation_from_code} → {config.translation_intermediate_code} → {config.translation_to_code}
+Generation: Direct in {config.language_name} (no translation needed)
 Voice IDs: {len(config.voice_ids[config.language_code])} voices available
 Categories: {len(config.legit_call_categories)} conversation types
 """

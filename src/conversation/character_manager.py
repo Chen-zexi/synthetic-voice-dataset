@@ -6,7 +6,7 @@ import json
 import logging
 import random
 from pathlib import Path
-from typing import Dict, List, Optional, Literal
+from typing import Dict, List, Optional, Literal, Union
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
@@ -39,15 +39,18 @@ class CharacterManager:
     Manages character profiles and creates generation scenarios.
     """
     
-    def __init__(self, character_profiles_path: Optional[Path] = None):
+    def __init__(self, character_profiles_path: Optional[Path] = None, voice_profiles_path: Optional[Union[Path, Dict]] = None):
         """
         Initialize the character manager.
         
         Args:
             character_profiles_path: Path to character profiles JSON file
+            voice_profiles_path: Path to voice profiles JSON file for locale-specific voice mappings
         """
         self.character_profiles_path = character_profiles_path
+        self.voice_profiles_path = voice_profiles_path
         self.profiles: List[CharacterProfile] = []
+        self.voice_mappings: Dict[str, str] = {}  # profile_id -> voice_name
         self._loaded = False
         
         # Load profiles if path provided
@@ -56,6 +59,10 @@ class CharacterManager:
         else:
             # Create default profiles
             self.create_default_profiles()
+        
+        # Load voice mappings if path provided
+        if voice_profiles_path:
+            self.load_voice_mappings()
     
     def load_profiles(self):
         """Load character profiles from JSON file."""
@@ -64,7 +71,7 @@ class CharacterManager:
             self.create_default_profiles()
             return
         
-        logger.info(f"Loading character profiles from {self.character_profiles_path}")
+        logger.debug(f"Loading character profiles from {self.character_profiles_path}")
         
         with open(self.character_profiles_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -78,12 +85,12 @@ class CharacterManager:
             except Exception as e:
                 logger.warning(f"Failed to parse character profile: {e}")
         
-        logger.info(f"Loaded {len(self.profiles)} character profiles")
+        logger.debug(f"Loaded {len(self.profiles)} character profiles")
         self._loaded = True
     
     def create_default_profiles(self):
         """Create default character profiles for immediate use."""
-        logger.info("Creating default character profiles")
+        logger.debug("Creating default character profiles")
         
         # Default scammer profiles
         scammer_profiles = [
@@ -172,8 +179,54 @@ class CharacterManager:
             except Exception as e:
                 logger.error(f"Failed to create default profile: {e}")
         
-        logger.info(f"Created {len(self.profiles)} default character profiles")
+        logger.debug(f"Created {len(self.profiles)} default character profiles")
         self._loaded = True
+    
+    def load_voice_mappings(self):
+        """
+        Load character-to-voice mappings from voice profiles JSON or dict.
+        """
+        if not self.voice_profiles_path:
+            logger.debug("No voice profiles path provided")
+            return
+            
+        # Handle both Path objects and dicts
+        if isinstance(self.voice_profiles_path, dict):
+            # Already loaded as dict from config
+            data = self.voice_profiles_path
+        elif isinstance(self.voice_profiles_path, Path):
+            # Load from file path
+            if not self.voice_profiles_path.exists():
+                logger.debug(f"Voice profiles file not found: {self.voice_profiles_path}")
+                return
+            try:
+                with open(self.voice_profiles_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            except Exception as e:
+                logger.warning(f"Failed to load voice profiles file: {e}")
+                return
+        else:
+            logger.debug(f"Unexpected voice_profiles_path type: {type(self.voice_profiles_path)}")
+            return
+        
+        # Load character voice mappings if present
+        if 'character_voice_mappings' in data:
+            self.voice_mappings = data['character_voice_mappings']
+            logger.debug(f"Loaded voice mappings for {len(self.voice_mappings)} character profiles")
+        else:
+            logger.debug("No character_voice_mappings found in voice profiles")
+    
+    def get_voice_for_profile(self, profile_id: str) -> Optional[str]:
+        """
+        Get the voice name mapped to a character profile.
+        
+        Args:
+            profile_id: Character profile ID
+            
+        Returns:
+            Voice name if mapped, None otherwise
+        """
+        return self.voice_mappings.get(profile_id)
     
     def get_profiles_for_role(self, role: str, locale: Optional[str] = None) -> List[CharacterProfile]:
         """
@@ -278,7 +331,7 @@ class CharacterManager:
                 if scenario:
                     scenarios.append(scenario)
         
-        logger.info(f"Created {len(scenarios)} scenarios from {len(seed_tags)} seed tags")
+        logger.debug(f"Created {len(scenarios)} scenarios from {len(seed_tags)} seed tags")
         return scenarios
     
     def get_stats(self) -> Dict:

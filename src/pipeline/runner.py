@@ -9,8 +9,8 @@ import warnings
 from typing import List, Optional, Dict, Callable
 from pathlib import Path
 
-from config.config_loader import Config
-from cli.utils import (
+from src.config.config_loader import Config
+from src.cli.utils import (
     print_step_header, print_step_complete,
     ensure_directory, ProgressTracker
 )
@@ -20,13 +20,12 @@ warnings.filterwarnings("ignore", message=".*Event loop is closed.*")
 logging.getLogger("asyncio").setLevel(logging.CRITICAL)
 
 # Import modules (to be implemented)
-from translation.translator import TranslatorFactory
-from conversation.scam_generator import ScamGenerator
-from conversation.legit_generator import LegitGenerator
-from tts.voice_synthesizer import VoiceSynthesizer
-from postprocessing.json_formatter import JsonFormatter
-from postprocessing.audio_packager import AudioPackager
-from utils.logging_utils import format_completion_message
+from src.conversation.scam_generator import ScamGenerator
+from src.conversation.legit_generator import LegitGenerator
+from src.tts.voice_synthesizer import VoiceSynthesizer
+from src.postprocessing.json_formatter import JsonFormatter
+from src.postprocessing.audio_packager import AudioPackager
+from src.utils.logging_utils import format_completion_message
 
 
 logger = logging.getLogger(__name__)
@@ -40,7 +39,6 @@ class PipelineRunner:
     # Define pipeline steps and their execution order
     PIPELINE_STEPS = {
         'conversation': 'run_conversation_generation',
-        'translate_final': 'run_final_translation',
         'legit': 'run_legit_generation',
         'tts': 'run_tts',
         'postprocess': 'run_postprocessing'
@@ -66,9 +64,6 @@ class PipelineRunner:
         # Initialize token trackers for conversation steps
         self.scam_token_tracker = None
         self.legit_token_tracker = None
-        
-        # Initialize token trackers for translation steps
-        self.translation_token_trackers = []
     
     def _validate_steps(self, steps: Optional[List[str]]) -> List[str]:
         """
@@ -94,13 +89,10 @@ class PipelineRunner:
     def _create_output_directories(self):
         """Create all necessary output directories."""
         directories = [
-            self.config.output_dir / "intermediate" / "preprocessed",
-            self.config.output_dir / "intermediate" / "translated",
-            self.config.output_dir / "intermediate" / "conversations",
+            self.config.output_dir / "conversations",
             self.config.output_dir / "audio" / "scam",
             self.config.output_dir / "audio" / "legit",
-            self.config.output_dir / "final" / "json",
-            self.config.output_dir / "final" / "archives"
+            self.config.output_dir / "final"
         ]
         
         for directory in directories:
@@ -111,15 +103,12 @@ class PipelineRunner:
         logger.info(f"Starting pipeline for {self.config.language_name}")
         logger.info(f"Steps to run: {', '.join(self.steps)}")
         
-        # Check if token tracking is enabled for conversation or translation steps
+        # Check if token tracking is enabled for conversation steps
         conversation_steps = {'conversation', 'legit'}
-        translation_steps = {'translate_final'}
         has_conversation_steps = bool(conversation_steps.intersection(set(self.steps)))
-        has_translation_steps = bool(translation_steps.intersection(set(self.steps)))
         
         track_llm_tokens = getattr(self.config, 'llm_track_tokens', False) and has_conversation_steps
-        track_translation_tokens = getattr(self.config, 'translation_track_tokens', False) and has_translation_steps
-        track_any_tokens = track_llm_tokens or track_translation_tokens
+        track_any_tokens = track_llm_tokens
         
         for step in self.steps:
             method_name = self.PIPELINE_STEPS[step]
@@ -129,8 +118,8 @@ class PipelineRunner:
             start_time = time.time()
             
             try:
-                # Conversation, legit generation, translation, and TTS are async methods
-                if step in ['conversation', 'legit', 'tts', 'translate_final']:
+                # Conversation, legit generation, and TTS are async methods
+                if step in ['conversation', 'legit', 'tts']:
                     # Use asyncio.run with debug=False to suppress warnings
                     loop = asyncio.new_event_loop()
                     asyncio.set_event_loop(loop)
@@ -152,29 +141,16 @@ class PipelineRunner:
         self.progress.complete()
         
         # Print token usage summary if any token tracking was enabled
-        if track_any_tokens and (self.scam_token_tracker or self.legit_token_tracker or self.translation_token_trackers):
+        if track_any_tokens and (self.scam_token_tracker or self.legit_token_tracker):
             self._print_combined_token_summary()
     
     async def run_conversation_generation(self):
         """Run conversation generation: create multi-turn scam dialogues."""
-        # Determine generation mode
-        generation_mode = getattr(self.config, 'generation_source_type', 'legacy_text')
-        
-        if generation_mode == 'seeds':
-            logger.info("Generating scam conversations using scenario-based system with character profiles")
-            if hasattr(self.config, 'generation_enable_character_profiles') and self.config.generation_enable_character_profiles:
-                logger.info(f"Character profiles enabled from: {getattr(self.config, 'generation_profiles_file', 'default profiles')}")
-            else:
-                logger.info("Using default character profiles")
-            
-            seeds_file = getattr(self.config, 'generation_seeds_file', 'scam_samples.json')
-            logger.info(f"Loading scam seeds from: {seeds_file}")
-            
-            scenarios_per_seed = getattr(self.config, 'generation_scenarios_per_seed', 1)
-            min_quality = getattr(self.config, 'generation_min_seed_quality', 70)
-            logger.info(f"Generation settings: {scenarios_per_seed} scenarios per seed, minimum quality {min_quality}")
+        # Log generation mode
+        if hasattr(self.config, 'generation_enable_character_profiles') and self.config.generation_enable_character_profiles:
+            logger.debug("Generating scam conversations with character profiles enabled")
         else:
-            logger.info("Generating scam conversations using legacy line-by-line system")
+            logger.debug("Generating scam conversations from seed file")
         
         generator = ScamGenerator(self.config)
         await generator.generate_conversations()
@@ -183,36 +159,10 @@ class PipelineRunner:
         if hasattr(generator, 'token_tracker') and generator.token_tracker:
             self.scam_token_tracker = generator.token_tracker
     
-    async def run_final_translation(self):
-        """Run final translation: English to target language."""
-        # Build service info string
-        service_info = f"service: {self.config.translation_service}"
-        if self.config.translation_service == "qwen":
-            service_info += f" (model: {getattr(self.config, 'qwen_model', 'qwen-mt-turbo')})"
-        
-        logger.info(f"Translating conversations to {self.config.language_name} using {service_info}")
-        
-        translator = TranslatorFactory.create(
-            self.config.translation_service,
-            self.config
-        )
-        await translator.translate_conversations(
-            input_path=self.config.multi_turn_translated_input_path,
-            output_path=self.config.multi_turn_translated_output_path,
-            from_code=self.config.multi_turn_from_code,
-            to_code=self.config.multi_turn_to_code
-        )
-        
-        # Capture token tracker if available
-        if hasattr(translator, 'token_tracker') and translator.token_tracker:
-            self.translation_token_trackers.append((
-                f'English to {self.config.language_name} Translation',
-                translator.token_tracker
-            ))
     
     async def run_legit_generation(self):
         """Run legitimate conversation generation."""
-        logger.info("Generating legitimate conversations")
+        logger.debug("Generating legitimate conversations")
         
         generator = LegitGenerator(self.config)
         await generator.generate_conversations()
@@ -261,9 +211,7 @@ class PipelineRunner:
     
     def _print_combined_token_summary(self):
         """Print combined token usage summary from all generators and translators."""
-        from llm_core.token_counter import TokenUsageTracker
-        import json
-        from pathlib import Path
+        from src.llm_core.token_counter import TokenUsageTracker
         
         print("\n" + "="*80)
         print("TOKEN USAGE AND COST SUMMARY")
@@ -284,69 +232,24 @@ class PipelineRunner:
                 llm_tracker.records.append(record)
             print(f"Legitimate Conversations: {len(self.legit_token_tracker.records)} API calls")
         
-        # Track translation costs separately
-        translation_tracker = TokenUsageTracker(verbose=False)
-        translation_model = None
-        
-        for step_name, tracker in self.translation_token_trackers:
-            print(f"{step_name}: {len(tracker.records)} API calls")
-            for record in tracker.records:
-                translation_tracker.records.append(record)
-                if not translation_model and record.model:
-                    translation_model = record.model
-        
         # Print LLM summary if available
         if llm_tracker.records:
             print("\n--- LLM Conversation Generation ---")
             llm_tracker.print_summary()
             llm_tracker.print_cost_estimate()
         
-        # Print translation summary if available
-        if translation_tracker.records:
-            print("\n--- Translation Services ---")
-            
-            # Load translation pricing
-            try:
-                config_path = Path(__file__).parent.parent / "translation" / "model_config.json"
-                with open(config_path, 'r') as f:
-                    model_config = json.load(f)
-                
-                # Get pricing for translation model
-                pricing = {}
-                if translation_model:
-                    for model_info in model_config['models']['qwen']:
-                        if model_info['id'] == translation_model:
-                            # Convert from per 1M to per 1K for compatibility
-                            pricing[translation_model] = {
-                                'input': model_info['pricing']['input'] / 1000,
-                                'output': model_info['pricing']['output'] / 1000
-                            }
-                            break
-                
-                translation_tracker.print_summary()
-                translation_tracker.print_cost_estimate(pricing)
-            except Exception as e:
-                logger.warning(f"Could not load translation pricing: {e}")
-                translation_tracker.print_summary()
-        
         # Calculate and print total costs
-        if llm_tracker.records or translation_tracker.records:
+        if llm_tracker.records:
             print("\n" + "="*80)
-            print("TOTAL COMBINED COSTS")
+            print("TOTAL COSTS")
             print("="*80)
             
             total_cost = 0.0
             if llm_tracker.records:
                 llm_cost = llm_tracker.estimate_cost()
                 if llm_cost and 'total_cost' in llm_cost:
-                    total_cost += llm_cost['total_cost']
+                    total_cost = llm_cost['total_cost']
                     print(f"LLM Generation: ${llm_cost['total_cost']:.4f}")
-            
-            if translation_tracker.records and pricing:
-                trans_cost = translation_tracker.estimate_cost(pricing)
-                if trans_cost and 'total_cost' in trans_cost:
-                    total_cost += trans_cost['total_cost']
-                    print(f"Translation: ${trans_cost['total_cost']:.4f}")
             
             print(f"\nGrand Total: ${total_cost:.4f}")
             print("="*80)

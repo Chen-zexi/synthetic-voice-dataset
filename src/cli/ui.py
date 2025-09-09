@@ -170,7 +170,7 @@ class InteractiveUI:
             print(f"\nLocale Details:")
             print(f"   Language: {config.language_name} ({config.language_code})")
             print(f"   Region: {config.region}")
-            print(f"   Translation: {config.translation_from_code} → {config.translation_to_code}")
+            print(f"   Generation: Direct in {config.language_name}")
             
             # Enhanced voice information with health status
             try:
@@ -363,8 +363,7 @@ class InteractiveUI:
             print_step_header(f"Configuration Details - {self.current_locale}")
             print(f"Language: {config.language_name} ({config.language_code})")
             print(f"Region: {config.region}")
-            print(f"Translation Service: {config.translation_service}")
-            print(f"Translation Path: {config.translation_from_code} → {config.translation_intermediate_code} → {config.translation_to_code}")
+            print(f"Generation: Direct in {config.language_name} (no translation needed)")
             
             print(f"\nLLM Settings:")
             print(f"  Provider: {getattr(config, 'llm_provider', 'openai')}")

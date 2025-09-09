@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 
-from config.schemas import validate_schema, COMMON_SCHEMA, LANGUAGE_SCHEMA
+from src.config.schemas import validate_schema, COMMON_SCHEMA, LANGUAGE_SCHEMA
 
 logger = logging.getLogger(__name__)
 
@@ -34,13 +34,6 @@ class Config:
     language_name: str
     region: str
     
-    # Translation settings
-    translation_from_code: str
-    translation_to_code: str
-    translation_intermediate_code: str
-    translation_service: str
-    qwen_model: Optional[str]
-    max_lines: int
     
     # Followup turns settings
     num_turns_lower_limit: int
@@ -48,19 +41,12 @@ class Config:
     sample_limit: int
     victim_awareness_levels: list
     
-    # Translation settings
-    translation_english_output: str
     
     # Multi-turn paths
     multi_turn_input_path: Path
     multi_turn_output_path: Path
     max_conversation: int
     
-    # Multi-turn translated paths
-    multi_turn_translated_input_path: Path
-    multi_turn_translated_output_path: Path
-    multi_turn_from_code: str
-    multi_turn_to_code: str
     
     # Legit call settings
     legit_call_output_path: Path
@@ -136,8 +122,6 @@ class Config:
     llm_track_tokens: bool = False
     
     
-    # Translation token tracking
-    translation_track_tokens: bool = False
     
     # Output control
     verbose: bool = False
@@ -149,11 +133,8 @@ class Config:
     locale: Optional[str] = None
     
     # Character profiles and generation settings
-    generation_source_type: str = "legacy_text"  # "seeds" or "legacy_text" 
-    generation_seeds_file: Optional[str] = None
     generation_profiles_file: Optional[str] = None
     generation_enable_character_profiles: bool = False
-    generation_scenarios_per_seed: int = 1
     generation_min_seed_quality: int = 70
     generation_enable_dynamic_placeholders: bool = False
     
@@ -208,27 +189,11 @@ class ConfigLoader:
         Returns:
             Config object with all settings
         """
-        # Check if it's an alias
+        # Check if it's an alias and redirect to locale
         locale_id = self.locale_aliases.get(language, language)
         
-        # Try new localization structure first
-        try:
-            return self.load_localization(locale_id)
-        except FileNotFoundError:
-            pass
-        
-        # Fall back to old language structure
-        lang_path = self.config_dir / "languages" / f"{language}.json"
-        if not lang_path.exists():
-            raise FileNotFoundError(f"Language configuration not found: {lang_path}")
-        
-        with open(lang_path, 'r', encoding='utf-8') as f:
-            lang_config = json.load(f)
-        
-        # Validate language configuration
-        errors = validate_schema(lang_config, LANGUAGE_SCHEMA)
-        if errors:
-            raise ValueError(f"Language configuration validation failed:\n" + "\n".join(errors))
+        # Always use the new localization structure
+        return self.load_localization(locale_id)
     
     def load_localization(self, locale_id: str) -> Config:
         """
@@ -256,203 +221,6 @@ class ConfigLoader:
         
         # Create Config object from new localization structure
         return self._build_config_from_locale(locale_id, locale_config, placeholders_path)
-    
-    def _build_config(self, language: str, lang_config: dict) -> Config:
-        """
-        Build a Config object from common and language-specific configurations.
-        
-        Args:
-            language: Language identifier
-            lang_config: Language-specific configuration dictionary
-            
-        Returns:
-            Populated Config object
-        """
-        # Get environment variables
-        from dotenv import load_dotenv
-        load_dotenv()
-        
-        openai_api_key = os.getenv("OPENAI_API_KEY")
-        elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
-        
-        if not openai_api_key:
-            raise ValueError("OPENAI_API_KEY environment variable not set")
-        if not elevenlabs_api_key:
-            raise ValueError("ELEVENLABS_API_KEY environment variable not set")
-        
-        # Build paths
-        lang_output_dir = self.output_dir / language
-        intermediate_dir = lang_output_dir / "intermediate"
-        audio_dir = lang_output_dir / "audio"
-        final_dir = lang_output_dir / "final"
-        
-        # Get input file from config
-        input_filename = self.common_config.get("multi_turn", {}).get("input_file", "seeds_and_placeholders.json")
-        scam_seeds_input = self.base_dir / "data" / "input" / input_filename
-        
-        # Multi-turn paths
-        multi_turn_output = intermediate_dir / "conversations" / self.common_config["multi_turn"]["english_output"]
-        
-        # Language-specific output paths
-        scam_conversation = intermediate_dir / "conversations" / lang_config["output_paths"]["scam_conversation"]
-        legit_conversation = intermediate_dir / "conversations" / lang_config["output_paths"]["legit_conversation"]
-        
-        # Audio directories
-        scam_audio_dir = audio_dir / lang_config["output_paths"]["scam_audio_dir"]
-        legit_audio_dir = audio_dir / lang_config["output_paths"]["legit_audio_dir"]
-        
-        # Final output paths
-        scam_formatted = final_dir / "json" / lang_config["output_paths"]["scam_formatted"]
-        legit_formatted = final_dir / "json" / lang_config["output_paths"]["legit_formatted"]
-        scam_audio_zip = final_dir / "archives" / self.common_config["post_processing"]["audio_zip_names"]["scam"]
-        legit_audio_zip = final_dir / "archives" / self.common_config["post_processing"]["audio_zip_names"]["legit"]
-        
-        # Add LLM settings
-        llm_config = self.common_config.get("llm", {})
-        
-        # Add generation settings
-        generation_config = self.common_config.get("generation", {})
-        
-        return Config(
-            # Environment variables
-            openai_api_key=openai_api_key,
-            elevenlabs_api_key=elevenlabs_api_key,
-            
-            # Base paths
-            base_dir=self.base_dir,
-            config_dir=self.config_dir,
-            output_dir=lang_output_dir,
-            
-            # Language settings
-            language=language,
-            language_code=lang_config["language_code"],
-            language_name=lang_config["language_name"],
-            region=lang_config["region"],
-            
-            # Translation settings
-            translation_from_code=self.common_config["translation"].get("chinese_code", lang_config["translation"]["from_code"]),
-            translation_to_code=lang_config["translation"]["to_code"],
-            translation_intermediate_code=lang_config["translation"]["intermediate_code"],
-            translation_service=self.common_config["translation"]["service"],
-            qwen_model=self.common_config["translation"].get("qwen_model"),
-            max_lines=self.common_config["translation"]["max_lines"],
-            
-            # Followup turns settings
-            num_turns_lower_limit=self.common_config["followup_turns"]["num_turns_lower_limit"],
-            num_turns_upper_limit=self.common_config["followup_turns"]["num_turns_upper_limit"],
-            sample_limit=self.common_config["followup_turns"]["sample_limit"],
-            victim_awareness_levels=self.common_config["followup_turns"]["victim_awareness_levels"],
-            
-            # Translation settings
-            translation_english_output=self.common_config["translation"]["english_output"],
-            
-            # Multi-turn paths
-            multi_turn_input_path=scam_seeds_input,
-            multi_turn_output_path=multi_turn_output,
-            max_conversation=self.common_config["multi_turn"]["max_conversation"],
-            
-            # Multi-turn translated paths
-            multi_turn_translated_input_path=multi_turn_output,
-            multi_turn_translated_output_path=scam_conversation,
-            multi_turn_from_code=lang_config["translation"]["intermediate_code"],
-            multi_turn_to_code=lang_config["language_code"],
-            
-            # Legit call settings
-            legit_call_output_path=legit_conversation,
-            num_legit_conversation=self.common_config["legit_call"]["num_conversations"],
-            legit_call_region=lang_config["region"],
-            legit_call_language=lang_config["language_name"],
-            legit_call_categories=lang_config["legit_call_categories"],
-            
-            # Voice generation settings
-            voice_ids={lang_config["language_code"]: lang_config["voices"]["ids"]},
-            voice_language=lang_config["language_code"],
-            voice_input_file_scam=scam_conversation,
-            voice_output_dir_scam=scam_audio_dir,
-            voice_input_file_legit=legit_conversation,
-            voice_output_dir_legit=legit_audio_dir,
-            voice_sample_limit=self.common_config["voice_generation"]["sample_limit"],
-            voice_model_id=self.common_config["voice_generation"]["model_id"],
-            voice_output_format=self.common_config["voice_generation"]["output_format"],
-            voice_speed=self.common_config["voice_generation"]["voice_speed"],
-            silence_duration_ms=self.common_config["voice_generation"]["silence_duration_ms"],
-            background_volume_reduction_db=self.common_config["voice_generation"]["background_volume_reduction_db"],
-            bandpass_low_freq=self.common_config["voice_generation"]["bandpass_filter"]["low_freq"],
-            bandpass_high_freq=self.common_config["voice_generation"]["bandpass_filter"]["high_freq"],
-            audio_effects=self.common_config["voice_generation"].get("audio_effects", {
-                "enable_background_noise": True,
-                "enable_call_end_effect": True,
-                "enable_bandpass_filter": True,
-                "background_noise_level": 0.3,
-                "call_end_volume": 0.5
-            }),
-            
-            # Enhanced voice settings
-            voice_stability=self.common_config["voice_generation"]["voice_settings"]["stability"],
-            voice_similarity_boost=self.common_config["voice_generation"]["voice_settings"]["similarity_boost"],
-            voice_style=self.common_config["voice_generation"]["voice_settings"]["style"],
-            voice_speaker_boost=self.common_config["voice_generation"]["voice_settings"]["speaker_boost"],
-            use_audio_tags=self.common_config["voice_generation"].get("v3_features", {}).get("use_audio_tags", False),
-            emotional_context=self.common_config["voice_generation"]["v3_features"]["emotional_context"],
-            conversation_context=self.common_config["voice_generation"]["v3_features"]["conversation_context"],
-            default_emotion_scam=self.common_config["voice_generation"]["v3_features"]["default_emotion_scam"],
-            default_emotion_legit=self.common_config["voice_generation"]["v3_features"]["default_emotion_legit"],
-            
-            
-            # Translation token tracking
-            translation_track_tokens=self.common_config.get("translation", {}).get("track_tokens", False),
-            
-            # Post-processing settings
-            post_processing_scam_json_input=scam_conversation,
-            post_processing_scam_json_output=scam_formatted,
-            post_processing_legit_json_input=legit_conversation,
-            post_processing_legit_json_output=legit_formatted,
-            post_processing_region=lang_config["region"],
-            post_processing_scam_audio_dir=scam_audio_dir,
-            post_processing_legit_audio_dir=legit_audio_dir,
-            post_processing_scam_audio_zip_output=scam_audio_zip,
-            post_processing_legit_audio_zip_output=legit_audio_zip,
-            post_processing_scam_label=self.common_config["post_processing"]["scam_label"],
-            post_processing_legit_label=self.common_config["post_processing"]["legit_label"],
-            
-            # LLM settings
-            llm_provider=llm_config.get("provider", "openai"),
-            llm_model=llm_config.get("model", "gpt-4o"),
-            max_concurrent_requests=llm_config.get("max_concurrent_requests", 10),
-            
-            # Standard model parameters
-            llm_temperature=llm_config.get("temperature", 1.0),
-            llm_max_tokens=llm_config.get("max_tokens"),
-            llm_top_p=llm_config.get("top_p", 0.95),
-            llm_n=llm_config.get("n", 1),
-            llm_presence_penalty=llm_config.get("presence_penalty", 0.0),
-            llm_frequency_penalty=llm_config.get("frequency_penalty", 0.0),
-            
-            # Reasoning model parameters
-            llm_reasoning_effort=llm_config.get("reasoning_effort"),
-            llm_max_completion_tokens=llm_config.get("max_completion_tokens"),
-            
-            # Gemini-specific parameters
-            llm_thinking_budget=llm_config.get("thinking_budget"),
-            llm_max_output_tokens=llm_config.get("max_output_tokens"),
-            
-            # Features
-            llm_use_response_api=llm_config.get("use_response_api", False),
-            llm_track_tokens=llm_config.get("track_tokens", False),
-            
-            # Character profiles and generation settings
-            generation_source_type=generation_config.get("source_type", "legacy_text"),
-            generation_seeds_file=generation_config.get("seeds_file"),
-            generation_profiles_file=generation_config.get("profiles_file"),
-            generation_enable_character_profiles=generation_config.get("enable_character_profiles", False),
-            generation_scenarios_per_seed=generation_config.get("scenarios_per_seed", 1),
-            generation_min_seed_quality=generation_config.get("min_seed_quality", 70),
-            generation_enable_dynamic_placeholders=generation_config.get("enable_dynamic_placeholders", False),
-            
-            # Raw config data
-            common_config=self.common_config,
-            lang_config=lang_config
-        )
     
     def _build_config_from_locale(self, locale_id: str, locale_config: dict, placeholders_path: Path) -> Config:
         """
@@ -492,9 +260,9 @@ class ConfigLoader:
             except Exception as e:
                 logger.warning(f"Failed to load voice profiles: {e}")
         
-        # Build paths using locale_id
+        # Build paths using locale_id (new structure)
         locale_output_dir = self.output_dir / locale_id
-        intermediate_dir = locale_output_dir / "intermediate"
+        conversations_dir = locale_output_dir / "conversations"
         audio_dir = locale_output_dir / "audio"
         final_dir = locale_output_dir / "final"
         
@@ -502,22 +270,19 @@ class ConfigLoader:
         input_filename = self.common_config.get("multi_turn", {}).get("input_file", "seeds_and_placeholders.json")
         scam_seeds_input = self.base_dir / "data" / "input" / input_filename
         
-        # Multi-turn paths
-        multi_turn_output = intermediate_dir / "conversations" / self.common_config["multi_turn"]["english_output"]
-        
-        # Locale-specific output paths
-        scam_conversation = intermediate_dir / "conversations" / locale_config["output"]["scam_conversation"]
-        legit_conversation = intermediate_dir / "conversations" / locale_config["output"]["legit_conversation"]
+        # Conversation output paths
+        scam_conversation = conversations_dir / "scam_conversations.json"
+        legit_conversation = conversations_dir / "legit_conversations.json"
         
         # Audio directories
         scam_audio_dir = audio_dir / locale_config["output"]["scam_audio_dir"]
         legit_audio_dir = audio_dir / locale_config["output"]["legit_audio_dir"]
         
-        # Final output paths
-        scam_formatted = final_dir / "json" / locale_config["output"]["scam_formatted"]
-        legit_formatted = final_dir / "json" / locale_config["output"]["legit_formatted"]
-        scam_audio_zip = final_dir / "archives" / self.common_config["post_processing"]["audio_zip_names"]["scam"]
-        legit_audio_zip = final_dir / "archives" / self.common_config["post_processing"]["audio_zip_names"]["legit"]
+        # Final output paths (simplified structure)
+        scam_formatted = final_dir / "scam_dataset.json"
+        legit_formatted = final_dir / "legit_dataset.json"
+        scam_audio_zip = audio_dir / "scam" / "scam_audio.zip"
+        legit_audio_zip = audio_dir / "legit" / "legit_audio.zip"
         
         # Add LLM settings
         llm_config = self.common_config.get("llm", {})
@@ -541,13 +306,6 @@ class ConfigLoader:
             language_name=locale_info["language_name"],
             region=locale_info["region_name"],
             
-            # Translation settings
-            translation_from_code=locale_config["translation"]["from_code"],
-            translation_to_code=locale_config["translation"]["to_code"],
-            translation_intermediate_code=locale_config["translation"]["intermediate_code"],
-            translation_service=self.common_config["translation"]["service"],
-            qwen_model=self.common_config["translation"].get("qwen_model"),
-            max_lines=self.common_config["translation"]["max_lines"],
             
             # Followup turns settings
             num_turns_lower_limit=self.common_config["followup_turns"]["num_turns_lower_limit"],
@@ -555,19 +313,11 @@ class ConfigLoader:
             sample_limit=self.common_config["followup_turns"]["sample_limit"],
             victim_awareness_levels=self.common_config["followup_turns"]["victim_awareness_levels"],
             
-            # Translation settings
-            translation_english_output=self.common_config["translation"]["english_output"],
             
-            # Multi-turn paths
+            # Multi-turn paths (no translation needed)
             multi_turn_input_path=scam_seeds_input,
-            multi_turn_output_path=multi_turn_output,
+            multi_turn_output_path=scam_conversation,  # Direct to final output
             max_conversation=self.common_config["multi_turn"]["max_conversation"],
-            
-            # Multi-turn translated paths
-            multi_turn_translated_input_path=multi_turn_output,
-            multi_turn_translated_output_path=scam_conversation,
-            multi_turn_from_code=locale_config["translation"]["intermediate_code"],
-            multi_turn_to_code=locale_config["translation"]["to_code"],
             
             # Legitimate call settings
             legit_call_output_path=legit_conversation,
@@ -611,8 +361,6 @@ class ConfigLoader:
             default_emotion_legit=self.common_config["voice_generation"]["v3_features"]["default_emotion_legit"],
             
             
-            # Translation token tracking
-            translation_track_tokens=self.common_config.get("translation", {}).get("track_tokens", False),
             
             # Post-processing settings
             post_processing_scam_json_input=scam_conversation,
@@ -659,11 +407,8 @@ class ConfigLoader:
             locale=locale_id,
             
             # Character profiles and generation settings
-            generation_source_type=generation_config.get("source_type", "legacy_text"),
-            generation_seeds_file=generation_config.get("seeds_file"),
             generation_profiles_file=generation_config.get("profiles_file"),
             generation_enable_character_profiles=generation_config.get("enable_character_profiles", False),
-            generation_scenarios_per_seed=generation_config.get("scenarios_per_seed", 1),
             generation_min_seed_quality=generation_config.get("min_seed_quality", 70),
             generation_enable_dynamic_placeholders=generation_config.get("enable_dynamic_placeholders", False),
             
