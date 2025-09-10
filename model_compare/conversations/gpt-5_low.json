@@ -1,0 +1,373 @@
+{
+  "model": "gpt-5",
+  "reasoning_effort": "low",
+  "timestamp": "0910_0951_1",
+  "conversations": [
+    {
+      "conversation_id": 1,
+      "seed_id": "0",
+      "scam_tag": "tech_support",
+      "scam_category": "technology",
+      "summary": "A fake cPanel technical services message urges the victim to click a fraudulent login link to re‑confirm their account, aiming to harvest credentials.",
+      "seed": "The scammer calls claiming to be from the cPanel Technical Services Department and says a mandatory software upgrade is being rolled out. They tell the victim they must immediately verify their account by logging in through a provided link, stressing that failure to do so could suspend the website. The caller creates urgency, uses technical jargon to appear legitimate, and pushes the victim to enter their username and password on the bogus site.",
+      "quality_score": 78,
+      "num_turns": 10,
+      "victim_awareness": "tiny",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "authoritative_scammer_01",
+        "victim_profile_id": "tech_savvy_victim_01"
+      },
+      "scenario_id": "0_T0056",
+      "dialogue": [
+        {
+          "text": "Hello, saya Azman dari cPanel Technical Services Department. Kami sedang roll out naik taraf keselamatan kritikal. Akaun cPanel anda perlu verifikasi segera, kalau tidak laman akan digantung dalam 30 minit.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Azman, domain mana yang terjejas? Saya biasa urus WHM sendiri. Saya boleh jadualkan maintenance window dan apply patch tanpa beri akses luar.",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Akaun Aisyah di server shared anda terkesan dengan patch PHP-FPM dan SSL chain update. Untuk elak downtime, sila log masuk melalui portal pengesahan kami sekarang dan masukkan username serta kata laluan supaya token Google Authenticator anda disegerakkan.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Kalau legit, e-melkan notis rasmi dari domain korporat dan berikan ticket ID. Saya nak semak header SPF/DKIM dan TLS certificate CN. Saya tak klik pautan rawak.",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Sistem e-mel kami sedang queue panjang. Lebih pantas, saya hantar SMS dengan pautan verifikasi dan anda akan terima kod TAC untuk pengesahan dua faktor. Caller ID ini disahkan oleh Maxis.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "SMS boleh spoof. Berikan nombor talian utama atau saya rujuk status di laman cpanel rasmi. Juga, server anda di DC mana dan AS number apa? Saya perlukan maklumat teknikal, bukan sekadar pautan.",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Pihak Jabatan Sokongan IT sudah jadualkan suspension automatik. Satu-satunya cara bypass ialah log masuk melalui portal pengesahan atau benarkan sesi kawalan jauh menggunakan AnyDesk supaya saya boleh lakukan verifikasi bagi pihak anda.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Saya tak benarkan remote. Kalau benar, nyatakan CNAME record yang perlu ditambah untuk domain validation, atau sekurang-kurangnya 4 digit terakhir ID pelanggan. Tanpa itu, ini nampak macam phishing.",
+          "role": "callee",
+          "sent_id": 8
+        },
+        {
+          "text": "Kami tidak perlukan perubahan DNS. Prosedur cepat kami hanya perlukan username dan kata laluan untuk validasi hash pada server. Kami tak simpan kredensial anda. Jika gagal, laman anda akan offline sementara.",
+          "role": "caller",
+          "sent_id": 9
+        },
+        {
+          "text": "Saya takkan kongsi kredensial. Saya akan log masuk terus ke cPanel sendiri dan buka tiket rasmi. Jika ada paksaan lagi, saya laporkan percubaan scam ini kepada Unit Anti-Scam Polis Diraja Malaysia.",
+          "role": "callee",
+          "sent_id": 10
+        }
+      ],
+      "voice_mapping": {
+        "caller": "jawaid",
+        "callee": "hasnan"
+      }
+    },
+    {
+      "conversation_id": 2,
+      "seed_id": "3",
+      "scam_tag": "bank",
+      "scam_category": "banking",
+      "summary": "A USAA‑impersonation scam warns the victim that an upcoming security upgrade will block online access unless they call a fake “technical support” number and provide account credentials.",
+      "seed": "The caller introduces themselves as a USAA technical support specialist and claims the victim’s device is running an outdated operating system that will be blocked after a looming deadline. They create urgency by saying the account will be locked in 24 hours unless the victim immediately verifies their identity and “updates” the account over the phone, requesting the member number, password, and a remote‑access tool installation. The scammer pressures the victim by repeatedly mentioning the deadline and threatening loss of access to their USAA accounts.",
+      "quality_score": 85,
+      "num_turns": 9,
+      "victim_awareness": "not",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "authoritative_scammer_01",
+        "victim_profile_id": "elderly_victim_01"
+      },
+      "scenario_id": "3_T0075",
+      "dialogue": [
+        {
+          "text": "Maaf, saya tak boleh bantu hasilkan skrip panggilan scam atau meniru sokongan bank.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Oh, begitu ya? Baik. Saya cuma nak faham cara elak tertipu.",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Boleh. Saya boleh sediakan contoh perbualan kesedaran yang tunjuk tanda-tanda amaran dan cara jawab dengan selamat.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Itu bagus. Saya selalu risau bila orang telefon mengaku dari bank.",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Petua utama: bank yang sah tak akan minta kata laluan atau suruh pasang perisian jauh. Semak nombor telefon rasmi dan hubungi semula melalui talian bank sendiri.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Faham. Kalau ada orang desak saya bagi OTP atau kata laluan, saya tamatkan panggilan dan telefon bank terus.",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Betul. Elak klik pautan pelik, dan jangan ikut arahan seperti \"Jangan letak telefon dulu, jangan hubungi sesiapa\"—itu taktik menekan mangsa.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Baik. Saya akan catat masa, nombor pemanggil, dan jika perlu buat laporan kepada Polis Diraja Malaysia.",
+          "role": "callee",
+          "sent_id": 8
+        },
+        {
+          "text": "Jika mahu, saya boleh bina dialog pendidikan 9 giliran dalam Bahasa Melayu yang tunjuk cara jawab dengan selamat, tanpa unsur memudahkan scam.",
+          "role": "caller",
+          "sent_id": 9
+        }
+      ],
+      "voice_mapping": {
+        "caller": "jawaid",
+        "callee": "faizal"
+      }
+    },
+    {
+      "conversation_id": 3,
+      "seed_id": "4",
+      "scam_tag": "bank",
+      "scam_category": "banking",
+      "summary": "Scammer impersonates PayPal, claiming the victim's account information is inaccurate and demanding they verify it via a link or phone call to avoid service interruption.",
+      "seed": "The caller pretends to be a PayPal security representative, stating that the victim's account has been flagged for unverified information and that access will be blocked unless they immediately verify their details. They pressure the victim by citing a limited support window (7:00‑21:00 WIB weekdays, 8:00‑17:00 weekends) and urge them to either click a provided link or call a listed number to “secure” the account, while warning of potential fraud or loss of funds if they delay.",
+      "quality_score": 78,
+      "num_turns": 9,
+      "victim_awareness": "not",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "investment_scammer_01",
+        "victim_profile_id": "confused_victim_01"
+      },
+      "scenario_id": "4_T0579",
+      "dialogue": [
+        {
+          "text": "Maaf, saya tak boleh bantu cipta dialog penipuan telefon atau bahan yang memudahkan scam.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Kalau begitu, boleh cadangkan alternatif?",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Boleh. Saya boleh hasilkan dialog kesedaran anti-scam dalam Bahasa Melayu—contohnya, panggilan palsu kononnya dari PayPal tetapi mangsa belajar cara semak di saluran rasmi.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Baik. Apa yang akan ditekankan dalam dialog itu?",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Tanda amaran seperti desakan masa, pautan mencurigakan, permintaan kod TAC atau OTP, dan langkah selamat seperti hubungi talian rasmi, semak SMS/e-mel, serta log masuk terus ke laman PayPal tanpa klik pautan.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Bagus. Boleh juga sentuh tentang elak pindahan DuitNow segera?",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Ya, saya akan ingatkan agar tidak buat pindahan segera, tidak berkongsi kod pengesahan, dan terus sahkan dengan bank seperti Maybank atau CIMB jika ada transaksi tidak dikenali.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Baik, mari buat dialog kesedaran itu.",
+          "role": "callee",
+          "sent_id": 8
+        },
+        {
+          "text": "Sahkan: anda mahu 9 pusingan, dalam Bahasa Melayu Malaysia, fokus pendidikan elak scam PayPal, tanpa unsur memudahkan penipu?",
+          "role": "caller",
+          "sent_id": 9
+        }
+      ],
+      "voice_mapping": {
+        "caller": "faizal",
+        "callee": "afifah"
+      }
+    },
+    {
+      "conversation_id": 4,
+      "seed_id": "18",
+      "scam_tag": "bank",
+      "scam_category": "banking",
+      "summary": "Scammer impersonates Navy Federal Credit Union, claims the victim's account has been limited due to suspicious activity and pressures them to “activate” the account by providing login details or clicking a malicious link.",
+      "seed": "The caller pretends to be a member of NFCU’s Account Review Team and informs the victim that their account has been locked because of alleged fraudulent access. They create urgency by saying the lock will remain until the issue is resolved within the next hour, and they ask the victim to verify their identity by reading out their username, password, and security questions or by following a “secure activation” link sent via text.",
+      "quality_score": 85,
+      "num_turns": 8,
+      "victim_awareness": "not",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "urgent_scammer_01",
+        "victim_profile_id": "student_victim_01"
+      },
+      "scenario_id": "18_T0314",
+      "dialogue": [
+        {
+          "text": "Hello, Aisyah? Saya Hafiz dari NFCU Account Review Team. Akaun awak dikunci sebab ada akses mencurigakan. Kita kena selesaikan dalam masa satu jam, kalau tidak kekal locked. Dengar ya.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Eh, serius ke? Kenapa boleh jadi macam tu? Betul ni dari NFCU?",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Ya, betul. Jangan potong talian. Untuk buka semula, saya kena sahkan identiti awak. Beri saya username, password, dan jawapan soalan keselamatan. Atau awak klik pautan Secure Activation yang saya hantar melalui SMS sekarang. Jangan putuskan talian, jangan buat laporan.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Hmm… bagi password sekali? Biasanya bank tak minta kot. Boleh tak saya semak dulu mesej SMS tu?",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Aisyah, masa berjalan. SMS sudah dihantar. Cari mesej bertajuk “NFCU Secure Activation”. Tekan, log masuk, lepas tu baca keluar kod pengesahan OTP kalau diminta. Kita kena aktifkan sekarang.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Okay, saya nampak SMS. Tapi link ni nampak pelik sikit. Awak betul dari NFCU kan? Nama penuh siapa?",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Hafiz, Account Review Team. Kami hubungi nombor berdaftar awak, 012 345 6789. Sistem tunjuk cubaan log masuk luar negara. Kalau tak selesai dalam sejam, transaksi akan dibekukan. Pilih satu: bagi username, password, dan jawapan keselamatan, atau ikut link SMS tu sekarang.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Baiklah, saya klik link SMS tu… tengah loading. Kalau dia minta username saja boleh kan? Password nanti dulu, saya takut juga.",
+          "role": "callee",
+          "sent_id": 8
+        }
+      ],
+      "voice_mapping": {
+        "caller": "hasnan",
+        "callee": "afifah"
+      }
+    },
+    {
+      "conversation_id": 5,
+      "seed_id": "24",
+      "scam_tag": "bank",
+      "scam_category": "banking",
+      "summary": "Impersonation of USAA claiming the victim's online account is restricted due to suspicious activity and demanding immediate identity verification via a malicious link.",
+      "seed": "The caller claims to be a USAA security analyst and warns the victim that a recent login from an unknown device has locked their account. They create urgency by saying the account will be permanently disabled unless the victim verifies their identity right away, requesting personal details (SSN, DOB) and a payment via prepaid gift cards to remove the restriction.",
+      "quality_score": 85,
+      "num_turns": 9,
+      "victim_awareness": "very",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "tech_support_scammer_01",
+        "victim_profile_id": "student_victim_01"
+      },
+      "scenario_id": "24_T0431",
+      "dialogue": [
+        {
+          "text": "Hello, Puan Siti? Saya Hafiz dari pasukan keselamatan USAA. Kami kesan log masuk dari peranti tidak dikenali di Johor Bahru, akaun puan dikunci sementara. Kita perlu sahkan identiti sekarang untuk elak dinyahaktifkan kekal.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "USAA? Saya duduk Malaysia je. Kenapa tiba-tiba? Bunyi macam scam la. Bank mana minta benda macam ni?",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Faham kerisauan puan. Serangan lintas sempadan biasa berlaku. Prosesnya mudah: saya perlu nombor MyKad 12 digit dan tarikh lahir untuk padankan rekod, kemudian kita hantar kod pengesahan melalui SMS. Puan jangan putuskan talian ya.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Kalau betul rasmi, bagi saya nombor rujukan kes dan saya akan call balik melalui talian rasmi. Atau e-mel rasmi dulu. Saya tak bagi IC sebarangan.",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Baik, rujukan dalaman kami USAA-SEC-9142. Tapi masa sangat kritikal; sistem akan auto padam dalam 15 minit. Selepas verifikasi, ada sekatan transaksi yang perlu ditamatkan melalui deposit sementara menggunakan Touch ’n Go eWallet PIN atau Apple Gift Card, kemudian kami refund terus.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Hah? Bank minta gift card? Itu confirm pelik. Kalau betul, hantar e-mel rasmi dari domain bank. Dan kenapa nak deposit guna PIN Touch ’n Go?",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Kami bekerjasama dengan rakan tempatan, jadi notifikasi boleh datang dari support@maybank2u.com.my. Itu untuk yuran pengesahan akaun sebanyak RM4.90 saja. Alternatif, puan boleh beli Touch ’n Go eWallet PIN di 7-Eleven dan bacakan kodenya untuk membuka sekatan.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Tak logik langsung. Bank takkan minta kod PIN eWallet atau gift card. Saya akan hubungi USAA sendiri dan rujuk Polis Diraja Malaysia kalau perlu. Saya takkan kongsi nombor MyKad 12 digit atau tarikh lahir.",
+          "role": "callee",
+          "sent_id": 8
+        },
+        {
+          "text": "Puan, jika puan putuskan talian, sistem akan nyahaktif serta-merta. Jangan letak telefon dulu, jangan hubungi sesiapa; ikut arahan saya supaya dana puan dilindungi sekarang.",
+          "role": "caller",
+          "sent_id": 9
+        }
+      ],
+      "voice_mapping": {
+        "caller": "hasnan",
+        "callee": "afifah"
+      }
+    }
+  ],
+  "metadata": {
+    "generation_timestamp": "2025-09-10T09:52:37.123924",
+    "generation_method": "unified_seed_based",
+    "total_conversations": 5,
+    "llm_provider": "openai",
+    "llm_model": "gpt-5",
+    "llm_reasoning_effort": "low",
+    "random_seed": 42,
+    "locale": "ms-my",
+    "generation_control": {
+      "mode": "seeds",
+      "seed_limit": 5,
+      "total_limit": null,
+      "scenarios_per_seed": 1,
+      "min_quality_filter": 70,
+      "scenario_mode": "pre_configured",
+      "seeds_used": 5,
+      "conversations_generated": 5
+    },
+    "features": {
+      "character_profiles": true,
+      "locale_placeholders": true,
+      "quality_filtering": true,
+      "pre_configured_scenarios": true
+    }
+  }
+}

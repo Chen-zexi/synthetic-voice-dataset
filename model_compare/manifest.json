@@ -1,0 +1,92 @@
+{
+  "generation_date": "2025-09-10T10:07:52.546860",
+  "locale": "ms-my",
+  "random_seed": 42,
+  "seed_limit": 5,
+  "configurations": [
+    {
+      "model": "gpt-5",
+      "reasoning_effort": "minimal",
+      "timestamp": "0910_0951",
+      "config_id": "gpt-5_minimal",
+      "output_path": "output/ms-my/0910_0951"
+    },
+    {
+      "model": "gpt-5",
+      "reasoning_effort": "low",
+      "timestamp": "0910_0951_1",
+      "config_id": "gpt-5_low",
+      "output_path": "output/ms-my/0910_0951_1"
+    },
+    {
+      "model": "gpt-5",
+      "reasoning_effort": "medium",
+      "timestamp": "0910_0952",
+      "config_id": "gpt-5_medium",
+      "output_path": "output/ms-my/0910_0952"
+    },
+    {
+      "model": "gpt-5",
+      "reasoning_effort": "high",
+      "timestamp": "0910_0954",
+      "config_id": "gpt-5_high",
+      "output_path": "output/ms-my/0910_0954"
+    },
+    {
+      "model": "gpt-5-mini",
+      "reasoning_effort": "minimal",
+      "timestamp": "0910_0959",
+      "config_id": "gpt-5-mini_minimal",
+      "output_path": "output/ms-my/0910_0959"
+    },
+    {
+      "model": "gpt-5-mini",
+      "reasoning_effort": "low",
+      "timestamp": "0910_0959_1",
+      "config_id": "gpt-5-mini_low",
+      "output_path": "output/ms-my/0910_0959_1"
+    },
+    {
+      "model": "gpt-5-mini",
+      "reasoning_effort": "medium",
+      "timestamp": "0910_1000",
+      "config_id": "gpt-5-mini_medium",
+      "output_path": "output/ms-my/0910_1000"
+    },
+    {
+      "model": "gpt-5-mini",
+      "reasoning_effort": "high",
+      "timestamp": "0910_1001",
+      "config_id": "gpt-5-mini_high",
+      "output_path": "output/ms-my/0910_1001"
+    },
+    {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "minimal",
+      "timestamp": "0910_1003",
+      "config_id": "gpt-5-nano_minimal",
+      "output_path": "output/ms-my/0910_1003"
+    },
+    {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "low",
+      "timestamp": "0910_1004",
+      "config_id": "gpt-5-nano_low",
+      "output_path": "output/ms-my/0910_1004"
+    },
+    {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "medium",
+      "timestamp": "0910_1004_1",
+      "config_id": "gpt-5-nano_medium",
+      "output_path": "output/ms-my/0910_1004_1"
+    },
+    {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "high",
+      "timestamp": "0910_1005",
+      "config_id": "gpt-5-nano_high",
+      "output_path": "output/ms-my/0910_1005"
+    }
+  ]
+}

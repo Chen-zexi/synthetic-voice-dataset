@@ -1,0 +1,346 @@
+{
+  "summary": {
+    "total_configurations": 12,
+    "successful": 12,
+    "failed": 0,
+    "locale": "ms-my",
+    "random_seed": 42,
+    "seed_limit": 5,
+    "test_duration": "0:16:25.758404"
+  },
+  "configurations": [
+    {
+      "model": "gpt-5",
+      "reasoning_effort": "minimal",
+      "success": true,
+      "timestamp": "0910_0951",
+      "duration": "19.19s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 30431,
+      "total_cost": 0.05770875,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    },
+    {
+      "model": "gpt-5",
+      "reasoning_effort": "low",
+      "success": true,
+      "timestamp": "0910_0951_1",
+      "duration": "51.99s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 35797,
+      "total_cost": 0.11136875,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    },
+    {
+      "model": "gpt-5",
+      "reasoning_effort": "medium",
+      "success": true,
+      "timestamp": "0910_0952",
+      "duration": "133.71s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 48494,
+      "total_cost": 0.23833875000000002,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    },
+    {
+      "model": "gpt-5",
+      "reasoning_effort": "high",
+      "success": true,
+      "timestamp": "0910_0954",
+      "duration": "274.30s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 65083,
+      "total_cost": 0.40422875,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    },
+    {
+      "model": "gpt-5-mini",
+      "reasoning_effort": "minimal",
+      "success": true,
+      "timestamp": "0910_0959",
+      "duration": "13.91s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 30808,
+      "total_cost": 0.01032775,
+      "quality_metrics": {
+        "avg_turns": 9.4,
+        "min_turns": 8,
+        "max_turns": 11,
+        "total_dialogue_items": 47
+      }
+    },
+    {
+      "model": "gpt-5-mini",
+      "reasoning_effort": "low",
+      "success": true,
+      "timestamp": "0910_0959_1",
+      "duration": "19.93s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 32621,
+      "total_cost": 0.01491375,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    },
+    {
+      "model": "gpt-5-mini",
+      "reasoning_effort": "medium",
+      "success": true,
+      "timestamp": "0910_1000",
+      "duration": "64.06s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 46175,
+      "total_cost": 0.04204575,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    },
+    {
+      "model": "gpt-5-mini",
+      "reasoning_effort": "high",
+      "success": true,
+      "timestamp": "0910_1001",
+      "duration": "172.75s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 79235,
+      "total_cost": 0.10816575,
+      "quality_metrics": {
+        "avg_turns": 9.2,
+        "min_turns": 9,
+        "max_turns": 10,
+        "total_dialogue_items": 46
+      }
+    },
+    {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "minimal",
+      "success": true,
+      "timestamp": "0910_1003",
+      "duration": "7.81s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 30126,
+      "total_cost": 0.00218635,
+      "quality_metrics": {
+        "avg_turns": 9.2,
+        "min_turns": 8,
+        "max_turns": 11,
+        "total_dialogue_items": 46
+      }
+    },
+    {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "low",
+      "success": true,
+      "timestamp": "0910_1004",
+      "duration": "12.36s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 33034,
+      "total_cost": 0.00295595,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    },
+    {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "medium",
+      "success": true,
+      "timestamp": "0910_1004_1",
+      "duration": "56.51s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 58720,
+      "total_cost": 0.013427149999999999,
+      "quality_metrics": {
+        "avg_turns": 7.6,
+        "min_turns": 1,
+        "max_turns": 10,
+        "total_dialogue_items": 38
+      }
+    },
+    {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "high",
+      "success": true,
+      "timestamp": "0910_1005",
+      "duration": "159.26s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 94604,
+      "total_cost": 0.027579150000000004,
+      "quality_metrics": {
+        "avg_turns": 7.2,
+        "min_turns": 0,
+        "max_turns": 10,
+        "total_dialogue_items": 36
+      }
+    }
+  ],
+  "cost_analysis": {
+    "by_model": {
+      "gpt-5": [
+        {
+          "reasoning_effort": "minimal",
+          "cost": 0.05770875
+        },
+        {
+          "reasoning_effort": "low",
+          "cost": 0.11136875
+        },
+        {
+          "reasoning_effort": "medium",
+          "cost": 0.23833875000000002
+        },
+        {
+          "reasoning_effort": "high",
+          "cost": 0.40422875
+        }
+      ],
+      "gpt-5-mini": [
+        {
+          "reasoning_effort": "minimal",
+          "cost": 0.01032775
+        },
+        {
+          "reasoning_effort": "low",
+          "cost": 0.01491375
+        },
+        {
+          "reasoning_effort": "medium",
+          "cost": 0.04204575
+        },
+        {
+          "reasoning_effort": "high",
+          "cost": 0.10816575
+        }
+      ],
+      "gpt-5-nano": [
+        {
+          "reasoning_effort": "minimal",
+          "cost": 0.00218635
+        },
+        {
+          "reasoning_effort": "low",
+          "cost": 0.00295595
+        },
+        {
+          "reasoning_effort": "medium",
+          "cost": 0.013427149999999999
+        },
+        {
+          "reasoning_effort": "high",
+          "cost": 0.027579150000000004
+        }
+      ]
+    },
+    "cheapest": {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "minimal",
+      "success": true,
+      "timestamp": "0910_1003",
+      "duration": "7.81s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 30126,
+      "total_cost": 0.00218635,
+      "quality_metrics": {
+        "avg_turns": 9.2,
+        "min_turns": 8,
+        "max_turns": 11,
+        "total_dialogue_items": 46
+      }
+    },
+    "most_expensive": {
+      "model": "gpt-5",
+      "reasoning_effort": "high",
+      "success": true,
+      "timestamp": "0910_0954",
+      "duration": "274.30s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 65083,
+      "total_cost": 0.40422875,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    }
+  },
+  "performance_analysis": {
+    "fastest": {
+      "model": "gpt-5-nano",
+      "reasoning_effort": "minimal",
+      "success": true,
+      "timestamp": "0910_1003",
+      "duration": "7.81s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 30126,
+      "total_cost": 0.00218635,
+      "quality_metrics": {
+        "avg_turns": 9.2,
+        "min_turns": 8,
+        "max_turns": 11,
+        "total_dialogue_items": 46
+      }
+    },
+    "slowest": {
+      "model": "gpt-5",
+      "reasoning_effort": "high",
+      "success": true,
+      "timestamp": "0910_0954",
+      "duration": "274.30s",
+      "conversations_generated": 5,
+      "seeds_used": 5,
+      "total_tokens": 65083,
+      "total_cost": 0.40422875,
+      "quality_metrics": {
+        "avg_turns": 9.0,
+        "min_turns": 8,
+        "max_turns": 10,
+        "total_dialogue_items": 45
+      }
+    }
+  },
+  "quality_metrics": {}
+}

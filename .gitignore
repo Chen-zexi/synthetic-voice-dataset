@@ -6,6 +6,7 @@
 CLAUDE.md
 .claude
 
+archive/misc/legacy_output/
 
 # API keys and secrets
 *.key

@@ -1,1 +1,0 @@
-/Users/chen/Library/Mobile Documents/com~apple~CloudDocs/ScamAI/voice_scam_dataset_gen/data/translation_cache/qwen/qwen-mt-turbo/scamGen_combined_first_20k_en.txt

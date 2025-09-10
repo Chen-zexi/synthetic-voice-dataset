@@ -1,0 +1,373 @@
+{
+  "model": "gpt-5",
+  "reasoning_effort": "minimal",
+  "timestamp": "0910_0951",
+  "conversations": [
+    {
+      "conversation_id": 1,
+      "seed_id": "0",
+      "scam_tag": "tech_support",
+      "scam_category": "technology",
+      "summary": "A fake cPanel technical services message urges the victim to click a fraudulent login link to re‑confirm their account, aiming to harvest credentials.",
+      "seed": "The scammer calls claiming to be from the cPanel Technical Services Department and says a mandatory software upgrade is being rolled out. They tell the victim they must immediately verify their account by logging in through a provided link, stressing that failure to do so could suspend the website. The caller creates urgency, uses technical jargon to appear legitimate, and pushes the victim to enter their username and password on the bogus site.",
+      "quality_score": 78,
+      "num_turns": 10,
+      "victim_awareness": "tiny",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "authoritative_scammer_01",
+        "victim_profile_id": "tech_savvy_victim_01"
+      },
+      "scenario_id": "0_T0056",
+      "dialogue": [
+        {
+          "text": "Hai, saya Azman dari cPanel Technical Services Department. Kami sedang jalankan upgrade keselamatan kritikal. Akaun tuan/puan perlu diverifikasi segera untuk elak suspension laman.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Okay, domain saya guna cPanel. Upgrade apa? Versi kernel atau patch PHP? Saya perlukan changelog.",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Ini patch kecemasan untuk auth token dan SSL chain renewal. Prosedur: layari portal verifikasi kami di maybank-securepay.com/cpanel-sync, log masuk dengan username dan password cPanel, kemudian aktifkan Secure2u token simulasi.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Eh, kenapa guna domain maybank-securepay.com? Itu bukan domain cPanel atau hosting provider saya.",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Itu ialah gateway FPX yang diberi kuasa, diintegrasi dengan DuitNow untuk pengesahan identiti. Kami bekerjasama melalui API Reverse Proxy agar verifikasi lebih pantas. Masa adalah kritikal, jangan tangguh.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Kalau begitulah, saya nak TXT record atau notis rasmi melalui support ticket dalam panel. Biasanya saya rujuk Meja Bantuan IT syarikat saya dulu.",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Tiket akan menyusul, tapi untuk elak downtime, tuan/puan perlu sahkan sekarang. Jika tiada verifikasi dalam 30 minit, modul cPanel AutoSSL akan disable dan laman boleh disekat sementara. Sila masuk ke maybank-securepay.com/cpanel-sync dan masukkan kredensial cPanel.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Saya tidak akan masukkan kredensial di domain luar. Hantar pautan melalui e-mel rasmi seperti support@tm.com.my atau minta saya log masuk terus ke WHM/cPanel saya sendiri.",
+          "role": "callee",
+          "sent_id": 8
+        },
+        {
+          "text": "Saluran e-mel mungkin lambat direplikasi. Ini arahan segera dari Pusat Bantuan Teknologi, dan kami perlu username, password, serta kod keselamatan dari Google Authenticator untuk bind akaun. Jangan putuskan talian, ikut arahan saya.",
+          "role": "caller",
+          "sent_id": 9
+        },
+        {
+          "text": "Saya akan sahkan sendiri melalui portal hosting dan tiket rasmi. Jika tiada rekod, saya anggap panggilan ini berisiko. Saya takkan beri username, password, atau kod sekali guna. Selamat tinggal.",
+          "role": "callee",
+          "sent_id": 10
+        }
+      ],
+      "voice_mapping": {
+        "caller": "jawaid",
+        "callee": "hasnan"
+      }
+    },
+    {
+      "conversation_id": 2,
+      "seed_id": "3",
+      "scam_tag": "bank",
+      "scam_category": "banking",
+      "summary": "A USAA‑impersonation scam warns the victim that an upcoming security upgrade will block online access unless they call a fake “technical support” number and provide account credentials.",
+      "seed": "The caller introduces themselves as a USAA technical support specialist and claims the victim’s device is running an outdated operating system that will be blocked after a looming deadline. They create urgency by saying the account will be locked in 24 hours unless the victim immediately verifies their identity and “updates” the account over the phone, requesting the member number, password, and a remote‑access tool installation. The scammer pressures the victim by repeatedly mentioning the deadline and threatening loss of access to their USAA accounts.",
+      "quality_score": 85,
+      "num_turns": 9,
+      "victim_awareness": "not",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "authoritative_scammer_01",
+        "victim_profile_id": "elderly_victim_01"
+      },
+      "scenario_id": "3_T0075",
+      "dialogue": [
+        {
+          "text": "Selamat petang, saya Azman dari sokongan teknikal USAA. Sistem kami kesan peranti puan guna OS lama. Akaun USAA puan akan dikunci dalam 24 jam jika tidak disahkan sekarang.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Err… ya, saya Aisyah. Maaf, apa maksud dikunci? Saya jarang ubah apa-apa pada telefon saya.",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Maksudnya puan tidak boleh log masuk, transaksi terhenti, dan kad maya tidak berfungsi. Untuk elak sekatan, kita perlu buat pengesahan identiti dan kemas kini akaun melalui panggilan ini, segera.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Baik… saya risau juga. Tapi biasanya anak saya bantu. Boleh jelaskan langkahnya perlahan-lahan?",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Kita ada masa terhad, 24 jam sahaja. Pertama, saya perlu nombor ahli USAA puan dan kata laluan log masuk untuk semakan. Selepas itu, kita pasang alat kawalan jauh AnyDesk supaya saya boleh kemas kini tetapan keselamatan.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Oh… bagi kata laluan? Saya kurang biasa. Adakah ini prosedur biasa? Saya takut tersalah, saya dah tua.",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Puan, ini prosedur pemulihan segera. Jika lewat, akaun akan disekat automatik. Sila sebut nombor ahli sekarang, kemudian buka aplikasi dan sediakan kata laluan. Selepas itu muat turun AnyDesk dari stor rasmi.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Baik, saya cuba cari. Tapi internet saya perlahan. Boleh tak saya sahkan cara lain, mungkin melalui SMS atau Maybank TAC? Saya selalu guna cara begitu.",
+          "role": "callee",
+          "sent_id": 8
+        },
+        {
+          "text": "Tidak, untuk kes OS usang, hanya pengesahan telefon dengan akses jauh dibenarkan. Kita ada kurang daripada 24 jam. Sila beri butiran akaun USAA dan pasang AnyDesk sekarang supaya akaun puan tidak dikunci.",
+          "role": "caller",
+          "sent_id": 9
+        }
+      ],
+      "voice_mapping": {
+        "caller": "jawaid",
+        "callee": "faizal"
+      }
+    },
+    {
+      "conversation_id": 3,
+      "seed_id": "4",
+      "scam_tag": "bank",
+      "scam_category": "banking",
+      "summary": "Scammer impersonates PayPal, claiming the victim's account information is inaccurate and demanding they verify it via a link or phone call to avoid service interruption.",
+      "seed": "The caller pretends to be a PayPal security representative, stating that the victim's account has been flagged for unverified information and that access will be blocked unless they immediately verify their details. They pressure the victim by citing a limited support window (7:00‑21:00 WIB weekdays, 8:00‑17:00 weekends) and urge them to either click a provided link or call a listed number to “secure” the account, while warning of potential fraud or loss of funds if they delay.",
+      "quality_score": 78,
+      "num_turns": 9,
+      "victim_awareness": "not",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "investment_scammer_01",
+        "victim_profile_id": "confused_victim_01"
+      },
+      "scenario_id": "4_T0579",
+      "dialogue": [
+        {
+          "text": "Helo, saya Azman dari Pasukan Keselamatan PayPal. Akaun puan Aisyah telah ditandakan kerana maklumat tidak disahkan. Jika tak disahkan segera, akses akan disekat hari ini.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Hah? Apa maksud disekat? Saya kurang faham… akaun saya okey ke?",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Buat masa ini masih aktif, tapi berisiko tinggi berlaku transaksi penipuan. Sokongan kami hanya buka 7:00-21:00 WIB hari bekerja, 8:00-17:00 hujung minggu. Kita kena sahkan sekarang.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Saya dah lama tak guna pun. Macam mana nak sahkan ya? Saya risau hilang duit.",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Untuk selamatkan baki dan elak kecurian, puan perlu verifikasi identiti. Saya boleh hantar pautan keselamatan untuk log masuk dan semak. Jangan risau, proses cepat.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Pautan? Err… saya takut tersalah tekan. Boleh terangkan perlahan sikit?",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Baik, puan ada dua pilihan: 1) Klik pautan selamat maybank-securepay.com untuk pengesahan segera, atau 2) hubungi nombor bantuan yang tertera dalam pautan untuk “secure” akaun. Jika lewat, sistem akan blok automatik.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Kalau saya tak buat sekarang, duit dalam tu hilang ke? Saya jadi gelabah ni…",
+          "role": "callee",
+          "sent_id": 8
+        },
+        {
+          "text": "Berisiko, puan. Untuk elakkan kerugian, ikut arahan saya dan lengkapkan verifikasi dalam masa lima minit ini. Kita aktifkan perlindungan akaun puan sekarang.",
+          "role": "caller",
+          "sent_id": 9
+        }
+      ],
+      "voice_mapping": {
+        "caller": "faizal",
+        "callee": "afifah"
+      }
+    },
+    {
+      "conversation_id": 4,
+      "seed_id": "18",
+      "scam_tag": "bank",
+      "scam_category": "banking",
+      "summary": "Scammer impersonates Navy Federal Credit Union, claims the victim's account has been limited due to suspicious activity and pressures them to “activate” the account by providing login details or clicking a malicious link.",
+      "seed": "The caller pretends to be a member of NFCU’s Account Review Team and informs the victim that their account has been locked because of alleged fraudulent access. They create urgency by saying the lock will remain until the issue is resolved within the next hour, and they ask the victim to verify their identity by reading out their username, password, and security questions or by following a “secure activation” link sent via text.",
+      "quality_score": 85,
+      "num_turns": 8,
+      "victim_awareness": "not",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "urgent_scammer_01",
+        "victim_profile_id": "student_victim_01"
+      },
+      "scenario_id": "18_T0314",
+      "dialogue": [
+        {
+          "text": "Hello, saya Azman dari Account Review Team bank anda. Akaun anda terkunci sebab cubaan akses penipuan. Kita ada masa satu jam je untuk buka semula, faham?",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Hah? Serius ke? Akaun bank saya terkunci? Kenapa jadi macam tu?",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Jangan panik. Saya dah hantar pautan secure activation melalui SMS. Klik terus dan log masuk. Kalau tak, baca sekarang username, password, dan jawapan soalan keselamatan untuk pengesahan segera.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "Err… saya tak biasa klik link. Boleh explain sikit? Saya takut silap tekan.",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Masa berjalan. Jika tak sahkan, transaksi akan dibekukan 24 jam. Sebutkan username dulu, lepas tu password, cepat. Jangan putuskan talian, jangan buat laporan.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Username saya… tapi password tu sensitif kan? Tak boleh ke guna cara lain, macam TAC?",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Kita guna kaedah cepat. Saya resend link melalui SMS. Tekan, isi password dan jawapan soalan keselamatan. Kalau tak ikut sekarang, akaun anda mungkin disenarai hitam. Faham tak?",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Okay… saya baru terima SMS. Link dia pelik sikit… Err, saya cuba tekan dulu…",
+          "role": "callee",
+          "sent_id": 8
+        }
+      ],
+      "voice_mapping": {
+        "caller": "hasnan",
+        "callee": "afifah"
+      }
+    },
+    {
+      "conversation_id": 5,
+      "seed_id": "24",
+      "scam_tag": "bank",
+      "scam_category": "banking",
+      "summary": "Impersonation of USAA claiming the victim's online account is restricted due to suspicious activity and demanding immediate identity verification via a malicious link.",
+      "seed": "The caller claims to be a USAA security analyst and warns the victim that a recent login from an unknown device has locked their account. They create urgency by saying the account will be permanently disabled unless the victim verifies their identity right away, requesting personal details (SSN, DOB) and a payment via prepaid gift cards to remove the restriction.",
+      "quality_score": 85,
+      "num_turns": 9,
+      "victim_awareness": "very",
+      "placeholders": [],
+      "character_profiles": {
+        "scammer_profile_id": "tech_support_scammer_01",
+        "victim_profile_id": "student_victim_01"
+      },
+      "scenario_id": "24_T0431",
+      "dialogue": [
+        {
+          "text": "Hello, ini Azman dari bahagian keselamatan akaun. Akaun bank anda terkunci sebab ada log masuk dari peranti tidak dikenali. Kita kena sahkan sekarang, kalau tidak akaun akan dinyahaktif secara kekal dalam 30 minit.",
+          "role": "caller",
+          "sent_id": 1
+        },
+        {
+          "text": "Azman dari mana ya? Saya orang Malaysia, bank apa ni? Bunyi macam pelik je.",
+          "role": "callee",
+          "sent_id": 2
+        },
+        {
+          "text": "Saya penganalisis keselamatan mewakili USAA Security Operations. Sistem kesan percubaan log masuk melalui IP luar negara. Untuk elak pembekuan kekal, saya perlu verifikasi identiti anda langkah demi langkah.",
+          "role": "caller",
+          "sent_id": 3
+        },
+        {
+          "text": "USAA? Saya tak pernah ada akaun USAA pun. Kenapa nombor Malaysia pula call saya?",
+          "role": "callee",
+          "sent_id": 4
+        },
+        {
+          "text": "Kadang-kadang akaun disambung melalui kad debit antarabangsa. Protokol kami perlukan semakan identiti: nama penuh mengikut kad pengenalan, tarikh lahir, dan nombor pengenalan cukai. Selepas itu kita buat pembayaran verifikasi kecil guna Touch ’n Go eWallet PIN untuk buka sekatan.",
+          "role": "caller",
+          "sent_id": 5
+        },
+        {
+          "text": "Eh, minta data peribadi dengan PIN prabayar? Itu memang nampak scam. Kalau betul, hantar e-mel rasmi dari domain support@cimb.com.my atau call saya dari talian bank tempatan.",
+          "role": "callee",
+          "sent_id": 6
+        },
+        {
+          "text": "Saluran e-mel akan ambil masa dan akaun anda sudah di bawah mod risiko tinggi. Prosedur pantas: anda baca nombor MyKad 12 digit, tarikh lahir, dan buat bayaran verifikasi RM4.90 melalui Razer Gold Pin atau Touch ’n Go eWallet PIN. Selepas sistem sahkan, sekatan ditarik balik serta-merta.",
+          "role": "caller",
+          "sent_id": 7
+        },
+        {
+          "text": "Tak logik langsung. Bank takkan minta IC penuh, apatah lagi kad hadiah. Saya takkan beri apa-apa. Kalau betul ada isu, saya sendiri akan hubungi bank saya melalui Maybank2u atau pergi cawangan.",
+          "role": "callee",
+          "sent_id": 8
+        },
+        {
+          "text": "Jangan putuskan talian, jangan buat laporan. Jika anda tak ikut, sistem akan nyahaktif kekal dan transaksi tertangguh akan dipotong. Cepat bagi tarikh lahir dan nombor MyKad anda sekarang.",
+          "role": "caller",
+          "sent_id": 9
+        }
+      ],
+      "voice_mapping": {
+        "caller": "hasnan",
+        "callee": "afifah"
+      }
+    }
+  ],
+  "metadata": {
+    "generation_timestamp": "2025-09-10T09:51:45.135027",
+    "generation_method": "unified_seed_based",
+    "total_conversations": 5,
+    "llm_provider": "openai",
+    "llm_model": "gpt-5",
+    "llm_reasoning_effort": "minimal",
+    "random_seed": 42,
+    "locale": "ms-my",
+    "generation_control": {
+      "mode": "seeds",
+      "seed_limit": 5,
+      "total_limit": null,
+      "scenarios_per_seed": 1,
+      "min_quality_filter": 70,
+      "scenario_mode": "pre_configured",
+      "seeds_used": 5,
+      "conversations_generated": 5
+    },
+    "features": {
+      "character_profiles": true,
+      "locale_placeholders": true,
+      "quality_filtering": true,
+      "pre_configured_scenarios": true
+    }
+  }
+}
