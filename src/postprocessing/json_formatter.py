@@ -58,18 +58,31 @@ class JsonFormatter:
         """
         self.clogger.info("Formatting JSON files")
         
-        if not self.config.verbose:
-            pbar = create_progress_bar(2, "Formatting conversations", "files")
+        # Check which files exist
+        scam_exists = self.config.post_processing_scam_json_input.exists()
+        legit_exists = self.config.post_processing_legit_json_input.exists()
         
-        # Format scam conversations
-        self._format_scam_conversations()
-        if not self.config.verbose:
-            pbar.update(1)
+        num_files = sum([scam_exists, legit_exists])
+        if num_files == 0:
+            self.clogger.warning("No conversation files found to format")
+            return
         
-        # Format legitimate conversations
-        self._format_legit_conversations()
         if not self.config.verbose:
-            pbar.update(1)
+            pbar = create_progress_bar(num_files, "Formatting conversations", "files")
+        
+        # Format scam conversations if they exist
+        if scam_exists:
+            self._format_scam_conversations()
+            if not self.config.verbose:
+                pbar.update(1)
+        
+        # Format legitimate conversations if they exist
+        if legit_exists:
+            self._format_legit_conversations()
+            if not self.config.verbose:
+                pbar.update(1)
+        
+        if not self.config.verbose and 'pbar' in locals():
             pbar.close()
     
     def _format_scam_conversations(self):

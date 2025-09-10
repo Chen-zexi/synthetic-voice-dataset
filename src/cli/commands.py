@@ -144,7 +144,19 @@ def run_pipeline(
     output_dir: str = "./output",
     force: bool = False,
     sample_limit: Optional[int] = None,
-    verbose: bool = False
+    scam_limit: Optional[int] = None,
+    legit_limit: Optional[int] = None,
+    generation_mode: str = "both",
+    verbose: bool = False,
+    use_timestamp: bool = True,
+    specific_timestamp: Optional[str] = None,
+    model_override: Optional[str] = None,
+    reasoning_effort_override: Optional[str] = None,
+    random_seed: Optional[int] = None,
+    generation_control_mode: str = "seeds",
+    seed_limit: Optional[int] = None,
+    total_limit: Optional[int] = None,
+    scenarios_per_seed_override: Optional[int] = None
 ) -> int:
     """
     Run the voice scam dataset generation pipeline.
@@ -156,20 +168,39 @@ def run_pipeline(
         output_dir: Output directory
         force: Force overwrite existing files
         sample_limit: Optional limit on number of samples to process
+        scam_limit: Specific limit for scam conversations
+        legit_limit: Specific limit for legit conversations
+        generation_mode: Generation mode ("scam", "legit", or "both")
         verbose: Enable verbose output
+        use_timestamp: Whether to use timestamp in output directory structure
+        specific_timestamp: Specific timestamp to use or "new" for new timestamp
         
     Returns:
         Exit code (0 for success)
     """
     try:
-        # Load configuration
+        # Load configuration with smart timestamp selection
         print_info(f"Loading configuration for {language}...")
-        config_loader = ConfigLoader(config_dir, output_dir)
-        config = config_loader.load_language(language)
+        config_loader = ConfigLoader(
+            config_dir, 
+            output_dir, 
+            use_timestamp=use_timestamp,
+            specific_timestamp=specific_timestamp,
+            pipeline_steps=steps
+        )
+        config = config_loader.load_language(
+            language,
+            model_override=model_override,
+            reasoning_effort_override=reasoning_effort_override,
+            random_seed=random_seed
+        )
         config.verbose = verbose  # Set verbose flag
         
-        # Display configuration info
+        # Display configuration info with timestamp
         print(format_language_info(config))
+        if config.generation_timestamp:
+            print_info(f"Generation timestamp: {config.generation_timestamp}")
+            print_info(f"Output will be saved to: {config.output_dir}")
         
         # Check for existing output
         if config.output_dir.exists() and not force:
@@ -180,13 +211,44 @@ def run_pipeline(
         # Create output directories
         ensure_directory(config.output_dir)
         
-        # Override sample limit if specified
+        # Override sample limits and generation mode
         if sample_limit:
             config.sample_limit = sample_limit
             print_info(f"Sample limit set to {sample_limit}")
         
+        # Set new generation control parameters
+        config.generation_control_mode = generation_control_mode
+        if generation_control_mode != "seeds":
+            print_info(f"Generation control mode: {generation_control_mode}")
+        
+        if seed_limit is not None:
+            config.seed_limit = seed_limit
+            print_info(f"Seed limit set to {seed_limit}")
+        
+        if total_limit is not None:
+            config.total_conversation_limit = total_limit
+            print_info(f"Total conversation limit set to {total_limit}")
+        
+        if scenarios_per_seed_override is not None:
+            config.scenarios_per_seed = scenarios_per_seed_override
+            print_info(f"Scenarios per seed overridden to {scenarios_per_seed_override}")
+        
+        # Set specific limits
+        if scam_limit is not None:
+            config.scam_sample_limit = scam_limit
+            print_info(f"Scam conversation limit set to {scam_limit}")
+        
+        if legit_limit is not None:
+            config.legit_sample_limit = legit_limit
+            print_info(f"Legitimate conversation limit set to {legit_limit}")
+        
+        # Set generation mode
+        config.generation_mode = generation_mode
+        if generation_mode != "both":
+            print_info(f"Generation mode: {generation_mode}")
+        
         # Initialize and run pipeline
-        runner = PipelineRunner(config, steps)
+        runner = PipelineRunner(config, steps, generation_mode=generation_mode)
         runner.run()
         
         print_info("Pipeline completed successfully!")
@@ -311,8 +373,8 @@ def validate_config(language: str, config_dir: str = "./configs") -> int:
         
         # Input files
         files_to_check = [
-            ("Chinese input", config.preprocessing_input_path),
-            ("Placeholder map", config.preprocessing_map_path),
+            # Note: preprocessing paths removed as they're no longer in new config structure
+            ("Seeds input", config.multi_turn_input_path),
         ]
         
         # Sound effects

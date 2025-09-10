@@ -63,7 +63,22 @@ class ScamGenerator:
             if hasattr(config, 'voice_profiles') and config.voice_profiles:
                 voice_profiles_path = config.voice_profiles
             
-            self.character_manager = CharacterManager(profiles_file_path, voice_profiles_path)
+            # Get scenario template paths if available
+            scenario_templates_path = None
+            scenario_assignments_path = None
+            if hasattr(config, 'scenario_templates_file') and config.scenario_templates_file:
+                scenario_templates_path = config.base_dir / config.scenario_templates_file
+            if hasattr(config, 'scenario_assignments_file') and config.scenario_assignments_file:
+                scenario_assignments_path = config.base_dir / config.scenario_assignments_file
+            
+            self.character_manager = CharacterManager(
+                profiles_file_path, 
+                voice_profiles_path,
+                victim_awareness_levels=config.victim_awareness_levels,
+                num_turns_range=(config.num_turns_lower_limit, config.num_turns_upper_limit),
+                scenario_templates_path=scenario_templates_path,
+                scenario_assignments_path=scenario_assignments_path
+            )
         
         
         # Initialize LLM with configurable provider (default to OpenAI)
@@ -231,9 +246,48 @@ Select contextually appropriate values from the arrays and incorporate them natu
         """
         self.clogger.debug(f"Generating scam conversations from seeds")
         
-        # Get seeds with quality filtering
+        # Initialize tracking variables for metadata
+        self.generation_control_params = {}
+        
+        # Set random seed for reproducibility if configured
+        random_seed = getattr(self.config, 'generation_random_seed', None)
+        if random_seed is not None:
+            random.seed(random_seed)
+            self.clogger.info(f"Set random seed to {random_seed} for reproducible generation")
+        
+        # Get generation control settings
+        generation_control_mode = getattr(self.config, 'generation_control_mode', 'seeds')
+        seed_limit = getattr(self.config, 'seed_limit', None)
+        total_conversation_limit = getattr(self.config, 'total_conversation_limit', None)
+        scenarios_per_seed = getattr(self.config, 'scenarios_per_seed', 1)
         min_quality = getattr(self.config, 'generation_min_seed_quality', 70)
-        limit = self.config.sample_limit
+        scenario_mode = getattr(self.config, 'scenario_mode', 'random')
+        
+        # Store generation parameters for metadata
+        self.generation_control_params = {
+            "mode": generation_control_mode,
+            "seed_limit": seed_limit,
+            "total_limit": total_conversation_limit,
+            "scenarios_per_seed": scenarios_per_seed,
+            "min_quality_filter": min_quality,
+            "scenario_mode": scenario_mode
+        }
+        
+        # Determine limit based on generation mode
+        if generation_control_mode == 'conversations' and total_conversation_limit:
+            # Calculate seeds needed for total conversations
+            import math
+            seeds_needed = math.ceil(total_conversation_limit / scenarios_per_seed)
+            limit = seeds_needed
+            self.clogger.info(f"Conversation mode: targeting {total_conversation_limit} conversations, need {seeds_needed} seeds")
+        else:
+            # Seed-based mode (default)
+            if seed_limit is not None:
+                limit = seed_limit
+            elif self.config.scam_sample_limit is not None:
+                limit = self.config.scam_sample_limit
+            else:
+                limit = self.config.sample_limit
         
         # Filter and limit seeds
         seeds = self.seed_manager.filter_and_limit_seeds(
@@ -247,11 +301,63 @@ Select contextually appropriate values from the arrays and incorporate them natu
         
         self.clogger.debug(f"Using {len(seeds)} seeds for generation")
         
-        # Prepare tasks
+        # Track seeds actually used
+        seeds_used = set()
+        
+        # Prepare tasks with scenarios
         tasks = []
-        for idx, seed in enumerate(seeds):
-            task = self._generate_single_conversation(idx + 1, seed)
-            tasks.append(task)
+        locale = getattr(self.config, 'locale', getattr(self.config, 'language', 'en-us'))
+        # scenarios_per_seed already fetched above
+        
+        task_id = 1
+        conversations_planned = 0
+        
+        for seed in seeds:
+            # Determine how many scenarios to generate for this seed
+            if generation_control_mode == 'conversations' and total_conversation_limit:
+                # Only generate scenarios needed to reach limit
+                scenarios_to_generate = min(
+                    scenarios_per_seed,
+                    total_conversation_limit - conversations_planned
+                )
+                if scenarios_to_generate <= 0:
+                    break
+            else:
+                scenarios_to_generate = scenarios_per_seed
+            
+            # Get scenarios for this seed (pre-configured or random)
+            if self.character_manager:
+                scenarios = self.character_manager.get_scenarios_for_seed(
+                    seed_id=seed.seed_id,
+                    seed_tag=seed.scam_tag,
+                    locale=locale,
+                    count=scenarios_to_generate
+                )
+                
+                if not scenarios:
+                    self.clogger.warning(f"Failed to get scenarios for seed {seed.seed_id}, skipping")
+                    continue
+                
+                # Create task for each scenario
+                for scenario in scenarios:
+                    task = self._generate_single_conversation(task_id, seed, scenario)
+                    tasks.append(task)
+                    task_id += 1
+                    conversations_planned += 1
+                    seeds_used.add(seed.seed_id)  # Track this seed was used
+                    
+                    # Stop if we've reached the conversation limit
+                    if generation_control_mode == 'conversations' and total_conversation_limit:
+                        if conversations_planned >= total_conversation_limit:
+                            self.clogger.info(f"Reached conversation limit of {total_conversation_limit}")
+                            break
+            else:
+                # No character manager, use old method
+                task = self._generate_single_conversation(task_id, seed, None)
+                tasks.append(task)
+                task_id += 1
+                conversations_planned += 1
+                seeds_used.add(seed.seed_id)  # Track this seed was used
         
         # Run tasks concurrently with progress bar
         max_concurrent = getattr(self.config, 'max_concurrent_requests', 10)
@@ -287,6 +393,10 @@ Select contextually appropriate values from the arrays and incorporate them natu
             elif result:
                 all_conversations.append(result)
         
+        # Update generation control params with actual counts
+        self.generation_control_params["seeds_used"] = len(seeds_used)
+        self.generation_control_params["conversations_generated"] = len(all_conversations)
+        
         # Save conversations
         self._save_conversations(all_conversations)
         
@@ -296,46 +406,60 @@ Select contextually appropriate values from the arrays and incorporate them natu
         self.clogger.info(f"Generated {len(all_conversations)} conversations")
         return all_conversations
 
-    async def _generate_single_conversation(self, conversation_id: int, seed: ScamSeed) -> Optional[Dict]:
+    async def _generate_single_conversation(self, conversation_id: int, seed: ScamSeed, scenario=None) -> Optional[Dict]:
         """
         Generate a single conversation from a seed with optional character profiles.
         
         Args:
             conversation_id: Unique conversation ID
             seed: ScamSeed object with scam details
+            scenario: Optional GenerationScenario with pre-selected parameters
             
         Returns:
             Conversation dictionary or None if generation failed
         """
-        # Randomly select conversation parameters
-        num_turns = random.randint(
-            self.config.num_turns_lower_limit,
-            self.config.num_turns_upper_limit
-        )
-        victim_awareness = random.choice(self.config.victim_awareness_levels)
+        # Use scenario if provided, otherwise create one
+        if scenario:
+            # Use parameters from scenario
+            num_turns = scenario.num_turns
+            victim_awareness = scenario.victim_awareness
+            character_profiles = {
+                "scammer": scenario.scammer_profile,
+                "victim": scenario.victim_profile
+            }
+            self.clogger.debug(f"Using scenario for conversation {conversation_id}: "
+                             f"Scammer={scenario.scammer_profile.profile_id}, "
+                             f"Victim={scenario.victim_profile.profile_id}, "
+                             f"Awareness={victim_awareness}, Turns={num_turns}")
+        else:
+            # Fallback to old behavior if no scenario provided
+            num_turns = random.randint(
+                self.config.num_turns_lower_limit,
+                self.config.num_turns_upper_limit
+            )
+            victim_awareness = random.choice(self.config.victim_awareness_levels)
+            
+            # Generate character profiles if enabled
+            character_profiles = None
+            if self.character_manager:
+                locale = getattr(self.config, 'locale', getattr(self.config, 'language', 'en-us'))
+                scammer_profile = self.character_manager.select_random_profile("scammer", locale)
+                victim_profile = self.character_manager.select_random_profile("victim", locale)
+                
+                if scammer_profile and victim_profile:
+                    character_profiles = {
+                        "scammer": scammer_profile,
+                        "victim": victim_profile
+                    }
+                    self.clogger.debug(f"Using character profiles for conversation {conversation_id}: "
+                                     f"Scammer={scammer_profile.profile_id}, Victim={victim_profile.profile_id}")
         
         # Use seed placeholders if available, otherwise use all locale placeholders
         placeholder_list = seed.placeholders if seed.placeholders else list(self.placeholder_mappings.keys())
         
-        
         # Use original seed text (no processing needed)
         processed_seed_text = seed.conversation_seed
         processed_summary = seed.scam_summary
-        
-        # Generate character profiles if enabled
-        character_profiles = None
-        if self.character_manager:
-            locale = getattr(self.config, 'locale', getattr(self.config, 'language', 'en-us'))
-            scammer_profile = self.character_manager.select_random_profile("scammer", locale)
-            victim_profile = self.character_manager.select_random_profile("victim", locale)
-            
-            if scammer_profile and victim_profile:
-                character_profiles = {
-                    "scammer": scammer_profile,
-                    "victim": victim_profile
-                }
-                self.clogger.debug(f"Using character profiles for conversation {conversation_id}: "
-                                 f"Scammer={scammer_profile.profile_id}, Victim={victim_profile.profile_id}")
         
         # Generate dialogue using the seed text with placeholder context and optional character profiles
         dialogue = await self._generate_dialogue(
@@ -369,6 +493,10 @@ Select contextually appropriate values from the arrays and incorporate them natu
                     "victim_profile_id": character_profiles["victim"].profile_id
                 }
             
+            # Add scenario information if available
+            if scenario:
+                conversation["scenario_id"] = scenario.scenario_id
+            
             # Check if dialogue is a dict with dialogue field
             if isinstance(dialogue, dict) and 'dialogue' in dialogue:
                 conversation["dialogue"] = dialogue['dialogue']
@@ -382,23 +510,30 @@ Select contextually appropriate values from the arrays and incorporate them natu
                 victim_voice = self.character_manager.get_voice_for_profile(character_profiles["victim"].profile_id)
                 
                 if scammer_voice and victim_voice:
+                    # Check for voice duplication and reassign if necessary
+                    if scammer_voice == victim_voice:
+                        # Get alternative voice for victim from available voices
+                        if hasattr(self.config, 'voice_profiles') and self.config.voice_profiles:
+                            available_voices = []
+                            if 'available_voices' in self.config.voice_profiles:
+                                available_voices = list(self.config.voice_profiles['available_voices'].keys())
+                            elif 'character_voice_mappings' in self.config.voice_profiles:
+                                # Get unique voices from mappings
+                                available_voices = list(set(self.config.voice_profiles['character_voice_mappings'].values()))
+                            
+                            # Filter out the scammer's voice and select an alternative
+                            alternative_voices = [v for v in available_voices if v != scammer_voice]
+                            if alternative_voices:
+                                victim_voice = random.choice(alternative_voices)
+                                self.clogger.debug(f"Voice collision detected for conversation {conversation_id}, reassigned victim voice to {victim_voice}")
+                            else:
+                                self.clogger.warning(f"Voice collision detected but no alternative voices available for conversation {conversation_id}")
+                    
                     conversation["voice_mapping"] = {
                         "caller": scammer_voice,  # Scammer is always the caller
                         "callee": victim_voice    # Victim is always the callee
                     }
                     self.clogger.debug(f"Assigned voices for conversation {conversation_id}: caller={scammer_voice}, callee={victim_voice}")
-            
-            # Add generation metadata
-            conversation["metadata"] = {
-                "generation_method": "seed_based_with_profiles" if character_profiles else "seed_based",
-                "character_profiles_enabled": bool(character_profiles),
-                "placeholders_provided": bool(self.placeholder_mappings),
-                "llm_provider": self.llm_provider,
-                "llm_model": self.llm_model,
-                "generation_timestamp": self._get_iso_timestamp(),
-                "locale": getattr(self.config, 'locale', getattr(self.config, 'language', 'unknown'))
-            }
-            
             
             return conversation
         
@@ -638,32 +773,24 @@ Based on the above parameters and scenario, generate exactly {num_turns} dialogu
         output_path = self.config.multi_turn_output_path
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
-        # Create comprehensive dataset metadata
+        # Create comprehensive dataset metadata focused on this batch
         generation_metadata = {
             "generation_timestamp": self._get_iso_timestamp(),
             "generation_method": "unified_seed_based",
             "total_conversations": len(conversations),
             "llm_provider": self.llm_provider,
             "llm_model": self.llm_model,
+            "llm_reasoning_effort": getattr(self.config, 'llm_reasoning_effort', None),
+            "random_seed": getattr(self.config, 'generation_random_seed', None),
             "locale": getattr(self.config, 'locale', getattr(self.config, 'language', 'unknown')),
+            "generation_control": self.generation_control_params,
             "features": {
                 "character_profiles": bool(self.character_manager),
                 "locale_placeholders": bool(self.placeholder_mappings),
-                "quality_filtering": True
+                "quality_filtering": True,
+                "pre_configured_scenarios": self.generation_control_params.get("scenario_mode") == "pre_configured"
             }
         }
-        
-        # Add character profile statistics if available
-        if self.character_manager:
-            generation_metadata["character_stats"] = self.character_manager.get_stats()
-        
-        # Add seed statistics
-        if self.seed_manager:
-            generation_metadata["seed_stats"] = self.seed_manager.get_stats()
-        
-        # Add placeholder mappings count if available
-        if self.placeholder_mappings:
-            generation_metadata["placeholder_count"] = len(self.placeholder_mappings)
         
         # Add token usage summary if tracking is enabled
         output_data = {

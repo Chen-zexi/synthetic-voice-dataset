@@ -74,7 +74,8 @@ class LegitGenerator:
         Returns:
             List of conversation dictionaries
         """
-        num_conversations = self.config.sample_limit
+        # Use legit_sample_limit if set, otherwise fall back to sample_limit
+        num_conversations = self.config.legit_sample_limit if self.config.legit_sample_limit is not None else self.config.sample_limit
         self.clogger.debug(f"Generating {num_conversations} legitimate conversations")
         
         # Prepare tasks
@@ -358,18 +359,33 @@ Based on the above parameters, generate exactly {num_turns} dialogue turns for a
         output_path = self.config.legit_call_output_path
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
+        # Create comprehensive dataset metadata
+        from datetime import datetime
+        generation_metadata = {
+            "generation_timestamp": datetime.now().isoformat(),
+            "generation_method": "category_based",
+            "total_conversations": len(conversations),
+            "llm_provider": self.llm_provider,
+            "llm_model": self.llm_model,
+            "llm_reasoning_effort": getattr(self.config, 'llm_reasoning_effort', None),
+            "locale": getattr(self.config, 'locale', getattr(self.config, 'language', 'unknown')),
+            "categories": self.config.legit_call_categories
+        }
+        
+        # Build output data structure
+        output_data = {
+            "generation_metadata": generation_metadata,
+            "conversations": conversations
+        }
+        
         # Add token usage summary if tracking is enabled
-        output_data = conversations
         if self.token_tracker:
             # Create a wrapper with token usage info (without detailed breakdowns)
             token_summary = self.token_tracker.get_summary(include_details=False)
             cost_estimate = self.token_tracker.estimate_cost()
             
-            output_data = {
-                "conversations": conversations,
-                "token_usage": token_summary,
-                "estimated_cost": cost_estimate
-            }
+            output_data["token_usage"] = token_summary
+            output_data["estimated_cost"] = cost_estimate
             
             # Print summary if verbose
             if self.config.verbose:
@@ -377,6 +393,6 @@ Based on the above parameters, generate exactly {num_turns} dialogue turns for a
                 self.token_tracker.print_cost_estimate()
         
         with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(output_data if self.token_tracker else conversations, f, ensure_ascii=False, indent=2)
+            json.dump(output_data, f, ensure_ascii=False, indent=2)
         
         self.clogger.info(f"Saved legitimate conversations to {output_path}")

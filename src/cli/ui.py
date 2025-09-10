@@ -38,17 +38,19 @@ from cli.voice_quality_commands import VoiceQualityManager
 class InteractiveUI:
     """Interactive user interface for the pipeline."""
     
-    def __init__(self, config_dir: str = "./configs", output_dir: str = "./output"):
+    def __init__(self, config_dir: str = "./configs", output_dir: str = "./output", use_timestamp: bool = True):
         """
         Initialize the interactive UI.
         
         Args:
             config_dir: Configuration directory path
             output_dir: Output directory path
+            use_timestamp: Whether to use timestamp in output directory structure
         """
         self.config_dir = config_dir
         self.output_dir = output_dir
-        self.config_loader = ConfigLoader(config_dir, output_dir)
+        self.use_timestamp = use_timestamp
+        self.config_loader = ConfigLoader(config_dir, output_dir, use_timestamp=use_timestamp)
         self.voice_quality_manager = VoiceQualityManager(self.config_loader)
         self.current_locale = None
         self.pipeline_steps = [
@@ -422,15 +424,45 @@ class InteractiveUI:
         print(f"Base directory: {output_path}")
         
         if output_path.exists():
-            # Check each subdirectory
-            subdirs = ['intermediate', 'audio', 'final']
-            for subdir in subdirs:
-                subdir_path = output_path / subdir
-                if subdir_path.exists():
-                    file_count = len(list(subdir_path.rglob('*')))
-                    print(f"  ✓ {subdir}: {file_count} files")
+            # List all timestamp directories
+            timestamp_dirs = sorted([d for d in output_path.iterdir() if d.is_dir()])
+            
+            if timestamp_dirs:
+                print(f"Found {len(timestamp_dirs)} generation(s):")
+                for ts_dir in timestamp_dirs[-5:]:  # Show last 5 generations
+                    print(f"\n  Timestamp: {ts_dir.name}")
+                    # Check subdirectories in each timestamp
+                    subdirs = ['conversations', 'audio', 'final']
+                    for subdir in subdirs:
+                        subdir_path = ts_dir / subdir
+                        if subdir_path.exists():
+                            file_count = len(list(subdir_path.rglob('*')))
+                            print(f"    ✓ {subdir}: {file_count} files")
+                        else:
+                            print(f"    ✗ {subdir}: not found")
+                
+                if len(timestamp_dirs) > 5:
+                    print(f"\n  ... and {len(timestamp_dirs) - 5} more generation(s)")
+            else:
+                # Check if old structure exists (without timestamps)
+                subdirs = ['conversations', 'audio', 'final']
+                has_old_structure = False
+                for subdir in subdirs:
+                    if (output_path / subdir).exists():
+                        has_old_structure = True
+                        break
+                
+                if has_old_structure:
+                    print("  Found old directory structure (without timestamps):")
+                    for subdir in subdirs:
+                        subdir_path = output_path / subdir
+                        if subdir_path.exists():
+                            file_count = len(list(subdir_path.rglob('*')))
+                            print(f"    ✓ {subdir}: {file_count} files")
+                        else:
+                            print(f"    ✗ {subdir}: not found")
                 else:
-                    print(f"  ✗ {subdir}: not found")
+                    print("  ✗ No generations found")
         else:
             print("  ✗ Output directory does not exist")
     
@@ -449,14 +481,62 @@ class InteractiveUI:
         if not output_path.exists():
             print_info("Output directory does not exist.")
             return
-            
-        if confirm_action(f"Delete all files in {output_path}? This cannot be undone."):
+        
+        # List timestamp directories
+        timestamp_dirs = sorted([d for d in output_path.iterdir() if d.is_dir()])
+        
+        if not timestamp_dirs:
+            print_info("No generation directories found.")
+            return
+        
+        print(f"\nFound {len(timestamp_dirs)} generation(s):")
+        for i, ts_dir in enumerate(timestamp_dirs, 1):
+            print(f"  {i}. {ts_dir.name}")
+        
+        print("\nOptions:")
+        print("  1. Clean all generations")
+        print("  2. Clean specific generation(s)")
+        print("  3. Keep latest N generations and clean others")
+        print("  q. Cancel")
+        
+        choice = input("\nEnter your choice: ").strip()
+        
+        if choice == '1':
+            if confirm_action(f"Delete ALL generations in {output_path}? This cannot be undone."):
+                try:
+                    import shutil
+                    shutil.rmtree(output_path)
+                    print_info("All generations cleaned successfully.")
+                except Exception as e:
+                    print_error(f"Error cleaning directory: {e}")
+                    
+        elif choice == '2':
+            indices = input("Enter generation numbers to delete (comma-separated): ").strip()
             try:
-                import shutil
-                shutil.rmtree(output_path)
-                print_info("Output directory cleaned successfully.")
-            except Exception as e:
-                print_error(f"Error cleaning directory: {e}")
+                to_delete = [timestamp_dirs[int(i.strip())-1] for i in indices.split(',')]
+                if confirm_action(f"Delete {len(to_delete)} generation(s)? This cannot be undone."):
+                    import shutil
+                    for ts_dir in to_delete:
+                        shutil.rmtree(ts_dir)
+                        print_info(f"Deleted: {ts_dir.name}")
+            except (ValueError, IndexError) as e:
+                print_error("Invalid selection.")
+                
+        elif choice == '3':
+            keep = input("How many latest generations to keep? ").strip()
+            try:
+                keep_count = int(keep)
+                if keep_count < len(timestamp_dirs):
+                    to_delete = timestamp_dirs[:-keep_count]
+                    if confirm_action(f"Delete {len(to_delete)} older generation(s)? This cannot be undone."):
+                        import shutil
+                        for ts_dir in to_delete:
+                            shutil.rmtree(ts_dir)
+                            print_info(f"Deleted: {ts_dir.name}")
+                else:
+                    print_info("Nothing to delete.")
+            except ValueError:
+                print_error("Invalid number.")
     
     def _help_menu(self):
         """Show help and information menu."""
@@ -945,7 +1025,8 @@ class InteractiveUI:
                 config_dir=self.config_dir,
                 output_dir=self.output_dir,
                 force=force,
-                sample_limit=sample_limit
+                sample_limit=sample_limit,
+                use_timestamp=self.use_timestamp
             )
             
         except Exception as e:

@@ -44,15 +44,17 @@ class PipelineRunner:
         'postprocess': 'run_postprocessing'
     }
     
-    def __init__(self, config: Config, steps: Optional[List[str]] = None):
+    def __init__(self, config: Config, steps: Optional[List[str]] = None, generation_mode: str = "both"):
         """
         Initialize the pipeline runner.
         
         Args:
             config: Configuration object
             steps: List of steps to run (None for all)
+            generation_mode: Generation mode ("scam", "legit", or "both")
         """
         self.config = config
+        self.generation_mode = generation_mode
         self.steps = self._validate_steps(steps)
         
         # Create output directories
@@ -76,15 +78,36 @@ class PipelineRunner:
             Validated list of steps
         """
         if not steps or 'all' in steps:
-            return list(self.PIPELINE_STEPS.keys())
+            steps = list(self.PIPELINE_STEPS.keys())
+        else:
+            # Validate each step
+            invalid_steps = [s for s in steps if s not in self.PIPELINE_STEPS]
+            if invalid_steps:
+                raise ValueError(f"Invalid steps: {', '.join(invalid_steps)}")
         
-        # Validate each step
-        invalid_steps = [s for s in steps if s not in self.PIPELINE_STEPS]
-        if invalid_steps:
-            raise ValueError(f"Invalid steps: {', '.join(invalid_steps)}")
+        # Apply generation mode filtering
+        filtered_steps = []
+        for step in steps:
+            if self.generation_mode == "scam":
+                # For scam mode, skip legit generation
+                if step == "legit":
+                    continue
+                filtered_steps.append(step)
+            elif self.generation_mode == "legit":
+                # For legit mode, replace "conversation" with "legit"
+                if step == "conversation":
+                    if "legit" not in filtered_steps:
+                        filtered_steps.append("legit")
+                elif step != "legit":
+                    filtered_steps.append(step)
+                else:
+                    filtered_steps.append(step)
+            else:
+                # Both mode - include all steps
+                filtered_steps.append(step)
         
         # Return steps in pipeline order
-        return [s for s in self.PIPELINE_STEPS.keys() if s in steps]
+        return [s for s in self.PIPELINE_STEPS.keys() if s in filtered_steps]
     
     def _create_output_directories(self):
         """Create all necessary output directories."""
@@ -178,23 +201,29 @@ class PipelineRunner:
         
         synthesizer = VoiceSynthesizer(self.config)
         
-        # Generate scam audio
-        if self.config.verbose:
-            print("Generating scam conversation audio...")
-        await synthesizer.generate_audio(
-            input_file=self.config.voice_input_file_scam,
-            output_dir=self.config.voice_output_dir_scam,
-            is_scam=True
-        )
+        # Generate scam audio if file exists
+        if self.config.voice_input_file_scam.exists():
+            if self.config.verbose:
+                print("Generating scam conversation audio...")
+            await synthesizer.generate_audio(
+                input_file=self.config.voice_input_file_scam,
+                output_dir=self.config.voice_output_dir_scam,
+                is_scam=True
+            )
+        elif self.generation_mode in ["scam", "both"]:
+            logger.warning(f"Scam conversation file not found: {self.config.voice_input_file_scam}")
         
-        # Generate legitimate audio
-        if self.config.verbose:
-            print("Generating legitimate conversation audio...")
-        await synthesizer.generate_audio(
-            input_file=self.config.voice_input_file_legit,
-            output_dir=self.config.voice_output_dir_legit,
-            is_scam=False
-        )
+        # Generate legitimate audio if file exists
+        if self.config.voice_input_file_legit.exists():
+            if self.config.verbose:
+                print("Generating legitimate conversation audio...")
+            await synthesizer.generate_audio(
+                input_file=self.config.voice_input_file_legit,
+                output_dir=self.config.voice_output_dir_legit,
+                is_scam=False
+            )
+        elif self.generation_mode in ["legit", "both"]:
+            logger.warning(f"Legitimate conversation file not found: {self.config.voice_input_file_legit}")
     
     def run_postprocessing(self):
         """Run postprocessing: format JSON and package audio."""

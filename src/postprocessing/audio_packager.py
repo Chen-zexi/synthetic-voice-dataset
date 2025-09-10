@@ -44,11 +44,21 @@ class AudioPackager:
         # Resample audio files before packaging
         self._resample_audio_files()
         
-        # Package scam audio
-        self._package_scam_audio()
+        # Check which directories exist
+        scam_exists = self.config.post_processing_scam_audio_dir.exists()
+        legit_exists = self.config.post_processing_legit_audio_dir.exists()
         
-        # Package legitimate audio
-        self._package_legit_audio()
+        # Package scam audio if directory exists
+        if scam_exists:
+            self._package_scam_audio()
+        else:
+            self.clogger.debug(f"Scam audio directory not found: {self.config.post_processing_scam_audio_dir}")
+        
+        # Package legitimate audio if directory exists
+        if legit_exists:
+            self._package_legit_audio()
+        else:
+            self.clogger.debug(f"Legit audio directory not found: {self.config.post_processing_legit_audio_dir}")
     
     def _resample_audio_files(self):
         """

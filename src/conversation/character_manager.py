@@ -6,7 +6,7 @@ import json
 import logging
 import random
 from pathlib import Path
-from typing import Dict, List, Optional, Literal, Union
+from typing import Dict, List, Optional, Literal, Union, Tuple
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
@@ -32,6 +32,8 @@ class GenerationScenario(BaseModel):
     scammer_profile: CharacterProfile = Field(description="Profile for the scammer character")
     victim_profile: CharacterProfile = Field(description="Profile for the victim character")
     locale: str = Field(description="Target locale for the conversation")
+    victim_awareness: str = Field(description="Victim's awareness level (not/tiny/very)")
+    num_turns: int = Field(description="Number of dialogue turns")
 
 
 class CharacterManager:
@@ -39,19 +41,38 @@ class CharacterManager:
     Manages character profiles and creates generation scenarios.
     """
     
-    def __init__(self, character_profiles_path: Optional[Path] = None, voice_profiles_path: Optional[Union[Path, Dict]] = None):
+    def __init__(self, character_profiles_path: Optional[Path] = None, 
+                 voice_profiles_path: Optional[Union[Path, Dict]] = None,
+                 victim_awareness_levels: Optional[List[str]] = None,
+                 num_turns_range: Optional[Tuple[int, int]] = None,
+                 scenario_templates_path: Optional[Path] = None,
+                 scenario_assignments_path: Optional[Path] = None):
         """
         Initialize the character manager.
         
         Args:
             character_profiles_path: Path to character profiles JSON file
             voice_profiles_path: Path to voice profiles JSON file for locale-specific voice mappings
+            victim_awareness_levels: List of possible victim awareness levels (weighted)
+            num_turns_range: Tuple of (min, max) for number of turns
+            scenario_templates_path: Path to pre-configured scenario templates
+            scenario_assignments_path: Path to seed-to-template assignments
         """
         self.character_profiles_path = character_profiles_path
         self.voice_profiles_path = voice_profiles_path
         self.profiles: List[CharacterProfile] = []
         self.voice_mappings: Dict[str, str] = {}  # profile_id -> voice_name
         self._loaded = False
+        
+        # Pre-configured scenarios
+        self.scenario_templates: Dict[str, Dict] = {}  # template_id -> template data
+        self.scenario_assignments: Dict[str, List[str]] = {}  # seed_id -> template_ids
+        self.scenario_templates_path = scenario_templates_path
+        self.scenario_assignments_path = scenario_assignments_path
+        
+        # Conversation parameter configuration (for fallback/random mode)
+        self.victim_awareness_levels = victim_awareness_levels or ["not", "not", "not", "not", "not", "tiny", "very"]
+        self.num_turns_range = num_turns_range or (7, 10)
         
         # Load profiles if path provided
         if character_profiles_path:
@@ -63,6 +84,11 @@ class CharacterManager:
         # Load voice mappings if path provided
         if voice_profiles_path:
             self.load_voice_mappings()
+        
+        # Load pre-configured scenarios if available
+        if scenario_templates_path and scenario_assignments_path:
+            self.load_scenario_templates()
+            self.load_scenario_assignments()
     
     def load_profiles(self):
         """Load character profiles from JSON file."""
@@ -216,6 +242,64 @@ class CharacterManager:
         else:
             logger.debug("No character_voice_mappings found in voice profiles")
     
+    def load_scenario_templates(self):
+        """
+        Load pre-configured scenario templates from JSON file.
+        """
+        if not self.scenario_templates_path or not self.scenario_templates_path.exists():
+            logger.debug(f"Scenario templates file not found: {self.scenario_templates_path}")
+            return
+        
+        logger.debug(f"Loading scenario templates from {self.scenario_templates_path}")
+        
+        try:
+            with open(self.scenario_templates_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            # Build template dictionary for quick lookup
+            for template in data.get('templates', []):
+                template_id = template.get('template_id')
+                if template_id:
+                    self.scenario_templates[template_id] = template
+            
+            logger.debug(f"Loaded {len(self.scenario_templates)} scenario templates")
+        except Exception as e:
+            logger.warning(f"Failed to load scenario templates: {e}")
+    
+    def load_scenario_assignments(self):
+        """
+        Load seed-to-template assignments from JSON file.
+        """
+        if not self.scenario_assignments_path or not self.scenario_assignments_path.exists():
+            logger.debug(f"Scenario assignments file not found: {self.scenario_assignments_path}")
+            return
+        
+        logger.debug(f"Loading scenario assignments from {self.scenario_assignments_path}")
+        
+        try:
+            with open(self.scenario_assignments_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            self.scenario_assignments = data.get('seed_scenarios', {})
+            logger.debug(f"Loaded assignments for {len(self.scenario_assignments)} seeds")
+        except Exception as e:
+            logger.warning(f"Failed to load scenario assignments: {e}")
+    
+    def get_profile_by_id(self, profile_id: str) -> Optional[CharacterProfile]:
+        """
+        Get a character profile by its ID.
+        
+        Args:
+            profile_id: Character profile ID
+            
+        Returns:
+            CharacterProfile object or None if not found
+        """
+        for profile in self.profiles:
+            if profile.profile_id == profile_id:
+                return profile
+        return None
+    
     def get_voice_for_profile(self, profile_id: str) -> Optional[str]:
         """
         Get the voice name mapped to a character profile.
@@ -274,9 +358,86 @@ class CharacterManager:
         
         return random.choice(suitable_profiles)
     
+    def create_from_template(self, template_id: str, seed_tag: str, locale: str, seed_id: str = "") -> Optional[GenerationScenario]:
+        """
+        Create a scenario from a pre-configured template.
+        
+        Args:
+            template_id: Template ID to use
+            seed_tag: The scam tag being used
+            locale: Target locale
+            seed_id: Seed ID for scenario naming
+            
+        Returns:
+            GenerationScenario object or None if creation failed
+        """
+        if template_id not in self.scenario_templates:
+            logger.warning(f"Template {template_id} not found")
+            return None
+        
+        template = self.scenario_templates[template_id]
+        
+        # Get profile objects
+        scammer_profile = self.get_profile_by_id(template['scammer_profile_id'])
+        victim_profile = self.get_profile_by_id(template['victim_profile_id'])
+        
+        if not scammer_profile or not victim_profile:
+            logger.warning(f"Could not find profiles for template {template_id}")
+            return None
+        
+        # Create scenario with template parameters
+        scenario_id = f"{seed_id}_{template_id}" if seed_id else template_id
+        
+        return GenerationScenario(
+            scenario_id=scenario_id,
+            seed_tag=seed_tag,
+            scammer_profile=scammer_profile,
+            victim_profile=victim_profile,
+            locale=locale,
+            victim_awareness=template['victim_awareness'],
+            num_turns=template['num_turns']
+        )
+    
+    def get_scenarios_for_seed(self, seed_id: str, seed_tag: str, locale: str, count: int = 1) -> List[GenerationScenario]:
+        """
+        Get pre-assigned scenarios for a seed.
+        
+        Args:
+            seed_id: Seed ID to get scenarios for
+            seed_tag: The scam tag being used
+            locale: Target locale
+            count: Number of scenarios to return
+            
+        Returns:
+            List of GenerationScenario objects
+        """
+        scenarios = []
+        
+        # Check if we have pre-configured assignments
+        if self.scenario_assignments and seed_id in self.scenario_assignments:
+            template_ids = self.scenario_assignments[seed_id][:count]
+            
+            for template_id in template_ids:
+                scenario = self.create_from_template(template_id, seed_tag, locale, seed_id)
+                if scenario:
+                    scenarios.append(scenario)
+            
+            if scenarios:
+                logger.debug(f"Using pre-configured scenarios for seed {seed_id}: {template_ids}")
+                return scenarios
+        
+        # Fallback to random scenario creation
+        logger.debug(f"No pre-configured scenarios for seed {seed_id}, using random generation")
+        for i in range(count):
+            scenario = self.create_scenario(seed_tag, locale, f"{seed_id}_{i+1}")
+            if scenario:
+                scenarios.append(scenario)
+        
+        return scenarios
+    
     def create_scenario(self, seed_tag: str, locale: str, scenario_id: Optional[str] = None) -> Optional[GenerationScenario]:
         """
-        Create a generation scenario by combining seed with character profiles.
+        Create a generation scenario by combining seed with character profiles and conversation parameters.
         
         Args:
             seed_tag: The scam tag to use
@@ -294,6 +455,10 @@ class CharacterManager:
             logger.error(f"Could not create scenario for seed '{seed_tag}' - missing profiles")
             return None
         
+        # Select conversation parameters (affected by random seed)
+        victim_awareness = random.choice(self.victim_awareness_levels)
+        num_turns = random.randint(self.num_turns_range[0], self.num_turns_range[1])
+        
         # Generate scenario ID
         if not scenario_id:
             scenario_id = f"{seed_tag}_{scammer_profile.profile_id}_{victim_profile.profile_id}_{locale}"
@@ -303,7 +468,9 @@ class CharacterManager:
             seed_tag=seed_tag,
             scammer_profile=scammer_profile,
             victim_profile=victim_profile,
-            locale=locale
+            locale=locale,
+            victim_awareness=victim_awareness,
+            num_turns=num_turns
         )
     
     def create_multiple_scenarios(self, seed_tags: List[str], locale: str, 

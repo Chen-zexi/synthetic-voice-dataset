@@ -6,8 +6,9 @@ import os
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field
+from datetime import datetime
 
 from src.config.schemas import validate_schema, COMMON_SCHEMA, LANGUAGE_SCHEMA
 
@@ -124,6 +125,9 @@ class Config:
     
     # Fields with default values (must be at the end)
     sample_limit: int = 100  # Default value, overridden by CLI
+    scam_sample_limit: Optional[int] = None  # Specific limit for scam conversations
+    legit_sample_limit: Optional[int] = None  # Specific limit for legit conversations
+    generation_mode: str = "both"  # "scam", "legit", or "both"
     
     # Voice profiles for intelligent voice assignment (optional)
     voice_profiles: Optional[Dict] = None
@@ -136,10 +140,24 @@ class Config:
     generation_enable_character_profiles: bool = False
     generation_min_seed_quality: int = 70
     generation_enable_dynamic_placeholders: bool = False
+    generation_random_seed: Optional[int] = None
+    scenarios_per_seed: int = 1
+    scenario_mode: str = "random"
+    scenario_templates_file: Optional[str] = None
+    scenario_assignments_file: Optional[str] = None
+    
+    # Generation control settings
+    generation_control_mode: str = "seeds"  # "seeds" or "conversations"
+    seed_limit: Optional[int] = None
+    total_conversation_limit: Optional[int] = None
     
     # Raw config data
     common_config: dict = field(default_factory=dict)
     lang_config: dict = field(default_factory=dict)
+    
+    # Timestamp for this generation run
+    generation_timestamp: Optional[str] = None
+    use_timestamp: bool = True
 
 
 class ConfigLoader:
@@ -147,17 +165,25 @@ class ConfigLoader:
     Loads and validates configuration files for the voice scam dataset generator.
     """
     
-    def __init__(self, config_dir: str = "./configs", output_dir: str = "./output"):
+    def __init__(self, config_dir: str = "./configs", output_dir: str = "./output", 
+                 use_timestamp: bool = True, specific_timestamp: Optional[str] = None,
+                 pipeline_steps: Optional[List[str]] = None):
         """
         Initialize the configuration loader.
         
         Args:
             config_dir: Directory containing configuration files
             output_dir: Base output directory for generated files
+            use_timestamp: Whether to use timestamp in output directory structure
+            specific_timestamp: Specific timestamp to use (overrides smart selection)
+            pipeline_steps: Pipeline steps that will be run (for smart timestamp selection)
         """
         self.config_dir = Path(config_dir)
         self.output_dir = Path(output_dir)
         self.base_dir = Path(".")
+        self.use_timestamp = use_timestamp
+        self.specific_timestamp = specific_timestamp
+        self.pipeline_steps = pipeline_steps or []
         
         # Load common configuration
         common_path = self.config_dir / "common.json"
@@ -178,7 +204,73 @@ class ConfigLoader:
             "malay": "ms-my"
         }
     
-    def load_language(self, language: str) -> Config:
+    def _find_latest_timestamp(self, locale_id: str) -> Optional[str]:
+        """
+        Find the latest timestamp directory for a given locale.
+        Handles both base timestamps (MMDD_HHMM) and suffixed versions (MMDD_HHMM_N).
+        
+        Args:
+            locale_id: Locale identifier
+            
+        Returns:
+            Latest timestamp string or None if no timestamps found
+        """
+        locale_dir = self.output_dir / locale_id
+        if not locale_dir.exists():
+            return None
+        
+        # Find all timestamp directories (format: MMDD_HHMM or MMDD_HHMM_N)
+        import re
+        timestamp_pattern = re.compile(r'^(\d{4}_\d{4})(?:_(\d+))?$')
+        timestamp_dirs = []
+        
+        for d in locale_dir.iterdir():
+            if d.is_dir():
+                match = timestamp_pattern.match(d.name)
+                if match:
+                    base_timestamp = match.group(1)
+                    suffix = int(match.group(2)) if match.group(2) else 0
+                    # Store as tuple for proper sorting
+                    timestamp_dirs.append((base_timestamp, suffix, d.name))
+        
+        if not timestamp_dirs:
+            return None
+        
+        # Sort by base timestamp first, then by suffix
+        timestamp_dirs.sort(key=lambda x: (x[0], x[1]))
+        latest = timestamp_dirs[-1][2]  # Get the full directory name
+        logger.info(f"Found latest timestamp for {locale_id}: {latest}")
+        return latest
+    
+    def _generate_unique_timestamp(self, locale_id: str, base_timestamp: str) -> str:
+        """
+        Generate a unique timestamp directory name, adding suffix if needed.
+        
+        Args:
+            locale_id: Locale identifier
+            base_timestamp: Base timestamp in format MMDD_HHMM
+            
+        Returns:
+            Unique timestamp string (e.g., "0909_2218" or "0909_2218_1")
+        """
+        locale_dir = self.output_dir / locale_id
+        
+        # Check if base timestamp directory exists
+        if not (locale_dir / base_timestamp).exists():
+            return base_timestamp
+        
+        # Find next available suffix
+        suffix = 1
+        while (locale_dir / f"{base_timestamp}_{suffix}").exists():
+            suffix += 1
+        
+        unique_timestamp = f"{base_timestamp}_{suffix}"
+        logger.info(f"Generated unique timestamp with suffix: {unique_timestamp}")
+        return unique_timestamp
+    
+    def load_language(self, language: str, model_override: Optional[str] = None,
+                      reasoning_effort_override: Optional[str] = None,
+                      random_seed: Optional[int] = None) -> Config:
         """
         Load configuration for a specific language (backward compatibility).
         
@@ -192,9 +284,11 @@ class ConfigLoader:
         locale_id = self.locale_aliases.get(language, language)
         
         # Always use the new localization structure
-        return self.load_localization(locale_id)
+        return self.load_localization(locale_id, model_override, reasoning_effort_override, random_seed)
     
-    def load_localization(self, locale_id: str) -> Config:
+    def load_localization(self, locale_id: str, model_override: Optional[str] = None,
+                         reasoning_effort_override: Optional[str] = None,
+                         random_seed: Optional[int] = None) -> Config:
         """
         Load configuration for a specific localization.
         
@@ -219,9 +313,13 @@ class ConfigLoader:
             locale_config = json.load(f)
         
         # Create Config object from new localization structure
-        return self._build_config_from_locale(locale_id, locale_config, placeholders_path)
+        return self._build_config_from_locale(locale_id, locale_config, placeholders_path,
+                                             model_override, reasoning_effort_override, random_seed)
     
-    def _build_config_from_locale(self, locale_id: str, locale_config: dict, placeholders_path: Path) -> Config:
+    def _build_config_from_locale(self, locale_id: str, locale_config: dict, placeholders_path: Path,
+                                  model_override: Optional[str] = None,
+                                  reasoning_effort_override: Optional[str] = None,
+                                  random_seed: Optional[int] = None) -> Config:
         """
         Build a Config object from new locale-based configuration.
         
@@ -259,8 +357,42 @@ class ConfigLoader:
             except Exception as e:
                 logger.warning(f"Failed to load voice profiles: {e}")
         
-        # Build paths using locale_id (new structure)
-        locale_output_dir = self.output_dir / locale_id
+        # Determine timestamp based on smart selection logic
+        generation_timestamp = None
+        if not self.use_timestamp:
+            # No timestamp mode
+            locale_output_dir = self.output_dir / locale_id
+        else:
+            # Smart timestamp selection
+            generation_steps = {'conversation', 'legit'}
+            has_generation = any(step in generation_steps for step in self.pipeline_steps)
+            
+            if self.specific_timestamp:
+                # User specified a timestamp
+                if self.specific_timestamp == "new":
+                    base_timestamp = datetime.now().strftime("%m%d_%H%M")
+                    generation_timestamp = self._generate_unique_timestamp(locale_id, base_timestamp)
+                else:
+                    generation_timestamp = self.specific_timestamp
+                    # Validate specified timestamp directory exists
+                    if not (self.output_dir / locale_id / generation_timestamp).exists():
+                        raise ValueError(f"Timestamp directory does not exist: {self.output_dir / locale_id / generation_timestamp}")
+            else:
+                # Smart default: check if running generation steps
+                if has_generation or not self.pipeline_steps:
+                    # Running generation or no steps specified - create new timestamp
+                    base_timestamp = datetime.now().strftime("%m%d_%H%M")
+                    generation_timestamp = self._generate_unique_timestamp(locale_id, base_timestamp)
+                else:
+                    # Only TTS/postprocessing - use latest timestamp
+                    generation_timestamp = self._find_latest_timestamp(locale_id)
+                    if not generation_timestamp:
+                        raise ValueError(f"No existing timestamp directories found for {locale_id}. "
+                                       f"Please generate conversations first or use --use-timestamp new")
+            
+            locale_output_dir = self.output_dir / locale_id / generation_timestamp
+        
+        # Build paths using locale_id and optionally timestamp
         conversations_dir = locale_output_dir / "conversations"
         audio_dir = locale_output_dir / "audio"
         final_dir = locale_output_dir / "final"
@@ -286,8 +418,22 @@ class ConfigLoader:
         # Add LLM settings
         llm_config = self.common_config.get("llm", {})
         
+        # Apply CLI overrides for LLM settings
+        if model_override:
+            llm_config["model"] = model_override
+            logger.info(f"Overriding LLM model to: {model_override}")
+        
+        if reasoning_effort_override:
+            llm_config["reasoning_effort"] = reasoning_effort_override
+            logger.info(f"Overriding reasoning effort to: {reasoning_effort_override}")
+        
         # Add generation settings
         generation_config = self.common_config.get("generation", {})
+        
+        # Apply random seed override
+        if random_seed is not None:
+            generation_config["random_seed"] = random_seed
+            logger.info(f"Setting random seed to: {random_seed}")
         
         return Config(
             # Environment variables
@@ -310,6 +456,9 @@ class ConfigLoader:
             num_turns_lower_limit=self.common_config["followup_turns"]["num_turns_lower_limit"],
             num_turns_upper_limit=self.common_config["followup_turns"]["num_turns_upper_limit"],
             sample_limit=100,  # Default value, overridden by CLI --sample-limit
+            scam_sample_limit=None,  # Specific limit for scam, overridden by CLI
+            legit_sample_limit=None,  # Specific limit for legit, overridden by CLI
+            generation_mode="both",  # Default to both, overridden by CLI
             victim_awareness_levels=self.common_config["followup_turns"]["victim_awareness_levels"],
             
             
@@ -407,10 +556,19 @@ class ConfigLoader:
             generation_enable_character_profiles=generation_config.get("enable_character_profiles", False),
             generation_min_seed_quality=generation_config.get("min_seed_quality", 70),
             generation_enable_dynamic_placeholders=generation_config.get("enable_dynamic_placeholders", False),
+            generation_random_seed=generation_config.get("random_seed"),
+            scenarios_per_seed=generation_config.get("scenarios_per_seed", 1),
+            scenario_mode=generation_config.get("scenario_mode", "random"),
+            scenario_templates_file=generation_config.get("scenario_templates_file"),
+            scenario_assignments_file=generation_config.get("scenario_assignments_file"),
             
             # Raw config data
             common_config=self.common_config,
-            lang_config=locale_config
+            lang_config=locale_config,
+            
+            # Timestamp information
+            generation_timestamp=generation_timestamp,
+            use_timestamp=self.use_timestamp
         )
     
     def list_languages(self) -> list:

@@ -112,10 +112,15 @@
     "seeds_file": "scam_samples.json",
     "profiles_file": "configs/character_profiles.json",
     "enable_character_profiles": true,
-    "scenarios_per_seed": 2,
+    "scenarios_per_seed": 1,
     "min_seed_quality": 70,
     "enable_dynamic_placeholders": true,
     "batch_size": 10,
-    "enable_conversation_caching": false
+    "enable_conversation_caching": false,
+    "random_seed": null,
+    "deterministic_seed_order": true,
+    "scenario_mode": "pre_configured",
+    "scenario_templates_file": "configs/scenario_templates.json",
+    "scenario_assignments_file": "configs/scenario_assignments.json"
   }
 }

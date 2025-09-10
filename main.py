@@ -153,7 +153,58 @@ Examples:
     parser.add_argument(
         '--sample-limit',
         type=int,
-        help='Limit the number of samples to process (for testing)'
+        help='[DEPRECATED: Use --seed-limit or --total-limit] Limit the number of seeds to process'
+    )
+    
+    # New generation control arguments
+    parser.add_argument(
+        '--generation-mode',
+        choices=['seeds', 'conversations'],
+        default='seeds',
+        help='Control whether limits apply to seeds or total conversations (default: seeds)'
+    )
+    
+    parser.add_argument(
+        '--seed-limit',
+        type=int,
+        help='Number of unique seeds to use for generation'
+    )
+    
+    parser.add_argument(
+        '--total-limit',
+        type=int,
+        help='Total number of conversations to generate (stops when reached)'
+    )
+    
+    parser.add_argument(
+        '--scenarios-per-seed',
+        type=int,
+        help='Override number of scenarios to generate per seed'
+    )
+    
+    # Generation mode control
+    parser.add_argument(
+        '--scam',
+        action='store_true',
+        help='Generate scam conversations (default if neither --scam nor --legit specified)'
+    )
+    
+    parser.add_argument(
+        '--legit',
+        action='store_true',
+        help='Generate legitimate conversations'
+    )
+    
+    parser.add_argument(
+        '--scam-limit',
+        type=int,
+        help='Specific limit for scam conversation generation'
+    )
+    
+    parser.add_argument(
+        '--legit-limit',
+        type=int,
+        help='Specific limit for legitimate conversation generation'
     )
     
     # Interface mode
@@ -176,6 +227,40 @@ Examples:
         help='Suppress all output except errors'
     )
     
+    # Timestamp control
+    parser.add_argument(
+        '--no-timestamp',
+        action='store_true',
+        help='Do not use timestamp in output directory structure (use old structure)'
+    )
+    
+    parser.add_argument(
+        '--use-timestamp',
+        type=str,
+        metavar='TIMESTAMP',
+        help='Use specific timestamp directory (e.g., 0909_2040) or "new" to force new timestamp'
+    )
+    
+    # Model and generation control
+    parser.add_argument(
+        '--model',
+        type=str,
+        help='Override LLM model (e.g., gpt-4o, gpt-5-nano, claude-3-opus)'
+    )
+    
+    parser.add_argument(
+        '--reasoning-effort',
+        type=str,
+        choices=['low', 'medium', 'high', 'minimal'],
+        help='Reasoning effort level for reasoning models (gpt-5 models)'
+    )
+    
+    parser.add_argument(
+        '--random-seed',
+        type=int,
+        help='Random seed for reproducible generation (ensures same seed/profile selection)'
+    )
+    
     args = parser.parse_args()
     
     # Setup logging
@@ -186,7 +271,7 @@ Examples:
     if args.interactive or len(sys.argv) == 1:
         if not args.quiet:
             print_banner()
-        ui = InteractiveUI(config_dir=args.config_dir, output_dir=args.output_dir)
+        ui = InteractiveUI(config_dir=args.config_dir, output_dir=args.output_dir, use_timestamp=not args.no_timestamp)
         ui.run()
         return 0
     
@@ -233,6 +318,26 @@ Examples:
     else:
         parser.error("Either --locale or --language is required to run the pipeline. Use --help for more information.")
     
+    # Determine generation mode
+    generation_mode = "both"
+    if args.scam and not args.legit:
+        generation_mode = "scam"
+    elif args.legit and not args.scam:
+        generation_mode = "legit"
+    elif args.scam and args.legit:
+        generation_mode = "both"
+    # If neither flag specified, default to "both" for backward compatibility
+    
+    # Handle deprecated sample-limit
+    if args.sample_limit and (args.seed_limit or args.total_limit):
+        print("Warning: --sample-limit is deprecated. Using --seed-limit and --total-limit instead.")
+        sample_limit = None
+    elif args.sample_limit and not args.seed_limit:
+        print("Warning: --sample-limit is deprecated. Use --seed-limit for seed-based limits or --total-limit for conversation limits.")
+        sample_limit = args.sample_limit
+    else:
+        sample_limit = args.sample_limit
+    
     # Run the pipeline
     try:
         run_pipeline(
@@ -241,8 +346,20 @@ Examples:
             config_dir=args.config_dir,
             output_dir=args.output_dir,
             force=args.force,
-            sample_limit=args.sample_limit,
-            verbose=args.verbose
+            sample_limit=sample_limit,
+            scam_limit=args.scam_limit,
+            legit_limit=args.legit_limit,
+            generation_mode=generation_mode,
+            verbose=args.verbose,
+            use_timestamp=not args.no_timestamp,
+            specific_timestamp=args.use_timestamp,
+            model_override=args.model,
+            reasoning_effort_override=args.reasoning_effort,
+            random_seed=args.random_seed,
+            generation_control_mode=args.generation_mode,
+            seed_limit=args.seed_limit,
+            total_limit=args.total_limit,
+            scenarios_per_seed_override=args.scenarios_per_seed
         )
     except KeyboardInterrupt:
         print("\n\nPipeline interrupted by user.")
