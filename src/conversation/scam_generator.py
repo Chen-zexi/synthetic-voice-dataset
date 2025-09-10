@@ -258,7 +258,7 @@ Select contextually appropriate values from the arrays and incorporate them natu
         # Get generation control settings
         generation_control_mode = getattr(self.config, 'generation_control_mode', 'seeds')
         seed_limit = getattr(self.config, 'seed_limit', None)
-        total_conversation_limit = getattr(self.config, 'total_conversation_limit', None)
+        total_conversation_limit = getattr(self.config, 'total_conversation_limit', None)  # Target count from --conversation-count
         scenarios_per_seed = getattr(self.config, 'scenarios_per_seed', 1)
         min_quality = getattr(self.config, 'generation_min_seed_quality', 70)
         scenario_mode = getattr(self.config, 'scenario_mode', 'random')
@@ -267,7 +267,8 @@ Select contextually appropriate values from the arrays and incorporate them natu
         self.generation_control_params = {
             "mode": generation_control_mode,
             "seed_limit": seed_limit,
-            "total_limit": total_conversation_limit,
+            "conversation_count": total_conversation_limit,  # Target from --conversation-count
+            "total_limit": self.config.total_limit,  # Absolute cap from --total-limit
             "scenarios_per_seed": scenarios_per_seed,
             "min_quality_filter": min_quality,
             "scenario_mode": scenario_mode
@@ -287,7 +288,7 @@ Select contextually appropriate values from the arrays and incorporate them natu
             elif self.config.scam_sample_limit is not None:
                 limit = self.config.scam_sample_limit
             else:
-                limit = self.config.sample_limit
+                limit = self.config.total_limit  # Use total_limit as the default
         
         # Filter and limit seeds
         seeds = self.seed_manager.filter_and_limit_seeds(
@@ -346,10 +347,13 @@ Select contextually appropriate values from the arrays and incorporate them natu
                     conversations_planned += 1
                     seeds_used.add(seed.seed_id)  # Track this seed was used
                     
-                    # Stop if we've reached the conversation limit
-                    if generation_control_mode == 'conversations' and total_conversation_limit:
+                    # Stop if we've reached the conversation limit or absolute cap
+                    if self.config.total_limit and conversations_planned >= self.config.total_limit:
+                        self.clogger.info(f"Reached absolute cap of {self.config.total_limit} conversations")
+                        break
+                    elif generation_control_mode == 'conversations' and total_conversation_limit:
                         if conversations_planned >= total_conversation_limit:
-                            self.clogger.info(f"Reached conversation limit of {total_conversation_limit}")
+                            self.clogger.info(f"Reached target conversation count of {total_conversation_limit}")
                             break
             else:
                 # No character manager, use old method
@@ -358,6 +362,11 @@ Select contextually appropriate values from the arrays and incorporate them natu
                 task_id += 1
                 conversations_planned += 1
                 seeds_used.add(seed.seed_id)  # Track this seed was used
+                
+                # Check absolute cap
+                if self.config.total_limit and conversations_planned >= self.config.total_limit:
+                    self.clogger.info(f"Reached absolute cap of {self.config.total_limit} conversations")
+                    break
         
         # Run tasks concurrently with progress bar
         max_concurrent = getattr(self.config, 'max_concurrent_requests', 10)

@@ -143,7 +143,6 @@ def run_pipeline(
     config_dir: str = "./configs",
     output_dir: str = "./output",
     force: bool = False,
-    sample_limit: Optional[int] = None,
     scam_limit: Optional[int] = None,
     legit_limit: Optional[int] = None,
     generation_mode: str = "both",
@@ -156,6 +155,7 @@ def run_pipeline(
     generation_control_mode: str = "seeds",
     seed_limit: Optional[int] = None,
     total_limit: Optional[int] = None,
+    conversation_count: Optional[int] = None,
     scenarios_per_seed_override: Optional[int] = None
 ) -> int:
     """
@@ -211,10 +211,7 @@ def run_pipeline(
         # Create output directories
         ensure_directory(config.output_dir)
         
-        # Override sample limits and generation mode
-        if sample_limit:
-            config.sample_limit = sample_limit
-            print_info(f"Sample limit set to {sample_limit}")
+        # Override generation limits and mode
         
         # Set new generation control parameters
         config.generation_control_mode = generation_control_mode
@@ -226,8 +223,13 @@ def run_pipeline(
             print_info(f"Seed limit set to {seed_limit}")
         
         if total_limit is not None:
-            config.total_conversation_limit = total_limit
-            print_info(f"Total conversation limit set to {total_limit}")
+            # total_limit acts as absolute cap that overrides all other settings
+            config.total_limit = total_limit
+            print_info(f"Total conversation limit (absolute cap) set to {total_limit}")
+        
+        if conversation_count is not None:
+            config.total_conversation_limit = conversation_count
+            print_info(f"Target conversation count set to {conversation_count}")
         
         if scenarios_per_seed_override is not None:
             config.scenarios_per_seed = scenarios_per_seed_override

@@ -195,14 +195,30 @@ class PipelineRunner:
             self.legit_token_tracker = generator.token_tracker
     
     async def run_tts(self):
-        """Run text-to-speech conversion."""
+        """Run text-to-speech conversion for available conversation files."""
         if self.config.verbose:
             logger.info("Converting conversations to audio")
         
         synthesizer = VoiceSynthesizer(self.config)
         
-        # Generate scam audio if file exists
-        if self.config.voice_input_file_scam.exists():
+        # Check which files are available
+        scam_exists = self.config.voice_input_file_scam.exists()
+        legit_exists = self.config.voice_input_file_legit.exists()
+        
+        if not scam_exists and not legit_exists:
+            logger.warning("No conversation files found for TTS processing")
+            return
+        
+        # Log what will be processed
+        files_found = []
+        if scam_exists:
+            files_found.append("scam_conversations.json")
+        if legit_exists:
+            files_found.append("legit_conversations.json")
+        logger.info(f"Found conversation files: {', '.join(files_found)}")
+        
+        # Process scam audio if file exists
+        if scam_exists:
             if self.config.verbose:
                 print("Generating scam conversation audio...")
             await synthesizer.generate_audio(
@@ -210,11 +226,9 @@ class PipelineRunner:
                 output_dir=self.config.voice_output_dir_scam,
                 is_scam=True
             )
-        elif self.generation_mode in ["scam", "both"]:
-            logger.warning(f"Scam conversation file not found: {self.config.voice_input_file_scam}")
         
-        # Generate legitimate audio if file exists
-        if self.config.voice_input_file_legit.exists():
+        # Process legitimate audio if file exists
+        if legit_exists:
             if self.config.verbose:
                 print("Generating legitimate conversation audio...")
             await synthesizer.generate_audio(
@@ -222,8 +236,6 @@ class PipelineRunner:
                 output_dir=self.config.voice_output_dir_legit,
                 is_scam=False
             )
-        elif self.generation_mode in ["legit", "both"]:
-            logger.warning(f"Legitimate conversation file not found: {self.config.voice_input_file_legit}")
     
     def run_postprocessing(self):
         """Run postprocessing: format JSON and package audio."""

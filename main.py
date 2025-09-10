@@ -52,13 +52,7 @@ Examples:
     
     # Main operation arguments
     parser.add_argument(
-        '--language', '-l',
-        type=str,
-        help='Language to process (e.g., arabic, malay) - for backward compatibility'
-    )
-    
-    parser.add_argument(
-        '--locale',
+        '--locale', '-l',
         type=str,
         help='Locale to process (e.g., ar-sa, ms-my, ar-ae)'
     )
@@ -151,9 +145,9 @@ Examples:
     )
     
     parser.add_argument(
-        '--sample-limit',
+        '--total-limit', '-limit',
         type=int,
-        help='[DEPRECATED: Use --seed-limit or --total-limit] Limit the number of seeds to process'
+        help='Absolute maximum number of conversations to generate (overrides all other limits)'
     )
     
     # New generation control arguments
@@ -171,9 +165,9 @@ Examples:
     )
     
     parser.add_argument(
-        '--total-limit',
+        '--conversation-count',
         type=int,
-        help='Total number of conversations to generate (stops when reached)'
+        help='Target number of conversations to generate (calculates seeds needed)'
     )
     
     parser.add_argument(
@@ -310,13 +304,9 @@ Examples:
         return show_pipeline_steps()
     
     # Determine which identifier to use
-    identifier = None
-    if args.locale:
-        identifier = args.locale
-    elif args.language:
-        identifier = args.language
-    else:
-        parser.error("Either --locale or --language is required to run the pipeline. Use --help for more information.")
+    if not args.locale:
+        parser.error("--locale is required to run the pipeline. Use --help for more information.")
+    identifier = args.locale
     
     # Determine generation mode
     generation_mode = "both"
@@ -328,15 +318,8 @@ Examples:
         generation_mode = "both"
     # If neither flag specified, default to "both" for backward compatibility
     
-    # Handle deprecated sample-limit
-    if args.sample_limit and (args.seed_limit or args.total_limit):
-        print("Warning: --sample-limit is deprecated. Using --seed-limit and --total-limit instead.")
-        sample_limit = None
-    elif args.sample_limit and not args.seed_limit:
-        print("Warning: --sample-limit is deprecated. Use --seed-limit for seed-based limits or --total-limit for conversation limits.")
-        sample_limit = args.sample_limit
-    else:
-        sample_limit = args.sample_limit
+    # total_limit now acts as an absolute maximum that overrides all other settings
+    # No longer using sample_limit
     
     # Run the pipeline
     try:
@@ -346,7 +329,6 @@ Examples:
             config_dir=args.config_dir,
             output_dir=args.output_dir,
             force=args.force,
-            sample_limit=sample_limit,
             scam_limit=args.scam_limit,
             legit_limit=args.legit_limit,
             generation_mode=generation_mode,
@@ -358,7 +340,8 @@ Examples:
             random_seed=args.random_seed,
             generation_control_mode=args.generation_mode,
             seed_limit=args.seed_limit,
-            total_limit=args.total_limit,
+            total_limit=args.total_limit,  # Absolute cap on conversations
+            conversation_count=args.conversation_count,  # Target conversation count
             scenarios_per_seed_override=args.scenarios_per_seed
         )
     except KeyboardInterrupt:

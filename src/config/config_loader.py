@@ -124,7 +124,7 @@ class Config:
     verbose: bool = False
     
     # Fields with default values (must be at the end)
-    sample_limit: int = 100  # Default value, overridden by CLI
+    total_limit: int = 100  # Default value, overridden by CLI
     scam_sample_limit: Optional[int] = None  # Specific limit for scam conversations
     legit_sample_limit: Optional[int] = None  # Specific limit for legit conversations
     generation_mode: str = "both"  # "scam", "legit", or "both"
@@ -455,7 +455,7 @@ class ConfigLoader:
             # Followup turns settings
             num_turns_lower_limit=self.common_config["followup_turns"]["num_turns_lower_limit"],
             num_turns_upper_limit=self.common_config["followup_turns"]["num_turns_upper_limit"],
-            sample_limit=100,  # Default value, overridden by CLI --sample-limit
+            total_limit=100,  # Default value, overridden by CLI --total-limit
             scam_sample_limit=None,  # Specific limit for scam, overridden by CLI
             legit_sample_limit=None,  # Specific limit for legit, overridden by CLI
             generation_mode="both",  # Default to both, overridden by CLI

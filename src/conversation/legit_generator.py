@@ -74,8 +74,8 @@ class LegitGenerator:
         Returns:
             List of conversation dictionaries
         """
-        # Use legit_sample_limit if set, otherwise fall back to sample_limit
-        num_conversations = self.config.legit_sample_limit if self.config.legit_sample_limit is not None else self.config.sample_limit
+        # Use legit_sample_limit if set, otherwise fall back to total_limit
+        num_conversations = self.config.legit_sample_limit if self.config.legit_sample_limit is not None else self.config.total_limit
         self.clogger.debug(f"Generating {num_conversations} legitimate conversations")
         
         # Prepare tasks

@@ -1048,27 +1048,27 @@ class InteractiveUI:
     def _execute_pipeline_with_limit_and_force(self):
         """Execute pipeline with custom sample limit and force overwrite."""
         try:
-            sample_limit = int(input("Enter sample limit (number of samples to process): ").strip())
+            total_limit = int(input("Enter total limit (maximum conversations to generate): ").strip())
             if confirm_action("This will overwrite existing files. Continue?", default_yes=True):
-                self._execute_pipeline(sample_limit=sample_limit, force=True)
+                self._execute_pipeline(total_limit=total_limit, force=True)
         except ValueError:
             print_warning("Invalid sample limit. Please enter a number.")
     
     def _execute_pipeline_with_steps_and_limit(self, steps: List[str]):
         """Execute specific steps with custom sample limit."""
         try:
-            sample_limit = int(input("Enter sample limit (number of samples to process): ").strip())
+            total_limit = int(input("Enter total limit (maximum conversations to generate): ").strip())
             if confirm_action("Proceed with execution?", default_yes=True):
-                self._execute_pipeline(steps=steps, sample_limit=sample_limit)
+                self._execute_pipeline(steps=steps, total_limit=total_limit)
         except ValueError:
             print_warning("Invalid sample limit. Please enter a number.")
     
     def _execute_pipeline_with_steps_limit_and_force(self, steps: List[str]):
         """Execute specific steps with custom sample limit and force overwrite."""
         try:
-            sample_limit = int(input("Enter sample limit (number of samples to process): ").strip())
+            total_limit = int(input("Enter total limit (maximum conversations to generate): ").strip())
             if confirm_action("This will overwrite existing files. Continue?", default_yes=True):
-                self._execute_pipeline(steps=steps, sample_limit=sample_limit, force=True)
+                self._execute_pipeline(steps=steps, total_limit=total_limit, force=True)
         except ValueError:
             print_warning("Invalid sample limit. Please enter a number.")
     
