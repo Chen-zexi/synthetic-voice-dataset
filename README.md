@@ -1,6 +1,6 @@
 # Scam Conversation Generation Pipeline
 
-This pipeline generates realistic scam phone conversations with audio synthesis. The process involves translating Chinese scam texts to English, generating follow-up dialogue turns, translating to target languages, and finally creating audio files.
+This pipeline generates realistic scam phone conversations with audio synthesis using advanced character profiles, scenario-based generation, and multi-provider LLM support. The system creates diverse, culturally-appropriate conversations through seed-based generation, character-driven dialogue, and high-quality voice synthesis with ElevenLabs v3 features.
 
 
 ## Quick Start
@@ -60,14 +60,21 @@ python main.py --locale ar-sa
 python main.py --locale ar-ae
 
 # Run specific steps for Malaysia (Malay)
-# Available steps: preprocess, translate, conversation, legit, translate_final, tts, postprocess
-python main.py --locale ms-my --steps preprocess translate
+# Available steps: conversation, legit, tts, postprocess
+python main.py --locale ms-my --steps conversation
 
-# Run all conversation-related steps with sample limit (using uv)
-uv run main.py --locale ms-my --steps preprocess translate conversation legit translate_final --sample-limit 1 --force
+# Run with character profiles and scenario-based generation
+python main.py --locale ms-my --steps conversation --scam-limit 10
 
-# Run complete pipeline with all steps
-python main.py --locale ms-my --steps preprocess translate conversation legit translate_final tts postprocess
+# Run with generation control modes
+python main.py --locale ar-sa --generation-mode seeds --seed-limit 5
+python main.py --locale ar-sa --generation-mode conversations --conversation-count 20
+
+# Run with specific LLM model
+python main.py --locale ar-sa --model gpt-5-nano --reasoning-effort minimal
+
+# Run with custom voice settings
+python main.py --locale ar-sa --steps tts --force
 
 # List available locales
 python main.py --list-locales
@@ -76,13 +83,13 @@ python main.py --list-locales
 python main.py --language arabic  # Maps to ar-sa
 
 # Validate configuration
-python main.py --validate-config arabic
+python main.py --validate-config ar-sa
 
 # Show available pipeline steps
 python main.py --show-steps
 
 # Test with limited samples
-python main.py --locale ar-sa --sample-limit 10
+python main.py --locale ar-sa --total-limit 10
 
 # Force overwrite existing files
 python main.py --locale ar-sa --force
@@ -126,15 +133,22 @@ python main.py --list-cached-translations
 
 ## Pipeline Overview
 
-The pipeline consists of seven main steps:
+The pipeline consists of four main steps with advanced character-driven generation:
 
-1. **preprocess**: Extract placeholder tags from Chinese source text
-2. **translate**: Translate Chinese to English (intermediate language)  
-3. **conversation**: Generate multi-turn scam dialogues using LLM
-4. **legit**: Generate legitimate (non-scam) conversations using LLM
-5. **translate_final**: Translate English conversations to target language
-6. **tts**: Convert conversations to audio using ElevenLabs
-7. **postprocess**: Format JSON files and package audio
+1. **conversation**: Generate multi-turn scam dialogues using LLM with character profiles
+2. **legit**: Generate legitimate (non-scam) conversations using LLM with character profiles
+3. **tts**: Convert conversations to audio using ElevenLabs with v3 features
+4. **postprocess**: Format JSON files and package audio
+
+### Character Profiles & Scenario-Based Generation
+
+The system uses advanced character profiles and scenario-based generation for authentic, diverse conversations:
+
+- **141 High-Quality Scam Scenarios**: Pre-curated scam patterns across 14 categories
+- **15 Character Profiles**: Diverse scammer and victim personalities with cultural adaptation
+- **Dynamic Placeholder System**: 53 culturally-appropriate placeholders with smart selection
+- **Quality Filtering**: Only uses high-quality seeds (configurable threshold)
+- **Multiple Scenarios per Seed**: Generate varied conversations from the same scam type
 
 ## Project Structure
 
@@ -193,6 +207,195 @@ voice_scam_dataset_gen/
     ├── ar-sa/                      # Saudi Arabia Arabic outputs
     ├── ar-ae/                      # UAE Arabic outputs
     └── ms-my/                      # Malaysia Malay outputs
+```
+
+## Advanced Features
+
+### Character Profiles System
+
+The pipeline includes a sophisticated character profile system for creating diverse, authentic conversations:
+
+**Character Types:**
+- **Scammers**: Authoritative figures, friendly helpers, tech support impersonators, government officials, investment advisors
+- **Victims**: Trusting individuals, skeptical persons, busy professionals, confused seniors, tech-savvy users, anxious people, students
+
+**Profile Attributes:**
+- Gender, age range, personality traits, speaking style, education level
+- Locale affinity for cultural adaptation
+- Role preferences (scammer/victim/any)
+
+**Configuration:**
+```json
+{
+  "generation": {
+    "enable_character_profiles": true,
+    "profiles_file": "configs/character_profiles.json",
+    "scenarios_per_seed": 2,
+    "min_seed_quality": 70
+  }
+}
+```
+
+### Scenario-Based Generation
+
+Instead of line-by-line text processing, the system uses rich scenario-based generation:
+
+**Seed Management:**
+- 141 high-quality scam scenarios from `scam_samples.json`
+- Quality scoring and filtering (0-100 scale)
+- Category-based organization (14 scam categories)
+- Dynamic placeholder integration
+
+**Generation Modes:**
+```bash
+# Seed-based generation (default)
+python main.py --locale ar-sa --generation-mode seeds --seed-limit 10
+
+# Conversation-based generation
+python main.py --locale ar-sa --generation-mode conversations --conversation-count 50
+
+# Mixed mode with specific limits
+python main.py --locale ar-sa --scam-limit 20 --legit-limit 10
+```
+
+### Enhanced LLM Core
+
+Multi-provider LLM support with advanced features:
+
+**Supported Providers:**
+- **OpenAI**: GPT-4, GPT-4o, GPT-5-nano, GPT-5 (with reasoning)
+- **Anthropic**: Claude-3.5-Sonnet, Claude-3-Haiku
+- **Google**: Gemini-1.5-Pro, Gemini-1.5-Flash
+- **Local**: LM-Studio, vLLM servers
+
+**Advanced Features:**
+- Reasoning model support with effort levels
+- Token tracking and cost estimation
+- Concurrent API calls with rate limiting
+- Structured output with JSON fallback
+- Response API integration (OpenAI)
+
+**Configuration:**
+```json
+{
+  "llm": {
+    "provider": "openai",
+    "model": "gpt-5-nano",
+    "reasoning_effort": "minimal",
+    "max_concurrent_requests": 20,
+    "track_tokens": true
+  }
+}
+```
+
+### ElevenLabs v3 Features
+
+Advanced voice synthesis with emotional context and expressiveness:
+
+**v3 Capabilities:**
+- Audio tags for emotional context (urgent, friendly, concerned, etc.)
+- Enhanced voice settings (stability, similarity, style, speaker boost)
+- Conversation context awareness
+- Multiple TTS models (turbo, flash, multilingual v2/v3)
+
+**Voice Quality Management:**
+```bash
+# Interactive voice quality configuration
+python main.py
+# Navigate to: Configuration Management → Voice Quality & V3 Features
+
+# Change TTS model
+python main.py --locale ar-sa --steps tts --model eleven_multilingual_v3
+
+# Configure voice settings
+python main.py --locale ar-sa --steps tts --voice-stability 0.7
+```
+
+**Audio Processing:**
+- Background noise and call effects
+- Bandpass filtering for phone quality
+- Multiple audio formats (MP3, various bitrates)
+- Silence insertion and volume normalization
+
+### Dynamic Placeholder System
+
+Intelligent placeholder replacement with cultural adaptation:
+
+**53 Placeholder Types:**
+- Personal names, locations, companies, amounts
+- Government agencies, services, products
+- Dates, times, account numbers, reference codes
+
+**Smart Selection:**
+- Random selection from culturally-appropriate arrays
+- Conversation-level consistency (same placeholder = same value)
+- Cross-conversation diversity for dataset variety
+
+**Configuration:**
+```json
+{
+  "generation": {
+    "enable_dynamic_placeholders": true,
+    "batch_size": 10,
+    "random_seed": null
+  }
+}
+```
+
+### Voice Management System
+
+Comprehensive voice ID validation and management:
+
+**Voice Health Checking:**
+```bash
+# Validate voices for specific locale
+python main.py --validate-voices ar-sa
+
+# Validate all voices across all locales
+python main.py --validate-all-voices
+
+# Get voice suggestions for locale
+python main.py --suggest-voices ar-sa
+
+# Clean up invalid voice IDs
+python main.py --update-voice-configs
+
+# Ensure minimum voice requirements
+python main.py --ensure-minimum-voices
+```
+
+**Features:**
+- Real-time voice ID validation
+- Compatibility scoring and suggestions
+- Automatic cleanup of invalid IDs
+- Minimum requirements enforcement (≥2 voices per locale)
+- Interactive voice management through CLI
+
+### Token Tracking & Cost Management
+
+Comprehensive cost tracking across all providers:
+
+**Token Tracking:**
+- Input/output token counting
+- Reasoning token tracking (GPT-5 models)
+- Cached token tracking
+- Audio token tracking (multimodal models)
+- Session-based aggregation
+
+**Cost Estimation:**
+- Real-time cost calculation
+- Provider-specific pricing
+- Session summaries
+- Budget monitoring
+
+**Configuration:**
+```json
+{
+  "llm": {
+    "track_tokens": true,
+    "use_response_api": true
+  }
+}
 ```
 
 ## Adding a New Locale
@@ -338,28 +541,42 @@ See the [Locale Roadmap](locale_road_map.md) for current implementation status. 
 
 ## LLM Module
 
-The project includes a unified LLM abstraction layer (`src/llm_core/`) that supports multiple providers:
+The project includes a unified LLM abstraction layer (`src/llm_core/`) that supports multiple providers with advanced features:
 
 ### Supported LLM Providers
-- **OpenAI**: GPT-4, GPT-3.5-turbo (default: gpt-4.1-mini)
-- **Anthropic**: Claude models
-- **Google**: Gemini models
-- **LM-Studio**: Local model hosting
+- **OpenAI**: GPT-4, GPT-4o, GPT-5-nano, GPT-5 (with reasoning), GPT-3.5-turbo
+- **Anthropic**: Claude-3.5-Sonnet, Claude-3-Haiku, Claude-3-Opus
+- **Google**: Gemini-1.5-Pro, Gemini-1.5-Flash, Gemini-1.0-Pro
+- **LM-Studio**: Local model hosting with custom endpoints
 - **vLLM**: High-performance inference server
 
-### LLM Configuration
+### Advanced LLM Features
 
-Configure LLM parameters in `configs/common.json`:
+**Reasoning Models:**
+- GPT-5 models with configurable reasoning effort levels
+- Automatic reasoning token tracking
+- Enhanced prompt engineering for complex tasks
+
+**Token Tracking & Cost Management:**
+- Comprehensive token usage tracking across all providers
+- Real-time cost estimation with provider-specific pricing
+- Session-based aggregation and reporting
+- Budget monitoring and alerts
+
+**Enhanced Configuration:**
 ```json
 {
   "llm": {
     "provider": "openai",
-    "model": "gpt-4.1-mini",
-    "max_concurrent_requests": 10,
+    "model": "gpt-5-nano",
+    "reasoning_effort": "minimal",
+    "max_concurrent_requests": 20,
     "temperature": 1.0,
     "max_tokens": null,
     "top_p": 0.95,
-    "n": 1
+    "n": 1,
+    "track_tokens": true,
+    "use_response_api": true
   }
 }
 ```
@@ -370,6 +587,9 @@ Configure LLM parameters in `configs/common.json`:
 - **JSON fallback**: Robust parsing with multiple fallback patterns
 - **Rate limiting**: Semaphore-based concurrent request management
 - **Provider abstraction**: Easy switching between different LLM providers
+- **Reasoning support**: Native support for reasoning models with effort levels
+- **Token tracking**: Comprehensive usage and cost tracking
+- **Response API**: OpenAI Response API integration for streaming
 
 ### Environment Variables
 ```env
@@ -382,6 +602,24 @@ GEMINI_API_KEY=your_gemini_key
 HOST_IP=192.168.1.100  # For LM-Studio/vLLM
 ```
 
+### Model-Specific Parameters
+
+**Reasoning Models (GPT-5):**
+- `reasoning_effort`: "minimal", "low", "medium", "high"
+- `max_completion_tokens`: Maximum tokens for completion
+- `use_response_api`: Enable Response API for streaming
+
+**Standard Models:**
+- `temperature`: Randomness in generation (0.0-2.0)
+- `max_tokens`: Maximum tokens to generate
+- `top_p`: Nucleus sampling parameter
+- `presence_penalty`: Penalty for repetition
+- `frequency_penalty`: Penalty for frequent tokens
+
+**Gemini-Specific:**
+- `thinking_budget`: Budget for internal reasoning
+- `max_output_tokens`: Maximum output tokens
+
 ## API Requirements
 
 - **OpenAI API**: For LLM conversation generation (default provider)
@@ -391,16 +629,18 @@ HOST_IP=192.168.1.100  # For LM-Studio/vLLM
 
 ## Voice ID Validation System
 
-The pipeline includes comprehensive voice ID validation to ensure audio generation reliability across all locales.
+The pipeline includes comprehensive voice ID validation and management to ensure audio generation reliability across all locales.
 
 ### Features
 
-- **Real-time validation**: Verify voice IDs against ElevenLabs API
-- **Bulk validation**: Check all voice IDs across all locales simultaneously
-- **Automatic cleanup**: Remove invalid voice IDs from configuration files
-- **Voice suggestions**: Get compatible voice recommendations for specific locales
-- **Minimum requirements**: Ensure each locale has ≥2 voices for redundancy
+- **Real-time validation**: Verify voice IDs against ElevenLabs API with detailed error reporting
+- **Bulk validation**: Check all voice IDs across all locales simultaneously with progress tracking
+- **Automatic cleanup**: Remove invalid voice IDs from configuration files with backup
+- **Voice suggestions**: Get AI-powered voice recommendations based on locale compatibility
+- **Minimum requirements**: Ensure each locale has ≥2 voices for redundancy with health scoring
 - **Interactive management**: GUI-based voice management through interactive mode
+- **Compatibility scoring**: Rate voice-locale compatibility with confidence scores
+- **Voice discovery**: Automatic detection of available voices with metadata
 
 ### CLI Commands
 
@@ -468,6 +708,37 @@ Navigate to: **Configuration Management** → **Voice ID Management**
    - Batch removal of invalid voice IDs
    - Configuration backup and safe updates
    - Progress tracking for bulk operations
+
+## Interactive UI Enhancements
+
+The interactive mode includes comprehensive management interfaces:
+
+### Main Menu Options
+1. **Select Locale/Language** - Choose target locale with detailed information
+2. **Run Full Pipeline** - Execute complete generation pipeline
+3. **Run Specific Steps** - Select individual pipeline steps
+4. **Configuration Management** - Manage all configuration aspects
+5. **Monitoring & Status** - Check output status and recent runs
+6. **Help & Information** - Access documentation and troubleshooting
+
+### Configuration Management
+- **Voice ID Management**: Complete voice validation and suggestion system
+- **Voice Quality & V3 Features**: TTS model and quality settings
+- **Locale Validation**: Configuration validation and health checking
+- **Settings Overview**: View all current configuration settings
+
+### Voice Quality Management
+- **TTS Model Selection**: Choose between turbo, flash, and v3 models
+- **V3 Features Configuration**: Audio tags, emotional context, conversation context
+- **Voice Settings**: Stability, similarity boost, style, speaker boost
+- **Audio Format**: Multiple MP3 formats with quality options
+- **Settings Reset**: Restore default configurations
+
+### Monitoring & Status
+- **Output Directory Status**: Check generation history and file counts
+- **Recent Pipeline Runs**: View execution history and results
+- **Directory Cleanup**: Manage old generations and storage
+- **Health Monitoring**: System status and configuration validation
 
 ### Voice Configuration Structure
 
@@ -557,14 +828,66 @@ python main.py --locale ms-my
 - `configs/languages/` old language configurations (deprecated)
 - `data/input/placeholder_maps/` old placeholder maps (migrated to locale directories)
 
+## Enhanced Command-Line Options
+
+### Generation Control
+```bash
+# Generation modes
+--generation-mode seeds          # Limit by number of seeds (default)
+--generation-mode conversations  # Limit by total conversations
+
+# Generation limits
+--seed-limit N                   # Number of seeds to process
+--conversation-count N           # Target number of conversations
+--scam-limit N                   # Limit scam conversations only
+--legit-limit N                  # Limit legitimate conversations only
+--total-limit N                  # Absolute maximum conversations (overrides all)
+--scenarios-per-seed N           # Override scenarios per seed
+
+# Generation types
+--scam                           # Generate only scam conversations
+--legit                          # Generate only legitimate conversations
+```
+
+### LLM Configuration
+```bash
+# Model selection
+--model MODEL_NAME               # Override LLM model (e.g., gpt-5-nano)
+--reasoning-effort LEVEL         # Reasoning effort for GPT-5 (minimal/low/medium/high)
+--random-seed N                  # Set random seed for reproducibility
+```
+
+### Output Control
+```bash
+# Timestamp control
+--use-timestamp TIMESTAMP        # Use specific timestamp or "new"
+--no-timestamp                   # Use old directory structure (no timestamps)
+
+# Output management
+--output-dir PATH                # Custom output directory
+--force                          # Overwrite existing files
+```
+
+### Voice Management
+```bash
+# Voice validation
+--validate-voices LOCALE         # Validate voices for specific locale
+--validate-all-voices            # Validate all voice IDs
+--update-voice-configs           # Remove invalid voice IDs
+--ensure-minimum-voices          # Check minimum voice requirements
+--suggest-voices LOCALE          # Get voice suggestions
+```
+
 ## Performance Considerations
 
 - Use `--steps` to run specific pipeline stages for faster iteration
-- Use `--sample-limit N` for testing with smaller datasets
+- Use `--total-limit N` for testing with smaller datasets
 - Audio generation is rate-limited to avoid API throttling
 - Large datasets should be processed in batches
 - Consider running overnight for full datasets
 - Monitor API quotas for OpenAI and ElevenLabs
+- Use `--generation-mode seeds` for more predictable generation counts
+- Enable token tracking to monitor costs: `"track_tokens": true`
 
 ## Data Privacy & Ethics
 
@@ -590,6 +913,14 @@ python main.py --locale ms-my
 8. **Voice Synthesis Quota**: ElevenLabs has monthly character limits
 9. **LLM Parameter Warnings**: Parameters are now passed directly to model constructors
 10. **Translation Cache Not Working**: Cache will not work if source file is modified after cache is created. Use ```find data/translation_cache -type f -exec touch {} \;``` to refresh the cache timestamp to by pass
+11. **Character Profiles Not Loading**: Ensure `configs/character_profiles.json` exists and is valid
+12. **Seed File Not Found**: Check that `scam_samples.json` exists in the correct location
+13. **Voice ID Validation Fails**: Use `--validate-voices` to check voice ID validity
+14. **Reasoning Model Errors**: Ensure you have access to GPT-5 models and proper API keys
+15. **Token Tracking Issues**: Enable `track_tokens: true` in configuration
+16. **V3 Features Not Working**: Ensure you're using a v3 model (eleven_multilingual_v3)
+17. **Generation Mode Errors**: Use `--generation-mode seeds` or `--generation-mode conversations`
+18. **Voice Quality Issues**: Use interactive mode to configure voice settings
 
 ### Debug Mode
 
