@@ -1,7 +1,7 @@
 {
   "followup_turns": {
-    "num_turns_lower_limit": 7,
-    "num_turns_upper_limit": 10,
+    "num_turns_lower_limit": 20,
+    "num_turns_upper_limit": 24,
     "victim_awareness_levels": [
       "not",
       "not",
@@ -81,17 +81,17 @@
   },
   "llm": {
     "provider": "openai",
-    "model": "gpt-5-nano",
+    "model": "gpt-5",
     "max_concurrent_requests": 20,
     "comment": "Standard model parameters (ignored for reasoning models)",
-    "temperature": 1.0,
+    "temperature": 1.1,
     "max_tokens": null,
     "top_p": 0.95,
     "n": 1,
     "presence_penalty": 0.0,
-    "frequency_penalty": 0.0,
+    "frequency_penalty": 0.3,
     "comment2": "Reasoning model parameters (ignored for standard models)",
-    "reasoning_effort": "minimal",
+    "reasoning_effort": "low",
     "max_completion_tokens": null,
     "comment3": "Gemini-specific parameters",
     "thinking_budget": 0,

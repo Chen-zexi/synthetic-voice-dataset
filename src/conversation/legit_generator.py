@@ -282,6 +282,42 @@ The dialogue must be returned as a JSON array with the exact format shown in exa
 4. Maintain professional tone appropriate to the scenario
 5. Generate synthetic but plausible values (no real personal data)
 
+### Natural Speech Patterns (Language-Specific)
+
+For Malay (ms-my):
+- Use colloquial particles: "lah", "kan", "je", "pun", "ni", "tu"
+- Mix formal and informal: "awak/anda" (you), "saya/aku" (I), "macam mana" (how)
+- Natural fillers: "eh", "ah", "hmm", "macam", "betul ke", "okay"
+- Casual contractions: "nak" (hendak), "dah" (sudah), "tak" (tidak), "boleh ke"
+- Spoken abbreviations: "ok" instead of "baik", casual responses
+- Code-switching with English is natural for younger speakers
+- Avoid overusing "sila", "terima kasih", "adakah" - use sparingly
+- Use incomplete sentences and natural breaks
+- Professional calls can still be casual in Malaysian context
+
+For Arabic (ar-sa, ar-ae):
+- Use dialectal Arabic mixed with Modern Standard Arabic
+- Include natural hesitations and discourse markers
+- Vary between formal and casual pronouns
+- Use region-specific expressions
+
+For other languages:
+- Research and use natural spoken forms
+- Include local slang and casual expressions
+- Professional doesn't mean overly formal
+- Mix sentence fragments with complete sentences
+
+### Conversation Progression for Longer Calls
+When generating extended conversations (15+ turns):
+1. Opening (3-5 turns): Greetings, identity confirmation, state purpose
+2. Main Discussion (10-14 turns): Address the topic, exchange information, handle details
+3. Closure (3-5 turns): Summarize, confirm next steps, polite closing
+
+For professional calls, include:
+- Appropriate small talk or rapport building
+- Detailed information exchange relevant to the category
+- Natural back-and-forth with clarifications
+- Professional courtesies and confirmations
 
 ## Important Rules
 1. Always alternate between caller and callee roles
@@ -342,6 +378,34 @@ Generate a JSON array of dialogue turns with this exact structure:
 **Category**: {category_display}
 **Number of Turns**: Generate exactly {num_turns} dialogue turns
 **Context**: This is a legitimate business/service call about {category_display.lower()}
+
+### Quality Guidelines for Extended Conversations
+
+For conversations with 20+ turns:
+- Start with appropriate greetings and context-setting
+- Include natural information gathering and confirmation exchanges
+- Add realistic details specific to the conversation category
+- Show professional courtesy and active listening
+- Include clarifications, confirmations, and follow-up questions
+- Build toward a clear conclusion with next steps or resolution
+- Maintain natural pacing throughout
+
+CRITICAL FOR MALAY (ms-my): Use NATURAL, SPOKEN language
+- BAD: "Selamat pagi. Saya dari syarikat. Adakah anda bersedia?"
+- GOOD: "Hai, saya dari syarikat. Awak ada masa sekejap tak?"
+- BAD: "Terima kasih kerana menunggu. Sila berikan maklumat."
+- GOOD: "Thanks sebab tunggu. Boleh bagi details sikit?"
+- BAD: "Baiklah, saya akan memproses permintaan anda."
+- GOOD: "Ok, nanti saya process ye."
+- Use: "lah", "kan", "je", "tak", "dah", "nak", "okay", "macam mana"
+- Professional calls in Malaysia are still casual and friendly
+- Mix Malay and English naturally - it's how Malaysians speak!
+
+Example structure for a 22-turn appointment confirmation:
+Turns 1-4: Greeting, identify caller/callee, state purpose
+Turns 5-12: Discuss appointment details, check availability, address concerns
+Turns 13-18: Confirm specifics, provide additional information, answer questions
+Turns 19-22: Summarize, confirm understanding, polite closing
 
 ### Generate the Dialogue
 

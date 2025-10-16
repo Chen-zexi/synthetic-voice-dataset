@@ -653,6 +653,31 @@ The dialogue must be returned as a JSON array with the exact format shown in exa
 3. Create culturally appropriate dialogue for the target region
 4. Keep sentences short and natural for phone conversations
 
+### Natural Speech Patterns (Language-Specific)
+
+For Malay (ms-my):
+- Use colloquial particles: "lah", "kan", "je", "pun", "ni", "tu"
+- Mix formal and informal: "awak/anda" (you), "saya/aku" (I), "macam mana" (how)
+- Natural fillers: "eh", "ah", "hmm", "macam", "betul ke", "okay"
+- Casual contractions: "nak" (hendak), "dah" (sudah), "tak" (tidak), "boleh ke"
+- Spoken abbreviations: "SMS" (mesej), "ok" instead of "baik"
+- Code-switching with English is natural for younger speakers
+- Avoid overusing "sila", "terima kasih", "adakah" - use sparingly
+- Use incomplete sentences and natural breaks
+- Add thinking pauses: "errr", "hmm", "tunggu sekejap"
+
+For Arabic (ar-sa, ar-ae):
+- Use dialectal Arabic mixed with Modern Standard Arabic
+- Include natural hesitations and discourse markers
+- Vary between formal and casual pronouns
+- Use region-specific expressions
+
+For other languages:
+- Research and use natural spoken forms
+- Include local slang and casual expressions
+- Avoid overly formal or literary language
+- Mix sentence fragments with complete sentences
+
 ### Placeholder Handling
 When localized placeholder values are provided:
 1. Select appropriate values from the options given
@@ -667,6 +692,16 @@ When character profiles are provided:
 3. Adapt vocabulary and complexity based on education level
 4. Maintain consistent character voices throughout the conversation
 
+### Conversation Progression Strategy
+When generating longer conversations (15+ turns):
+1. Opening (3-5 turns): Establish scenario, build initial trust/urgency
+2. Development (8-12 turns): Deepen engagement, introduce key elements, handle objections
+3. Escalation (4-8 turns): Increase pressure, present opportunities/threats, push toward action
+4. Resolution (2-4 turns): Drive toward conclusion naturally
+
+Ensure smooth transitions between phases with natural dialogue flow.
+Vary sentence length and structure to maintain realism.
+Include realistic pauses, clarifications, and natural conversation elements.
 
 ## Important Rules
 1. Always alternate between caller and callee roles
@@ -758,6 +793,35 @@ Reflect these character traits consistently throughout the dialogue.
 
 **Scenario Description**:
 {seed_text}
+
+### Quality Guidelines for Longer Conversations
+
+For conversations with 20+ turns:
+- Build rapport gradually, don't rush to the main point
+- Include natural conversational elements (clarifications, confirmations, small talk)
+- Vary the pacing - some quick exchanges, some longer explanations
+- Show character development as the conversation progresses
+- Include realistic hesitations, questions, and concerns from the victim
+- Demonstrate the scammer's persistence and adaptability
+- Maintain tension and engagement throughout
+- End with a clear resolution (success, failure, or interruption)
+
+CRITICAL FOR MALAY (ms-my): Use SPOKEN, COLLOQUIAL language
+- BAD: "Selamat pagi. Sila sahkan nombor akaun anda."
+- GOOD: "Hai, boleh tolong sahkan nombor akaun awak sekejap?"
+- BAD: "Terima kasih kerana memberi maklumat tersebut."
+- GOOD: "Ok, terima kasih ye. Lepas ni..."
+- BAD: "Adakah anda bersedia untuk meneruskan?"
+- GOOD: "Awak okay nak proceed ke?"
+- Use: "lah", "kan", "je", "macam", "tak", "dah", "nak", "eh", "betul ke"
+- Mix Malay and English naturally for younger characters
+- Avoid rigid formality - phone conversations are casual!
+
+Example progression for a 22-turn banking scam:
+Turns 1-5: Initial contact, identity verification, problem statement
+Turns 6-12: Explaining the issue, building urgency, addressing concerns
+Turns 13-18: Requesting action, handling resistance, escalating pressure
+Turns 19-22: Final push, victim response, conversation conclusion
 
 ### Generate the Dialogue
 

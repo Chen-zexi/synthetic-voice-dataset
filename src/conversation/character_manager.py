@@ -388,6 +388,9 @@ class CharacterManager:
         # Create scenario with template parameters
         scenario_id = f"{seed_id}_{template_id}" if seed_id else template_id
         
+        # Override template turn count with new config range for longer conversations
+        num_turns = random.randint(self.num_turns_range[0], self.num_turns_range[1])
+        
         return GenerationScenario(
             scenario_id=scenario_id,
             seed_tag=seed_tag,
@@ -395,7 +398,7 @@ class CharacterManager:
             victim_profile=victim_profile,
             locale=locale,
             victim_awareness=template['victim_awareness'],
-            num_turns=template['num_turns']
+            num_turns=num_turns  # Use overridden value instead of template['num_turns']
         )
     
     def get_scenarios_for_seed(self, seed_id: str, seed_tag: str, locale: str, count: int = 1) -> List[GenerationScenario]:
