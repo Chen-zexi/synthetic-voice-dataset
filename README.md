@@ -150,6 +150,52 @@ The system uses advanced character profiles and scenario-based generation for au
 - **Quality Filtering**: Only uses high-quality seeds (configurable threshold)
 - **Multiple Scenarios per Seed**: Generate varied conversations from the same scam type
 
+### Long Conversation Generation
+
+The system now supports generating realistic 5-minute scam conversations (25-40 turns) with advanced features:
+
+- **Multi-Stage Generation**: Breaks conversations into 5 logical stages (opening, building trust, creating urgency, action request, closing)
+- **SMS Link Behavior**: Injects realistic SMS link tactics into 40-50% of conversations
+- **Context Management**: Maintains coherence between conversation stages
+- **Quality Validation**: Advanced coherence checking and conversation flow validation
+- **Stage Guidelines**: Explicit instructions for each conversation phase
+
+**Configuration Example:**
+```json
+{
+  "followup_turns": {
+    "num_turns_lower_limit": 25,
+    "num_turns_upper_limit": 40
+  },
+  "multi_stage_generation": {
+    "enabled": true,
+    "stages": [
+      {"name": "opening", "min_turns": 5, "max_turns": 8},
+      {"name": "building_trust", "min_turns": 8, "max_turns": 12},
+      {"name": "creating_urgency", "min_turns": 6, "max_turns": 10},
+      {"name": "action_request", "min_turns": 4, "max_turns": 8},
+      {"name": "closing", "min_turns": 2, "max_turns": 5}
+    ]
+  },
+  "sms_link_behavior": {
+    "enabled": true,
+    "injection_probability": 0.45,
+    "link_types": ["verification", "payment", "security_check"]
+  }
+}
+```
+
+**Usage:**
+```bash
+# Generate long conversations (25-40 turns)
+python main.py --locale ar-sa --steps conversation
+
+# Test long conversation features
+python scripts/test_long_conversations.py --locale ar-sa --num-conversations 20
+```
+
+For detailed information, see the [Long Conversation Guide](doc/LONG_CONVERSATION_GUIDE.md).
+
 ## Project Structure
 
 ```

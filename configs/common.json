@@ -1,7 +1,7 @@
 {
-  "followup_turns": {
-    "num_turns_lower_limit": 7,
-    "num_turns_upper_limit": 10,
+    "followup_turns": {
+      "num_turns_lower_limit": 30,
+      "num_turns_upper_limit": 40,
     "victim_awareness_levels": [
       "not",
       "not",
@@ -122,5 +122,21 @@
     "scenario_mode": "pre_configured",
     "scenario_templates_file": "configs/scenario_templates.json",
     "scenario_assignments_file": "configs/scenario_assignments.json"
+  },
+  "multi_stage_generation": {
+    "enabled": true,
+    "stages": [
+      {"name": "opening", "min_turns": 5, "max_turns": 8},
+      {"name": "building_trust", "min_turns": 8, "max_turns": 12},
+      {"name": "creating_urgency", "min_turns": 6, "max_turns": 10},
+      {"name": "action_request", "min_turns": 4, "max_turns": 8},
+      {"name": "closing", "min_turns": 2, "max_turns": 5}
+    ]
+  },
+    "sms_link_behavior": {
+      "enabled": true,
+      "injection_probability": 0.5,
+    "injection_stages": ["creating_urgency", "action_request"],
+    "link_types": ["verification", "payment", "security_check", "document_download", "prize_claim"]
   }
 }

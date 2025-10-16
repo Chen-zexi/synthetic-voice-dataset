@@ -388,6 +388,11 @@ class CharacterManager:
         # Create scenario with template parameters
         scenario_id = f"{seed_id}_{template_id}" if seed_id else template_id
         
+        # Clamp template-provided turns to configured range
+        template_turns = template['num_turns']
+        min_turns, max_turns = self.num_turns_range if self.num_turns_range else (template_turns, template_turns)
+        clamped_turns = max(min_turns, min(template_turns, max_turns))
+
         return GenerationScenario(
             scenario_id=scenario_id,
             seed_tag=seed_tag,
@@ -395,7 +400,7 @@ class CharacterManager:
             victim_profile=victim_profile,
             locale=locale,
             victim_awareness=template['victim_awareness'],
-            num_turns=template['num_turns']
+            num_turns=clamped_turns
         )
     
     def get_scenarios_for_seed(self, seed_id: str, seed_tag: str, locale: str, count: int = 1) -> List[GenerationScenario]:

@@ -1014,7 +1014,7 @@ class InteractiveUI:
         print("• Placeholder system for cultural localization")
         print("• Both scam and legitimate conversation generation")
     
-    def _execute_pipeline(self, steps: Optional[List[str]] = None, sample_limit: Optional[int] = None, force: bool = False):
+    def _execute_pipeline(self, steps: Optional[List[str]] = None, total_limit: Optional[int] = None, force: bool = False):
         """Execute the pipeline with given parameters."""
         try:
             print_info(f"Starting pipeline for {self.current_locale}...")
@@ -1025,7 +1025,7 @@ class InteractiveUI:
                 config_dir=self.config_dir,
                 output_dir=self.output_dir,
                 force=force,
-                sample_limit=sample_limit,
+                total_limit=total_limit,
                 use_timestamp=self.use_timestamp
             )
             
@@ -1035,10 +1035,10 @@ class InteractiveUI:
     def _execute_pipeline_with_limit(self):
         """Execute pipeline with custom sample limit."""
         try:
-            sample_limit = int(input("Enter sample limit (number of samples to process): ").strip())
-            self._execute_pipeline(sample_limit=sample_limit)
+            total_limit = int(input("Enter total limit (maximum conversations to generate): ").strip())
+            self._execute_pipeline(total_limit=total_limit)
         except ValueError:
-            print_warning("Invalid sample limit. Please enter a number.")
+            print_warning("Invalid total limit. Please enter a number.")
     
     def _execute_pipeline_with_force(self):
         """Execute pipeline with force overwrite."""

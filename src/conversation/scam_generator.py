@@ -13,9 +13,11 @@ from src.config.config_loader import Config
 from src.llm_core.api_provider import LLM
 from src.llm_core.api_call import make_api_call
 from src.llm_core.token_counter import TokenUsageTracker
-from src.conversation.schemas import ScamConversationResponse
+from src.conversation.schemas import ScamConversationResponse, MultiStageConversationResponse, ConversationStage
 from src.conversation.seed_manager import SeedManager, ScamSeed
 from src.conversation.character_manager import CharacterManager
+from src.conversation.sms_link_manager import SMSLinkManager
+from src.conversation.context_manager import ConversationContextManager
 from src.utils.logging_utils import ConditionalLogger
 
 
@@ -79,6 +81,12 @@ class ScamGenerator:
                 scenario_templates_path=scenario_templates_path,
                 scenario_assignments_path=scenario_assignments_path
             )
+        
+        # Initialize SMS link manager
+        self.sms_link_manager = SMSLinkManager()
+        
+        # Initialize context manager for multi-stage generation
+        self.context_manager = ConversationContextManager()
         
         
         # Initialize LLM with configurable provider (default to OpenAI)
@@ -430,7 +438,10 @@ Select contextually appropriate values from the arrays and incorporate them natu
         # Use scenario if provided, otherwise create one
         if scenario:
             # Use parameters from scenario
-            num_turns = scenario.num_turns
+            # Enforce configured min/max even if scenario templates specify lower values
+            min_turns = getattr(self.config, 'num_turns_lower_limit', 7)
+            max_turns = getattr(self.config, 'num_turns_upper_limit', 10)
+            num_turns = max(min_turns, min(scenario.num_turns, max_turns))
             victim_awareness = scenario.victim_awareness
             character_profiles = {
                 "scammer": scenario.scammer_profile,
@@ -447,21 +458,29 @@ Select contextually appropriate values from the arrays and incorporate them natu
                 self.config.num_turns_upper_limit
             )
             victim_awareness = random.choice(self.config.victim_awareness_levels)
+        
+        # Check if we should use multi-stage generation for longer conversations
+        use_multi_stage = (num_turns >= 20 and 
+                          getattr(self.config, 'multi_stage_generation_enabled', True))
+        
+        if use_multi_stage:
+            self.clogger.debug(f"Using multi-stage generation for conversation {conversation_id} with {num_turns} turns")
+            return await self._generate_multi_stage_conversation(conversation_id, seed, num_turns, scenario)
+        
+        # Generate character profiles if enabled (for single-stage generation)
+        character_profiles = None
+        if self.character_manager:
+            locale = getattr(self.config, 'locale', getattr(self.config, 'language', 'en-us'))
+            scammer_profile = self.character_manager.select_random_profile("scammer", locale)
+            victim_profile = self.character_manager.select_random_profile("victim", locale)
             
-            # Generate character profiles if enabled
-            character_profiles = None
-            if self.character_manager:
-                locale = getattr(self.config, 'locale', getattr(self.config, 'language', 'en-us'))
-                scammer_profile = self.character_manager.select_random_profile("scammer", locale)
-                victim_profile = self.character_manager.select_random_profile("victim", locale)
-                
-                if scammer_profile and victim_profile:
-                    character_profiles = {
-                        "scammer": scammer_profile,
-                        "victim": victim_profile
-                    }
-                    self.clogger.debug(f"Using character profiles for conversation {conversation_id}: "
-                                     f"Scammer={scammer_profile.profile_id}, Victim={victim_profile.profile_id}")
+            if scammer_profile and victim_profile:
+                character_profiles = {
+                    "scammer": scammer_profile,
+                    "victim": victim_profile
+                }
+                self.clogger.debug(f"Using character profiles for conversation {conversation_id}: "
+                                 f"Scammer={scammer_profile.profile_id}, Victim={victim_profile.profile_id}")
         
         # Use seed placeholders if available, otherwise use all locale placeholders
         placeholder_list = seed.placeholders if seed.placeholders else list(self.placeholder_mappings.keys())
@@ -653,6 +672,8 @@ The dialogue must be returned as a JSON array with the exact format shown in exa
 3. Create culturally appropriate dialogue for the target region
 4. Keep sentences short and natural for phone conversations
 
+IMPORTANT: If the target locale is Malay (ms-my), generate ALL dialogue strictly in Malay. Do NOT include English words or code-switching except unavoidable proper nouns. Use Malaysian phrasing and idioms.
+
 ### Placeholder Handling
 When localized placeholder values are provided:
 1. Select appropriate values from the options given
@@ -667,6 +688,42 @@ When character profiles are provided:
 3. Adapt vocabulary and complexity based on education level
 4. Maintain consistent character voices throughout the conversation
 
+### Conversation Flow Structure
+For longer conversations (20+ turns), follow this natural progression:
+
+**Opening Stage (5-8 turns):**
+- Scammer establishes identity and reason for call
+- Victim responds with initial questions or concerns
+- Build initial rapport and credibility
+- Keep tone professional but friendly
+
+**Building Trust Stage (8-12 turns):**
+- Scammer provides detailed information to seem legitimate
+- Use technical terms, reference numbers, or official procedures
+- Victim asks clarifying questions
+- Scammer addresses concerns professionally
+- Build credibility through expertise demonstration
+
+**Creating Urgency Stage (6-10 turns):**
+- Introduce time pressure or consequences
+- Escalate the importance of immediate action
+- Victim shows hesitation or concern
+- Scammer intensifies urgency while maintaining professionalism
+- Use phrases like "immediately", "urgent", "time-sensitive"
+
+**Action Request Stage (4-8 turns):**
+- Request specific action (SMS link, payment, information)
+- Provide clear, step-by-step instructions
+- Handle objections and concerns
+- Victim may express uncertainty but should ultimately comply
+- Be persistent but not aggressive
+
+**Closing Stage (2-5 turns):**
+- Confirm action or next steps
+- Provide false reassurance
+- End call naturally
+- Leave victim feeling confident about their decision
+- Thank victim for their cooperation
 
 ## Important Rules
 1. Always alternate between caller and callee roles
@@ -824,3 +881,345 @@ Based on the above parameters and scenario, generate exactly {num_turns} dialogu
             json.dump(output_data, f, ensure_ascii=False, indent=2)
         
         self.clogger.info(f"Saved {len(conversations)} conversations to {output_path}")
+    
+    async def _generate_multi_stage_conversation(self, conversation_id: int, seed: ScamSeed, 
+                                                total_turns: int, scenario=None) -> Optional[Dict]:
+        """
+        Generate conversation in multiple stages for better coherence and longer conversations.
+        
+        Args:
+            conversation_id: Unique conversation ID
+            seed: ScamSeed object with scam details
+            scenario: Optional GenerationScenario with pre-selected parameters
+            total_turns: Total number of turns for the conversation
+            
+        Returns:
+            Conversation dictionary or None if generation failed
+        """
+        # Check if multi-stage generation is enabled
+        if not getattr(self.config, 'multi_stage_generation_enabled', True):
+            # Fallback to single-stage generation
+            return await self._generate_single_conversation(conversation_id, seed, scenario)
+        
+        # Get stage configuration
+        stages_config = getattr(self.config, 'multi_stage_generation_stages', [
+            {"name": "opening", "min_turns": 5, "max_turns": 8},
+            {"name": "building_trust", "min_turns": 8, "max_turns": 12},
+            {"name": "creating_urgency", "min_turns": 6, "max_turns": 10},
+            {"name": "action_request", "min_turns": 4, "max_turns": 8},
+            {"name": "closing", "min_turns": 2, "max_turns": 5}
+        ])
+        
+        # Calculate turns per stage
+        stage_turns = self._calculate_stage_turns(total_turns, stages_config)
+        
+        # Determine if SMS link should be injected
+        should_inject_sms = False
+        link_type = None
+        if getattr(self.config, 'sms_link_behavior_enabled', True):
+            injection_probability = getattr(self.config, 'sms_link_injection_probability', 0.45)
+            should_inject_sms = self.sms_link_manager.should_inject_sms_link(seed.__dict__, injection_probability)
+            if should_inject_sms:
+                available_types = getattr(self.config, 'sms_link_types', ["verification", "payment", "security_check"])
+                link_type = self.sms_link_manager.select_link_type(getattr(self.config, 'locale', 'en-us'), available_types)
+        
+        # Generate each stage
+        all_stages = []
+        full_conversation = []
+        previous_context = ""
+        last_role = None
+        
+        for i, stage_config in enumerate(stages_config):
+            stage_name = stage_config["name"]
+            stage_turn_count = stage_turns[i]
+            
+            self.clogger.debug(f"Generating stage '{stage_name}' with {stage_turn_count} turns")
+            
+            # Create stage-specific prompt
+            stage_prompt = self._create_stage_prompt(
+                seed, scenario, stage_name, stage_turn_count, 
+                previous_context, should_inject_sms and stage_name in ["creating_urgency", "action_request"],
+                link_type
+            )
+            
+            # Generate stage dialogue
+            stage_dialogue = await self._generate_stage_dialogue(stage_prompt, stage_turn_count)
+            
+            if not stage_dialogue:
+                self.clogger.error(f"Failed to generate dialogue for stage '{stage_name}'")
+                return None
+            
+            # Enforce cross-stage role alternation
+            if full_conversation and stage_dialogue:
+                if stage_dialogue[0].get('role') == full_conversation[-1].get('role'):
+                    stage_dialogue[0]['role'] = 'callee' if stage_dialogue[0]['role'] == 'caller' else 'caller'
+
+            # Append and renumber sent_id sequentially across stages
+            for turn in stage_dialogue:
+                turn['sent_id'] = len(full_conversation) + 1
+                full_conversation.append(turn)
+                last_role = turn.get('role')
+            
+            # Create context summary for next stage
+            context_summary = self.context_manager.summarize_stage_context(stage_dialogue, stage_name)
+            previous_context = f"{previous_context} | {context_summary}" if previous_context else context_summary
+            
+            # Create stage object
+            stage = ConversationStage(
+                stage_name=stage_name,
+                stage_turns=stage_turn_count,
+                dialogue=stage_dialogue,
+                context_summary=context_summary
+            )
+            all_stages.append(stage)
+        
+        # Validate conversation coherence
+        is_coherent, issues = self.context_manager.validate_conversation_coherence(full_conversation)
+        if not is_coherent:
+            self.clogger.warning(f"Conversation {conversation_id} has coherence issues: {', '.join(issues[:3])}")
+        
+        # Build final conversation dictionary
+        conversation = {
+            "conversation_id": conversation_id,
+            "seed_id": seed.seed_id,
+            "scam_tag": seed.scam_tag,
+            "scam_category": seed.scam_category,
+            "summary": seed.scam_summary,
+            "seed": seed.conversation_seed,
+            "quality_score": seed.quality_score,
+            "num_turns": total_turns,
+            "victim_awareness": scenario.victim_awareness if scenario else random.choice(self.config.victim_awareness_levels),
+            "placeholders": seed.placeholders,
+            "generation_method": "multi_stage",
+            "dialogue": full_conversation,
+            "stages": [stage.model_dump() for stage in all_stages],
+            "sms_link_injected": should_inject_sms,
+            "link_type": link_type,
+            "coherence_issues": issues if not is_coherent else []
+        }
+        
+        # Add character profile information if used
+        if scenario and scenario.scammer_profile and scenario.victim_profile:
+            conversation["character_profiles"] = {
+                "scammer": scenario.scammer_profile.model_dump(),
+                "victim": scenario.victim_profile.model_dump()
+            }
+        
+        # Add voice mapping if available
+        if hasattr(self.config, 'voice_mapping') and self.config.voice_mapping:
+            scammer_voice = self.config.voice_mapping.get("scammer")
+            victim_voice = self.config.voice_mapping.get("victim")
+            if scammer_voice and victim_voice:
+                conversation["voice_mapping"] = {
+                    "caller": scammer_voice,
+                    "callee": victim_voice
+                }
+        
+        return conversation
+    
+    def _calculate_stage_turns(self, total_turns: int, stages_config: List[Dict]) -> List[int]:
+        """
+        Calculate the number of turns for each stage.
+        
+        Args:
+            total_turns: Total number of turns for the conversation
+            stages_config: List of stage configurations
+            
+        Returns:
+            List of turn counts for each stage
+        """
+        num_stages = len(stages_config)
+        base_turns_per_stage = total_turns // num_stages
+        remainder = total_turns % num_stages
+        
+        stage_turns = []
+        for i, stage_config in enumerate(stages_config):
+            # Add base turns plus remainder distribution
+            turns = base_turns_per_stage + (1 if i < remainder else 0)
+            
+            # Ensure within stage limits
+            min_turns = stage_config.get("min_turns", 1)
+            max_turns = stage_config.get("max_turns", 10)
+            turns = max(min_turns, min(turns, max_turns))
+            
+            stage_turns.append(turns)
+        
+        return stage_turns
+    
+    def _create_stage_prompt(self, seed: ScamSeed, scenario, stage_name: str,
+                            stage_turns: int, previous_context: str,
+                            inject_sms: bool, link_type: str = None) -> str:
+        """
+        Create a prompt for a specific conversation stage.
+        
+        Args:
+            seed: ScamSeed object
+            scenario: GenerationScenario object
+            stage_name: Name of the stage
+            stage_turns: Number of turns for this stage
+            previous_context: Context from previous stages
+            inject_sms: Whether to inject SMS link behavior
+            link_type: Type of SMS link to inject
+            
+        Returns:
+            Stage-specific prompt
+        """
+        # Base prompt structure with locale-static guidance
+        locale_static = self._build_locale_static_prompt() if hasattr(self, '_build_locale_static_prompt') else ""
+        target_locale = getattr(self.config, 'language', 'en-us')
+        target_language_name = getattr(self.config, 'language_name', target_locale)
+        target_region = getattr(self.config, 'region', '')
+
+        prompt = f"""{locale_static}
+## Task: Generate {stage_name.title()} Stage of Scam Phone Call
+
+### Stage Context
+**Stage**: {stage_name}
+**Turns**: {stage_turns}
+**Scenario**: {seed.scam_summary}
+
+### Target Locale
+Locale ID: {target_locale}
+Language: {target_language_name}{f" ({target_region})" if target_region else ""}
+Instructions:
+- Generate ALL dialogue strictly in the target locale language.
+- If seed/summary are not in the target language, translate concepts and produce natural {target_language_name} output.
+- Use culturally appropriate wording for {target_region or target_locale}.
+
+### Previous Context
+{previous_context if previous_context else "This is the opening stage of the conversation."}
+
+### Stage-Specific Guidelines
+{self._get_stage_guidelines(stage_name)}
+
+### Character Profiles
+"""
+        
+        # Add character profiles if available
+        if scenario and scenario.scammer_profile and scenario.victim_profile:
+            prompt += f"""
+**Caller (Scammer):**
+- Personality: {', '.join(scenario.scammer_profile.personality_traits)}
+- Speaking Style: {', '.join(scenario.scammer_profile.speaking_style)}
+- Education: {scenario.scammer_profile.education_level}
+
+**Callee (Victim):**
+- Personality: {', '.join(scenario.victim_profile.personality_traits)}
+- Speaking Style: {', '.join(scenario.victim_profile.speaking_style)}
+- Education: {scenario.victim_profile.education_level}
+"""
+        else:
+            prompt += "Use appropriate character traits for a realistic scam conversation.\n"
+        
+        # Add SMS link behavior if needed
+        if inject_sms and link_type:
+            locale = getattr(self.config, 'locale', 'en-us')
+            sms_instructions = self.sms_link_manager.inject_sms_behavior("", link_type, locale, stage_name)
+            prompt += f"\n### SMS Link Behavior\n{sms_instructions}\n"
+        
+        # Add output format
+        prompt += f"""
+### Output Format
+Generate exactly {stage_turns} dialogue turns as JSON array:
+[{{"text": "<dialogue text>", "role": "caller"}}, {{"text": "<dialogue text>", "role": "callee"}}, ...]
+
+### Generate the {stage_name} stage dialogue now.
+"""
+        
+        return prompt
+    
+    def _get_stage_guidelines(self, stage_name: str) -> str:
+        """Get stage-specific guidelines."""
+        guidelines = {
+            "opening": """
+- Scammer establishes identity and reason for call
+- Victim responds with initial questions or concerns
+- Build initial rapport and credibility
+- Keep tone professional but friendly
+""",
+            "building_trust": """
+- Scammer provides detailed information to seem legitimate
+- Use technical terms, reference numbers, or official procedures
+- Victim asks clarifying questions
+- Scammer addresses concerns professionally
+- Build credibility through expertise demonstration
+""",
+            "creating_urgency": """
+- Introduce time pressure or consequences
+- Escalate the importance of immediate action
+- Victim shows hesitation or concern
+- Scammer intensifies urgency while maintaining professionalism
+- Use phrases like "immediately", "urgent", "time-sensitive"
+""",
+            "action_request": """
+- Request specific action (SMS link, payment, information)
+- Provide clear, step-by-step instructions
+- Handle objections and concerns
+- Victim may express uncertainty but should ultimately comply
+- Be persistent but not aggressive
+""",
+            "closing": """
+- Confirm action or next steps
+- Provide false reassurance
+- End call naturally
+- Leave victim feeling confident about their decision
+- Thank victim for their cooperation
+"""
+        }
+        
+        return guidelines.get(stage_name, "Continue the conversation naturally.")
+    
+    async def _generate_stage_dialogue(self, stage_prompt: str, stage_turns: int) -> Optional[List[Dict]]:
+        """
+        Generate dialogue for a specific stage.
+        
+        Args:
+            stage_prompt: Stage-specific prompt
+            stage_turns: Number of turns to generate
+            
+        Returns:
+            List of dialogue turns or None if generation failed
+        """
+        try:
+            # Use the same system prompt as regular generation
+            system_prompt = self._create_system_prompt()
+            
+            # Make API call
+            if self.token_tracker:
+                response, token_info = await make_api_call(
+                    llm=self.llm,
+                    system_prompt=system_prompt,
+                    user_prompt=stage_prompt,
+                    response_schema=ScamConversationResponse,
+                    return_token_usage=True
+                )
+                # Track token usage
+                self.token_tracker.add_usage(
+                    token_info,
+                    self.llm_model,
+                    f"stage_dialogue_{stage_turns}turns"
+                )
+            else:
+                response = await make_api_call(
+                    llm=self.llm,
+                    system_prompt=system_prompt,
+                    user_prompt=stage_prompt,
+                    response_schema=ScamConversationResponse
+                )
+            
+            if hasattr(response, 'dialogue'):
+                # Convert to dict format and add sent_id
+                dialogue_with_ids = []
+                for i, turn in enumerate(response.dialogue, 1):
+                    turn_dict = turn.model_dump()
+                    turn_dict['sent_id'] = i
+                    dialogue_with_ids.append(turn_dict)
+                
+                return dialogue_with_ids
+            else:
+                self.clogger.error(f"Stage generation failed: missing dialogue field")
+                return None
+                
+        except Exception as e:
+            self.clogger.error(f"Stage generation error: {e}")
+            return None

@@ -56,3 +56,18 @@ class LegitConversation(BaseModel):
     category: str
     num_turns: int
     dialogue: List[DialogueTurn]
+
+
+class ConversationStage(BaseModel):
+    """A single stage in a multi-stage conversation generation."""
+    stage_name: str = Field(description="Name of the conversation stage")
+    stage_turns: int = Field(description="Number of turns in this stage")
+    dialogue: List[DialogueTurn] = Field(description="Dialogue turns for this stage")
+    context_summary: str = Field(description="Summary of context from this stage")
+
+
+class MultiStageConversationResponse(BaseModel):
+    """Structured response for multi-stage conversation generation."""
+    stages: List[ConversationStage] = Field(
+        description="List of conversation stages with their dialogue and context"
+    )
