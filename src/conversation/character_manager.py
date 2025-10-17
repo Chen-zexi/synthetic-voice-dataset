@@ -273,18 +273,18 @@ class CharacterManager:
         if not self.scenario_assignments_path or not self.scenario_assignments_path.exists():
             logger.debug(f"Scenario assignments file not found: {self.scenario_assignments_path}")
             return
-        
+
         logger.debug(f"Loading scenario assignments from {self.scenario_assignments_path}")
-        
+
         try:
             with open(self.scenario_assignments_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-            
+
             self.scenario_assignments = data.get('seed_scenarios', {})
             logger.debug(f"Loaded assignments for {len(self.scenario_assignments)} seeds")
         except Exception as e:
             logger.warning(f"Failed to load scenario assignments: {e}")
-    
+
     def get_profile_by_id(self, profile_id: str) -> Optional[CharacterProfile]:
         """
         Get a character profile by its ID.
@@ -401,38 +401,38 @@ class CharacterManager:
     def get_scenarios_for_seed(self, seed_id: str, seed_tag: str, locale: str, count: int = 1) -> List[GenerationScenario]:
         """
         Get pre-assigned scenarios for a seed.
-        
+
         Args:
             seed_id: Seed ID to get scenarios for
             seed_tag: The scam tag being used
             locale: Target locale
             count: Number of scenarios to return
-            
+
         Returns:
             List of GenerationScenario objects
         """
         scenarios = []
-        
-        # Check if we have pre-configured assignments
+
+        # Check pre-configured assignments
         if self.scenario_assignments and seed_id in self.scenario_assignments:
             template_ids = self.scenario_assignments[seed_id][:count]
-            
+
             for template_id in template_ids:
                 scenario = self.create_from_template(template_id, seed_tag, locale, seed_id)
                 if scenario:
                     scenarios.append(scenario)
-            
+
             if scenarios:
                 logger.debug(f"Using pre-configured scenarios for seed {seed_id}: {template_ids}")
                 return scenarios
-        
+
         # Fallback to random scenario creation
         logger.debug(f"No pre-configured scenarios for seed {seed_id}, using random generation")
         for i in range(count):
             scenario = self.create_scenario(seed_tag, locale, f"{seed_id}_{i+1}")
             if scenario:
                 scenarios.append(scenario)
-        
+
         return scenarios
     
     def create_scenario(self, seed_tag: str, locale: str, scenario_id: Optional[str] = None) -> Optional[GenerationScenario]:

@@ -1,7 +1,7 @@
 {
   "followup_turns": {
-    "num_turns_lower_limit": 7,
-    "num_turns_upper_limit": 10,
+    "num_turns_lower_limit": 20,
+    "num_turns_upper_limit": 24,
     "victim_awareness_levels": [
       "not",
       "not",
@@ -27,7 +27,7 @@
     "track_tokens": true
   },
   "multi_turn": {
-    "input_file": "deduplicated_seeds_no_email.json",
+    "input_file": "malaysian_voice_phishing_seeds_2025.json",
     "english_output": "scam_conversation_english.json"
   },
   "legit_call": {
@@ -81,7 +81,7 @@
   },
   "llm": {
     "provider": "openai",
-    "model": "gpt-5-nano",
+    "model": "gpt-5",
     "max_concurrent_requests": 20,
     "comment": "Standard model parameters (ignored for reasoning models)",
     "temperature": 1.0,
@@ -91,7 +91,7 @@
     "presence_penalty": 0.0,
     "frequency_penalty": 0.0,
     "comment2": "Reasoning model parameters (ignored for standard models)",
-    "reasoning_effort": "minimal",
+    "reasoning_effort": "low",
     "max_completion_tokens": null,
     "comment3": "Gemini-specific parameters",
     "thinking_budget": 0,
@@ -121,6 +121,6 @@
     "deterministic_seed_order": true,
     "scenario_mode": "pre_configured",
     "scenario_templates_file": "configs/scenario_templates.json",
-    "scenario_assignments_file": "configs/scenario_assignments.json"
+    "scenario_assignments_file": "configs/scenario_assignments_malaysia.json"
   }
 }

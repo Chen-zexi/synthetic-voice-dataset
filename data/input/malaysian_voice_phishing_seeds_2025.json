@@ -1,0 +1,211 @@
+[
+  {
+    "seed_id": "MY001",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "macau_pdrm",
+    "scam_category": "government_impersonation",
+    "meta_tag": "Macau Scam",
+    "scam_summary": "PDRM officer claims victim is involved in money laundering case with arrest warrant issued, demands immediate payment to resolve the case.",
+    "conversation_seed": "The scammer calls from a spoofed PDRM number claiming to be Inspector Ahmad from Bukit Aman. They inform the victim that their IC number was found linked to a money laundering case involving RM2.8 million. The caller creates panic by saying an arrest warrant has been issued and police will arrive within 2 hours. They offer to help 'settle' the case if the victim transfers RM50,000 to a special Bank Negara holding account for verification. The scammer uses official-sounding language, quotes fake case numbers (IP-2024-8847362), and threatens immediate arrest if the victim hangs up or contacts anyone.",
+    "quality_score": "95",
+    "processing_notes": "Based on actual October 2024 case where Chinese student nearly lost RM36,500. This pattern is the most common voice phishing scam in Malaysia with RM1.6 billion losses in 2024."
+  },
+  {
+    "seed_id": "MY002",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "bank_negara_credit",
+    "scam_category": "banking",
+    "meta_tag": "Macau Scam",
+    "scam_summary": "Bank Negara officer claims victim has unauthorized credit cards opened in their name, requires immediate verification and payment to prevent legal action.",
+    "conversation_seed": "The caller identifies as Officer Faridah from Bank Negara Malaysia's Financial Crime Division. They claim three credit cards have been opened using the victim's MyKad at CIMB, Maybank, and Public Bank with RM85,000 in outstanding debt. The scammer creates urgency by saying the case will be forwarded to PDRM in 30 minutes unless resolved. They instruct the victim to transfer RM15,000 as a 'security deposit' to freeze the fraudulent accounts, promising full refund within 7 working days. They remain on the line continuously, preventing the victim from verifying the claims independently.",
+    "quality_score": "92",
+    "processing_notes": "Classic Macau scam variant documented extensively by Bank Negara. This specific pattern accounts for significant portion of the 35,368 scam cases reported in 2024."
+  },
+  {
+    "seed_id": "MY003",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "tac_wrong_number",
+    "scam_category": "banking",
+    "meta_tag": "Voice Scam",
+    "scam_summary": "Scammer claims they accidentally registered victim's number for banking TAC, urgently needs the code to complete important transaction for sick parent.",
+    "conversation_seed": "The caller sounds apologetic and distressed, explaining they accidentally entered the victim's number when updating their Maybank2u profile. They claim their elderly mother is in Hospital Kuala Lumpur awaiting emergency surgery costing RM25,000, and they need to transfer money immediately but the TAC was sent to the victim's phone. The scammer pleads desperately, even offering to pay RM100 for the inconvenience, and creates emotional pressure by saying the hospital won't proceed without payment. They stay on the line asking repeatedly for the 6-digit code, claiming each minute of delay endangers their mother's life.",
+    "quality_score": "88",
+    "processing_notes": "Based on documented TAC scams that caused RM15 million in losses. This emotional manipulation tactic exploits Malaysian cultural values of helping others in medical emergencies."
+  },
+  {
+    "seed_id": "MY004",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "maybank_suspension",
+    "scam_category": "banking",
+    "meta_tag": "Voice Scam",
+    "scam_summary": "Maybank security claims suspicious transaction from victim's account to Nigerian IP address, requires immediate TAC verification to prevent account closure.",
+    "conversation_seed": "The caller claims to be from Maybank's Fraud Detection Unit and alerts the victim about a RM12,000 transfer attempt to Nigeria detected 10 minutes ago. They create panic by saying the account will be permanently frozen by Bank Negara within the hour due to suspected terrorism financing. The scammer asks the victim to provide the TAC they're about to receive to 'reverse' the transaction and secure the account. They use banking terminology, quote fake reference numbers (FRD-2024-MY-88291), and warn that all the victim's other bank accounts will also be blacklisted if they don't act immediately.",
+    "quality_score": "90",
+    "processing_notes": "Reflects actual bank impersonation tactics. Malaysian banks reported blocking RM302 million in fraudulent transactions in 2024, showing the scale of these attempts."
+  },
+  {
+    "seed_id": "MY005",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "lhdn_tax_arrears",
+    "scam_category": "government_impersonation",
+    "meta_tag": "Macau Scam",
+    "scam_summary": "LHDN officer claims victim owes RM45,000 in unpaid taxes from undeclared income, threatens asset seizure and criminal prosecution unless immediate payment.",
+    "conversation_seed": "The scammer introduces themselves as Tax Investigation Officer Razak from LHDN Cyberjaya headquarters. They claim the victim failed to declare RM380,000 in overseas income for 2023, resulting in RM45,000 unpaid taxes plus RM20,000 in penalties. The caller threatens that LHDN officers and police will arrive tomorrow morning to seize assets including cars and freeze all bank accounts. They offer a 'settlement option' where the victim pays RM15,000 immediately to close the case without prosecution. The scammer sends a fake LHDN letter via WhatsApp and provides a personal bank account claiming it's a 'special settlement account' authorized by the Finance Ministry.",
+    "quality_score": "91",
+    "processing_notes": "Based on common LHDN impersonation scams. Government agencies have repeatedly warned they never conduct investigations entirely over the phone or request payments to personal accounts."
+  },
+  {
+    "seed_id": "MY006",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "love_scam_engineer",
+    "scam_category": "romance",
+    "meta_tag": "E-commerce Fraud",
+    "scam_summary": "American oil rig engineer working in South China Sea develops romantic relationship, then needs urgent financial help due to equipment damage threatening his job.",
+    "conversation_seed": "After three weeks of daily WhatsApp conversations and video calls (using stolen footage), 'David Richardson' claims a critical piece of drilling equipment was damaged due to his supervisor's mistake, but he's being blamed. He says he needs RM75,000 to replace the equipment or lose his RM50,000/month job and be deported. He promises to repay double when his contract ends in 2 months, sends fake employment contracts and passport copies, and claims he's already borrowed from other crew members. He manipulates emotions by saying he was planning to propose during his next leave to Malaysia and shows fake jewelry receipts. The scammer creates urgency saying he has 48 hours before the company files charges against him.",
+    "quality_score": "93",
+    "processing_notes": "Based on actual love scam patterns that caused RM45.9 million losses in 2024. Elderly women are primary targets, with Facebook and WhatsApp as main platforms."
+  },
+  {
+    "seed_id": "MY007",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "crypto_investment_guru",
+    "scam_category": "investment",
+    "meta_tag": "Investment Scam",
+    "scam_summary": "Cryptocurrency trading 'sifu' with WhatsApp group promises guaranteed 40% monthly returns, shows fake profit screenshots from other 'successful' members.",
+    "conversation_seed": "The victim is added to a WhatsApp group called 'Crypto Millionaire Malaysia' with 200+ members. The 'sifu' Christopher Tan shares daily profit screenshots showing RM10,000 becoming RM14,000 overnight. Multiple group members praise the sifu excessively, sharing testimonials of buying new cars and houses. The scammer offers exclusive access to his 'AI trading bot' for a RM5,000 setup fee, guaranteeing minimum 40% monthly returns. Initial small investments of RM500 are allowed to withdraw profits to build trust. After larger investments, the platform shows huge paper profits but blocks withdrawals, demanding 30% 'tax payment' before releasing funds. The sifu threatens to close the victim's account and forfeit all funds if tax isn't paid within 72 hours.",
+    "quality_score": "94",
+    "processing_notes": "Reflects sophisticated crypto investment scams using social proof and FOMO tactics. These scams are increasingly common with AI-generated fake testimonials and doctored trading screenshots."
+  },
+  {
+    "seed_id": "MY008",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "epf_kwsp_withdrawal",
+    "scam_category": "government_impersonation",
+    "meta_tag": "Macau Scam",
+    "scam_summary": "Fake KWSP officer offers special COVID hardship withdrawal of RM50,000, requires upfront processing fee and personal banking credentials.",
+    "conversation_seed": "The caller claims to be from KWSP's Special Assistance Unit, informing the victim they qualify for a one-time RM50,000 withdrawal under a new government aid program for COVID-affected Malaysians. They explain this is different from i-Sinar or i-Citra and is only available for 2 weeks. The scammer requests RM1,500 'processing fee' to expedite the application, plus the victim's online KWSP login details to 'verify eligibility'. They create urgency by saying only 1,000 slots remain nationwide and 800 are already taken. They send fake KWSP letters via WhatsApp with legitimate-looking letterheads and reference numbers, warning that this opportunity won't be available again.",
+    "quality_score": "89",
+    "processing_notes": "Exploits public familiarity with legitimate KWSP withdrawal schemes during pandemic. These scams target middle-income Malaysians facing financial pressure."
+  },
+  {
+    "seed_id": "MY009",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "tnb_disconnection",
+    "scam_category": "utility",
+    "meta_tag": "Voice Scam",
+    "scam_summary": "TNB representative threatens immediate electricity disconnection for unpaid bills, demands instant payment through unofficial channels to avoid disconnection.",
+    "conversation_seed": "The scammer calls claiming to be from TNB's Disconnection Unit, stating the victim has RM3,847 in unpaid bills from the past 6 months. They threaten that a technician is already dispatched and will cut power within 2 hours. The caller offers to cancel the disconnection if payment is made immediately, but claims the official TNB system is under maintenance. They instruct the victim to transfer money to a personal account or buy RM4,000 in iTunes/Google Play cards as 'temporary payment' that will be credited once the system is restored. The scammer stays on the line, creating pressure by counting down the time until disconnection and mentioning how power loss will spoil food and affect children doing homework.",
+    "quality_score": "87",
+    "processing_notes": "Common utility scam exploiting fear of service disruption. Often targets elderly who are less familiar with actual TNB payment procedures."
+  },
+  {
+    "seed_id": "MY010",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "mysikap_summons",
+    "scam_category": "government_impersonation",
+    "meta_tag": "SMS Scam",
+    "scam_summary": "Traffic police claims victim has multiple unpaid summonses totaling RM8,000 with arrest warrant to be issued, offers settlement discount if paid immediately.",
+    "conversation_seed": "The caller identifies as Sergeant Kumar from PDRM Traffic Investigation Department, informing the victim they have 12 unpaid traffic summonses from 2023-2024 totaling RM8,000. They claim an arrest warrant will be issued tomorrow morning and the victim's driving license will be blacklisted. The scammer offers a 'special settlement program' reducing the amount to RM2,500 if paid within 2 hours. They provide a fake MySikap portal link via SMS that looks legitimate but captures banking credentials. The scammer warns that ignoring this will result in arrest at roadblocks, inability to renew road tax, and additional RM5,000 court fees. They pressure the victim by saying officers are preparing the warrant documentation as they speak.",
+    "quality_score": "86",
+    "processing_notes": "Based on traffic summons scams exploiting MySikap system. Scammers use fear of arrest and license issues to create urgency."
+  },
+  {
+    "seed_id": "MY011",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "lottery_winner_4d",
+    "scam_category": "lottery",
+    "meta_tag": "Giveaway Scam",
+    "scam_summary": "Sports Toto representative claims victim won RM2.8 million in special draw but must pay processing fee and taxes upfront to claim the prize.",
+    "conversation_seed": "The scammer calls congratulating the victim on winning RM2.8 million in Sports Toto's special 35th Anniversary Draw, claiming their phone number was randomly selected from a customer database. They explain that to claim the prize, the victim must pay RM28,000 (1% processing fee) and RM84,000 (3% withholding tax) upfront, which will be refunded with the winnings. The caller sends official-looking Sports Toto letters and bank deposit slips via WhatsApp, creates urgency by saying the prize expires in 72 hours, and warns that unclaimed prizes are forfeited to the government. They offer to 'help' by accepting partial payment of RM20,000 first, promising to cover the rest temporarily from their personal funds.",
+    "quality_score": "85",
+    "processing_notes": "Classic lottery scam adapted to Malaysian context using Sports Toto branding. Targets victims' greed and uses fake documentation to appear legitimate."
+  },
+  {
+    "seed_id": "MY012",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "insurance_claim_aia",
+    "scam_category": "insurance",
+    "meta_tag": "E-commerce Fraud",
+    "scam_summary": "AIA insurance agent claims victim has unclaimed insurance payout of RM180,000 from deceased relative, requires fee to process the claim.",
+    "conversation_seed": "The caller introduces themselves as Senior Claims Officer Janice Wong from AIA Malaysia, informing the victim that their late uncle (provides a common surname) left them as beneficiary for a RM180,000 life insurance policy. They claim the policy was purchased in 2015 and matured after the uncle's death in 2023. The scammer explains that to release the funds, the victim must pay RM6,000 for 'probate processing' and RM3,000 for 'beneficiary verification'. They send fake AIA documents, death certificates, and policy papers via email. Creating urgency, they warn that unclaimed insurance payouts are surrendered to Bank Negara after 30 days. The scammer offers payment plans and even suggests the victim borrow money, emphasizing the substantial payout awaiting them.",
+    "quality_score": "88",
+    "processing_notes": "Exploits emotions around deceased relatives and complexity of insurance claims. Uses official insurance company branding to build credibility."
+  },
+  {
+    "seed_id": "MY013",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "job_scam_singapore",
+    "scam_category": "employment",
+    "meta_tag": "E-commerce Fraud",
+    "scam_summary": "Singapore hotel recruiter offers high-paying hospitality job, requires upfront payment for work permit and accommodation deposit.",
+    "conversation_seed": "The scammer poses as HR Manager Patricia Lim from Marina Bay Sands Hotel, offering a Guest Relations Officer position with SGD 4,500 monthly salary plus accommodation. They conduct a brief phone interview asking basic questions, then immediately offer the job, claiming urgent need due to upcoming F1 Grand Prix season. The caller requests RM3,500 for Singapore work permit processing and RM2,000 for accommodation deposit, promising reimbursement in the first salary. They send professional-looking employment contracts, create urgency by saying the position must be filled within a week, and warn that delay means losing the opportunity to another candidate. They provide fake Singapore Ministry of Manpower permit numbers and even offer to arrange transportation to Singapore.",
+    "quality_score": "87",
+    "processing_notes": "Based on cross-border job scams that have trapped over 5,000 Malaysians. Often leads to human trafficking situations in Cambodia, Myanmar, and Laos."
+  },
+  {
+    "seed_id": "MY014",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "astro_technician",
+    "scam_category": "utility",
+    "meta_tag": "E-commerce Fraud",
+    "scam_summary": "Fake Astro technician claims satellite upgrade required, requests remote access to victim's phone to 'configure' new settings, installs malware.",
+    "conversation_seed": "The caller claims to be Astro Technical Support, informing the victim about a mandatory satellite upgrade affecting their area. They explain that without the upgrade, all channels will stop working within 24 hours. The scammer instructs the victim to download a 'configuration app' (actually malware) from a link sent via WhatsApp, claiming it's needed to sync their decoder with the new satellite. They guide the victim to enable installation from unknown sources and grant all app permissions including accessibility services. Once installed, the malware provides remote access to the device. The scammer keeps the victim on the line during 'configuration', actually accessing banking apps and stealing credentials while the victim's screen appears to show Astro settings.",
+    "quality_score": "90",
+    "processing_notes": "Sophisticated technical scam combining utility service with malware installation. Part of new APK scam wave that led Malaysian banks to implement malware shielding in 2024."
+  },
+  {
+    "seed_id": "MY015",
+    "processing_timestamp": "2025-09-20T10:30:00.000000",
+    "scam_tag": "medical_emergency_child",
+    "scam_category": "emergency",
+    "meta_tag": "Voice Scam",
+    "scam_summary": "Scammer claims to be calling from hospital emergency room, victim's child was in accident and needs immediate surgery deposit or treatment will be delayed.",
+    "conversation_seed": "The caller, claiming to be Dr. Rashid from Hospital Kuala Lumpur Emergency Department, informs the victim their child was in a serious traffic accident (provides victim's actual child's name obtained from social media). They describe severe injuries requiring immediate surgery costing RM35,000, claiming the child is unconscious and cannot provide insurance details. The scammer creates extreme panic, saying surgery must begin within 30 minutes or there could be permanent damage. They demand RM10,000 deposit immediately to start the procedure, providing a personal bank account claiming the hospital's system is down. Background hospital sounds are played to add authenticity. They prevent the victim from hanging up to verify, saying every second counts for the child's survival.",
+    "quality_score": "92",
+    "processing_notes": "Extremely manipulative scam exploiting parental fears. Scammers research victims on social media to obtain children's names and details for credibility."
+  },
+  {
+    "seed_id": "MY016",
+    "processing_timestamp": "2025-10-16T21:30:00.000000",
+    "scam_tag": "pos_laju_delivery",
+    "scam_category": "delivery",
+    "meta_tag": "Delivery Scam",
+    "scam_summary": "Pos Laju courier claims package cannot be delivered due to address errors, demands victim download fake tracking app or pay delivery fee to release package.",
+    "conversation_seed": "The caller claims to be from Pos Laju customer service, saying a parcel from Lazada addressed to the victim is being held at the Petaling Jaya sorting facility because the delivery address is incomplete. They create urgency by warning the package contains perishable items and will be returned to sender tomorrow unless resolved immediately. The scammer instructs the victim to download a 'Pos Laju Tracking Pro' app from a WhatsApp link to verify their address, or pay RM25 delivery fee via online transfer. They pressure the victim saying other couriers are waiting and delays will cost the company money. The fake app actually installs malware that harvests banking credentials.",
+    "quality_score": "91",
+    "processing_notes": "Based on delivery scam patterns that exploit Malaysian e-commerce growth. Combines package anxiety with malware installation tactics similar to the Astro scam wave."
+  },
+  {
+    "seed_id": "MY017",
+    "processing_timestamp": "2025-10-16T21:30:00.000000",
+    "scam_tag": "j_and_t_parcel",
+    "scam_category": "delivery",
+    "meta_tag": "Delivery Scam",
+    "scam_summary": "J&T Express agent claims unclaimed high-value parcel requires customs clearance fee before delivery, threatens to forfeit package if not paid within hours.",
+    "conversation_seed": "The scammer introduces themselves as J&T Express supervisor handling international parcels, informing the victim they have a package from overseas (claims to be from Singapore) declared value RM8,500. They say Malaysian Customs requires immediate clearance payment of RM380 to release the parcel, warning that failure to pay within 4 hours will result in the package being seized and destroyed by customs authorities. The caller provides fake tracking number JTM2024MY88234, sends official-looking J&T and customs documents via WhatsApp, and instructs payment to a personal account claiming their payment system is temporarily offline. They create curiosity by refusing to reveal package contents, saying it's 'sealed by customs regulations'.",
+    "quality_score": "89",
+    "processing_notes": "Exploits the popularity of J&T Express in Malaysia and creates mystery around package contents to increase victim curiosity and compliance."
+  },
+  {
+    "seed_id": "MY018",
+    "processing_timestamp": "2025-10-16T21:30:00.000000",
+    "scam_tag": "easy_loan_app",
+    "scam_category": "loan_fraud",
+    "meta_tag": "Loan Fraud",
+    "scam_summary": "Easy loan app representative offers instant RM10,000 approval with no credit check, requires upfront processing fee and access to contacts/photos as collateral.",
+    "conversation_seed": "The caller claims to be from 'Kredit Mudah Malaysia', a licensed money lender offering instant personal loans up to RM50,000 with approval in 15 minutes and no credit check required. They tell the victim they're pre-approved for RM10,000 at 3% monthly interest, but must pay RM500 'processing fee' and RM300 'insurance deposit' before the loan is disbursed. The scammer sends a loan agreement via WhatsApp and instructs the victim to download their app and grant all permissions including contacts, photos, and SMS access. They claim this is for 'digital collateral' and threaten to contact everyone in the victim's phone and post their photos online if loan payments are missed. The app actually harvests all personal data and the loan is never disbursed even after payment.",
+    "quality_score": "93",
+    "processing_notes": "Reflects predatory loan app scams targeting financially desperate Malaysians. These scams have caused significant distress through harassment and privacy violations when victims cannot repay."
+  },
+  {
+    "seed_id": "MY019",
+    "processing_timestamp": "2025-10-16T21:30:00.000000",
+    "scam_tag": "bank_personal_loan",
+    "scam_category": "loan_fraud",
+    "meta_tag": "Loan Fraud",
+    "scam_summary": "Bank officer offers pre-approved RM80,000 personal loan at low interest, requires victim to pay stamp duty and legal fees upfront before disbursement.",
+    "conversation_seed": "The scammer poses as a relationship manager from Maybank Personal Financing calling about a special pre-approved loan offer. They congratulate the victim on being selected for an RM80,000 personal loan at just 2.5% annual interest (well below market rate), claiming it's a promotional rate only available for 48 hours. The caller explains that to process the loan, the victim must first pay RM2,400 in stamp duty and RM1,800 in legal fees, promising these will be added to the loan disbursement amount. They send professional-looking loan approval letters with fake Maybank logos and reference numbers, create urgency saying the promotional rate expires tonight at midnight, and provide a personal bank account claiming it's the 'legal department's collection account'. The victim pays the fees but never receives the loan.",
+    "quality_score": "90",
+    "processing_notes": "Sophisticated loan fraud impersonating legitimate banks with too-good-to-be-true interest rates. Preys on Malaysians seeking debt consolidation or emergency funds."
+  }
+]

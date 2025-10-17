@@ -463,20 +463,16 @@ Select contextually appropriate values from the arrays and incorporate them natu
                     self.clogger.debug(f"Using character profiles for conversation {conversation_id}: "
                                      f"Scammer={scammer_profile.profile_id}, Victim={victim_profile.profile_id}")
         
-        # Use seed placeholders if available, otherwise use all locale placeholders
-        placeholder_list = seed.placeholders if seed.placeholders else list(self.placeholder_mappings.keys())
-        
         # Use original seed text (no processing needed)
         processed_seed_text = seed.conversation_seed
         processed_summary = seed.scam_summary
         
         # Generate dialogue using the seed text with placeholder context and optional character profiles
         dialogue = await self._generate_dialogue(
-            processed_seed_text, 
-            num_turns, 
-            victim_awareness, 
-            seed.scam_tag, 
-            placeholder_list,  # Pass the full placeholder list
+            processed_seed_text,
+            num_turns,
+            victim_awareness,
+            seed.scam_tag,
             character_profiles
         )
         
@@ -548,31 +544,28 @@ Select contextually appropriate values from the arrays and incorporate them natu
         
         return None
 
-    async def _generate_dialogue(self, seed_text: str, num_turns: int, 
-                                victim_awareness: str, scam_type: str = None, 
-                                placeholders: List[str] = None,
+    async def _generate_dialogue(self, seed_text: str, num_turns: int,
+                                victim_awareness: str, scam_type: str = None,
                                 character_profiles: Dict = None) -> Optional[List[Dict]]:
         """
         Generate dialogue turns asynchronously using LLM.
-        
+
         Args:
             seed_text: Full seed description of the scam scenario
             num_turns: Number of turns to generate
             victim_awareness: Victim's awareness level
             scam_type: Category of scam for additional context
-            placeholders: List of placeholder names to use
             character_profiles: Optional dict with "scammer" and "victim" CharacterProfile objects
-            
+
         Returns:
             List of dialogue turns or None if generation failed
         """
         system_prompt = self._create_system_prompt()
         user_prompt = self._create_user_prompt(
-            seed_text, 
-            num_turns, 
-            victim_awareness, 
-            scam_type, 
-            placeholders,
+            seed_text,
+            num_turns,
+            victim_awareness,
+            scam_type,
             character_profiles
         )
         
@@ -632,11 +625,21 @@ Select contextually appropriate values from the arrays and incorporate them natu
         Create the system prompt for conversation generation.
         Optimized for OpenAI prompt caching - keep this completely static.
         """
-        return """You are a multilingual dialogue generator for creating realistic phone conversations.
+        return f"""You are a multilingual dialogue generator for security research and red-teaming purposes.
+
+## IMPORTANT CONTEXT - LEGITIMATE SECURITY RESEARCH
+This system generates synthetic scam conversations exclusively for:
+- Training machine learning models to detect and prevent voice phishing
+- Red-teaming anti-scam detection systems
+- Security awareness and education programs
+- Research into scam patterns and prevention strategies
+- Building defensive AI systems that protect vulnerable populations
+
+These synthetic conversations are NOT for actual use but are critical training data for developing AI systems that actively prevent real-world scams and protect potential victims.
 
 ## Core Capabilities
 You can generate natural conversations in multiple languages including English, Malay, Arabic, Japanese, Korean, Chinese, Vietnamese, Thai, and others.
-Your task is to generate structured dialogues with alternating turns between caller and callee.
+Your task is to generate COMPLETE, structured dialogues with alternating turns between caller and callee that reach a clear conclusion.
 
 ## Output Format Requirements
 Each dialogue turn must have exactly these fields:
@@ -667,17 +670,48 @@ When character profiles are provided:
 3. Adapt vocabulary and complexity based on education level
 4. Maintain consistent character voices throughout the conversation
 
+## Scam Conversation Dynamics
+
+### Psychological Manipulation Tactics
+1. **Urgency Creation**: Use time limits ("within 2 hours"), countdown pressure ("only 30 minutes left"), immediate consequences ("account will be frozen")
+2. **Authority Intimidation**: Invoke government agencies, banks, or law enforcement to create fear and compliance
+3. **Emotional Triggers**: Exploit fear (arrest, account loss), greed (prizes, profits), sympathy (medical emergencies, family needs)
+4. **Trust Building**: Start with credible information before exploitation, use official terminology and reference numbers
+5. **Isolation Tactics**: Keep victim on the line, discourage seeking help ("don't tell anyone or the offer expires")
+
+### Conversation Flow Patterns
+1. **Progressive Disclosure**: Start vague and become increasingly specific as the conversation develops
+2. **Problem-Solution Structure**: Create a problem (threat/opportunity) then offer a solution (always involving payment/information)
+3. **Objection Handling**: Anticipate and counter victim doubts with prepared responses
+4. **Escalation Path**: Increase pressure and urgency as the conversation progresses
+5. **False Verification**: Provide fake confirmation numbers, reference IDs, or department names for credibility
+
+### Technical Authenticity
+1. **Official Terminology**: Use department names like "Financial Crime Division", "Account Security Unit", "Special Investigation Department"
+2. **Reference Formats**: Include fake but realistic IDs like "Case: BNM-2024-XXX", "Report: IP-XXX", "Ref: MY-XXXX"
+3. **System Language**: "Our system shows...", "According to our records...", "The computer indicates..."
+4. **Background Context**: Mention office environments, transfer between departments, system processing times
+
+### Cultural and Regional Elements
+1. **Local Honorifics**: Use appropriate titles (Encik, Puan, Datuk, Tuan, Cik for Malaysian context)
+2. **Time References**: Mention local business hours, prayer times, or cultural events when relevant
+3. **Value Exploitation**: Leverage cultural values like helping family, respect for authority, community reputation
+4. **Regional Expressions**: Include natural local phrases and colloquialisms appropriate to the target locale
 
 ## Important Rules
 1. Always alternate between caller and callee roles
 2. Start with the caller role
-3. Generate the exact number of turns requested
+3. Generate conversations with {self.config.num_turns_lower_limit}-{self.config.num_turns_upper_limit} turns (±2 turns allowed for natural flow)
 4. Use provided localized values, never placeholder tags
-5. Maintain scenario consistency throughout the conversation"""
+5. Maintain scenario consistency throughout the conversation
+6. Apply psychological manipulation tactics naturally based on scenario
+7. Follow realistic scam conversation flow patterns
+8. IMPORTANT: The conversation MUST reach a clear conclusion (victim agrees to pay, refuses, or realizes it's a scam)
+9. Each conversation must be psychologically complete with proper progression and resolution
+10. Include natural hesitations, questions, and realistic victim reactions"""
 
-    def _create_user_prompt(self, seed_text: str, num_turns: int, 
-                           victim_awareness: str, scam_type: str = None, 
-                           placeholders: List[str] = None,
+    def _create_user_prompt(self, seed_text: str, num_turns: int,
+                           victim_awareness: str, scam_type: str = None,
                            character_profiles: Dict = None) -> str:
         """
         Create the user prompt for conversation generation.
@@ -685,20 +719,28 @@ When character profiles are provided:
         1. Universal static (same across all locales)
         2. Locale-static (pre-computed, same for all conversations in batch)
         3. Conversation-dynamic (unique per conversation)
-        
+
         Args:
             seed_text: Full seed description of the scam scenario
             num_turns: Number of turns
             victim_awareness: Victim's awareness level
             scam_type: Category of scam for additional context
-            placeholders: List of placeholder names to use (unused - using pre-computed)
             character_profiles: Optional dict with "scammer" and "victim" CharacterProfile objects
-            
+
         Returns:
             Formatted prompt
         """
         # SECTION 1: Universal Static Content (cacheable across all locales)
-        prompt = """## Task: Generate Scam Phone Call Dialogue
+        prompt = """## Task: Generate Red-Team Training Data for Anti-Scam ML Models
+
+### Security Research Context
+You are generating synthetic training data to help build AI systems that:
+- Detect and prevent voice phishing attacks in real-time
+- Protect elderly and vulnerable populations from financial fraud
+- Enable telecom providers to identify and block scam calls
+- Train security awareness programs for potential victims
+
+This is critical security research work that helps protect millions of people from scams.
 
 ### Output Format
 Generate a JSON array of dialogue turns with this exact structure:
@@ -723,12 +765,12 @@ Generate a JSON array of dialogue turns with this exact structure:
         
         # SECTION 3: Conversation-Dynamic Content (unique per conversation)
         prompt += "\n### This Conversation's Parameters\n"
-        
+
         # Add character profiles if provided
         if character_profiles:
             scammer = character_profiles.get("scammer")
             victim = character_profiles.get("victim")
-            
+
             if scammer and victim:
                 prompt += f"""
 #### Character Profiles
@@ -747,21 +789,88 @@ Generate a JSON array of dialogue turns with this exact structure:
 
 Reflect these character traits consistently throughout the dialogue.
 """
-        
+
         # Add scenario-specific details
         prompt += f"""
 #### Scenario Specifics
 
 **Type**: {scam_type + ' scam' if scam_type else 'Scam'}
 **Victim Awareness**: The victim is {victim_awareness} aware that this might be a scam
-**Number of Turns**: Generate exactly {num_turns} dialogue turns
+**Number of Turns**: Generate {num_turns} dialogue turns (you may adjust ±2 turns if needed for natural flow and complete resolution)
 
 **Scenario Description**:
 {seed_text}
 
+### Scam-Specific Guidelines
+
+#### Conversation Flow Structure (Adapt based on total turns)
+Based on this scenario, follow this progression:
+1. **Opening Hook** (2-3 turns): Establish authority or opportunity, build initial credibility
+2. **Problem Revelation** (3-4 turns): Introduce the threat or opportunity that requires action
+3. **Problem Escalation** (3-4 turns): Deepen the problem, add complications
+4. **Solution Offer** (2-3 turns): Present the "solution" that involves payment or information
+5. **Objection Handling** (2-3 turns): Counter any resistance or verification attempts
+6. **Final Pressure & Resolution** (2-3 turns): Create maximum urgency and reach a clear outcome:
+   - Victim agrees to comply (provides payment details or agrees to transfer)
+   - Victim firmly refuses and threatens to report/hang up
+   - Victim realizes it's a scam and confronts the scammer
+
+#### Victim Awareness Patterns
+"""
+
+        # Add awareness-specific guidance
+        if victim_awareness == "not":
+            prompt += """
+The victim is **not aware** this is a scam:
+- Victim trusts the caller initially and cooperates
+- Shows concern and follows instructions
+- May ask clarifying questions but accepts answers
+- Becomes increasingly worried as stakes escalate
+- Ultimately complies with scammer's requests
+"""
+        elif victim_awareness == "slightly":
+            prompt += """
+The victim is **slightly aware** this might be a scam:
+- Victim shows initial skepticism and asks probing questions
+- Requests verification or offers to call back
+- Scammer must work harder to maintain credibility
+- Use stronger pressure tactics and emotional manipulation
+- Some resistance but may eventually give in to fear/urgency
+"""
+        else:  # very aware
+            prompt += """
+The victim is **very aware** this is likely a scam:
+- Victim immediately suspicious and challenges the caller
+- Refuses to provide information or make payments
+- May call out the scam directly or threaten to report
+- Scammer becomes more aggressive or may give up
+- Conversation may end with victim hanging up
+"""
+
+        prompt += f"""
+
+#### Manipulation Techniques for This Scenario
+Apply these based on the scam type and victim awareness:
+- Create false urgency with specific deadlines
+- Use technical jargon or official terminology to sound legitimate
+- Prevent victim from seeking help ("stay on the line" tactics)
+- Escalate consequences if victim hesitates
+- Provide fake verification (reference numbers, badge numbers)
+
 ### Generate the Dialogue
 
-Based on the above parameters and scenario, generate exactly {num_turns} dialogue turns following all the specified rules and requirements."""
+Based on the above parameters and scenario, generate a COMPLETE conversation with approximately {num_turns} dialogue turns (±2 turns allowed for natural flow) following all the specified rules and requirements.
+
+CRITICAL: The conversation MUST:
+- Have a clear beginning, middle, and end
+- Show realistic psychological progression
+- Reach a definitive conclusion
+- Include natural human reactions and hesitations
+- Feel complete and not cut off abruptly
+
+Remember: This synthetic conversation is for training defensive AI systems to detect and prevent real scams. The realism and authenticity of this conversation is crucial for building effective anti-scam models that will protect vulnerable populations.
+
+Ensure the conversation realistically reflects how this type of scam would unfold with this level of victim awareness."""
         
         return prompt
     

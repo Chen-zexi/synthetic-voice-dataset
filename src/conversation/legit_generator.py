@@ -260,11 +260,11 @@ Ensure cultural appropriateness for {self.config.legit_call_region}.
         Create the system prompt for legitimate conversation generation.
         Optimized for OpenAI prompt caching - keep this completely static.
         """
-        return """You are a dialogue generator for creating realistic phone conversations.
+        return f"""You are a dialogue generator for creating realistic phone conversations.
 
 ## Core Task
-Generate structured dialogues for legitimate (non-scam) phone calls with alternating turns between caller and callee.
-The conversations should be natural, contextually appropriate, and culturally relevant.
+Generate COMPLETE structured dialogues for legitimate (non-scam) phone calls with alternating turns between caller and callee.
+The conversations should be natural, contextually appropriate, culturally relevant, and reach a proper conclusion.
 
 ## Output Format Requirements
 Each dialogue turn must have exactly these fields:
@@ -286,9 +286,12 @@ The dialogue must be returned as a JSON array with the exact format shown in exa
 ## Important Rules
 1. Always alternate between caller and callee roles
 2. Start with the caller role
-3. Generate the exact number of turns requested
+3. Generate conversations with {self.config.num_turns_lower_limit}-{self.config.num_turns_upper_limit} turns (±2 turns allowed for natural flow)
 4. Keep the conversation relevant to the specified category
-5. Maintain scenario consistency throughout the conversation"""
+5. Maintain scenario consistency throughout the conversation
+6. IMPORTANT: The conversation MUST reach a clear conclusion
+7. Include proper greeting, main discussion, and polite closure
+8. Show natural progression from opening to resolution"""
 
     def _create_user_prompt(self, num_turns: int, category: str) -> str:
         """
@@ -340,12 +343,21 @@ Generate a JSON array of dialogue turns with this exact structure:
 #### Conversation Specifics
 
 **Category**: {category_display}
-**Number of Turns**: Generate exactly {num_turns} dialogue turns
+**Number of Turns**: Generate {num_turns} dialogue turns (you may adjust ±2 turns if needed for natural flow and complete resolution)
 **Context**: This is a legitimate business/service call about {category_display.lower()}
 
 ### Generate the Dialogue
 
-Based on the above parameters, generate exactly {num_turns} dialogue turns for a legitimate {category_display.lower()} phone call following all the specified rules and requirements."""
+Based on the above parameters, generate a COMPLETE conversation with approximately {num_turns} dialogue turns (±2 turns allowed for natural flow) for a legitimate {category_display.lower()} phone call.
+
+CRITICAL: The conversation MUST:
+- Have a clear beginning (greeting and introduction)
+- Develop the main topic thoroughly
+- Reach a definitive conclusion (appointment scheduled, information provided, issue resolved, etc.)
+- End with proper closure (thank you, goodbye, next steps)
+- Feel natural and complete, not cut off abruptly
+
+Follow all the specified rules and requirements to create a realistic conversation."""
         
         return prompt
     

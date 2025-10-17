@@ -34,7 +34,7 @@ class SeedManager:
     def __init__(self, seeds_file_path: Path):
         """
         Initialize the seed manager.
-        
+
         Args:
             seeds_file_path: Path to the seeds JSON file
         """
@@ -43,7 +43,7 @@ class SeedManager:
         self.seeds_by_category: Dict[str, List[ScamSeed]] = {}
         self.seeds_by_tag: Dict[str, ScamSeed] = {}
         self._loaded = False
-        
+
         # Load seeds on initialization
         self.load_seeds()
     
@@ -132,30 +132,30 @@ class SeedManager:
         """
         return [seed for seed in self.seeds if seed.quality_score >= min_quality]
     
-    def filter_and_limit_seeds(self, min_quality: Optional[int] = None, 
+    def filter_and_limit_seeds(self, min_quality: Optional[int] = None,
                               limit: Optional[int] = None) -> List[ScamSeed]:
         """
         Filter seeds by quality and limit the number returned.
-        
+
         Args:
             min_quality: Minimum quality score (if None, no filtering)
             limit: Maximum number of seeds to return
-            
+
         Returns:
             Filtered and limited list of seeds
         """
         seeds = self.seeds
-        
+
         # Filter by quality if specified
         if min_quality is not None:
             seeds = [s for s in seeds if s.quality_score >= min_quality]
             logger.debug(f"Filtered to {len(seeds)} seeds with quality >= {min_quality}")
-        
+
         # Apply limit if specified
         if limit is not None and limit < len(seeds):
             seeds = seeds[:limit]
             logger.debug(f"Limited to {limit} seeds")
-        
+
         return seeds
     
     def get_stats(self) -> Dict:
