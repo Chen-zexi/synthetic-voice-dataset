@@ -44,6 +44,10 @@ scam_audio_conversations_arabic/
 scam_audio_conversations_malay/
 output/
 
+# Labeling directories
+scam_labeling/
+legit_labeling/
+
 # OS
 .DS_Store
 .DS_Store?

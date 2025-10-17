@@ -251,6 +251,24 @@ Use natural, colloquial expressions appropriate for the region.
 Ensure cultural appropriateness for {self.config.legit_call_region}.
 """
         
+        # Add locale-specific natural speech patterns
+        locale_id = getattr(self.config, 'locale', getattr(self.config, 'language', '')).lower()
+        
+        if locale_id == 'ms-my':
+            locale_prompt += """
+#### Natural Speech Patterns (Malay - Malaysia)
+- Use colloquial particles: "lah", "kan", "je", "pun", "ni", "tu"
+- Mix formal and informal: "awak/anda" (you), "saya/aku" (I), "macam mana" (how)
+- Natural fillers: "eh", "ah", "hmm", "macam", "betul ke", "okay"
+- Casual contractions: "nak" (hendak), "dah" (sudah), "tak" (tidak), "boleh ke"
+- Spoken abbreviations: "ok" instead of "baik", casual responses
+- Code-switching with English is natural for younger speakers
+- Avoid overusing "sila", "terima kasih", "adakah" - use sparingly
+- Use incomplete sentences and natural breaks
+- Professional calls can still be casual in Malaysian context
+"""
+        # Add more locale-specific patterns here as needed for other languages
+        
         # Voice selection now handled externally, not by LLM
         
         return locale_prompt
@@ -291,7 +309,19 @@ The dialogue must be returned as a JSON array with the exact format shown in exa
 5. Maintain scenario consistency throughout the conversation
 6. IMPORTANT: The conversation MUST reach a clear conclusion
 7. Include proper greeting, main discussion, and polite closure
-8. Show natural progression from opening to resolution"""
+8. Show natural progression from opening to resolution
+
+## Conversation Progression for Extended Calls
+When generating extended conversations (15+ turns):
+1. **Opening (3-5 turns)**: Greetings, identity confirmation, state purpose
+2. **Main Discussion (10-14 turns)**: Address the topic, exchange information, handle details
+3. **Closure (3-5 turns)**: Summarize, confirm next steps, polite closing
+
+For professional calls, include:
+- Appropriate small talk or rapport building
+- Detailed information exchange relevant to the category
+- Natural back-and-forth with clarifications
+- Professional courtesies and confirmations"""
 
     def _create_user_prompt(self, num_turns: int, category: str) -> str:
         """

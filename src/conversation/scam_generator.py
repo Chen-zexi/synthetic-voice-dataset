@@ -179,6 +179,24 @@ Use natural, colloquial {target_language} expressions and dialogue patterns.
 Incorporate localized values naturally into {target_language} sentences.
 """
         
+        # Add locale-specific natural speech patterns
+        locale_id = getattr(self.config, 'locale', getattr(self.config, 'language', '')).lower()
+        
+        if locale_id == 'ms-my':
+            locale_prompt += """
+#### Natural Speech Patterns (Malay - Malaysia)
+- Use colloquial particles: "lah", "kan", "je", "pun", "ni", "tu"
+- Mix formal and informal: "awak/anda" (you), "saya/aku" (I), "macam mana" (how)
+- Natural fillers: "eh", "ah", "hmm", "macam", "betul ke", "okay"
+- Casual contractions: "nak" (hendak), "dah" (sudah), "tak" (tidak), "boleh ke"
+- Spoken abbreviations: "SMS" (mesej), "ok" instead of "baik"
+- Code-switching with English is natural for younger speakers
+- Avoid overusing "sila", "terima kasih", "adakah" - use sparingly
+- Use incomplete sentences and natural breaks
+- Add thinking pauses: "errr", "hmm", "tunggu sekejap"
+"""
+        # Add more locale-specific patterns here as needed for other languages
+        
         # Voice selection now handled by character-voice mappings, not LLM
         
         # Add placeholder context with ALL placeholders for the locale
