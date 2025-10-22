@@ -257,15 +257,57 @@ Ensure cultural appropriateness for {self.config.legit_call_region}.
         if locale_id == 'ms-my':
             locale_prompt += """
 #### Natural Speech Patterns (Malay - Malaysia)
-- Use colloquial particles: "lah", "kan", "je", "pun", "ni", "tu"
-- Mix formal and informal: "awak/anda" (you), "saya/aku" (I), "macam mana" (how)
-- Natural fillers: "eh", "ah", "hmm", "macam", "betul ke", "okay"
-- Casual contractions: "nak" (hendak), "dah" (sudah), "tak" (tidak), "boleh ke"
-- Spoken abbreviations: "ok" instead of "baik", casual responses
-- Code-switching with English is natural for younger speakers
-- Avoid overusing "sila", "terima kasih", "adakah" - use sparingly
-- Use incomplete sentences and natural breaks
-- Professional calls can still be casual in Malaysian context
+
+**Colloquial Particles (MUST appear at END of phrases, NOT mid-sentence):**
+- "lah" (emphasis, softening): "Tak boleh lah", "Saya faham lah"
+- "kan" (confirmation seeking): "Betul kan?", "Awak tahu kan?"
+- "je" (only, just): "Sikit je", "Tunggu sekejap je"
+- "pun" (also, even): "Saya pun tak tahu", "Itu pun boleh"
+- "ni/tu" (this/that): "Orang ni", "Macam tu lah"
+
+**Natural Disfluencies and Fillers (Use frequently for realism):**
+- Thinking pauses: "errr", "emmm", "hmm", "aaa"
+- Time-buying: "tunggu sekejap ya", "kejap", "kejap ya", "jap", "kejap ya"
+- Surprise/reaction: "eh", "ah", "wah", "alamak"
+- Processing: "macam mana ya", "apa eh", "camne ni"
+- Hesitations: "ha okay", "ok jap", "on lah"
+
+**Incomplete Sentences and Conversational Shortcuts:**
+- Trail off naturally: "Kalau macam tu...", "Tapi saya rasa...", "Jadi maksudnya..."
+- Quick responses: "ok jap", "on lah", "boleh je", "takpe", "noted"
+- Casual questions: "macam tu ke?", "betul ke?", "ye ke?"
+- Service shortcuts: "ok set", "dah settle", "ha ngam"
+
+**Professional Casualness (Malaysian workplace norm):**
+- Professional calls blend formality with friendliness
+- Use "awak/saya" rather than "anda" in most business contexts
+- Small talk is natural: "Hari ni panas kan?", "Traffic ok ke tadi?"
+- Casual confirmations even in formal settings: "ok noted", "sure boleh"
+
+**Formality Matching by Context:**
+- Clinic/hospital: Moderately formal but friendly
+- Bank/government: More formal, but still use particles
+- Education: Professional but approachable
+- Service industry: Casual-friendly with polite particles
+- Friend referrals: Very casual with full particle use
+
+**Avoid Over-Formal Words (Replace with natural alternatives):**
+- "sila" → use "tolong" or direct request
+- "adakah" → use "ke" or "ada... tak?"
+- "terima kasih" → use "thanks", "terima kasih" only occasionally
+- "baik" → use "ok", "okay", "boleh"
+- "mengapa" → use "kenapa"
+
+**Code-Switching (Natural for younger/urban speakers):**
+- Mix English words naturally: "ok", "sure", "sorry", "appointment", "confirm", "email"
+- Professional terms often in English: "meeting", "report", "deadline"
+- Keep it contextual - service staff use more English
+
+**Grammatical Imperfections (Real speech patterns):**
+- Double subjects: "Saya ni, saya nak tanya..."
+- Dropped words: "Awak tahu tak?" (instead of "Adakah awak tahu?")
+- Word order variations: "Boleh ke?" (instead of perfect grammar)
+- Natural interruptions: Mid-thought changes, clarification requests
 """
         # Add more locale-specific patterns here as needed for other languages
         
@@ -300,6 +342,17 @@ The dialogue must be returned as a JSON array with the exact format shown in exa
 4. Maintain professional tone appropriate to the scenario
 5. Generate synthetic but plausible values (no real personal data)
 
+### Natural Speech Realism
+Generate conversations that sound genuinely human, not AI-polished:
+
+1. **Imperfect Grammar**: Real phone conversations have minor grammatical variations, incomplete thoughts, and natural speech errors
+2. **Varied Response Lengths**: Mix very short reactions ("Ha", "Oh", "Okay", "Noted") with longer explanations
+3. **Natural Interruptions**: Characters can ask for clarification mid-explanation, interrupt politely, or redirect conversation
+4. **Emotional Authenticity**: Show appropriate emotions - friendly warmth, professional courtesy, slight hesitation when uncertain
+5. **No Perfect Timing**: Include realistic delays, thinking pauses ("hmm", "errr", "kejap ya"), acknowledgments of multitasking
+6. **Phrase Variety**: CRITICAL - Do NOT repeat identical phrases. Use synonymous expressions and varied sentence structures throughout
+7. **Spontaneous Elements**: Include mid-sentence corrections, clarification questions, natural topic transitions
+8. **Human Imperfections**: Real conversations have false starts, verbal fillers, slight redundancy, and minor mistakes
 
 ## Important Rules
 1. Always alternate between caller and callee roles
@@ -310,6 +363,13 @@ The dialogue must be returned as a JSON array with the exact format shown in exa
 6. IMPORTANT: The conversation MUST reach a clear conclusion
 7. Include proper greeting, main discussion, and polite closure
 8. Show natural progression from opening to resolution
+
+## Formality Consistency Rules
+1. **Match Context**: Clinic/hospital = moderately formal but friendly, Bank/government = more formal, Service industry = casual-friendly, Friend referrals = very casual
+2. **Professional Casualness**: Malaysian professional calls naturally blend formality with friendliness
+3. **No Sudden Switches**: Avoid formal→casual→formal jumps within the same character's dialogue
+4. **Maintain Character Voice**: Service providers maintain consistent professional tone, customers maintain their natural style
+5. **Context-Appropriate Language**: Match vocabulary complexity and formality to the service type and relationship
 
 ## Conversation Progression for Extended Calls
 When generating extended conversations (15+ turns):
@@ -376,6 +436,33 @@ Generate a JSON array of dialogue turns with this exact structure:
 **Number of Turns**: Generate {num_turns} dialogue turns (you may adjust ±2 turns if needed for natural flow and complete resolution)
 **Context**: This is a legitimate business/service call about {category_display.lower()}
 
+#### Professional Casualness Guidelines (Malaysian Context)
+Malaysian professional calls naturally blend formality with friendliness:
+
+**Small Talk Elements (Use sparingly, context-appropriate):**
+- Weather/traffic: "Hari ni panas kan?", "Traffic ok ke tadi?"
+- Timing context: "Eh, tengah lunch hour ni", "Sempat lagi sebelum office hour habis"
+- Rapport building: "Ok je harini?", "Macam mana weekend?"
+
+**Service Staff Natural Speech:**
+- Professional but friendly tone with particles: "Boleh je, saya check sekejap ya"
+- Use fillers between system checks: "Tunggu sekejap ya...", "Hmm, saya tengok dulu"
+- Acknowledging delays: "Sorry lambat sikit, sistem slow", "Kejap, line busy"
+- Natural confirmations with variety: "Ok noted", "Dah record", "Ok saya dah tandakan"
+
+**Customer Natural Speech:**
+- Questions aren't perfect sentences: "Parking macam mana?", "Kena bawa apa?"
+- Multitasking references: "Saya tengah drive ni", "Jap, saya sambil-sambil je"
+- Natural concerns: "Takut tersalah", "Confirm ye slot tu?", "Kalau lambat sikit boleh?"
+- Casual confirmations: "Ok faham", "Noted", "On lah", "Ok set"
+
+**Context-Specific Formality:**
+- Medical/clinic: Moderately formal but empathetic, use particles for warmth
+- Banking/government: More formal language but still use "awak/saya", occasional particles
+- Education: Professional yet approachable, balance authority with friendliness
+- Service bookings: Casual-friendly, full particle use, conversational
+- Customer support: Problem-solving friendly, patient, use confirmatory particles
+
 ### Generate the Dialogue
 
 Based on the above parameters, generate a COMPLETE conversation with approximately {num_turns} dialogue turns (±2 turns allowed for natural flow) for a legitimate {category_display.lower()} phone call.
@@ -386,6 +473,15 @@ CRITICAL: The conversation MUST:
 - Reach a definitive conclusion (appointment scheduled, information provided, issue resolved, etc.)
 - End with proper closure (thank you, goodbye, next steps)
 - Feel natural and complete, not cut off abruptly
+
+**Anti-Repetition Requirements (CRITICAL):**
+- Use VARIED expressions for similar ideas throughout the conversation
+- AVOID repeating identical phrases or sentence structures
+- When expressing similar concepts, use synonyms and rephrase naturally
+- Each character should have DISTINCT verbal habits, not mirror each other's exact phrases
+- If a phrase was used once, find a different way to express the same idea later
+- Vary greeting patterns, confirmation phrases, and transitional expressions
+- Service staff may have patterns but should still vary their wording naturally
 
 Follow all the specified rules and requirements to create a realistic conversation."""
         

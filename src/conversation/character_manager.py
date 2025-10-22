@@ -401,6 +401,7 @@ class CharacterManager:
     def get_scenarios_for_seed(self, seed_id: str, seed_tag: str, locale: str, count: int = 1) -> List[GenerationScenario]:
         """
         Get pre-assigned scenarios for a seed.
+        If pre-configured scenarios don't meet the requested count, generates additional random scenarios.
 
         Args:
             seed_id: Seed ID to get scenarios for
@@ -423,10 +424,20 @@ class CharacterManager:
                     scenarios.append(scenario)
 
             if scenarios:
-                logger.debug(f"Using pre-configured scenarios for seed {seed_id}: {template_ids}")
+                logger.debug(f"Using {len(scenarios)} pre-configured scenarios for seed {seed_id}: {template_ids}")
+                
+                # If we got fewer scenarios than requested, generate additional random ones
+                if len(scenarios) < count:
+                    additional_needed = count - len(scenarios)
+                    logger.debug(f"Need {additional_needed} more scenarios for seed {seed_id}, generating randomly")
+                    for i in range(additional_needed):
+                        scenario = self.create_scenario(seed_tag, locale, f"{seed_id}_random_{i+1}")
+                        if scenario:
+                            scenarios.append(scenario)
+                
                 return scenarios
 
-        # Fallback to random scenario creation
+        # Fallback to random scenario creation (when no pre-configured scenarios exist)
         logger.debug(f"No pre-configured scenarios for seed {seed_id}, using random generation")
         for i in range(count):
             scenario = self.create_scenario(seed_tag, locale, f"{seed_id}_{i+1}")
@@ -438,6 +449,7 @@ class CharacterManager:
     def create_scenario(self, seed_tag: str, locale: str, scenario_id: Optional[str] = None) -> Optional[GenerationScenario]:
         """
         Create a generation scenario by combining seed with character profiles and conversation parameters.
+        Uses pre-configured templates as inspiration to maintain quality and realism.
         
         Args:
             seed_tag: The scam tag to use
@@ -447,17 +459,53 @@ class CharacterManager:
         Returns:
             GenerationScenario object or None if profiles unavailable
         """
-        # Select profiles
-        scammer_profile = self.select_random_profile("scammer", locale)
-        victim_profile = self.select_random_profile("victim", locale)
+        # If we have scenario templates, use one as inspiration for parameters
+        if self.scenario_templates:
+            # Select a random template to inspire this scenario's parameters
+            # scenario_templates is a dict, so get values as list
+            inspiration_template = random.choice(list(self.scenario_templates.values()))
+            
+            # Get profiles: try to use the template's profile types if available,
+            # otherwise fall back to random selection
+            scammer_profile = self.get_profile_by_id(inspiration_template['scammer_profile_id'])
+            if not scammer_profile:
+                # Template profile not available, select similar role
+                scammer_profile = self.select_random_profile("scammer", locale)
+            
+            victim_profile = self.get_profile_by_id(inspiration_template['victim_profile_id'])
+            if not victim_profile:
+                # Template profile not available, select similar role
+                victim_profile = self.select_random_profile("victim", locale)
+            
+            # Use template's awareness and turns with slight variation for diversity
+            victim_awareness = inspiration_template['victim_awareness']
+            num_turns = inspiration_template['num_turns']
+            
+            logger.debug(f"Generated scenario inspired by template {inspiration_template['template_id']}")
+        else:
+            # No templates available, use basic random selection
+            # Apply weighted victim awareness (mostly "not" aware for realism)
+            scammer_profile = self.select_random_profile("scammer", locale)
+            victim_profile = self.select_random_profile("victim", locale)
+            
+            # Weighted awareness distribution (realistic: most victims are not aware)
+            awareness_weights = {
+                "not": 0.70,      # 70% not aware (most realistic)
+                "slightly": 0.20,  # 20% slightly aware
+                "very": 0.10       # 10% very aware
+            }
+            victim_awareness = random.choices(
+                list(awareness_weights.keys()),
+                weights=list(awareness_weights.values())
+            )[0]
+            
+            num_turns = random.randint(self.num_turns_range[0], self.num_turns_range[1])
+            
+            logger.debug(f"Generated scenario with weighted random selection (no templates available)")
         
         if not scammer_profile or not victim_profile:
             logger.error(f"Could not create scenario for seed '{seed_tag}' - missing profiles")
             return None
-        
-        # Select conversation parameters (affected by random seed)
-        victim_awareness = random.choice(self.victim_awareness_levels)
-        num_turns = random.randint(self.num_turns_range[0], self.num_turns_range[1])
         
         # Generate scenario ID
         if not scenario_id:

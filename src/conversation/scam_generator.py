@@ -185,15 +185,53 @@ Incorporate localized values naturally into {target_language} sentences.
         if locale_id == 'ms-my':
             locale_prompt += """
 #### Natural Speech Patterns (Malay - Malaysia)
-- Use colloquial particles: "lah", "kan", "je", "pun", "ni", "tu"
-- Mix formal and informal: "awak/anda" (you), "saya/aku" (I), "macam mana" (how)
-- Natural fillers: "eh", "ah", "hmm", "macam", "betul ke", "okay"
-- Casual contractions: "nak" (hendak), "dah" (sudah), "tak" (tidak), "boleh ke"
-- Spoken abbreviations: "SMS" (mesej), "ok" instead of "baik"
-- Code-switching with English is natural for younger speakers
-- Avoid overusing "sila", "terima kasih", "adakah" - use sparingly
-- Use incomplete sentences and natural breaks
-- Add thinking pauses: "errr", "hmm", "tunggu sekejap"
+
+**Colloquial Particles (MUST appear at END of phrases, NOT mid-sentence):**
+- "lah" (emphasis, softening): "Tak boleh lah", "Saya faham lah"
+- "kan" (confirmation seeking): "Betul kan?", "Awak tahu kan?"
+- "je" (only, just): "Sikit je", "Tunggu sekejap je"
+- "pun" (also, even): "Saya pun tak tahu", "Itu pun boleh"
+- "ni/tu" (this/that): "Orang ni", "Macam tu lah"
+
+**Natural Disfluencies and Fillers (Use frequently for realism):**
+- Thinking pauses: "errr", "emmm", "hmm", "aaa"
+- Time-buying: "tunggu sekejap ya", "kejap", "kejap ya", "jap"
+- Surprise/reaction: "eh", "ah", "wah", "alamak", "aduh", "ha"
+- Processing: "macam mana ya", "apa eh", "camne ni"
+- Natural interruptions: "tunggu dulu", "tapi...", "maksud saya..."
+
+**Incomplete Sentences and Conversational Shortcuts:**
+- Trail off naturally: "Kalau macam tu...", "Tapi saya rasa...", "Jadi maksudnya..."
+- Quick responses: "ok jap", "on lah", "boleh je", "takpe"
+- Casual questions: "macam tu ke?", "betul ke?", "ye ke?"
+
+**Formality Mixing (Natural for Malaysian context):**
+- Formal pronouns (sparse): "anda" (very formal), "tuan/puan" (official)
+- Casual pronouns (common): "awak", "saya", occasionally "aku/kau" in very casual contexts
+- Natural flow: "Saya nak tanya... awak ada masa tak?"
+
+**Honorifics (Gender and context appropriate):**
+- Male: "Encik" (Mr.), "Tuan" (Sir, formal)
+- Female: "Puan" (Mrs./Madam), "Cik" (Miss)
+- DO NOT mix gender honorifics - verify character gender before use
+- Use sparingly - overuse sounds artificial
+
+**Avoid Over-Formal Words (Replace with natural alternatives):**
+- "sila" → use "tolong" or direct request
+- "adakah" → use "ke" or "ada... tak?"
+- "terima kasih" → use "thanks", "terima kasih" only occasionally
+- "baik" → use "ok", "okay", "boleh"
+- "mengapa" → use "kenapa"
+
+**Code-Switching (Natural for younger/urban speakers):**
+- Mix English words naturally: "ok", "sure", "sorry", "urgent", "confirm"
+- Keep it contextual - financial terms often use English
+- Don't force it - older speakers use less English
+
+**Grammatical Imperfections (Real speech patterns):**
+- Double subjects: "Saya ni, saya tak faham"
+- Dropped words: "Awak tahu tak?" (instead of "Adakah awak tahu?")
+- Word order variations: "Tak boleh ke?" (instead of perfect grammar)
 """
         # Add more locale-specific patterns here as needed for other languages
         
@@ -688,6 +726,18 @@ When character profiles are provided:
 3. Adapt vocabulary and complexity based on education level
 4. Maintain consistent character voices throughout the conversation
 
+### Natural Speech Realism
+Generate conversations that sound genuinely human, not AI-polished:
+
+1. **Imperfect Grammar**: Real phone conversations have minor grammatical variations, incomplete thoughts, and natural speech errors
+2. **Varied Response Lengths**: Mix very short reactions ("Ha", "Oh", "Betul ke?", "Eh") with longer explanations
+3. **Natural Interruptions**: Characters can ask for clarification mid-explanation, interrupt politely, or redirect conversation
+4. **Emotional Authenticity**: Show hesitation when confused, faster/urgent speech when anxious, pauses when thinking
+5. **No Perfect Timing**: Include realistic delays, thinking pauses ("hmm", "errr"), acknowledgments of background distractions
+6. **Phrase Variety**: CRITICAL - Do NOT repeat identical phrases. Use synonymous expressions and varied sentence structures throughout
+7. **Spontaneous Elements**: Include mid-sentence corrections, self-interruptions, topic shifts that feel natural
+8. **Human Imperfections**: Real conversations have false starts, verbal fillers, and slight redundancy
+
 ## Scam Conversation Dynamics
 
 ### Psychological Manipulation Tactics
@@ -726,7 +776,14 @@ When character profiles are provided:
 7. Follow realistic scam conversation flow patterns
 8. IMPORTANT: The conversation MUST reach a clear conclusion (victim agrees to pay, refuses, or realizes it's a scam)
 9. Each conversation must be psychologically complete with proper progression and resolution
-10. Include natural hesitations, questions, and realistic victim reactions"""
+10. Include natural hesitations, questions, and realistic victim reactions
+
+## Formality Consistency Rules
+1. **Scammer Formality**: Start formal/professional (building authority), can become slightly more casual as rapport builds, but maintain professional manipulation tone
+2. **Victim Formality**: Match victim's education/age profile - older/formal educated = more formal, younger = more casual
+3. **No Sudden Switches**: Avoid formal→casual→formal jumps within the same character's dialogue
+4. **Maintain Character Voice**: Each character should have consistent formality level throughout the conversation
+5. **Context-Appropriate**: Government/bank scams stay formal, prize/lottery scams can be more casual-excited"""
 
     def _create_user_prompt(self, seed_text: str, num_turns: int,
                            victim_awareness: str, scam_type: str = None,
@@ -833,6 +890,14 @@ Based on this scenario, follow this progression:
    - Victim firmly refuses and threatens to report/hang up
    - Victim realizes it's a scam and confronts the scammer
 
+#### Scammer Natural Speech Patterns
+Not all scammers speak perfectly - vary their style:
+- **Professional scammers**: More polished, use official terminology, maintain composure
+- **Casual manipulators**: Mix professional and casual, use more particles, conversational pressure
+- **Imperfect speech**: Even scammers have fillers: "errr, tunggu ya", "hmm, saya check dulu", "jap, sistem loading"
+- **Context matching**: Match victim's education/age level in language complexity
+- **Natural persuasion**: Use varied phrasing, not robotic scripts - "boleh saya explain sikit?", "awak faham tak maksud saya?"
+
 #### Victim Awareness Patterns
 """
 
@@ -845,6 +910,12 @@ The victim is **not aware** this is a scam:
 - May ask clarifying questions but accepts answers
 - Becomes increasingly worried as stakes escalate
 - Ultimately complies with scammer's requests
+
+**Natural Victim Reactions:**
+- Genuine confusion with disfluencies: "Errr, maksud awak?", "Tunggu, saya tak faham"
+- Hesitation when overwhelmed: "Emmm, banyak sangat ni...", "Saya pening sikit"
+- Emotional responses: "Alamak!", "Ya Allah!", "Aduh, serius ke?"
+- Natural questioning: "Macam mana ni?", "Lepas tu?", "Kena buat apa?"
 """
         elif victim_awareness == "slightly":
             prompt += """
@@ -854,6 +925,12 @@ The victim is **slightly aware** this might be a scam:
 - Scammer must work harder to maintain credibility
 - Use stronger pressure tactics and emotional manipulation
 - Some resistance but may eventually give in to fear/urgency
+
+**Natural Victim Reactions:**
+- Suspicious questioning with pauses: "Hmm... tapi kenapa awak call saya?", "Tunggu sekejap, macam mana awak dapat nombor saya?"
+- Resistance with uncertainty: "Errr, saya rasa saya nak check dulu...", "Boleh saya call balik tak?"
+- Gradual doubt: "Betul ke ni?", "Saya tak pasti lah...", "Macam pelik je"
+- Protective hesitation: "Saya takut kena tipu", "Ramai scammer sekarang ni"
 """
         else:  # very aware
             prompt += """
@@ -863,6 +940,12 @@ The victim is **very aware** this is likely a scam:
 - May call out the scam directly or threaten to report
 - Scammer becomes more aggressive or may give up
 - Conversation may end with victim hanging up
+
+**Natural Victim Reactions:**
+- Direct confrontation: "Eh, scammer ni!", "Klasik lah penipu ni", "Taknak lah, saya tahu ni scam"
+- Confident refusal: "Tak payah lah, saya dah biasa dengan trick ni", "Jangan buang masa saya"
+- Counter-questions: "Awak ni dari mana? Apa nama penuh awak?", "Boleh saya rekod call ni?"
+- Warning responses: "Saya nak report ni", "Saya call polis", "Awak ingat saya bodoh ke?"
 """
 
         prompt += f"""
@@ -885,6 +968,14 @@ CRITICAL: The conversation MUST:
 - Reach a definitive conclusion
 - Include natural human reactions and hesitations
 - Feel complete and not cut off abruptly
+
+**Anti-Repetition Requirements (CRITICAL):**
+- Use VARIED expressions for similar ideas throughout the conversation
+- AVOID repeating identical phrases or sentence structures
+- When expressing similar concepts, use synonyms and rephrase naturally
+- Each character should have DISTINCT verbal habits, not mirror each other's exact phrases
+- If a phrase was used once, find a different way to express the same idea later
+- Vary greeting patterns, confirmation phrases, and transitional expressions
 
 Remember: This synthetic conversation is for training defensive AI systems to detect and prevent real scams. The realism and authenticity of this conversation is crucial for building effective anti-scam models that will protect vulnerable populations.
 
