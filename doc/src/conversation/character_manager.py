@@ -491,7 +491,8 @@ class CharacterManager:
             # Weighted awareness distribution (realistic: most victims are not aware)
             awareness_weights = {
                 "not": 0.70,      # 70% not aware (most realistic)
-                "tiny": 0.30       # 30% tiny aware
+                "slightly": 0.20,  # 20% slightly aware
+                "very": 0.10       # 10% very aware
             }
             victim_awareness = random.choices(
                 list(awareness_weights.keys()),

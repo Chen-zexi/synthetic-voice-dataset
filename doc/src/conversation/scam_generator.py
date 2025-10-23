@@ -16,7 +16,6 @@ from src.llm_core.token_counter import TokenUsageTracker
 from src.conversation.schemas import ScamConversationResponse
 from src.conversation.seed_manager import SeedManager, ScamSeed
 from src.conversation.character_manager import CharacterManager
-from src.conversation.conversation_postprocessor import create_postprocessor_from_config
 from src.utils.logging_utils import ConditionalLogger
 
 
@@ -122,15 +121,6 @@ class ScamGenerator:
         # Pre-compute locale-static prompt section for optimal caching
         self.locale_static_prompt = self._build_locale_static_prompt()
         self.clogger.debug(f"Pre-computed locale-static prompt for {config.language} ({config.region})")
-        
-        # Initialize post-processor for conversation quality improvements
-        self.postprocessor = None
-        if hasattr(config, 'common_config'):
-            try:
-                self.postprocessor = create_postprocessor_from_config(config.common_config)
-                logger.info("Post-processor initialized for conversation quality improvements")
-            except Exception as e:
-                logger.warning(f"Could not initialize post-processor: {e}. Continuing without post-processing.")
     
     def _load_placeholder_mappings(self) -> Dict[str, Dict]:
         """
@@ -566,32 +556,6 @@ Select contextually appropriate values from the arrays and incorporate them natu
                     self.clogger.debug(f"Using character profiles for conversation {conversation_id}: "
                                      f"Scammer={scammer_profile.profile_id}, Victim={victim_profile.profile_id}")
         
-        # Determine if conversation should have early termination
-        # Only for 'tiny' awareness (not for 'not aware')
-        should_terminate_early = False
-        early_termination_style = None  # 'quick' or 'extended'
-        early_termination_turn = None
-        
-        if victim_awareness == "tiny":
-            # 20-35% of conversations get early termination
-            if random.random() < 0.275:  # 27.5% average
-                should_terminate_early = True
-                
-                # Minimum 12-15 turns before termination
-                min_termination_turn = random.randint(12, 15)
-                # Latest termination is num_turns - 2 (need at least 1-2 turns to end)
-                max_termination_turn = max(min_termination_turn, num_turns - 4)
-                early_termination_turn = random.randint(min_termination_turn, max_termination_turn)
-                
-                # 60-70% quick (1-2 turns), 30-40% extended (scammer tries 2-4 more turns)
-                if random.random() < 0.65:  # 65% quick termination
-                    early_termination_style = 'quick'
-                else:
-                    early_termination_style = 'extended'
-                
-                self.clogger.debug(f"Conversation {conversation_id} will have early termination: "
-                                 f"style={early_termination_style}, turn={early_termination_turn}")
-        
         # Use original seed text (no processing needed)
         processed_seed_text = seed.conversation_seed
         processed_summary = seed.scam_summary
@@ -602,12 +566,7 @@ Select contextually appropriate values from the arrays and incorporate them natu
             num_turns,
             victim_awareness,
             seed.scam_tag,
-            character_profiles,
-            early_termination_config={
-                'enabled': should_terminate_early,
-                'style': early_termination_style,
-                'target_turn': early_termination_turn
-            } if should_terminate_early else None
+            character_profiles
         )
         
         if dialogue:
@@ -674,19 +633,13 @@ Select contextually appropriate values from the arrays and incorporate them natu
                     }
                     self.clogger.debug(f"Assigned voices for conversation {conversation_id}: caller={scammer_voice}, callee={victim_voice}")
             
-            # Apply post-processing (interruptions, redaction, symbol removal)
-            if self.postprocessor:
-                conversation = self.postprocessor.process_conversation(conversation, "scam")
-                self.clogger.debug(f"Post-processed conversation {conversation_id}")
-            
             return conversation
         
         return None
 
     async def _generate_dialogue(self, seed_text: str, num_turns: int,
                                 victim_awareness: str, scam_type: str = None,
-                                character_profiles: Dict = None,
-                                early_termination_config: Dict = None) -> Optional[List[Dict]]:
+                                character_profiles: Dict = None) -> Optional[List[Dict]]:
         """
         Generate dialogue turns asynchronously using LLM.
 
@@ -706,8 +659,7 @@ Select contextually appropriate values from the arrays and incorporate them natu
             num_turns,
             victim_awareness,
             scam_type,
-            character_profiles,
-            early_termination_config
+            character_profiles
         )
         
         try:
@@ -883,7 +835,7 @@ Generate conversations that sound genuinely human, not AI-polished:
 5. Maintain scenario consistency throughout the conversation
 6. Apply psychological manipulation tactics naturally based on scenario
 7. Follow realistic scam conversation flow patterns
-8. IMPORTANT: The conversation MUST reach a clear conclusion (victim agrees to pay, refuses, realizes it's a scam and hangs up early, or firmly ends the call)
+8. IMPORTANT: The conversation MUST reach a clear conclusion (victim agrees to pay, refuses, or realizes it's a scam)
 9. Each conversation must be psychologically complete with proper progression and resolution
 10. Include natural hesitations, questions, and realistic victim reactions
 
@@ -896,8 +848,7 @@ Generate conversations that sound genuinely human, not AI-polished:
 
     def _create_user_prompt(self, seed_text: str, num_turns: int,
                            victim_awareness: str, scam_type: str = None,
-                           character_profiles: Dict = None,
-                           early_termination_config: Dict = None) -> str:
+                           character_profiles: Dict = None) -> str:
         """
         Create the user prompt for conversation generation.
         Optimized for OpenAI prompt caching with three-section structure:
@@ -973,19 +924,6 @@ Generate a JSON array of dialogue turns with this exact structure:
 - Age Range: {victim.age_range}
 
 Reflect these character traits consistently throughout the dialogue.
-
-**Victim's Expected Knowledge Level:**
-Based on education level ({victim.education_level}) and age ({victim.age_range}), the victim should demonstrate contextually appropriate knowledge:
-
-- **Graduate/College educated**: Should ask verification questions, understand basic banking procedures, show awareness of scams
-- **High school educated**: May be less tech-savvy but understands common financial concepts, shows reasonable caution
-- **Senior age**: May be less familiar with digital banking but has life experience to recognize pressure tactics
-- **Young/Middle-aged**: More tech-aware, should question unusual requests, may reference scam awareness
-
-CRITICAL: Victims should NOT:
-- Immediately comply without asking verification questions (unrealistic for any education level)
-- Lack knowledge that matches their profile (e.g., a college graduate not knowing basic banking terms)
-- Ignore obvious red flags that anyone in their demographic would catch
 """
 
         # Add scenario-specific details
@@ -1048,25 +986,21 @@ Scammers adapt their speech style based on their role and strategy:
         if victim_awareness == "not":
             prompt += """
 The victim is **not aware** this is a scam:
-- Victim trusts the caller initially BUT still shows normal verification behavior
-- May ask 2-3 clarifying questions before complying (realistic for any adult)
-- Shows concern and follows instructions AFTER initial verification
-- Gradually becomes more worried as stakes escalate
-- Ultimately complies but with contextually appropriate hesitation
+- Victim trusts the caller initially and cooperates
+- Shows concern and follows instructions
+- May ask clarifying questions but accepts answers
+- Becomes increasingly worried as stakes escalate
+- Ultimately complies with scammer's requests
 
-**Natural Victim Reactions (Contextually Intelligent):**
-- Initial verification: "Boleh beritahu nama penuh awak?", "Dari mana awak dapat nombor saya?"
-- Process questions: "Kenapa perlu guna cara ni?", "Tak boleh saya datang ke pejabat?"
+**Natural Victim Reactions:**
 - Genuine confusion with disfluencies: "Errr, maksud awak?", "Tunggu, saya tak faham"
 - Hesitation when overwhelmed: "Emmm, banyak sangat ni...", "Saya pening sikit"
 - Emotional responses: "Alamak!", "Ya Allah!", "Aduh, serius ke?"
 - Natural questioning: "Macam mana ni?", "Lepas tu?", "Kena buat apa?"
-
-CRITICAL: "Not aware" means the victim doesn't REALIZE it's a scam, NOT that they lack basic adult intelligence or common sense.
 """
-        elif victim_awareness == "tiny":
+        elif victim_awareness == "slightly":
             prompt += """
-The victim is **tiny aware** this might be a scam:
+The victim is **slightly aware** this might be a scam:
 - Victim shows initial skepticism and asks probing questions
 - Requests verification or offers to call back
 - Scammer must work harder to maintain credibility
@@ -1079,62 +1013,20 @@ The victim is **tiny aware** this might be a scam:
 - Gradual doubt: "Betul ke ni?", "Saya tak pasti lah...", "Macam pelik je"
 - Protective hesitation: "Saya takut kena tipu", "Ramai scammer sekarang ni"
 """
+        else:  # very aware
+            prompt += """
+The victim is **very aware** this is likely a scam:
+- Victim immediately suspicious and challenges the caller
+- Refuses to provide information or make payments
+- May call out the scam directly or threaten to report
+- Scammer becomes more aggressive or may give up
+- Conversation may end with victim hanging up
 
-        # Add early termination guidance if applicable
-        if early_termination_config:
-            target_turn = early_termination_config['target_turn']
-            style = early_termination_config['style']
-            
-            if style == 'quick':
-                prompt += f"""
-
-### CRITICAL: Early Termination Scenario
-This conversation should have EARLY TERMINATION around turn {target_turn}:
-- The victim realizes this is a scam and decisively ends the conversation
-- After the victim's recognition (around turn {target_turn}), the conversation should end in 1-2 turns maximum
-- The victim should firmly state they're ending the call: "Saya nak tutup call ni", "Jangan call lagi", "Saya nak report ni"
-- The scammer may make ONE brief final attempt, but the victim hangs up
-- Do NOT force the conversation to continue to {num_turns} turns - end it naturally at {target_turn + 1} to {target_turn + 2} turns
-- This reflects realistic behavior where people hang up once they recognize a scam
-
-Example flow:
-Turn {target_turn} (Victim): "Eh, saya tahu ni scam. Saya tak nak dengar lagi."
-Turn {target_turn + 1} (Scammer): "Tunggu encik, ini betul-betul—"
-Turn {target_turn + 2} (Victim): "Tak payah. Saya tutup call ni sekarang." [CONVERSATION ENDS]
-"""
-            else:  # extended
-                prompt += f"""
-
-### CRITICAL: Early Termination Scenario (Extended)
-This conversation should have EARLY TERMINATION starting around turn {target_turn}:
-- The victim begins to recognize this is a scam around turn {target_turn}
-- The scammer attempts to win back the victim with 2-4 more desperate attempts
-- Despite the scammer's efforts, the victim becomes more convinced it's a scam
-- The conversation ends naturally when the victim firmly refuses (approximately {target_turn + 4} to {target_turn + 6} turns)
-- Do NOT force the conversation to reach {num_turns} turns
-
-Example flow:
-Turn {target_turn} (Victim): "Saya rasa macam pelik je ni... Macam scam."
-Turn {target_turn + 1} (Scammer): "Tidak, encik! Ini memang betul. Saya boleh tunjuk bukti—"
-Turn {target_turn + 2} (Victim): "Tak payah lah. Kalau betul, saya akan call sendiri."
-Turn {target_turn + 3} (Scammer): "Tapi bila awak call nanti dah lambat! Akaun akan frozen!"
-Turn {target_turn + 4} (Victim): "Saya lebih percaya bank saya dari awak. Jangan call lagi."
-Turn {target_turn + 5} (Scammer): "Encik, ini masa terakhir untuk—"
-Turn {target_turn + 6} (Victim): "Dah cukup. Bye." [CONVERSATION ENDS]
-"""
-
-        prompt += """
-
-#### Profession and Context-Appropriate Knowledge
-
-The victim should demonstrate knowledge appropriate to their context:
-- **Workers/employees**: Understand company policies, HR procedures, payroll processes
-- **Business owners**: Know business banking, tax procedures, licensing requirements
-- **Parents**: Understand school systems, child-related services
-- **Homeowners**: Know utility billing, property management, condo procedures
-- **Seniors**: May need help with tech but understand financial basics from life experience
-
-AVOID: Victims lacking knowledge that anyone in their situation would have (flagged in feedback as unrealistic).
+**Natural Victim Reactions:**
+- Direct confrontation: "Eh, scammer ni!", "Klasik lah penipu ni", "Taknak lah, saya tahu ni scam"
+- Confident refusal: "Tak payah lah, saya dah biasa dengan trick ni", "Jangan buang masa saya"
+- Counter-questions: "Awak ni dari mana? Apa nama penuh awak?", "Boleh saya rekod call ni?"
+- Warning responses: "Saya nak report ni", "Saya call polis", "Awak ingat saya bodoh ke?"
 """
 
         prompt += f"""
