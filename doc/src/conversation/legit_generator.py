@@ -14,7 +14,6 @@ from src.llm_core.api_provider import LLM
 from src.llm_core.api_call import make_api_call
 from src.llm_core.token_counter import TokenUsageTracker
 from src.conversation.schemas import LegitConversationResponse
-from src.conversation.conversation_postprocessor import create_postprocessor_from_config
 from src.utils.logging_utils import ConditionalLogger
 
 
@@ -67,15 +66,6 @@ class LegitGenerator:
         # Pre-compute locale-static prompt section for optimal caching
         self.locale_static_prompt = self._build_locale_static_prompt()
         self.clogger.debug(f"Pre-computed locale-static prompt for {config.legit_call_language} ({config.legit_call_region})")
-        
-        # Initialize post-processor for conversation quality improvements
-        self.postprocessor = None
-        if hasattr(config, 'common_config'):
-            try:
-                self.postprocessor = create_postprocessor_from_config(config.common_config)
-                logger.info("Post-processor initialized for conversation quality improvements")
-            except Exception as e:
-                logger.warning(f"Could not initialize post-processor: {e}. Continuing without post-processing.")
     
     async def generate_conversations(self) -> List[Dict]:
         """
@@ -178,11 +168,6 @@ class LegitGenerator:
                     "num_turns": num_turns,
                     "dialogue": dialogue
                 }
-            
-            # Apply post-processing (interruptions, redaction, symbol removal)
-            if self.postprocessor:
-                conversation = self.postprocessor.process_conversation(conversation, "legit")
-                self.clogger.debug(f"Post-processed conversation {conversation_id}")
             
             return conversation
         
@@ -510,27 +495,6 @@ Malaysian professional calls naturally blend formality with friendliness:
 - Multitasking references: "Saya tengah drive ni", "Jap, saya sambil-sambil je"
 - Natural concerns: "Takut tersalah", "Confirm ye slot tu?", "Kalau lambat sikit boleh?"
 - Casual confirmations: "Ok faham", "Noted", "On lah", "Ok set"
-
-**Context-Appropriate Knowledge (Realistic Caller/Callee Behavior):**
-Both parties should demonstrate knowledge appropriate to their role and context:
-
-**Service Staff Knowledge:**
-- Understand their own procedures, policies, and systems
-- Know common requirements for their services
-- Can explain processes clearly without confusion
-- Example: Clinic staff know appointment procedures, required documents, insurance policies
-
-**Customer/Caller Knowledge:**
-- Should have basic understanding of services they're calling about
-- Workers understand company policies, HR procedures
-- Homeowners know about their utility services, condo rules
-- Parents understand school systems, child-related requirements
-- Business owners know business registration, licensing, banking procedures
-
-CRITICAL: Both parties should show contextually appropriate intelligence:
-- Service staff shouldn't lack knowledge of their own processes (unrealistic)
-- Customers shouldn't lack basic knowledge relevant to their situation
-- Example: A worker calling about condo visitor procedures should understand basic security concepts
 
 **Context-Specific Formality:**
 - Medical/clinic: Moderately formal but empathetic, use particles for warmth

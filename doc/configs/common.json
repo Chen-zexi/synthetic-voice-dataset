@@ -9,7 +9,7 @@
       "not",
       "not",
       "tiny",
-      "very"
+      "tiny"
     ]
   },
   "preprocessing": {
@@ -63,6 +63,16 @@
       "default_emotion_legit": "friendly"
     }
   },
+  "conversation_postprocessing": {
+    "enable_interruptions": true,
+    "interruption_rate": 0.10,
+    "enable_redaction": true,
+    "enable_symbol_removal": true,
+    "interruption_reasons": {
+      "scam": ["victim_suspicion", "victim_verification_attempt", "scammer_detected_resistance", "external_interruption"],
+      "legit": ["network_issue", "caller_needed_to_go", "issue_resolved_early", "call_back_requested"]
+    }
+  },
   "post_processing": {
     "scam_label": 1,
     "legit_label": 0,
@@ -81,7 +91,7 @@
   },
   "llm": {
     "provider": "openai",
-    "model": "gpt-5",
+    "model": "gpt-4o",
     "max_concurrent_requests": 20,
     "comment": "Standard model parameters (ignored for reasoning models)",
     "temperature": 1.0,
