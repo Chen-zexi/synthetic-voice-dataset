@@ -1,0 +1,85 @@
+{
+  "locale": {
+    "id": "ko-kr",
+    "language_code": "ko",
+    "country_code": "KR",
+    "language_name": "Korean",
+    "region_name": "South Korea",
+    "currency": "KRW",
+    "currency_symbol": "₩"
+  },
+  "translation": {
+    "from_code": "zh-CN",
+    "to_code": "ko",
+    "intermediate_code": "en"
+  },
+  "voices": {
+    "ids": [
+      "onwK4e9ZLuTAKqWW03F9",
+      "pqHfZKP75CvOlQylNhV4"
+    ],
+    "names": [
+      "Korean Male (Middle-aged)",
+      "Korean Female (Young)"
+    ],
+    "_note": "Invalid voice IDs removed: SOYHLrjzK2X1ezoPC6cr. Use --validate-voices to find alternatives."
+  },
+  "conversation": {
+    "legit_categories": [
+      "family_checkin",
+      "friend_chat",
+      "relationship_talk",
+      "holiday_greeting",
+      "emergency_help_request",
+      "doctor_appointment_confirmation",
+      "clinic_test_results",
+      "delivery_confirmation",
+      "utility_service_followup",
+      "repair_scheduling",
+      "bank_verification_call",
+      "visa_status_update",
+      "tax_inquiry",
+      "insurance_claim_followup",
+      "civil_services_scheduling",
+      "job_interview_scheduling",
+      "coworker_sync",
+      "project_status_update",
+      "freelance_client_call",
+      "work_meeting_reminder",
+      "school_event_reminder",
+      "tutoring_session",
+      "academic_advising",
+      "exam_results_notification",
+      "class_schedule_change",
+      "restaurant_reservation",
+      "hairdresser_booking",
+      "hotel_booking_confirmation",
+      "volunteering_coordination",
+      "language_exchange_call",
+      "customer_support_callback",
+      "subscription_renewal_notice",
+      "product_feedback_survey",
+      "account_security_verification",
+      "appointment_cancellation_notice"
+    ]
+  },
+  "output": {
+    "scam_conversation": "scam_conversation.json",
+    "legit_conversation": "legit_conversation.json",
+    "scam_audio_dir": "scam",
+    "legit_audio_dir": "legit",
+    "scam_formatted": "scam_conversation_formatted.json",
+    "legit_formatted": "legit_conversation_formatted.json"
+  },
+  "cultural_notes": {
+    "phone_greeting": "여보세요 (yeoboseyo) - Hello (phone greeting)",
+    "formality_level": "Formal/Hierarchical - Korean uses different speech levels based on age and social status",
+    "common_scam_themes": [
+      "Voice phishing (보이스피싱) impersonating prosecutors or police",
+      "Loan scams targeting those with poor credit",
+      "Delivery package scams",
+      "Government subsidy scams",
+      "Investment scams promising high returns"
+    ]
+  }
+}

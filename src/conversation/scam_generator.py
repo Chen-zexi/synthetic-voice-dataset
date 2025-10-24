@@ -617,6 +617,7 @@ Select contextually appropriate values from the arrays and incorporate them natu
                 "seed_id": seed.seed_id,
                 "scam_tag": seed.scam_tag,
                 "scam_category": seed.scam_category,
+                "meta_tag": seed.meta_tag,  # Add meta_tag from seed
                 "summary": processed_summary,
                 "seed": processed_seed_text,
                 "quality_score": seed.quality_score,
@@ -624,6 +625,14 @@ Select contextually appropriate values from the arrays and incorporate them natu
                 "victim_awareness": victim_awareness,
                 "placeholders": seed.placeholders
             }
+            
+            # Add early termination fields if applicable
+            if should_terminate_early:
+                conversation["early_termination"] = True
+                conversation["early_termination_style"] = early_termination_style
+                conversation["early_termination_turn"] = early_termination_turn
+            else:
+                conversation["early_termination"] = False
             
             # Add character profile information if used
             if character_profiles:

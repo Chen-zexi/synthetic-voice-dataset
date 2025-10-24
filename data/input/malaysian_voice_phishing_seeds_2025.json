@@ -207,5 +207,104 @@
     "conversation_seed": "The scammer poses as a relationship manager from Maybank Personal Financing calling about a special pre-approved loan offer. They congratulate the victim on being selected for an RM80,000 personal loan at just 2.5% annual interest (well below market rate), claiming it's a promotional rate only available for 48 hours. The caller explains that to process the loan, the victim must first pay RM2,400 in stamp duty and RM1,800 in legal fees, promising these will be added to the loan disbursement amount. They send professional-looking loan approval letters with fake Maybank logos and reference numbers, create urgency saying the promotional rate expires tonight at midnight, and provide a personal bank account claiming it's the 'legal department's collection account'. The victim pays the fees but never receives the loan.",
     "quality_score": "90",
     "processing_notes": "Sophisticated loan fraud impersonating legitimate banks with too-good-to-be-true interest rates. Preys on Malaysians seeking debt consolidation or emergency funds."
+  },
+  {
+    "seed_id": "MY020",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "lhdn_tax_refund_sms",
+    "scam_category": "government_impersonation",
+    "meta_tag": "Phone Message Scam",
+    "scam_summary": "SMS claiming tax refund from LHDN with phishing link to fake website requesting banking credentials and MyKad details.",
+    "conversation_seed": "Victim receives SMS from 'LHDN' stating they have an unclaimed tax refund of RM850 for the year 2023. The message includes a link (lhdn-my-refund[.]com) and warns that the refund must be claimed within 48 hours or it will be forfeited to government revenue. Clicking the link leads to a fake LHDN website that looks identical to the real e-Hasil portal, requesting the victim to log in with MyKad number, full name, bank account details, and online banking credentials to process the refund transfer. The site harvests all entered information and may also install malware. Some variants follow up with phone calls from 'LHDN verification officers' requesting TAC codes to 'complete' the refund process.",
+    "quality_score": "90",
+    "processing_notes": "Based on widespread LHDN SMS phishing campaigns in Malaysia 2023-2024. LHDN has repeatedly issued warnings that they never send tax refund notifications via SMS or request personal banking information online."
+  },
+  {
+    "seed_id": "MY021",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "bank_account_verification_sms",
+    "scam_category": "banking",
+    "meta_tag": "Phone Message Scam",
+    "scam_summary": "Urgent SMS from bank claiming account suspension due to suspicious activity, requesting immediate verification through phishing link.",
+    "conversation_seed": "Victim receives urgent SMS appearing to be from Maybank, CIMB, or Public Bank stating their account has been temporarily suspended due to suspicious transactions detected from an IP address in Nigeria. The message warns that the account will be permanently blocked within 24 hours unless the customer verifies their identity immediately by clicking the provided link. The link leads to a fake banking website requesting full online banking credentials, ATM PIN, and may ask for TAC codes claiming it's to 'verify' the account. The phishing site looks authentic with correct bank logos, colors, and layout. Some victims receive follow-up calls from 'bank security officers' who guide them through entering information or transferring money to a 'secure holding account'.",
+    "quality_score": "92",
+    "processing_notes": "Common SMS phishing targeting Malaysian bank customers. Malaysian banks have intensified warnings about such SMS scams, emphasizing they never send links requesting login credentials via SMS."
+  },
+  {
+    "seed_id": "MY022",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "touch_n_go_ewallet_prize",
+    "scam_category": "giveaway",
+    "meta_tag": "Phone Message Scam",
+    "scam_summary": "WhatsApp message claiming victim won Touch n Go anniversary prize, requires processing fee payment to claim the reward.",
+    "conversation_seed": "Victim receives WhatsApp message with Touch n Go branding congratulating them on winning RM5,000 e-wallet credit in the company's '10th Anniversary Lucky Draw'. The message claims their phone number was randomly selected from active users and includes a fake announcement reference number (TNG-2024-MY-88234). To claim the prize, the victim must click a link and pay RM50 'processing fee' via FPX or online banking transfer, supposedly to cover administrative costs and government tax. After payment, scammer sends a fake confirmation screenshot showing the credit will be transferred within 24 hours. The victim never receives any credit, and attempting to contact Touch n Go customer service reveals no such promotion exists. Some variants demand additional payments claiming 'verification issues' or 'account upgrade needed' before releasing the prize.",
+    "quality_score": "88",
+    "processing_notes": "Touch n Go brand is heavily exploited in Malaysian giveaway scams due to its widespread popularity. Real Touch n Go promotions never require upfront payment and are always announced on official channels."
+  },
+  {
+    "seed_id": "MY023",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "facebook_sponsored_giveaway",
+    "scam_category": "giveaway",
+    "meta_tag": "Phone Message Scam",
+    "scam_summary": "Facebook sponsored post claiming Shopee or Lazada electronics giveaway, requires sharing and paying shipping fee to claim prize.",
+    "conversation_seed": "Victim sees a sponsored Facebook post with professional graphics claiming Shopee or Lazada is giving away iPhone 15 Pro, Samsung Galaxy S24, or MacBooks to celebrate reaching 10 million users in Malaysia. The post shows photos of previous 'winners' holding their prizes and includes hundreds of fake comments from bot accounts expressing excitement. To participate, victims must like, share, and comment, then fill out a Google Form with personal details including phone number and address. Within hours, they receive a WhatsApp call from a 'Shopee representative' congratulating them on winning and requesting RM99 'shipping fee' to send the iPhone. After payment, scammer provides a fake tracking number from a non-existent courier company. Victim never receives the prize, and the Facebook page disappears within days.",
+    "quality_score": "87",
+    "processing_notes": "Social media giveaway scams are prevalent across Malaysian platforms exploiting brand trust in Shopee and Lazada. Real e-commerce promotions never require payment to claim prizes or ship winnings."
+  },
+  {
+    "seed_id": "MY024",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "customs_parcel_sms",
+    "scam_category": "delivery",
+    "meta_tag": "Phone Message Scam",
+    "scam_summary": "SMS claiming parcel held at customs containing illegal items, demanding immediate fine payment or victim faces arrest.",
+    "conversation_seed": "Victim receives SMS from 'Kastam Diraja Malaysia' (Royal Malaysian Customs) stating a parcel addressed to them from overseas has been seized at KLIA Cargo Complex because it contains prohibited items including counterfeit branded goods and undeclared medications. The message includes a fake case reference number (KDM-2024-8834-MY) and warns that failure to respond within 48 hours will result in the case being forwarded to PDRM with potential arrest for smuggling. Victim is instructed to call a phone number or click a link to pay RM2,500 in immediate fines and processing fees to close the case without prosecution. The call connects to a scammer who creates extreme pressure, uses customs jargon, and demands bank transfer to a personal account claiming it's a 'customs settlement account'. They threaten that non-payment will result in a police raid at the victim's home and criminal charges carrying up to 7 years imprisonment.",
+    "quality_score": "91",
+    "processing_notes": "Parcel/customs SMS scams target Malaysian online shoppers who frequently receive international packages. Real customs violations are handled through official correspondence and legal processes, never via SMS demands for immediate payment."
+  },
+  {
+    "seed_id": "MY025",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "forex_trading_platform",
+    "scam_category": "investment",
+    "meta_tag": "Investment Fraud",
+    "scam_summary": "Unlicensed forex trading platform promoted via Telegram or WhatsApp promises guaranteed 30% monthly returns with fake profit screenshots.",
+    "conversation_seed": "Victim is added to a Telegram group called 'FX Pro Malaysia - Guaranteed Profits' with 500+ members. The administrator shares daily trading signals and profit screenshots showing RM1,000 becoming RM1,300 overnight. Multiple members post enthusiastic testimonials about earning enough to buy cars and pay off houses, with professionally edited photos showing luxury items. The 'expert trader' offers personal mentorship for a minimum RM1,000 investment, guaranteeing 30% monthly returns using 'AI-powered trading algorithms' and 'insider market intelligence'. Initial small investments are allowed to withdraw profits to build trust. After victims invest larger amounts (RM10,000+), the platform shows huge paper profits but blocks withdrawals, demanding 20-30% 'tax payment' or 'account upgrade fee' before releasing funds. When victims pay the additional fees, the platform becomes inaccessible, the Telegram group disappears, and all investment funds are lost.",
+    "quality_score": "93",
+    "processing_notes": "Forex scams led to major losses in Malaysia 2023-2024, with Securities Commission Malaysia warning about hundreds of unlicensed platforms. These scams target young professionals and students with promises of easy wealth."
+  },
+  {
+    "seed_id": "MY026",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "stock_investment_seminar",
+    "scam_category": "investment",
+    "meta_tag": "Investment Fraud",
+    "scam_summary": "Free stock trading seminar with high-pressure sales tactics promoting expensive VIP trading group membership that delivers worthless generic advice.",
+    "conversation_seed": "Victim receives invitation via Facebook or WhatsApp to a free 'Wealth Building Through Stock Investment' seminar at a hotel in Kuala Lumpur or Petaling Jaya. The 3-hour seminar features a charismatic speaker who shares staged success stories of students becoming millionaires, shows luxury cars and properties allegedly purchased from trading profits, and uses high-pressure tactics claiming market conditions are perfect for investing NOW. During the seminar, multiple planted audience members enthusiastically endorse the speaker and announce they're signing up for the VIP program. The speaker offers exclusive access to a 'VIP Trading Mastermind Group' for RM8,000 (discounted from RM15,000 for same-day registration), promising insider stock tips, daily trading signals, and personal mentorship to guarantee profits. Attendees who sign up receive access to a generic WhatsApp group with basic public information available free on Bursa Malaysia, no actual mentorship, and the promised returns never materialize. Requests for refunds are denied citing 'no refund' clause in fine print.",
+    "quality_score": "89",
+    "processing_notes": "Investment seminar scams are common in KL/Selangor targeting middle-income Malaysians seeking financial freedom. These operations often move between cities to avoid authorities and negative reviews."
+  },
+  {
+    "seed_id": "MY027",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "gold_trading_ponzi",
+    "scam_category": "investment",
+    "meta_tag": "Investment Fraud",
+    "scam_summary": "Multi-level gold trading scheme promising 20-40% monthly returns plus recruitment bonuses, operates as pyramid scheme until collapse.",
+    "conversation_seed": "Scammer recruits victim into 'Malaysia Gold Investment Club' promoted through Facebook groups and WhatsApp. They claim to represent a licensed gold trading company with connections to Swiss refineries, offering investment packages from RM5,000 to RM100,000. The scheme promises 20% monthly returns from 'gold price arbitrage trading' plus 10% commission for recruiting new members and additional bonuses for building downlines. Initial investors receive on-time payments for 2-3 months (paid from new recruit investments) building trust and encouraging them to invest more and recruit family and friends. The company organizes lavish appreciation dinners at 5-star hotels showing top recruiters receiving awards and new luxury cars. After 6-12 months when recruitment slows, the company claims 'temporary market challenges' and stops payments. Eventually, offices close overnight, phone numbers become unreachable, and the company website goes offline. Most investors lose their entire investment, and many are in debt from borrowing money to invest or from friends/family they recruited.",
+    "quality_score": "94",
+    "processing_notes": "Gold trading ponzi schemes have caused RM hundreds of millions in losses across Malaysia. These scams exploit Malaysian culture of trust in gold as investment and rely on social networks for recruitment, causing devastating financial and relationship damage."
+  },
+  {
+    "seed_id": "MY028",
+    "processing_timestamp": "2025-10-23T15:00:00.000000",
+    "scam_tag": "ai_boss_voice_clone",
+    "scam_category": "employment",
+    "meta_tag": "Voice Scam",
+    "scam_summary": "AI-cloned boss voice via WhatsApp call requesting urgent business money transfer to supplier account, bypassing normal authorization procedures.",
+    "conversation_seed": "Employee receives WhatsApp call from number showing boss's name (spoofed or compromised contact). The voice sounds exactly like their boss using AI voice cloning technology trained on the boss's previous voice messages, calls, or video clips from social media. The 'boss' claims to be in an urgent meeting with an important client and needs immediate RM15,000 transfer to a supplier for a time-sensitive business deal. They insist official channels are too slow and the client will walk away if payment isn't received within the hour, threatening the company could lose a RM200,000 contract. The cloned voice mimics the boss's speech patterns, commonly used phrases, and even knows internal company details gleaned from LinkedIn or company website. The scammer creates panic about losing the client and hints at job security concerns if the employee doesn't help. Employee transfers money to provided account before verifying through official channels, only later discovering the real boss never made such a request.",
+    "quality_score": "95",
+    "processing_notes": "AI voice cloning scams are emerging as a serious threat in Malaysia 2024-2025, explicitly mentioned in customer specification requirements. These scams are particularly effective because the cloned voice is virtually indistinguishable from the real person, and the urgency prevents victims from verifying through normal communication channels."
   }
 ]

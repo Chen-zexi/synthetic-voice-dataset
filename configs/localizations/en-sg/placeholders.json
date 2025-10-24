@@ -1,0 +1,1070 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "description": "Common personal names in Singapore",
+    "substitutions": [
+      "Michael Tan",
+      "Sarah Lee",
+      "Kevin Lim",
+      "Emily Wong",
+      "Jason Chen",
+      "Michelle Ng",
+      "Andrew Ong",
+      "Sharon Koh"
+    ],
+    "translations": [
+      "Michael Tan",
+      "Sarah Lee",
+      "Kevin Lim",
+      "Emily Wong",
+      "Jason Chen",
+      "Michelle Ng",
+      "Andrew Ong",
+      "Sharon Koh"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "description": "Major areas in Singapore",
+    "substitutions": [
+      "Jurong West",
+      "Woodlands",
+      "Tampines",
+      "Punggol",
+      "Ang Mo Kio",
+      "Bedok",
+      "Yishun",
+      "Clementi"
+    ],
+    "translations": [
+      "Jurong West",
+      "Woodlands",
+      "Tampines",
+      "Punggol",
+      "Ang Mo Kio",
+      "Bedok",
+      "Yishun",
+      "Clementi"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "description": "Medium monetary amounts in SGD",
+    "substitutions": [
+      "S$500",
+      "S$800",
+      "S$1,200",
+      "S$300",
+      "S$600",
+      "S$1,000"
+    ],
+    "translations": [
+      "500 dollars",
+      "800 dollars",
+      "1200 dollars",
+      "300 dollars",
+      "600 dollars",
+      "1000 dollars"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "description": "Educational tutoring centers",
+    "substitutions": [
+      "The Learning Lab",
+      "MindChamps",
+      "Kumon",
+      "Math Monkey",
+      "Mavis Tutorial Centre",
+      "Eye Level"
+    ],
+    "translations": [
+      "The Learning Lab",
+      "MindChamps",
+      "Kumon",
+      "Math Monkey",
+      "Mavis Tutorial Centre",
+      "Eye Level"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "description": "Credit card companies in Singapore",
+    "substitutions": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "UnionPay",
+      "DBS Card",
+      "OCBC Card"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard",
+      "American Express",
+      "UnionPay",
+      "DBS Card",
+      "OCBC Card"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "description": "Small monetary amounts in SGD",
+    "substitutions": [
+      "S$50",
+      "S$80",
+      "S$30",
+      "S$100",
+      "S$75",
+      "S$60"
+    ],
+    "translations": [
+      "50 dollars",
+      "80 dollars",
+      "30 dollars",
+      "100 dollars",
+      "75 dollars",
+      "60 dollars"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "description": "Banks in Singapore",
+    "substitutions": [
+      "DBS Bank",
+      "OCBC Bank",
+      "UOB",
+      "Standard Chartered",
+      "HSBC",
+      "Citibank"
+    ],
+    "translations": [
+      "DBS Bank",
+      "OCBC Bank",
+      "UOB",
+      "Standard Chartered",
+      "HSBC",
+      "Citibank"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "description": "Airports in Singapore",
+    "substitutions": [
+      "Changi Airport",
+      "Changi Terminal 1",
+      "Changi Terminal 2",
+      "Changi Terminal 3",
+      "Changi Terminal 4",
+      "Seletar Airport"
+    ],
+    "translations": [
+      "Changi Airport",
+      "Changi Terminal 1",
+      "Changi Terminal 2",
+      "Changi Terminal 3",
+      "Changi Terminal 4",
+      "Seletar Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "description": "Bank card names",
+    "substitutions": [
+      "DBS PayLah! card",
+      "OCBC 365 card",
+      "UOB One card",
+      "DBS Multiplier card",
+      "OCBC FRANK card",
+      "POSB Everyday card"
+    ],
+    "translations": [
+      "DBS PayLah! card",
+      "OCBC 365 card",
+      "UOB One card",
+      "DBS Multiplier card",
+      "OCBC FRANK card",
+      "POSB Everyday card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "description": "Government housing agency",
+    "substitutions": [
+      "HDB",
+      "Housing Development Board",
+      "HDB Branch Office",
+      "HDB Hub",
+      "My First Skool",
+      "Town Council"
+    ],
+    "translations": [
+      "HDB",
+      "Housing Development Board",
+      "HDB Branch Office",
+      "HDB Hub",
+      "My First Skool",
+      "Town Council"
+    ]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "description": "Housing grants and schemes",
+    "substitutions": [
+      "CPF Housing Grant",
+      "BTO scheme",
+      "Enhanced CPF Housing Grant",
+      "Proximity Housing Grant",
+      "Silver Housing Bonus",
+      "Family Grant"
+    ],
+    "translations": [
+      "CPF Housing Grant",
+      "BTO scheme",
+      "Enhanced CPF Housing Grant",
+      "Proximity Housing Grant",
+      "Silver Housing Bonus",
+      "Family Grant"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "description": "Telecommunications authority",
+    "substitutions": [
+      "IMDA",
+      "Infocomm Media Development Authority",
+      "IDA",
+      "MDA",
+      "Telecom Authority",
+      "Info-communications Authority"
+    ],
+    "translations": [
+      "IMDA",
+      "Infocomm Media Development Authority",
+      "IDA",
+      "MDA",
+      "Telecom Authority",
+      "Info-communications Authority"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "description": "Courier services in Singapore",
+    "substitutions": [
+      "SingPost",
+      "Ninja Van",
+      "DHL",
+      "FedEx",
+      "J&T Express",
+      "Qxpress"
+    ],
+    "translations": [
+      "SingPost",
+      "Ninja Van",
+      "DHL",
+      "FedEx",
+      "J&T Express",
+      "Qxpress"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "description": "Popular social media platforms",
+    "substitutions": [
+      "WhatsApp",
+      "Facebook",
+      "Instagram",
+      "Telegram",
+      "WeChat",
+      "TikTok"
+    ],
+    "translations": [
+      "WhatsApp",
+      "Facebook",
+      "Instagram",
+      "Telegram",
+      "WeChat",
+      "TikTok"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "description": "Government health agencies",
+    "substitutions": [
+      "MOH",
+      "Ministry of Health",
+      "HPB",
+      "Health Promotion Board",
+      "HSA",
+      "SingHealth"
+    ],
+    "translations": [
+      "MOH",
+      "Ministry of Health",
+      "HPB",
+      "Health Promotion Board",
+      "HSA",
+      "SingHealth"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "description": "Popular marketplaces",
+    "substitutions": [
+      "FairPrice",
+      "Giant",
+      "Cold Storage",
+      "Sheng Siong",
+      "Lazada",
+      "Shopee"
+    ],
+    "translations": [
+      "FairPrice",
+      "Giant",
+      "Cold Storage",
+      "Sheng Siong",
+      "Lazada",
+      "Shopee"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "description": "Very small amounts in SGD",
+    "substitutions": [
+      "S$10",
+      "S$20",
+      "S$15",
+      "S$5",
+      "S$8",
+      "S$12"
+    ],
+    "translations": [
+      "10 dollars",
+      "20 dollars",
+      "15 dollars",
+      "5 dollars",
+      "8 dollars",
+      "12 dollars"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "description": "Investment firms in Singapore",
+    "substitutions": [
+      "DBS Vickers",
+      "OCBC Securities",
+      "UOB Kay Hian",
+      "Phillip Securities",
+      "Tiger Brokers",
+      "Saxo Markets"
+    ],
+    "translations": [
+      "DBS Vickers",
+      "OCBC Securities",
+      "UOB Kay Hian",
+      "Phillip Securities",
+      "Tiger Brokers",
+      "Saxo Markets"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "description": "Real estate companies",
+    "substitutions": [
+      "PropertyGuru",
+      "ERA Realty",
+      "PropNex",
+      "Huttons Asia",
+      "OrangeTee & Tie",
+      "99.co"
+    ],
+    "translations": [
+      "PropertyGuru",
+      "ERA Realty",
+      "PropNex",
+      "Huttons Asia",
+      "OrangeTee & Tie",
+      "99.co"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "description": "Popular singers/artists",
+    "substitutions": [
+      "JJ Lin",
+      "Stefanie Sun",
+      "Dick Lee",
+      "Kit Chan",
+      "Tanya Chua",
+      "Nathan Hartono"
+    ],
+    "translations": [
+      "JJ Lin",
+      "Stefanie Sun",
+      "Dick Lee",
+      "Kit Chan",
+      "Tanya Chua",
+      "Nathan Hartono"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "description": "Titles of respect",
+    "substitutions": [
+      "Boss",
+      "Sir",
+      "Madam",
+      "Mr.",
+      "Ms.",
+      "Dr."
+    ],
+    "translations": [
+      "Boss",
+      "Sir",
+      "Madam",
+      "Mr.",
+      "Ms.",
+      "Dr."
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "description": "Major banks",
+    "substitutions": [
+      "DBS",
+      "POSB",
+      "OCBC",
+      "UOB",
+      "Standard Chartered",
+      "Maybank"
+    ],
+    "translations": [
+      "DBS",
+      "POSB",
+      "OCBC",
+      "UOB",
+      "Standard Chartered",
+      "Maybank"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "description": "Mobile service providers",
+    "substitutions": [
+      "Singtel",
+      "StarHub",
+      "M1",
+      "TPG Telecom",
+      "MyRepublic",
+      "Circles.Life"
+    ],
+    "translations": [
+      "Singtel",
+      "StarHub",
+      "M1",
+      "TPG Telecom",
+      "MyRepublic",
+      "Circles.Life"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "description": "Same as telecom_regulator",
+    "substitutions": [
+      "IMDA",
+      "Infocomm Media Development Authority",
+      "IDA",
+      "Communications Authority",
+      "Telecom Regulatory Authority",
+      "Media Development Authority"
+    ],
+    "translations": [
+      "IMDA",
+      "Infocomm Media Development Authority",
+      "IDA",
+      "Communications Authority",
+      "Telecom Regulatory Authority",
+      "Media Development Authority"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "description": "Popular cosmetic brands",
+    "substitutions": [
+      "Sephora",
+      "The Body Shop",
+      "SK-II",
+      "Laneige",
+      "Innisfree",
+      "MAC"
+    ],
+    "translations": [
+      "Sephora",
+      "The Body Shop",
+      "SK-II",
+      "Laneige",
+      "Innisfree",
+      "MAC"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "description": "Consumer protection agencies",
+    "substitutions": [
+      "CASE",
+      "Consumers Association of Singapore",
+      "Competition and Consumer Commission",
+      "CCCS",
+      "Small Claims Tribunal",
+      "Consumer Protection Unit"
+    ],
+    "translations": [
+      "CASE",
+      "Consumers Association of Singapore",
+      "Competition and Consumer Commission",
+      "CCCS",
+      "Small Claims Tribunal",
+      "Consumer Protection Unit"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "description": "Digital payment apps",
+    "substitutions": [
+      "PayNow",
+      "GrabPay",
+      "PayLah!",
+      "Google Pay",
+      "Apple Pay",
+      "Fave"
+    ],
+    "translations": [
+      "PayNow",
+      "GrabPay",
+      "PayLah!",
+      "Google Pay",
+      "Apple Pay",
+      "Fave"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "description": "Loyalty programs",
+    "substitutions": [
+      "DBS Points",
+      "OCBC$ Rewards",
+      "UOB Rewards",
+      "KrisFlyer Miles",
+      "Grab Rewards",
+      "LinkPoints"
+    ],
+    "translations": [
+      "DBS Points",
+      "OCBC$ Rewards",
+      "UOB Rewards",
+      "KrisFlyer Miles",
+      "Grab Rewards",
+      "LinkPoints"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "description": "Vehicle authority",
+    "substitutions": [
+      "LTA",
+      "Land Transport Authority",
+      "Traffic Police",
+      "One Motoring",
+      "Road Transport Authority",
+      "Vehicle Registry"
+    ],
+    "translations": [
+      "LTA",
+      "Land Transport Authority",
+      "Traffic Police",
+      "One Motoring",
+      "Road Transport Authority",
+      "Vehicle Registry"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "description": "Popular car brands",
+    "substitutions": [
+      "Toyota",
+      "Honda",
+      "Mazda",
+      "Mercedes-Benz",
+      "BMW",
+      "Hyundai"
+    ],
+    "translations": [
+      "Toyota",
+      "Honda",
+      "Mazda",
+      "Mercedes-Benz",
+      "BMW",
+      "Hyundai"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "description": "Dairy brands/stores",
+    "substitutions": [
+      "Meiji",
+      "Marigold",
+      "Farmhouse",
+      "Magnolia",
+      "Greenfields",
+      "F&N"
+    ],
+    "translations": [
+      "Meiji",
+      "Marigold",
+      "Farmhouse",
+      "Magnolia",
+      "Greenfields",
+      "F&N"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "description": "Education loan organizations",
+    "substitutions": [
+      "MOE Tuition Fee Loan",
+      "CPF Education Scheme",
+      "DBS Education Loan",
+      "OCBC Frank Education Loan",
+      "Mendaki Education Fund",
+      "PSEA Academy"
+    ],
+    "translations": [
+      "MOE Tuition Fee Loan",
+      "CPF Education Scheme",
+      "DBS Education Loan",
+      "OCBC Frank Education Loan",
+      "Mendaki Education Fund",
+      "PSEA Academy"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "description": "ISPs in Singapore",
+    "substitutions": [
+      "Singtel Fibre",
+      "StarHub Broadband",
+      "M1 Fibre",
+      "MyRepublic",
+      "ViewQwest",
+      "WhizComms"
+    ],
+    "translations": [
+      "Singtel Fibre",
+      "StarHub Broadband",
+      "M1 Fibre",
+      "MyRepublic",
+      "ViewQwest",
+      "WhizComms"
+    ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "description": "Singapore regions",
+    "substitutions": [
+      "Central Region",
+      "East Region",
+      "North Region",
+      "North-East Region",
+      "West Region",
+      "Central Area"
+    ],
+    "translations": [
+      "Central Region",
+      "East Region",
+      "North Region",
+      "North-East Region",
+      "West Region",
+      "Central Area"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "description": "Broader regions",
+    "substitutions": [
+      "Southeast Asia",
+      "ASEAN",
+      "Asia Pacific",
+      "Marina Bay area",
+      "Jurong Lake District",
+      "Changi Business Park"
+    ],
+    "translations": [
+      "Southeast Asia",
+      "ASEAN",
+      "Asia Pacific",
+      "Marina Bay area",
+      "Jurong Lake District",
+      "Changi Business Park"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "description": "Country variations",
+    "substitutions": [
+      "Singapore",
+      "Republic of Singapore",
+      "SG",
+      "The Lion City",
+      "Garden City",
+      "Red Dot"
+    ],
+    "translations": [
+      "Singapore",
+      "Republic of Singapore",
+      "SG",
+      "The Lion City",
+      "Garden City",
+      "Red Dot"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "description": "Police force names",
+    "substitutions": [
+      "Singapore Police Force",
+      "SPF",
+      "Traffic Police",
+      "Neighbourhood Police",
+      "Police Coast Guard",
+      "CID"
+    ],
+    "translations": [
+      "Singapore Police Force",
+      "SPF",
+      "Traffic Police",
+      "Neighbourhood Police",
+      "Police Coast Guard",
+      "CID"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "description": "Investigation units",
+    "substitutions": [
+      "Criminal Investigation Department",
+      "CID",
+      "Commercial Affairs Department",
+      "CAD",
+      "Corrupt Practices Investigation Bureau",
+      "CPIB"
+    ],
+    "translations": [
+      "Criminal Investigation Department",
+      "CID",
+      "Commercial Affairs Department",
+      "CAD",
+      "Corrupt Practices Investigation Bureau",
+      "CPIB"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "description": "Police station names",
+    "substitutions": [
+      "Ang Mo Kio Police Division",
+      "Jurong Police Division",
+      "Tanglin Police Division",
+      "Bedok Police Division",
+      "Central Police Division",
+      "Clementi Police Division"
+    ],
+    "translations": [
+      "Ang Mo Kio Police Division",
+      "Jurong Police Division",
+      "Tanglin Police Division",
+      "Bedok Police Division",
+      "Central Police Division",
+      "Clementi Police Division"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "description": "More police stations",
+    "substitutions": [
+      "Marine Parade NPC",
+      "Woodlands NPC",
+      "Tampines NPC",
+      "Bukit Merah West NPC",
+      "Punggol NPC",
+      "Yishun North NPC"
+    ],
+    "translations": [
+      "Marine Parade NPC",
+      "Woodlands NPC",
+      "Tampines NPC",
+      "Bukit Merah West NPC",
+      "Punggol NPC",
+      "Yishun North NPC"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "description": "Universities and colleges",
+    "substitutions": [
+      "NUS",
+      "NTU",
+      "SMU",
+      "SUSS",
+      "SIT",
+      "Singapore Polytechnic"
+    ],
+    "translations": [
+      "NUS",
+      "NTU",
+      "SMU",
+      "SUSS",
+      "SIT",
+      "Singapore Polytechnic"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "description": "Education ministry",
+    "substitutions": [
+      "MOE",
+      "Ministry of Education",
+      "SEAB",
+      "Singapore Examinations Board",
+      "SkillsFuture Singapore",
+      "ITE"
+    ],
+    "translations": [
+      "MOE",
+      "Ministry of Education",
+      "SEAB",
+      "Singapore Examinations Board",
+      "SkillsFuture Singapore",
+      "ITE"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "description": "Loan departments",
+    "substitutions": [
+      "HDB Loan Department",
+      "CPF Board",
+      "Personal Loan Department",
+      "SME Loan Centre",
+      "Student Loan Office",
+      "Car Loan Department"
+    ],
+    "translations": [
+      "HDB Loan Department",
+      "CPF Board",
+      "Personal Loan Department",
+      "SME Loan Centre",
+      "Student Loan Office",
+      "Car Loan Department"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "description": "TV service providers",
+    "substitutions": [
+      "Singtel TV",
+      "StarHub TV",
+      "Toggle",
+      "meWATCH",
+      "Netflix Singapore",
+      "Disney+ Singapore"
+    ],
+    "translations": [
+      "Singtel TV",
+      "StarHub TV",
+      "Toggle",
+      "meWATCH",
+      "Netflix Singapore",
+      "Disney+ Singapore"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "description": "TV packages",
+    "substitutions": [
+      "Basic TV Package",
+      "Sports Package",
+      "Entertainment Plus",
+      "Asian Package",
+      "Kids Package",
+      "Premium Bundle"
+    ],
+    "translations": [
+      "Basic TV Package",
+      "Sports Package",
+      "Entertainment Plus",
+      "Asian Package",
+      "Kids Package",
+      "Premium Bundle"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "description": "ISP names",
+    "substitutions": [
+      "Singtel",
+      "StarHub",
+      "M1",
+      "MyRepublic",
+      "ViewQwest",
+      "SuperInternet"
+    ],
+    "translations": [
+      "Singtel",
+      "StarHub",
+      "M1",
+      "MyRepublic",
+      "ViewQwest",
+      "SuperInternet"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "description": "E-commerce platforms",
+    "substitutions": [
+      "Lazada",
+      "Shopee",
+      "Qoo10",
+      "Amazon Singapore",
+      "Carousell",
+      "RedMart"
+    ],
+    "translations": [
+      "Lazada",
+      "Shopee",
+      "Qoo10",
+      "Amazon Singapore",
+      "Carousell",
+      "RedMart"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "description": "Popular products",
+    "substitutions": [
+      "iPhone 15",
+      "Samsung Galaxy S24",
+      "iPad Pro",
+      "Nintendo Switch",
+      "Dyson vacuum",
+      "Sony headphones"
+    ],
+    "translations": [
+      "iPhone 15",
+      "Samsung Galaxy S24",
+      "iPad Pro",
+      "Nintendo Switch",
+      "Dyson vacuum",
+      "Sony headphones"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "description": "Common fruits",
+    "substitutions": [
+      "durian",
+      "mango",
+      "rambutan",
+      "mangosteen",
+      "apple",
+      "orange"
+    ],
+    "translations": [
+      "durian",
+      "mango",
+      "rambutan",
+      "mangosteen",
+      "apple",
+      "orange"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "description": "Housing agency variant",
+    "substitutions": [
+      "HDB",
+      "Housing & Development Board",
+      "Building and Construction Authority",
+      "BCA",
+      "Urban Redevelopment Authority",
+      "URA"
+    ],
+    "translations": [
+      "HDB",
+      "Housing & Development Board",
+      "Building and Construction Authority",
+      "BCA",
+      "Urban Redevelopment Authority",
+      "URA"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "description": "Vehicle registration",
+    "substitutions": [
+      "LTA Vehicle Registry",
+      "One Motoring",
+      "Land Transport Authority",
+      "Vehicle Inspection Centre",
+      "VICOM",
+      "STA Inspection"
+    ],
+    "translations": [
+      "LTA Vehicle Registry",
+      "One Motoring",
+      "Land Transport Authority",
+      "Vehicle Inspection Centre",
+      "VICOM",
+      "STA Inspection"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "description": "Region name (typo)",
+    "substitutions": [
+      "Marina Bay",
+      "Orchard Road",
+      "CBD",
+      "Jurong",
+      "Changi",
+      "Sentosa"
+    ],
+    "translations": [
+      "Marina Bay",
+      "Orchard Road",
+      "CBD",
+      "Jurong",
+      "Changi",
+      "Sentosa"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "description": "Special stations",
+    "substitutions": [
+      "Airport Police Division",
+      "Police Cantonment Complex",
+      "Orchard NPC",
+      "Marina Bay NPC",
+      "Geylang NPC",
+      "Little India NPC"
+    ],
+    "translations": [
+      "Airport Police Division",
+      "Police Cantonment Complex",
+      "Orchard NPC",
+      "Marina Bay NPC",
+      "Geylang NPC",
+      "Little India NPC"
+    ]
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "generated": "2024-12-18T00:00:00.000000",
+  "version": "1.0",
+  "description": "Character profiles for diverse conversation generation",
+  "profiles": [
+    {
+      "profile_id": "authoritative_scammer_01",
+      "name": "Authority Figure Scammer",
+      "gender": "any",
+      "age_range": "middle-aged",
+      "personality_traits": ["authoritative", "confident", "urgent", "professional"],
+      "speaking_style": ["formal", "commanding", "technical-terms"],
+      "education_level": "college",
+      "role_preference": "scammer"
+    },
+    {
+      "profile_id": "friendly_scammer_01",
+      "name": "Friendly Helper Scammer",
+      "gender": "any",
+      "age_range": "young",
+      "personality_traits": ["friendly", "helpful", "reassuring", "patient"],
+      "speaking_style": ["conversational", "empathetic", "casual"],
+      "education_level": "high_school",
+      "role_preference": "scammer"
+    },
+    {
+      "profile_id": "urgent_scammer_01",
+      "name": "Time-Pressure Scammer",
+      "gender": "any",
+      "age_range": "middle-aged",
+      "personality_traits": ["urgent", "impatient", "persistent", "alarming"],
+      "speaking_style": ["fast-paced", "interrupting", "repetitive"],
+      "education_level": "any",
+      "role_preference": "scammer"
+    },
+    {
+      "profile_id": "tech_support_scammer_01",
+      "name": "Tech Support Impersonator",
+      "gender": "male",
+      "age_range": "young",
+      "personality_traits": ["technical", "knowledgeable", "helpful", "urgent"],
+      "speaking_style": ["technical-jargon", "step-by-step", "patient-initially"],
+      "education_level": "college",
+      "role_preference": "scammer"
+    },
+    {
+      "profile_id": "government_scammer_01",
+      "name": "Government Official Impersonator",
+      "gender": "any",
+      "age_range": "middle-aged",
+      "personality_traits": ["official", "bureaucratic", "threatening", "formal"],
+      "speaking_style": ["formal", "legal-terms", "intimidating"],
+      "education_level": "graduate",
+      "role_preference": "scammer"
+    },
+    {
+      "profile_id": "investment_scammer_01",
+      "name": "Investment Advisor Scammer",
+      "gender": "male",
+      "age_range": "middle-aged",
+      "personality_traits": ["persuasive", "charming", "confident", "greedy"],
+      "speaking_style": ["smooth", "financial-terms", "promising"],
+      "education_level": "graduate",
+      "role_preference": "scammer"
+    },
+    {
+      "profile_id": "trusting_victim_01",
+      "name": "Trusting Individual",
+      "gender": "any",
+      "age_range": "senior",
+      "personality_traits": ["trusting", "polite", "concerned", "cooperative"],
+      "speaking_style": ["hesitant", "questioning", "polite"],
+      "education_level": "high_school",
+      "role_preference": "victim"
+    },
+    {
+      "profile_id": "skeptical_victim_01",
+      "name": "Skeptical Person",
+      "gender": "any",
+      "age_range": "middle-aged",
+      "personality_traits": ["skeptical", "cautious", "analytical", "questioning"],
+      "speaking_style": ["probing", "demanding-proof", "suspicious"],
+      "education_level": "college",
+      "role_preference": "victim"
+    },
+    {
+      "profile_id": "busy_victim_01",
+      "name": "Busy Professional",
+      "gender": "any",
+      "age_range": "young",
+      "personality_traits": ["busy", "distracted", "efficient", "impatient"],
+      "speaking_style": ["brief", "multitasking", "rushed"],
+      "education_level": "graduate",
+      "role_preference": "victim"
+    },
+    {
+      "profile_id": "confused_victim_01",
+      "name": "Confused Individual",
+      "gender": "any",
+      "age_range": "senior",
+      "personality_traits": ["confused", "anxious", "seeking-help", "vulnerable"],
+      "speaking_style": ["slow", "repetitive-questions", "uncertain"],
+      "education_level": "any",
+      "role_preference": "victim"
+    },
+    {
+      "profile_id": "tech_savvy_victim_01",
+      "name": "Tech-Savvy Person",
+      "gender": "any",
+      "age_range": "young",
+      "personality_traits": ["technical", "knowledgeable", "skeptical", "confident"],
+      "speaking_style": ["technical-terms", "challenging", "informed"],
+      "education_level": "college",
+      "role_preference": "victim"
+    },
+    {
+      "profile_id": "anxious_victim_01",
+      "name": "Anxious Individual",
+      "gender": "female",
+      "age_range": "middle-aged",
+      "personality_traits": ["anxious", "worried", "compliant", "emotional"],
+      "speaking_style": ["nervous", "rambling", "seeking-reassurance"],
+      "education_level": "high_school",
+      "role_preference": "victim"
+    },
+    {
+      "profile_id": "elderly_victim_01",
+      "name": "Elderly Person",
+      "gender": "any",
+      "age_range": "senior",
+      "personality_traits": ["traditional", "respectful", "cautious", "lonely"],
+      "speaking_style": ["formal", "slow", "detailed-stories"],
+      "education_level": "high_school",
+      "role_preference": "victim",
+      "locale_affinity": ["en-us", "en-gb", "en-au"]
+    },
+    {
+      "profile_id": "working_parent_victim_01",
+      "name": "Working Parent",
+      "gender": "any",
+      "age_range": "middle-aged",
+      "personality_traits": ["stressed", "protective", "multitasking", "concerned"],
+      "speaking_style": ["rushed", "child-references", "protective"],
+      "education_level": "college",
+      "role_preference": "victim"
+    },
+    {
+      "profile_id": "student_victim_01",
+      "name": "Student",
+      "gender": "any",
+      "age_range": "young",
+      "personality_traits": ["naive", "curious", "budget-conscious", "trusting"],
+      "speaking_style": ["casual", "slang", "questioning"],
+      "education_level": "high_school",
+      "role_preference": "victim"
+    }
+  ]
+}

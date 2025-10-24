@@ -1,0 +1,136 @@
+{
+  "followup_turns": {
+    "num_turns_lower_limit": 20,
+    "num_turns_upper_limit": 24,
+    "victim_awareness_levels": [
+      "not",
+      "not",
+      "not",
+      "not",
+      "not",
+      "tiny",
+      "tiny"
+    ]
+  },
+  "preprocessing": {
+    "input_file": "scamGen_combined_first_20k.txt",
+    "mapped_suffix": "_mapped.txt"
+  },
+  "translation": {
+    "service": "google",
+    "max_lines": 1000,
+    "english_output": "scamGen_combined_first_20k_en.txt",
+    "chinese_code": "zh-CN",
+    "qwen_model": "qwen-mt-turbo",
+    "qwen_base_url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+    "max_concurrent_translations": 20,
+    "track_tokens": true
+  },
+  "multi_turn": {
+    "input_file": "malaysian_voice_phishing_seeds_2025.json",
+    "english_output": "scam_conversation_english.json"
+  },
+  "legit_call": {
+  },
+  "voice_generation": {
+    "model_id": "eleven_flash_v2_5",
+    "output_format": "mp3_44100_128",
+    "voice_speed": 1.08,
+    "silence_duration_ms": 500,
+    "background_volume_reduction_db": 18,
+    "bandpass_filter": {
+      "low_freq": 300,
+      "high_freq": 3400
+    },
+    "audio_effects": {
+      "enable_background_noise": true,
+      "enable_call_end_effect": true,
+      "enable_bandpass_filter": true,
+      "background_noise_level": 1.0,
+      "call_end_volume": 1.0
+    },
+    "voice_settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.5,
+      "style": 0.0,
+      "speaker_boost": true
+    },
+    "v3_features": {
+      "use_audio_tags": false,
+      "emotional_context": false,
+      "conversation_context": false,
+      "default_emotion_scam": "urgent",
+      "default_emotion_legit": "friendly"
+    }
+  },
+  "conversation_postprocessing": {
+    "enable_interruptions": true,
+    "interruption_rate": 0.10,
+    "enable_redaction": true,
+    "enable_symbol_removal": true,
+    "interruption_reasons": {
+      "scam": ["victim_suspicion", "victim_verification_attempt", "scammer_detected_resistance", "external_interruption"],
+      "legit": ["network_issue", "caller_needed_to_go", "issue_resolved_early", "call_back_requested"]
+    }
+  },
+  "post_processing": {
+    "scam_label": 1,
+    "legit_label": 0,
+    "audio_zip_names": {
+      "scam": "scam_conversation_audio.zip",
+      "legit": "legit_conversation_audio.zip"
+    },
+    "exclude_fields": [
+      "first_turn",
+      "voice_mapping",
+      "scenario",
+      "metadata",
+      "victim_awareness",
+      "category"
+    ]
+  },
+  "llm": {
+    "provider": "openai",
+    "model": "gpt-4o",
+    "max_concurrent_requests": 8,
+    "comment": "Reduced from 20 to 8 to stay under 800k TPM rate limit. Standard model parameters (ignored for reasoning models)",
+    "temperature": 1.0,
+    "max_tokens": null,
+    "top_p": 0.95,
+    "n": 1,
+    "presence_penalty": 0.0,
+    "frequency_penalty": 0.0,
+    "comment2": "Reasoning model parameters (ignored for standard models)",
+    "reasoning_effort": "low",
+    "max_completion_tokens": null,
+    "comment3": "Gemini-specific parameters",
+    "thinking_budget": 0,
+    "max_output_tokens": null,
+    "comment4": "Features (Response API defaults to true for OpenAI)",
+    "use_response_api": null,
+    "track_tokens": true
+  },
+  "translation_cache": {
+    "enabled": true,
+    "use_cache": true,
+    "cache_dir": "data/translation_cache",
+    "cache_service": "qwen",
+    "force_refresh": false
+  },
+  "generation": {
+    "source_type": "seeds",
+    "seeds_file": "scam_samples.json",
+    "profiles_file": "configs/character_profiles.json",
+    "enable_character_profiles": true,
+    "scenarios_per_seed": 1,
+    "min_seed_quality": 70,
+    "enable_dynamic_placeholders": true,
+    "batch_size": 10,
+    "enable_conversation_caching": false,
+    "random_seed": null,
+    "deterministic_seed_order": true,
+    "scenario_mode": "pre_configured",
+    "scenario_templates_file": "configs/scenario_templates.json",
+    "scenario_assignments_file": "configs/scenario_assignments_malaysia.json"
+  }
+}

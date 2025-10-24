@@ -1,0 +1,61 @@
+{
+  "available_voices": {
+    "voice_name_1": {
+      "id": "elevenlabs_voice_id_1",
+      "name": "Display Name 1",
+      "gender": "male/female",
+      "age": "young/middle-aged/elderly",
+      "description": "Voice description including accent, tone, and suitable content",
+      "use_cases": ["professional", "casual", "authority", "customer"]
+    },
+    "voice_name_2": {
+      "id": "elevenlabs_voice_id_2",
+      "name": "Display Name 2",
+      "gender": "male/female",
+      "age": "young/middle-aged/elderly",
+      "description": "Voice description including accent, tone, and suitable content",
+      "use_cases": ["victim", "scammer", "customer_service", "general"]
+    },
+    "voice_name_3": {
+      "id": "elevenlabs_voice_id_3",
+      "name": "Display Name 3",
+      "gender": "male/female",
+      "description": "Voice description (age is optional)",
+      "use_cases": ["delivery", "medical", "government", "informal"]
+    }
+  },
+  "role_assignments": {
+    "scam_scenarios": {
+      "police_officer": ["voice_name_1"],
+      "government_official": ["voice_name_1", "voice_name_2"],
+      "bank_officer": ["voice_name_2"],
+      "female_victim": ["voice_name_3"],
+      "male_victim": ["voice_name_1", "voice_name_2"]
+    },
+    "legitimate_scenarios": {
+      "delivery_rider": ["voice_name_1", "voice_name_2"],
+      "property_agent": ["voice_name_2"],
+      "bank_representative": ["voice_name_1"],
+      "medical_staff": ["voice_name_3"],
+      "female_customer": ["voice_name_3"],
+      "male_customer": ["voice_name_1", "voice_name_2"]
+    }
+  },
+  "default_voices": {
+    "male_caller": "voice_name_1",
+    "female_caller": "voice_name_3",
+    "male_callee": "voice_name_2",
+    "female_callee": "voice_name_3"
+  },
+  "notes": {
+    "description": "This file defines voice profiles for intelligent voice assignment during conversation generation",
+    "optional": true,
+    "instructions": [
+      "Replace voice_name_X with meaningful names (e.g., 'john', 'maria')",
+      "Use actual ElevenLabs voice IDs from your locale's config.json",
+      "Map voices to appropriate roles based on cultural context",
+      "Ensure gender and age match the voice characteristics",
+      "This file is optional - if not present, random voice selection will be used"
+    ]
+  }
+}

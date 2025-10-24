@@ -18,6 +18,7 @@ class ScamSeed(BaseModel):
     seed_id: str = Field(description="Unique seed identifier")
     scam_tag: str = Field(description="Category tag for the scam type")
     scam_category: str = Field(description="High-level category (e.g., 'technology', 'banking')")
+    meta_tag: Optional[str] = Field(default=None, description="Meta category tag for grouping (e.g., 'Phone Message Scam', 'Investment Fraud')")
     scam_summary: str = Field(description="Summary of the scam technique")
     conversation_seed: str = Field(description="Detailed conversation starter/scenario")
     quality_score: Optional[int] = Field(default=80, description="Quality score of the seed (0-100)")

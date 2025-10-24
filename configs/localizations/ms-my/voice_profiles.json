@@ -1,0 +1,81 @@
+{
+  "available_voices": {
+    "faizal": {
+      "id": "Wc6X61hTD7yucJMheuLN",
+      "name": "Faizal",
+      "gender": "male",
+      "age": "40",
+      "description": "40-year-old Malay male from Malaysia, suitable for conversational content",
+      "use_cases": ["casual_conversation", "delivery_rider", "customer"]
+    },
+    "hasnan": {
+      "id": "C1gMsiiE7sXAt59fmvYg",
+      "name": "Hasnan",
+      "gender": "male",
+      "description": "VO Hasan. Great for conversation",
+      "use_cases": ["professional", "scammer", "customer", "general"]
+    },
+    "afifah": {
+      "id": "UcqZLa941Kkt8ZhEEybf",
+      "name": "Afifah",
+      "gender": "female",
+      "age": "young",
+      "description": "A young Malaysian female speaking Malay. Voice created with permissions.",
+      "use_cases": ["victim", "customer", "general_female"]
+    },
+    "athira": {
+      "id": "BeIxObt4dYBRJLYoe1hU",
+      "name": "Athira",
+      "gender": "female",
+      "description": "Athira - Friendly & Natural Female Malay Voice. Athira's speech feels personal, warm, and easy to understand",
+      "use_cases": ["customer", "victim", "professional_female"]
+    },
+    "jawaid": {
+      "id": "NpVSXJvYSdIbjOaMbShj",
+      "name": "Jawaid Iqbal",
+      "gender": "male",
+      "age": "middle-aged",
+      "description": "Middle-aged Malaysian Malay accent male voice. Suitable for Informative videos",
+      "use_cases": ["authority", "police", "government_official", "professional_agent"]
+    }
+  },
+  "role_assignments": {
+    "scam_scenarios": {
+      "police_officer": ["jawaid"],
+      "government_official": ["jawaid", "hasnan"],
+      "bank_officer": ["hasnan", "faizal"],
+      "female_victim": ["afifah", "athira"],
+      "male_victim": ["faizal", "hasnan"]
+    },
+    "legitimate_scenarios": {
+      "delivery_rider": ["faizal", "hasnan"],
+      "property_agent": ["jawaid", "hasnan"],
+      "bank_representative": ["hasnan", "jawaid"],
+      "female_customer": ["athira", "afifah"],
+      "male_customer": ["hasnan", "faizal"]
+    }
+  },
+  "default_voices": {
+    "male_caller": "hasnan",
+    "female_caller": "athira",
+    "male_callee": "faizal",
+    "female_callee": "afifah"
+  },
+  "character_voice_mappings": {
+    "authoritative_scammer_01": "jawaid",
+    "friendly_scammer_01": "faizal",
+    "urgent_scammer_01": "hasnan",
+    "tech_support_scammer_01": "hasnan",
+    "government_scammer_01": "jawaid",
+    "investment_scammer_01": "faizal",
+    "trusting_victim_01": "athira",
+    "skeptical_victim_01": "hasnan",
+    "busy_victim_01": "faizal",
+    "confused_victim_01": "afifah",
+    "tech_savvy_victim_01": "hasnan",
+    "anxious_victim_01": "athira",
+    "elderly_victim_01": "faizal",
+    "working_parent_victim_01": "athira",
+    "student_victim_01": "afifah"
+  }
+}
