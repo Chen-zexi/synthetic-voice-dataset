@@ -230,10 +230,13 @@ Incorporate localized values naturally into {target_language} sentences.
 - Casual questions: "macam tu ke?", "betul ke?", "ye ke?"
 - Keep core meaning clear even with shortcuts
 
-**Formality Matching by Role (Critical for scam authenticity):**
-- Government scammers: Professional language, grammatically correct, strategic particle use
-- Bank scammers: Formal-professional hybrid, clearer grammar to build trust
-- Investment scammers: Persuasive-professional, mix of formal and friendly
+**Formality Matching by Role (CRITICAL - Don't Sound Like Written Text):**
+- Government scammers: Professional BUT still conversational - use "kena", "ada", "boleh" not "perlu", "adalah", "mesti"
+  Example: "Encik kena settle ni cepat" NOT "Encik perlu menyelesaikan perkara ini dengan segera"
+- Bank/Insurance scammers: Friendly-professional, NOT corporate formal
+  Example: "Awak ada unclaimed money ni" NOT "Terdapat wang yang belum dituntut"
+- Investment scammers: Persuasive-professional, mix of formal and friendly but CONVERSATIONAL
+- ALL scammers: Must sound like they're SPEAKING, not reading a script
 - Victims (elderly): More traditional Malay, fuller sentences, less casual
 - Victims (young): More casual with code-switching, natural shortcuts
 - Victims (professional): Questioning tone, grammatically clearer, skeptical
@@ -683,6 +686,26 @@ Select contextually appropriate values from the arrays and incorporate them natu
                     }
                     self.clogger.debug(f"Assigned voices for conversation {conversation_id}: caller={scammer_voice}, callee={victim_voice}")
             
+            # Check conversation naturalness
+            naturalness_check = self._check_conversation_naturalness(
+                conversation["dialogue"], 
+                seed.scam_category
+            )
+            
+            if not naturalness_check['passes']:
+                self.clogger.warning(
+                    f"Conversation {conversation_id} ({seed.scam_category}) may sound unnatural: "
+                    f"particle_ratio={naturalness_check['particle_ratio']:.2f} (target: >1.5), "
+                    f"formal_phrases={naturalness_check['formal_phrase_count']} (target: <3), "
+                    f"naturalness_score={naturalness_check['naturalness_score']:.2f}"
+                )
+            else:
+                self.clogger.debug(
+                    f"Conversation {conversation_id} passed naturalness check: "
+                    f"particle_ratio={naturalness_check['particle_ratio']:.2f}, "
+                    f"formal_phrases={naturalness_check['formal_phrase_count']}"
+                )
+            
             # Apply post-processing (interruptions, redaction, symbol removal)
             if self.postprocessor:
                 conversation = self.postprocessor.process_conversation(conversation, "scam")
@@ -770,6 +793,42 @@ Select contextually appropriate values from the arrays and incorporate them natu
             self.clogger.error(f"Traceback: {traceback.format_exc()}")
             return None
     
+    def _check_conversation_naturalness(self, dialogue: List[Dict], category: str) -> Dict:
+        """
+        Check if conversation meets naturalness criteria.
+        
+        Args:
+            dialogue: List of dialogue turns with 'text' and 'role' fields
+            category: Scam category for context
+            
+        Returns:
+            Dictionary with naturalness metrics
+        """
+        all_text = " ".join([turn['text'] for turn in dialogue])
+        
+        # Count natural elements
+        particles = ['lah', 'kan', 'je', 'pun', 'ni', 'tu']
+        particle_count = sum(all_text.lower().count(p) for p in particles)
+        
+        # Check for overly formal phrases
+        formal_phrases = [
+            'mengikut rekod', 'adalah penting', 'saya ingin memaklumkan',
+            'terdapat', 'hendaklah', 'sila maklum', 'dengan segera',
+            'berkaitan dengan', 'perlu untuk', 'dalam tempoh'
+        ]
+        formal_count = sum(all_text.lower().count(p) for p in formal_phrases)
+        
+        total_words = len(all_text.split())
+        particle_ratio = particle_count / (total_words / 100) if total_words > 0 else 0  # per 100 words
+        formal_ratio = formal_count / (total_words / 100) if total_words > 0 else 0
+        
+        return {
+            'particle_ratio': particle_ratio,
+            'formal_phrase_count': formal_count,
+            'naturalness_score': particle_ratio - (formal_ratio * 2),  # rough metric
+            'passes': particle_ratio > 1.5 and formal_count < 3
+        }
+    
     def _create_system_prompt(self) -> str:
         """
         Create the system prompt for conversation generation.
@@ -855,6 +914,27 @@ Generate conversations that sound genuinely human, not AI-polished:
    - Unnatural: Breaking sentences mid-thought without context
    - Unnatural: Using words incorrectly or forcing grammatical errors
    - Unnatural: Making authority figures sound too casual or broken
+
+9. **Example Conversation Snippets (Natural Malaysian Speech)**:
+
+**Government Impersonation (Good):**
+Caller: "Encik Ahmad, saya from PDRM ni. Ada case serious pasal IC awak."
+Callee: "Eh, serius ke? Case apa ni?"
+Caller: "IC awak kena guna untuk money laundering. Kena settle cepat ni."
+
+**NOT like this (Too Formal - AVOID):**
+Caller: "Encik Ahmad, saya menghubungi dari PDRM. Terdapat kes serius berkaitan IC anda."
+Callee: "Benarkah? Kes apakah itu?"
+Caller: "IC anda telah digunakan dalam kes pengubahan wang haram."
+
+**Insurance/Banking (Good):**
+Caller: "Puan, ada good news ni. Awak ada unclaimed insurance money."
+Callee: "Betul ke? Dari mana ni?"
+Caller: "Uncle awak ada tinggalkan insurance. Kena claim cepat."
+
+**NOT like this (Too Formal - AVOID):**
+Caller: "Puan, saya ada berita baik. Anda mempunyai wang insurans yang belum dituntut."
+Callee: "Benarkah ini? Dari mana sumbernya?"
 
 ## Scam Conversation Dynamics
 
@@ -1004,6 +1084,16 @@ CRITICAL: Victims should NOT:
 **Type**: {scam_type + ' scam' if scam_type else 'Scam'}
 **Victim Awareness**: The victim is {victim_awareness} aware that this might be a scam
 **Number of Turns**: Generate {num_turns} dialogue turns (you may adjust ±2 turns if needed for natural flow and complete resolution)
+
+**CRITICAL INSTRUCTION - Natural Spoken Malay**:
+The scenario description below is written in FORMAL ENGLISH for documentation purposes.
+You MUST convert this into NATURAL SPOKEN MALAYSIAN MALAY dialogue.
+
+DO NOT copy the formal tone from the description.
+DO NOT use phrases like "mengikut rekod kami", "saya ingin memaklumkan", "adalah penting untuk"
+DO use natural spoken language: "tengok ni", "kena buat cepat", "jangan risau"
+
+Think: How would a REAL Malaysian person say this on a phone call?
 
 **Scenario Description**:
 {seed_text}
