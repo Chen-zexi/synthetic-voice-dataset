@@ -1,0 +1,91 @@
+{
+  "locale": {
+    "id": "zh-tw",
+    "language_code": "zh",
+    "country_code": "TW",
+    "language_name": "Chinese (Traditional)",
+    "region_name": "Taiwan",
+    "currency": "TWD",
+    "currency_symbol": "NT$"
+  },
+  "translation": {
+    "from_code": "zh-CN",
+    "to_code": "zh-TW",
+    "intermediate_code": "zh"
+  },
+  "voices": {
+    "ids": [
+      "IKne3meq5aSn9XLyUdCD",
+      "XB0fDUnXU5powFXDhCwa",
+      "onwK4e9ZLuTAKqWW03F9"
+    ],
+    "names": [
+      "Charlie (Male/Young)",
+      "Charlotte (Female/Middle-aged)",
+      "Daniel (Male/Elderly)"
+    ],
+    "_note": "Invalid voice IDs removed: SOYHLrjzK2X1ezoPC6cr. Use --validate-voices to find alternatives."
+  },
+  "conversation": {
+    "legit_categories": [
+      "family_checkin",
+      "friend_chat",
+      "relationship_talk",
+      "holiday_greeting",
+      "emergency_help_request",
+      "doctor_appointment_confirmation",
+      "clinic_test_results",
+      "delivery_confirmation",
+      "utility_service_followup",
+      "repair_scheduling",
+      "bank_verification_call",
+      "visa_status_update",
+      "tax_inquiry",
+      "insurance_claim_followup",
+      "civil_services_scheduling",
+      "job_interview_scheduling",
+      "coworker_sync",
+      "project_status_update",
+      "freelance_client_call",
+      "work_meeting_reminder",
+      "school_event_reminder",
+      "tutoring_session",
+      "academic_advising",
+      "exam_results_notification",
+      "class_schedule_change",
+      "restaurant_reservation",
+      "hairdresser_booking",
+      "hotel_booking_confirmation",
+      "volunteering_coordination",
+      "language_exchange_call",
+      "customer_support_callback",
+      "subscription_renewal_notice",
+      "product_feedback_survey",
+      "account_security_verification",
+      "appointment_cancellation_notice"
+    ]
+  },
+  "output": {
+    "scam_conversation": "scam_conversation.json",
+    "legit_conversation": "legit_conversation.json",
+    "scam_audio_dir": "scam",
+    "legit_audio_dir": "legit",
+    "scam_formatted": "scam_conversation_formatted.json",
+    "legit_formatted": "legit_conversation_formatted.json"
+  },
+  "cultural_notes": {
+    "currency": "TWD (NT$) / 新臺幣",
+    "phone_greeting": "喂，您好 / 喂，請問找哪位？",
+    "formality_level": "Mixed (formal for business/government)",
+    "common_scam_themes": [
+      "假冒檢察官或警察 (刑事偵查保密原則)",
+      "投資詐騙 (假冒名人推薦股票)",
+      "網路購物詐騙 (解除分期付款)",
+      "個資盜用 (健保卡被盜刷)",
+      "付款失敗退款詐騙",
+      "二次詐騙 (謊稱可追回被詐騙款項)",
+      "AI變臉及變聲詐騙",
+      "網路交友感情詐騙"
+    ]
+  }
+}

@@ -1,0 +1,773 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "Nguyễn Văn Nam",
+      "Trần Thị Lan",
+      "Phạm Văn Hùng",
+      "Lê Thị Mai",
+      "Hoàng Văn Đức",
+      "Vũ Thị Hoa",
+      "Đặng Văn Minh",
+      "Bùi Thị Thu"
+    ],
+    "translations": [
+      "Nguyen Van Nam",
+      "Tran Thi Lan",
+      "Pham Van Hung",
+      "Le Thi Mai",
+      "Hoang Van Duc",
+      "Vu Thi Hoa",
+      "Dang Van Minh",
+      "Bui Thi Thu"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "Hồ Chí Minh",
+      "Hà Nội",
+      "Hải Phòng",
+      "Đà Nẵng",
+      "Cần Thơ",
+      "Biên Hòa",
+      "Nha Trang",
+      "Huế"
+    ],
+    "translations": [
+      "Ho Chi Minh City",
+      "Hanoi",
+      "Hai Phong",
+      "Da Nang",
+      "Can Tho",
+      "Bien Hoa",
+      "Nha Trang",
+      "Hue"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "substitutions": [
+      "5 triệu đồng (VND)",
+      "10 triệu đồng (VND)",
+      "20 triệu đồng (VND)",
+      "30 triệu đồng (VND)"
+    ],
+    "translations": [
+      "5,000,000 VND",
+      "10,000,000 VND",
+      "20,000,000 VND",
+      "30,000,000 VND"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "substitutions": [
+      "Hệ thống giáo dục Hocmai",
+      "Trung tâm Anh ngữ ILA",
+      "Apax English",
+      "VUS - The English Center"
+    ],
+    "translations": [
+      "Hocmai Education System",
+      "ILA English Center",
+      "Apax English",
+      "VUS - The English Center"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "Visa",
+      "MasterCard",
+      "JCB",
+      "American Express"
+    ],
+    "translations": [
+      "Visa",
+      "MasterCard",
+      "JCB",
+      "American Express"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "substitutions": [
+      "500 nghìn đồng (VND)",
+      "1 triệu đồng (VND)",
+      "2 triệu đồng (VND)"
+    ],
+    "translations": [
+      "500,000 VND",
+      "1,000,000 VND",
+      "2,000,000 VND"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "Vietcombank",
+      "BIDV",
+      "VietinBank",
+      "ACB",
+      "Techcombank"
+    ],
+    "translations": [
+      "Vietcombank",
+      "BIDV",
+      "VietinBank",
+      "ACB",
+      "Techcombank"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "Sân bay Tân Sơn Nhất",
+      "Sân bay Nội Bài",
+      "Sân bay Đà Nẵng",
+      "Sân bay Phú Quốc"
+    ],
+    "translations": [
+      "Tan Son Nhat Airport",
+      "Noi Bai Airport",
+      "Da Nang Airport",
+      "Phu Quoc Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "Thẻ Vietcombank",
+      "Thẻ BIDV",
+      "Thẻ VietinBank",
+      "Thẻ ACB",
+      "Thẻ Techcombank"
+    ],
+    "translations": [
+      "Vietcombank Card",
+      "BIDV Card",
+      "VietinBank Card",
+      "ACB Card",
+      "Techcombank Card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "substitutions": [
+      "Bộ Xây dựng",
+      "Bộ Kế hoạch và Đầu tư",
+      "Ngân hàng Chính sách xã hội"
+    ],
+    "translations": [
+      "Ministry of Construction",
+      "Ministry of Planning and Investment",
+      "Vietnam Bank for Social Policies"
+    ]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "Gói vay ưu đãi nhà ở xã hội",
+      "Hỗ trợ lãi suất mua nhà",
+      "Chương trình nhà ở thu nhập thấp",
+      "Quỹ phát triển nhà ở"
+    ],
+    "translations": [
+      "Social Housing Loan Package",
+      "Home Purchase Interest Support",
+      "Low-Income Housing Program",
+      "Housing Development Fund"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "substitutions": [
+      "Bộ Thông tin và Truyền thông",
+      "Cục Viễn thông"
+    ],
+    "translations": [
+      "Ministry of Information and Communications",
+      "Authority of Telecommunications"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "Viettel Post",
+      "Vietnam Post",
+      "Giao Hàng Nhanh",
+      "Giao Hàng Tiết Kiệm"
+    ],
+    "translations": [
+      "Viettel Post",
+      "Vietnam Post",
+      "GHN Express",
+      "GHTK"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "Facebook",
+      "Zalo",
+      "TikTok",
+      "Instagram"
+    ],
+    "translations": [
+      "Facebook",
+      "Zalo",
+      "TikTok",
+      "Instagram"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "substitutions": [
+      "Bộ Y tế",
+      "Bảo hiểm xã hội Việt Nam",
+      "Cục Quản lý Dược"
+    ],
+    "translations": [
+      "Ministry of Health",
+      "Vietnam Social Security",
+      "Drug Administration of Vietnam"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "Shopee",
+      "Lazada",
+      "Tiki",
+      "Bách Hóa Xanh",
+      "Thế Giới Di Động"
+    ],
+    "translations": [
+      "Shopee",
+      "Lazada",
+      "Tiki",
+      "Bach Hoa Xanh",
+      "The Gioi Di Dong"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "substitutions": [
+      "100 nghìn đồng (VND)",
+      "200 nghìn đồng (VND)",
+      "300 nghìn đồng (VND)"
+    ],
+    "translations": [
+      "100,000 VND",
+      "200,000 VND",
+      "300,000 VND"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "SSI",
+      "VNDirect",
+      "HSC",
+      "VCSC",
+      "MBS"
+    ],
+    "translations": [
+      "SSI Securities",
+      "VNDirect Securities",
+      "HSC Securities",
+      "Viet Capital Securities",
+      "MB Securities"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "substitutions": [
+      "Vingroup",
+      "Novaland",
+      "Vinhomes",
+      "Sun Group"
+    ],
+    "translations": [
+      "Vingroup",
+      "Novaland",
+      "Vinhomes",
+      "Sun Group"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "Sơn Tùng M-TP",
+      "Mỹ Tâm",
+      "Hoàng Thùy Linh",
+      "HIEUTHUHAI",
+      "MONO",
+      "Phương Mỹ Chi"
+    ],
+    "translations": [
+      "Son Tung M-TP",
+      "My Tam",
+      "Hoang Thuy Linh",
+      "HIEUTHUHAI",
+      "MONO",
+      "Phuong My Chi"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "substitutions": [
+      "Giám đốc",
+      "Trưởng phòng",
+      "Thầy",
+      "Cô"
+    ],
+    "translations": [
+      "Director",
+      "Department Head",
+      "Teacher (male)",
+      "Teacher (female)"
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "Vietcombank",
+      "BIDV",
+      "VietinBank",
+      "Agribank",
+      "ACB",
+      "Techcombank"
+    ],
+    "translations": [
+      "Vietcombank",
+      "BIDV",
+      "VietinBank",
+      "Agribank",
+      "ACB",
+      "Techcombank"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "substitutions": [
+      "Viettel",
+      "Vinaphone",
+      "MobiFone",
+      "Vietnamobile"
+    ],
+    "translations": [
+      "Viettel",
+      "Vinaphone",
+      "MobiFone",
+      "Vietnamobile"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "Bộ Thông tin và Truyền thông",
+      "Cục Viễn thông"
+    ],
+    "translations": [
+      "Ministry of Information and Communications",
+      "Authority of Telecommunications"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "Thorakao",
+      "Saigon Cosmetic",
+      "Lana",
+      "Cocoon",
+      "The Face Shop"
+    ],
+    "translations": [
+      "Thorakao",
+      "Saigon Cosmetic",
+      "Lana",
+      "Cocoon",
+      "The Face Shop"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "substitutions": [
+      "Cục Cạnh tranh và Bảo vệ người tiêu dùng",
+      "Hội Bảo vệ người tiêu dùng Việt Nam",
+      "Tổng cục Quản lý thị trường"
+    ],
+    "translations": [
+      "Vietnam Competition and Consumer Authority",
+      "Vietnam Consumer Protection Association",
+      "General Department of Market Surveillance"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "MoMo",
+      "ZaloPay",
+      "VNPay",
+      "Shopee Pay"
+    ],
+    "translations": [
+      "MoMo",
+      "ZaloPay",
+      "VNPay",
+      "Shopee Pay"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "Vietcombank Rewards",
+      "BIDV Loyalty Points",
+      "ACB Rewards",
+      "Techcombank F@st Rewards"
+    ],
+    "translations": [
+      "Vietcombank Rewards",
+      "BIDV Loyalty Points",
+      "ACB Rewards",
+      "Techcombank F@st Rewards"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "substitutions": [
+      "Cục Đăng kiểm Việt Nam",
+      "Cục Đường bộ Việt Nam"
+    ],
+    "translations": [
+      "Vietnam Register",
+      "Directorate for Roads of Vietnam"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "VinFast",
+      "Toyota",
+      "Honda",
+      "Mazda",
+      "Hyundai",
+      "Kia"
+    ],
+    "translations": [
+      "VinFast",
+      "Toyota",
+      "Honda",
+      "Mazda",
+      "Hyundai",
+      "Kia"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "Vinamilk",
+      "TH True Milk",
+      "Dutch Lady",
+      "Nutifood"
+    ],
+    "translations": [
+      "Vinamilk",
+      "TH True Milk",
+      "Dutch Lady",
+      "Nutifood"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "substitutions": [
+      "Ngân hàng Chính sách xã hội",
+      "Quỹ hỗ trợ học sinh sinh viên"
+    ],
+    "translations": [
+      "Vietnam Bank for Social Policies",
+      "Student Support Fund"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "Viettel Internet",
+      "VNPT Internet",
+      "FPT Telecom"
+    ],
+    "translations": [
+      "Viettel Internet",
+      "VNPT Internet",
+      "FPT Telecom"
+    ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "TP Hồ Chí Minh",
+      "Hà Nội",
+      "Hải Phòng",
+      "Đồng Nai",
+      "Bình Dương",
+      "Bà Rịa - Vũng Tàu",
+      "Long An"
+    ],
+    "translations": [
+      "Ho Chi Minh City",
+      "Hanoi",
+      "Hai Phong",
+      "Dong Nai",
+      "Binh Duong",
+      "Ba Ria - Vung Tau",
+      "Long An"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "Miền Bắc",
+      "Miền Trung",
+      "Miền Nam",
+      "Đồng bằng sông Cửu Long"
+    ],
+    "translations": [
+      "Northern Vietnam",
+      "Central Vietnam",
+      "Southern Vietnam",
+      "Mekong Delta"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "Việt Nam",
+      "Cộng hòa Xã hội Chủ nghĩa Việt Nam"
+    ],
+    "translations": [
+      "Vietnam",
+      "Socialist Republic of Vietnam"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "substitutions": [
+      "Công an",
+      "Bộ Công an",
+      "Cảnh sát"
+    ],
+    "translations": [
+      "Police",
+      "Ministry of Public Security",
+      "Police Force"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "Phòng Cảnh sát hình sự",
+      "Phòng An ninh mạng",
+      "Phòng Cảnh sát kinh tế"
+    ],
+    "translations": [
+      "Criminal Investigation Division",
+      "Cyber Security Division",
+      "Economic Police Division"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "Công an quận 1",
+      "Công an quận Hoàn Kiếm",
+      "Công an TP Thủ Đức"
+    ],
+    "translations": [
+      "District 1 Police Station",
+      "Hoan Kiem District Police Station",
+      "Thu Duc City Police Station"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "Công an quận Bình Thạnh",
+      "Công an quận Ba Đình",
+      "Công an quận Hải Châu"
+    ],
+    "translations": [
+      "Binh Thanh District Police Station",
+      "Ba Dinh District Police Station",
+      "Hai Chau District Police Station"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "Đại học Quốc gia Hà Nội",
+      "Đại học Quốc gia TP.HCM",
+      "Đại học Bách khoa Hà Nội",
+      "Đại học Kinh tế TP.HCM"
+    ],
+    "translations": [
+      "Vietnam National University, Hanoi",
+      "Vietnam National University, Ho Chi Minh City",
+      "Hanoi University of Science and Technology",
+      "University of Economics Ho Chi Minh City"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "Bộ Giáo dục và Đào tạo",
+      "Sở Giáo dục và Đào tạo"
+    ],
+    "translations": [
+      "Ministry of Education and Training",
+      "Department of Education and Training"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "Phòng Tín dụng cá nhân",
+      "Trung tâm Hỗ trợ vay vốn"
+    ],
+    "translations": [
+      "Personal Credit Department",
+      "Loan Support Center"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "Truyền hình cáp Viettel",
+      "FPT Play",
+      "VTVcab"
+    ],
+    "translations": [
+      "Viettel Cable TV",
+      "FPT Play",
+      "VTVcab"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "Gói cơ bản",
+      "Gói nâng cao",
+      "Gói phim HD"
+    ],
+    "translations": [
+      "Basic Package",
+      "Premium Package",
+      "HD Movie Package"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "Viettel",
+      "VNPT",
+      "FPT"
+    ],
+    "translations": [
+      "Viettel",
+      "VNPT",
+      "FPT"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "Shopee",
+      "Lazada",
+      "Tiki",
+      "Sendo"
+    ],
+    "translations": [
+      "Shopee",
+      "Lazada",
+      "Tiki",
+      "Sendo"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "iPhone",
+      "Samsung Galaxy",
+      "Xiaomi"
+    ],
+    "translations": [
+      "iPhone",
+      "Samsung Galaxy",
+      "Xiaomi"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "xoài",
+      "mãng cầu",
+      "sầu riêng",
+      "thanh long"
+    ],
+    "translations": [
+      "mango",
+      "custard apple",
+      "durian",
+      "dragon fruit"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "Bộ Xây dựng",
+      "Sở Xây dựng"
+    ],
+    "translations": [
+      "Ministry of Construction",
+      "Department of Construction"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "Phòng Cảnh sát giao thông",
+      "Sở Giao thông vận tải"
+    ],
+    "translations": [
+      "Traffic Police Department",
+      "Department of Transport"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "Đông Nam Bộ",
+      "Tây Nguyên",
+      "Bắc Trung Bộ"
+    ],
+    "translations": [
+      "Southeast Region",
+      "Central Highlands",
+      "North Central Coast"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "Công an sân bay Tân Sơn Nhất",
+      "Công an cửa khẩu quốc tế",
+      "Công an đường thủy"
+    ],
+    "translations": [
+      "Tan Son Nhat Airport Police",
+      "International Border Police",
+      "Marine Police"
+    ]
+  }
+}

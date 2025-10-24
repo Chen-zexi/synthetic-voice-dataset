@@ -1,0 +1,348 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "description": "Common personal names in the target locale",
+    "substitutions": [
+      "Name1",
+      "Name2",
+      "Name3",
+      "Name4"
+    ],
+    "translations": [
+      "Name1 (romanized if needed)",
+      "Name2 (romanized if needed)",
+      "Name3 (romanized if needed)",
+      "Name4 (romanized if needed)"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "description": "Major cities in the target country/region",
+    "substitutions": [
+      "City1",
+      "City2",
+      "City3",
+      "City4"
+    ],
+    "translations": [
+      "City1 (English)",
+      "City2 (English)",
+      "City3 (English)",
+      "City4 (English)"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "description": "Medium monetary amounts (equivalent to $200-$1000 USD)",
+    "substitutions": [
+      "Amount1 Currency",
+      "Amount2 Currency",
+      "Amount3 Currency"
+    ],
+    "translations": [
+      "Amount1 CUR",
+      "Amount2 CUR",
+      "Amount3 CUR"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "description": "Educational tutoring centers or test prep companies",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "description": "Credit card companies operating in the region",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "description": "Small monetary amounts (equivalent to $20-$100 USD)",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "description": "Banks and credit unions in the region",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "description": "Major airports in the country/region",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "description": "Bank/credit card names",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "description": "Government housing or urban development agencies",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "description": "Housing subsidy or assistance programs",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "description": "Telecommunications regulatory authority",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "description": "Courier and delivery services",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "description": "Popular social media platforms",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "description": "Government health departments/ministries",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "description": "Popular online/offline marketplaces and stores",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "description": "Very small monetary amounts (equivalent to $5-$20 USD)",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "description": "Stock brokerage and investment firms",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "description": "Major real estate developers/companies",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "description": "Popular singers/artists in the region",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "description": "Titles for important/respected people",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "description": "Major banks in the region",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "description": "Telecom/mobile service providers",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "description": "Telecommunications authority (same as telecom_regulator)",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "description": "Popular cosmetic/beauty brands",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "description": "Consumer protection agencies",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "description": "Digital payment apps/wallets",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "description": "Loyalty/rewards programs",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "description": "Vehicle/traffic regulatory authority",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "description": "Popular car brands in the region",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "description": "Dairy product brands/stores",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "description": "Student loan/education financing organizations",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "description": "Internet service providers",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "description": "States/provinces/regions within the country",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "description": "Broader geographical regions",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "description": "Country name variations",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "description": "Police force names",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "description": "Criminal investigation units",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "description": "Specific police station names",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "description": "Additional police station names",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "description": "Universities and colleges",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "description": "Education ministries/departments",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "description": "Loan/financing departments",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "description": "TV/cable service providers",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "description": "TV service types",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "description": "Internet service provider names",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "description": "E-commerce platforms",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "description": "Popular consumer products",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "description": "Common fruits in the region",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "description": "Government housing agency (variant)",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "description": "Vehicle registration department",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "description": "Region name (typo variant - should be region_name)",
+    "substitutions": [],
+    "translations": []
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "description": "Special police stations (duplicate tag)",
+    "substitutions": [],
+    "translations": []
+  }
+}

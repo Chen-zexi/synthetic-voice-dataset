@@ -1,0 +1,779 @@
+{
+  "{00001}": {
+    "tag": "<person_name>",
+    "substitutions": [
+      "佐藤太郎",
+      "鈴木花子",
+      "高橋健一",
+      "田中美咲",
+      "渡辺翔太",
+      "伊藤さくら",
+      "山本大輔",
+      "中村優子"
+    ],
+    "translations": [
+      "Sato Taro",
+      "Suzuki Hanako",
+      "Takahashi Kenichi",
+      "Tanaka Misaki",
+      "Watanabe Shota",
+      "Ito Sakura",
+      "Yamamoto Daisuke",
+      "Nakamura Yuko"
+    ]
+  },
+  "{00002}": {
+    "tag": "<city_name>",
+    "substitutions": [
+      "東京",
+      "横浜",
+      "大阪",
+      "名古屋",
+      "札幌",
+      "福岡",
+      "神戸",
+      "京都"
+    ],
+    "translations": [
+      "Tokyo",
+      "Yokohama",
+      "Osaka",
+      "Nagoya",
+      "Sapporo",
+      "Fukuoka",
+      "Kobe",
+      "Kyoto"
+    ]
+  },
+  "{00003}": {
+    "tag": "<money_amount_medium>",
+    "substitutions": [
+      "3万円 (JPY)",
+      "5万円 (JPY)",
+      "10万円 (JPY)",
+      "20万円 (JPY)"
+    ],
+    "translations": [
+      "30,000 JPY",
+      "50,000 JPY",
+      "100,000 JPY",
+      "200,000 JPY"
+    ]
+  },
+  "{00004}": {
+    "tag": "<tutoring_center>",
+    "substitutions": [
+      "公文",
+      "栄光ゼミナール",
+      "河合塾",
+      "駿台予備校"
+    ],
+    "translations": [
+      "Kumon",
+      "Eiko Seminar",
+      "Kawai Juku",
+      "Sundai"
+    ]
+  },
+  "{00005}": {
+    "tag": "<credit_card_agency>",
+    "substitutions": [
+      "VISA",
+      "マスターカード",
+      "JCB",
+      "アメリカン・エキスプレス"
+    ],
+    "translations": [
+      "VISA",
+      "MasterCard",
+      "JCB",
+      "American Express"
+    ]
+  },
+  "{00006}": {
+    "tag": "<money_amount_small>",
+    "substitutions": [
+      "3千円 (JPY)",
+      "5千円 (JPY)",
+      "1万円 (JPY)"
+    ],
+    "translations": [
+      "3,000 JPY",
+      "5,000 JPY",
+      "10,000 JPY"
+    ]
+  },
+  "{00007}": {
+    "tag": "<credit_union>",
+    "substitutions": [
+      "三菱UFJ銀行",
+      "みずほ銀行",
+      "三井住友銀行",
+      "りそな銀行",
+      "ゆうちょ銀行"
+    ],
+    "translations": [
+      "MUFG Bank",
+      "Mizuho Bank",
+      "SMBC",
+      "Resona Bank",
+      "Japan Post Bank"
+    ]
+  },
+  "{00008}": {
+    "tag": "<airport_name>",
+    "substitutions": [
+      "成田国際空港",
+      "羽田空港",
+      "関西国際空港",
+      "中部国際空港"
+    ],
+    "translations": [
+      "Narita International Airport",
+      "Haneda Airport",
+      "Kansai International Airport",
+      "Chubu Centrair Airport"
+    ]
+  },
+  "{00009}": {
+    "tag": "<credit_union_card>",
+    "substitutions": [
+      "三菱UFJカード",
+      "みずほカード",
+      "三井住友カード",
+      "楽天カード",
+      "イオンカード"
+    ],
+    "translations": [
+      "MUFG Card",
+      "Mizuho Card",
+      "SMBC Card",
+      "Rakuten Card",
+      "AEON Card"
+    ]
+  },
+  "{00010}": {
+    "tag": "<gov_housing_agency>",
+    "substitutions": [
+      "国土交通省",
+      "都市再生機構",
+      "住宅金融支援機構"
+    ],
+    "translations": [
+      "Ministry of Land, Infrastructure, Transport and Tourism",
+      "Urban Renaissance Agency",
+      "Japan Housing Finance Agency"
+    ]
+  },
+  "{00011}": {
+    "tag": "<housing_purchase_benefit>",
+    "substitutions": [
+      "住宅ローン減税",
+      "すまい給付金",
+      "フラット35",
+      "住宅取得等資金贈与"
+    ],
+    "translations": [
+      "Housing Loan Tax Deduction",
+      "Sumai Kyufukin",
+      "Flat 35",
+      "Housing Acquisition Gift Tax Exemption"
+    ]
+  },
+  "{00012}": {
+    "tag": "<telecom_regulator>",
+    "substitutions": [
+      "総務省",
+      "電気通信事業者協会"
+    ],
+    "translations": [
+      "Ministry of Internal Affairs and Communications",
+      "Telecommunications Carriers Association"
+    ]
+  },
+  "{00013}": {
+    "tag": "<courier_service>",
+    "substitutions": [
+      "ヤマト運輸",
+      "佐川急便",
+      "日本郵便",
+      "西濃運輸"
+    ],
+    "translations": [
+      "Yamato Transport",
+      "Sagawa Express",
+      "Japan Post",
+      "Seino Transportation"
+    ]
+  },
+  "{00014}": {
+    "tag": "<social_media>",
+    "substitutions": [
+      "LINE",
+      "Twitter",
+      "Instagram",
+      "TikTok"
+    ],
+    "translations": [
+      "LINE",
+      "Twitter",
+      "Instagram",
+      "TikTok"
+    ]
+  },
+  "{00015}": {
+    "tag": "<gov_health_agency>",
+    "substitutions": [
+      "厚生労働省",
+      "国民健康保険団体連合会",
+      "日本年金機構"
+    ],
+    "translations": [
+      "Ministry of Health, Labour and Welfare",
+      "National Federation of Health Insurance Societies",
+      "Japan Pension Service"
+    ]
+  },
+  "{00016}": {
+    "tag": "<marketplace>",
+    "substitutions": [
+      "Amazon",
+      "楽天市場",
+      "Yahoo!ショッピング",
+      "イオン",
+      "ドン・キホーテ"
+    ],
+    "translations": [
+      "Amazon",
+      "Rakuten Ichiba",
+      "Yahoo! Shopping",
+      "AEON",
+      "Don Quijote"
+    ]
+  },
+  "{00017}": {
+    "tag": "<money_amount_very_small>",
+    "substitutions": [
+      "500円 (JPY)",
+      "1,000円 (JPY)",
+      "2,000円 (JPY)"
+    ],
+    "translations": [
+      "500 JPY",
+      "1,000 JPY",
+      "2,000 JPY"
+    ]
+  },
+  "{00018}": {
+    "tag": "<brokerage_firm>",
+    "substitutions": [
+      "野村證券",
+      "大和証券",
+      "SMBC日興証券",
+      "みずほ証券",
+      "SBI証券"
+    ],
+    "translations": [
+      "Nomura Securities",
+      "Daiwa Securities",
+      "SMBC Nikko Securities",
+      "Mizuho Securities",
+      "SBI Securities"
+    ]
+  },
+  "{00019}": {
+    "tag": "<real_estate_company>",
+    "substitutions": [
+      "三井不動産",
+      "三菱地所",
+      "住友不動産",
+      "東急不動産"
+    ],
+    "translations": [
+      "Mitsui Fudosan",
+      "Mitsubishi Estate",
+      "Sumitomo Realty",
+      "Tokyu Land"
+    ]
+  },
+  "{00020}": {
+    "tag": "<singer_name>",
+    "substitutions": [
+      "米津玄師",
+      "あいみょん",
+      "YOASOBI",
+      "Official髭男dism",
+      "King & Prince",
+      "NiziU"
+    ],
+    "translations": [
+      "Kenshi Yonezu",
+      "Aimyon",
+      "YOASOBI",
+      "Official HIGE DANdism",
+      "King & Prince",
+      "NiziU"
+    ]
+  },
+  "{00021}": {
+    "tag": "<important_contact>",
+    "substitutions": [
+      "部長",
+      "社長",
+      "先生",
+      "課長"
+    ],
+    "translations": [
+      "Department Manager",
+      "President/CEO",
+      "Teacher/Doctor",
+      "Section Chief"
+    ]
+  },
+  "{00022}": {
+    "tag": "<bank_name>",
+    "substitutions": [
+      "三菱UFJ銀行",
+      "三井住友銀行",
+      "みずほ銀行",
+      "りそな銀行",
+      "ゆうちょ銀行",
+      "横浜銀行"
+    ],
+    "translations": [
+      "MUFG Bank",
+      "SMBC",
+      "Mizuho Bank",
+      "Resona Bank",
+      "Japan Post Bank",
+      "Bank of Yokohama"
+    ]
+  },
+  "{00023}": {
+    "tag": "<telecom_service_provider>",
+    "substitutions": [
+      "NTTドコモ",
+      "au",
+      "ソフトバンク",
+      "楽天モバイル"
+    ],
+    "translations": [
+      "NTT Docomo",
+      "au",
+      "SoftBank",
+      "Rakuten Mobile"
+    ]
+  },
+  "{00024}": {
+    "tag": "<telecom_authority>",
+    "substitutions": [
+      "総務省",
+      "電気通信事業者協会"
+    ],
+    "translations": [
+      "Ministry of Internal Affairs and Communications",
+      "Telecommunications Carriers Association"
+    ]
+  },
+  "{00025}": {
+    "tag": "<cosmetic_brand>",
+    "substitutions": [
+      "資生堂",
+      "SK-II",
+      "コーセー",
+      "カネボウ",
+      "花王"
+    ],
+    "translations": [
+      "Shiseido",
+      "SK-II",
+      "KOSE",
+      "Kanebo",
+      "Kao"
+    ]
+  },
+  "{00026}": {
+    "tag": "<consumer_protection_agency>",
+    "substitutions": [
+      "消費者庁",
+      "国民生活センター",
+      "公正取引委員会"
+    ],
+    "translations": [
+      "Consumer Affairs Agency",
+      "National Consumer Affairs Center",
+      "Fair Trade Commission"
+    ]
+  },
+  "{00027}": {
+    "tag": "<payment_app>",
+    "substitutions": [
+      "PayPay",
+      "LINE Pay",
+      "楽天ペイ",
+      "メルペイ"
+    ],
+    "translations": [
+      "PayPay",
+      "LINE Pay",
+      "Rakuten Pay",
+      "Merpay"
+    ]
+  },
+  "{00028}": {
+    "tag": "<card_network_loyalty>",
+    "substitutions": [
+      "楽天ポイント",
+      "Tポイント",
+      "dポイント",
+      "Pontaポイント"
+    ],
+    "translations": [
+      "Rakuten Points",
+      "T-Point",
+      "d Point",
+      "Ponta Points"
+    ]
+  },
+  "{00029}": {
+    "tag": "<motor_vehicle_authority>",
+    "substitutions": [
+      "運輸支局",
+      "陸運局",
+      "日本自動車連盟"
+    ],
+    "translations": [
+      "Transport Branch Office",
+      "Land Transport Office",
+      "JAF (Japan Automobile Federation)"
+    ]
+  },
+  "{00030}": {
+    "tag": "<car_brand>",
+    "substitutions": [
+      "トヨタ",
+      "ホンダ",
+      "日産",
+      "マツダ",
+      "スズキ",
+      "スバル"
+    ],
+    "translations": [
+      "Toyota",
+      "Honda",
+      "Nissan",
+      "Mazda",
+      "Suzuki",
+      "Subaru"
+    ]
+  },
+  "{00031}": {
+    "tag": "<dairy_store>",
+    "substitutions": [
+      "明治",
+      "森永乳業",
+      "雪印メグミルク",
+      "グリコ"
+    ],
+    "translations": [
+      "Meiji",
+      "Morinaga Milk",
+      "Megmilk Snow Brand",
+      "Glico"
+    ]
+  },
+  "{00032}": {
+    "tag": "<student_loan_office>",
+    "substitutions": [
+      "日本学生支援機構",
+      "教育ローンセンター"
+    ],
+    "translations": [
+      "Japan Student Services Organization (JASSO)",
+      "Education Loan Center"
+    ]
+  },
+  "{00033}": {
+    "tag": "<internet_service_provider>",
+    "substitutions": [
+      "NTT東日本",
+      "NTT西日本",
+      "KDDI",
+      "ソフトバンク光"
+    ],
+    "translations": [
+      "NTT East",
+      "NTT West",
+      "KDDI",
+      "SoftBank Hikari"
+    ]
+  },
+  "{00034}": {
+    "tag": "<state_name>",
+    "substitutions": [
+      "東京都",
+      "大阪府",
+      "北海道",
+      "愛知県",
+      "福岡県",
+      "神奈川県",
+      "埼玉県"
+    ],
+    "translations": [
+      "Tokyo",
+      "Osaka",
+      "Hokkaido",
+      "Aichi",
+      "Fukuoka",
+      "Kanagawa",
+      "Saitama"
+    ]
+  },
+  "{00035}": {
+    "tag": "<region_name>",
+    "substitutions": [
+      "関東地方",
+      "関西地方",
+      "東北地方",
+      "九州地方"
+    ],
+    "translations": [
+      "Kanto Region",
+      "Kansai Region",
+      "Tohoku Region",
+      "Kyushu Region"
+    ]
+  },
+  "{00036}": {
+    "tag": "<country_name>",
+    "substitutions": [
+      "日本",
+      "日本国"
+    ],
+    "translations": [
+      "Japan",
+      "State of Japan"
+    ]
+  },
+  "{00037}": {
+    "tag": "<police>",
+    "substitutions": [
+      "警察庁",
+      "警視庁",
+      "警察"
+    ],
+    "translations": [
+      "National Police Agency",
+      "Tokyo Metropolitan Police",
+      "Police"
+    ]
+  },
+  "{00038}": {
+    "tag": "<criminal_investigation_department>",
+    "substitutions": [
+      "刑事部",
+      "サイバー犯罪対策課",
+      "組織犯罪対策部"
+    ],
+    "translations": [
+      "Criminal Investigation Bureau",
+      "Cyber Crime Division",
+      "Organized Crime Department"
+    ]
+  },
+  "{00039}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "新宿警察署",
+      "渋谷警察署",
+      "池袋警察署"
+    ],
+    "translations": [
+      "Shinjuku Police Station",
+      "Shibuya Police Station",
+      "Ikebukuro Police Station"
+    ]
+  },
+  "{00040}": {
+    "tag": "<police_station_name>",
+    "substitutions": [
+      "品川警察署",
+      "上野警察署",
+      "横浜警察署"
+    ],
+    "translations": [
+      "Shinagawa Police Station",
+      "Ueno Police Station",
+      "Yokohama Police Station"
+    ]
+  },
+  "{00041}": {
+    "tag": "<education_institution>",
+    "substitutions": [
+      "東京大学",
+      "京都大学",
+      "早稲田大学",
+      "慶應義塾大学"
+    ],
+    "translations": [
+      "University of Tokyo",
+      "Kyoto University",
+      "Waseda University",
+      "Keio University"
+    ]
+  },
+  "{00042}": {
+    "tag": "<education_agency>",
+    "substitutions": [
+      "文部科学省",
+      "教育委員会"
+    ],
+    "translations": [
+      "Ministry of Education, Culture, Sports, Science and Technology",
+      "Board of Education"
+    ]
+  },
+  "{00043}": {
+    "tag": "<loan_department>",
+    "substitutions": [
+      "個人ローン部",
+      "融資相談センター"
+    ],
+    "translations": [
+      "Personal Loan Department",
+      "Loan Consultation Center"
+    ]
+  },
+  "{00044}": {
+    "tag": "<telecom_tv_provider>",
+    "substitutions": [
+      "NHK",
+      "スカパー",
+      "WOWOW",
+      "ひかりTV"
+    ],
+    "translations": [
+      "NHK",
+      "SKY PerfecTV",
+      "WOWOW",
+      "Hikari TV"
+    ]
+  },
+  "{00045}": {
+    "tag": "<telecom_tv_service>",
+    "substitutions": [
+      "地上デジタル放送",
+      "BS放送",
+      "CS放送"
+    ],
+    "translations": [
+      "Digital Terrestrial Broadcasting",
+      "BS Broadcasting",
+      "CS Broadcasting"
+    ]
+  },
+  "{00046}": {
+    "tag": "<ISP_name>",
+    "substitutions": [
+      "NTT",
+      "KDDI",
+      "ソフトバンク"
+    ],
+    "translations": [
+      "NTT",
+      "KDDI",
+      "SoftBank"
+    ]
+  },
+  "{00047}": {
+    "tag": "<ecommerce_platform_name>",
+    "substitutions": [
+      "Amazon",
+      "楽天",
+      "メルカリ",
+      "Yahoo!ショッピング"
+    ],
+    "translations": [
+      "Amazon",
+      "Rakuten",
+      "Mercari",
+      "Yahoo! Shopping"
+    ]
+  },
+  "{00048}": {
+    "tag": "<product_name>",
+    "substitutions": [
+      "iPhone",
+      "PlayStation",
+      "Nintendo Switch"
+    ],
+    "translations": [
+      "iPhone",
+      "PlayStation",
+      "Nintendo Switch"
+    ]
+  },
+  "{00049}": {
+    "tag": "<fruit>",
+    "substitutions": [
+      "りんご",
+      "みかん",
+      "梨",
+      "ぶどう"
+    ],
+    "translations": [
+      "apple",
+      "mandarin orange",
+      "pear",
+      "grape"
+    ]
+  },
+  "{00050}": {
+    "tag": "<gov_agency_housing>",
+    "substitutions": [
+      "国土交通省",
+      "住宅金融支援機構"
+    ],
+    "translations": [
+      "Ministry of Land, Infrastructure, Transport and Tourism",
+      "Japan Housing Finance Agency"
+    ]
+  },
+  "{00051}": {
+    "tag": "<vehicle_department>",
+    "substitutions": [
+      "陸運局",
+      "自動車検査登録事務所"
+    ],
+    "translations": [
+      "Land Transport Office",
+      "Vehicle Inspection and Registration Office"
+    ]
+  },
+  "{00052}": {
+    "tag": "<rigion_name>",
+    "substitutions": [
+      "関東地方",
+      "関西地方",
+      "中部地方"
+    ],
+    "translations": [
+      "Kanto Region",
+      "Kansai Region",
+      "Chubu Region"
+    ]
+  },
+  "{00053}": {
+    "tag": "<police_station>",
+    "substitutions": [
+      "空港警察署",
+      "鉄道警察隊",
+      "高速道路交通警察隊"
+    ],
+    "translations": [
+      "Airport Police Station",
+      "Railway Police Unit",
+      "Highway Traffic Police Unit"
+    ]
+  }
+}
