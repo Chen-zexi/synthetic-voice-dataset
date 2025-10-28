@@ -46,7 +46,10 @@ output/
 
 # Labeling directories
 scam_labeling/
+scam_labeling_new10k/
 legit_labeling/
+legit_labeling_new3k/
+batches_of_data/
 
 # OS
 .DS_Store

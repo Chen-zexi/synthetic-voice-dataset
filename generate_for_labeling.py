@@ -108,11 +108,12 @@ async def generate_scam_conversations(config, count: int):
     Generate scam conversations with maximum seed diversity.
     
     Distributes conversations across available seeds for variety:
-    - Calculates optimal scenarios_per_seed to use all 19 seeds
+    - Dynamically counts available high-quality seeds
+    - Calculates optimal scenarios_per_seed to use all available seeds
     - Each seed generates multiple conversations for target count
     - Higher counts automatically get more diversity
     
-    Example: 250 conversations with 19 seeds = ~13 conversations per seed
+    Example: 250 conversations with 28 seeds = ~9 conversations per seed
     
     Args:
         config: Configuration object
@@ -123,13 +124,19 @@ async def generate_scam_conversations(config, count: int):
     """
     print(f"Generating {count} scam conversations for ms-my locale...")
     
-    # Malaysian seeds: 19 available with quality >= 70
+    # Load seed file to get actual count
+    import json
+    seed_file_path = config.base_dir / "data" / "input" / "malaysian_voice_phishing_seeds_2025.json"
+    with open(seed_file_path, 'r') as f:
+        all_seeds = json.load(f)
+    
+    # Filter by quality
     min_quality = getattr(config, 'generation_min_seed_quality', 70)
-    available_seeds = 19
+    available_seeds = len([s for s in all_seeds if int(s.get('quality_score', 0)) >= min_quality])
     
     # Calculate scenarios per seed to distribute conversations across all seeds
-    # For 250 conversations: ceil(250/19) = 14 per seed = 266 total (capped at 250)
-    # For 2 conversations: ceil(2/19) = 1 per seed, but only 2 seeds will be used
+    # For 250 conversations with 28 seeds: ceil(250/28) = 9 per seed = 252 total (capped at 250)
+    # For 2 conversations: ceil(2/28) = 1 per seed, but only 2 seeds will be used
     scenarios_per_seed = max(1, math.ceil(count / available_seeds))
     
     # Use conversation-based control mode for exact count with absolute cap
