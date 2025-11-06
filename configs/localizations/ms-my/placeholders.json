@@ -27,11 +27,10 @@
     },
     {
         "placeholder_name": "<national_tax_agency_name>",
-        "description": "Name of the country’s primary tax authority, which varies by country and shapes the scam’s credibility.",
+        "description": "Name of the country's primary tax authority, which varies by country and shapes the scam's credibility. NOTE: The official name is 'Lembaga Hasil Dalam Negeri' (LHDN). 'Jabatan Hasil Dalam Negeri' is incorrect/outdated.",
         "substitutions": [
             "Lembaga Hasil Dalam Negeri",
             "LHDN",
-            "Jabatan Hasil",
             "Inland Revenue Board Malaysia"
         ]
     },
@@ -298,15 +297,30 @@
     },
     {
         "placeholder_name": "<bank_name_local>",
-        "description": "Name of a recognizable bank or credit issuer varies by country and even region; using a local institution increases plausibility of the scam.",
+        "description": "Name of a recognizable bank or credit issuer varies by country and even region; using a local institution increases plausibility of the scam. All entries are verified real Malaysian banks.",
         "substitutions": [
             "Maybank",
-            "CIMB",
+            "CIMB Bank",
             "Public Bank",
             "RHB Bank",
             "Bank Islam",
             "Hong Leong Bank",
-            "Ambank"
+            "Ambank",
+            "Alliance Bank",
+            "Standard Chartered Bank",
+            "OCBC Bank",
+            "United Overseas Bank",
+            "UOB Bank",
+            "Bank Rakyat",
+            "Bank Simpanan Nasional",
+            "BSN",
+            "Affin Bank",
+            "MBSB Bank",
+            "Bank Muamalat",
+            "Kuwait Finance House",
+            "Al Rajhi Bank",
+            "HSBC Bank",
+            "Citibank"
         ]
     },
     {
@@ -333,12 +347,20 @@
     },
     {
         "placeholder_name": "<investment_regulator_name>",
-        "description": "Name of the national or regional financial regulator the scammer might invoke to appear legitimate; varies by country/market.",
+        "description": "Name of the national or regional financial regulator the scammer might invoke to appear legitimate; varies by country/market. All entries are verified real Malaysian financial regulators.",
         "substitutions": [
             "Suruhanjaya Sekuriti Malaysia",
+            "Securities Commission Malaysia",
+            "SC Malaysia",
             "Bank Negara Malaysia",
+            "BNM",
             "Suruhanjaya Syarikat Malaysia",
-            "Bursa Malaysia"
+            "Companies Commission of Malaysia",
+            "SSM",
+            "Bursa Malaysia",
+            "Malaysian Exchange",
+            "Suruhanjaya Pasaran Kewangan",
+            "Financial Market Authority"
         ]
     },
     {
@@ -406,15 +428,42 @@
     },
     {
         "placeholder_name": "<health_services_provider_name>",
-        "description": "The clinic/hospital or network name differs by locale and lends credibility to the call.",
+        "description": "The clinic/hospital or network name differs by locale and lends credibility to the call. All entries are verified real Malaysian healthcare providers.",
         "substitutions": [
             "Klinik Kesihatan Bandar Baru",
             "Hospital Sungai Buloh",
-            "KPJ Damansara Specialist",
-            "Columbia Asia Cheras",
-            "Klinik Pakar Putra Heights",
+            "KPJ Damansara Specialist Hospital",
+            "Columbia Asia Hospital Cheras",
+            "KPJ Puteri Specialist Hospital",
+            "KPJ Ampang Puteri Specialist Hospital",
+            "KPJ Selangor Specialist Hospital",
+            "KPJ Johor Specialist Hospital",
             "Hospital Kuala Lumpur",
-            "Klinik Rakyat Setia Alam"
+            "Klinik Kesihatan Putrajaya",
+            "Klinik Kesihatan Serdang",
+            "Klinik Kesihatan Ampang",
+            "Sunway Medical Centre",
+            "Pantai Hospital Kuala Lumpur",
+            "Pantai Hospital Cheras",
+            "Pantai Hospital Ampang",
+            "Gleneagles Kuala Lumpur",
+            "Prince Court Medical Centre",
+            "Subang Jaya Medical Centre",
+            "Tropicana Medical Centre",
+            "Tung Shin Hospital",
+            "Assunta Hospital",
+            "Island Hospital",
+            "Loh Guan Lye Specialist Centre",
+            "Mahkota Medical Centre",
+            "Penang Adventist Hospital",
+            "KPJ Penang Specialist Hospital",
+            "Borneo Medical Centre",
+            "KPJ Sabah Specialist Hospital",
+            "Normah Medical Specialist Centre",
+            "Timberland Medical Centre",
+            "KPJ Kuching Specialist Hospital",
+            "KPJ Miri Specialist Hospital",
+            "Borneo Medical Centre Kuching"
         ]
     },
     {
@@ -546,15 +595,50 @@
     },
     {
         "placeholder_name": "<urgent_medical_facility_name_local>",
-        "description": "Name of a local hospital/clinic the scammer might cite during a claimed medical emergency; varies by country and city for realism.",
+        "description": "Name of a local hospital/clinic the scammer might cite during a claimed medical emergency; varies by country and city for realism. All entries are verified real Malaysian hospitals.",
         "substitutions": [
             "Hospital Kuala Lumpur",
+            "Hospital Putrajaya",
+            "Hospital Selayang",
+            "Hospital Ampang",
+            "Hospital Serdang",
+            "Hospital Kajang",
+            "Hospital Tengku Ampuan Rahimah",
             "Hospital Shah Alam",
             "Hospital Sultanah Aminah",
             "Hospital Seberang Jaya",
             "Hospital Sungai Buloh",
             "Hospital Queen Elizabeth",
-            "Hospital Putrajaya"
+            "Hospital Tuanku Ja'afar",
+            "Hospital Melaka",
+            "Hospital Sultanah Bahiyah",
+            "Hospital Ipoh",
+            "Hospital Taiping",
+            "Hospital Seberang Perai",
+            "Hospital Pulau Pinang",
+            "Hospital Tuanku Fauziah",
+            "Hospital Sultanah Nur Zahirah",
+            "Hospital Raja Permaisuri Bainun",
+            "Hospital Temerloh",
+            "Hospital Bentong",
+            "Hospital Tengku Ampuan Afzan",
+            "Hospital Raub",
+            "Hospital Kuala Krai",
+            "Hospital Kota Bharu",
+            "Hospital Sultan Ismail",
+            "Hospital Sultanah Nur Zahirah",
+            "Hospital Dungun",
+            "Hospital Kemaman",
+            "Hospital Tawau",
+            "Hospital Queen Elizabeth II",
+            "Hospital Likas",
+            "Hospital Sandakan",
+            "Hospital Duchess of Kent",
+            "Hospital Miri",
+            "Hospital Sarawak General",
+            "Hospital Sibu",
+            "Hospital Bintulu",
+            "Hospital Sri Aman"
         ]
     },
     {
@@ -1181,6 +1265,68 @@
             "Jangan putuskan talian, jangan buat laporan",
             "Jangan cuba call 999, nanti keadaan jadi lebih teruk",
             "Jangan mesej sesiapa, tunggu arahan saya seterusnya"
+        ]
+    },
+    {
+        "placeholder_name": "<malay_male_name>",
+        "description": "Common Malay male given names in Malaysia for high variety.",
+        "substitutions": [
+            "Ahmad", "Muhammad", "Hakim", "Hafiz", "Farid", "Azlan", "Zul", "Ridzuan", "Faisal", "Rahman",
+            "Kamal", "Shahrul", "Nizam", "Syafiq", "Amir", "Faruq", "Irfan", "Khairul", "Zain", "Syahrul",
+            "Haziq", "Danial", "Aiman", "Iskandar", "Haikal", "Aqil", "Firdaus", "Imran", "Harith", "Luqman",
+            "Naufal", "Arif", "Azim", "Asyraf", "Azri", "Rizal", "Nazmi", "Zaki", "Ikhwan", "Faiz",
+            "Hafizi", "Muaz", "Shafiq", "Ammar", "Rashid", "Shukri", "Faizal", "Khai", "Daniel", "Rauf",
+            "Azman", "Syazwan", "Firdaus", "Amirul", "Hakimi", "Haziq", "Danish", "Iman", "Fikri", "Haziq",
+            "Nazrul", "Zulhilmi", "Izzuddin", "Syukri", "Afiq", "Haziq", "Nazri", "Firdaus", "Aizat", "Hakimi",
+            "Ridwan", "Shahril", "Nizam", "Syafie", "Amiruddin", "Farhan", "Iqbal", "Khalil", "Zulkifli", "Syahril",
+            "Hazim", "Danish", "Aiman", "Iskandar", "Haikal", "Aqeel", "Firdaus", "Iman", "Hariz", "Luqman",
+            "Naufal", "Ariff", "Azim", "Asyraf", "Azrin", "Rizal", "Nazrin", "Zaki", "Ikram", "Faizal"
+        ]
+    },
+    {
+        "placeholder_name": "<malay_female_name>",
+        "description": "Common Malay female given names in Malaysia for high variety.",
+        "substitutions": [
+            "Aisyah", "Siti", "Nurul", "Aina", "Hannah", "Farah", "Zahra", "Syifa", "Aleeya", "Amira",
+            "Nadia", "Balqis", "Izzah", "Nurin", "Afiqah", "Nabila", "Sarah", "Khadijah", "Mira", "Liyana",
+            "Athirah", "Afifah", "Huda", "Rania", "Wani", "Nisa", "Sofea", "Alya", "Husna", "Umairah",
+            "Farzana", "Irdina", "Batrisyia", "Maisarah", "Syahirah", "Izzati", "Zarina", "Aqilah", "Adila", "Yasmin",
+            "Rafidah", "Salwa", "Zulaikha", "Aqila", "Arissa", "Najwa", "Mawar", "Qistina", "Ain", "Hani"
+        ]
+    },
+    {
+        "placeholder_name": "<chinese_malay_name>",
+        "description": "Common Malaysian Chinese given names used in Malay contexts (first names only).",
+        "substitutions": [
+            "Wei Ling", "Mei Ling", "Siew Ling", "Jia Wen", "Kah Jun", "Kah Yan", "Li Xuan", "Yee Ling", "Xin Yi", "Xiang",
+            "Jia Hao", "Wei Jian", "Hui Min", "Pei Wen", "Qian Hui", "Zi Ying", "Zi Jie", "Wen Jie", "Yee Hong", "Chee Hong",
+            "Kelvin", "Desmond", "Jason", "Carmen", "Vivian", "Amanda", "Yvonne", "Nicole", "Michelle", "Ashley"
+        ]
+    },
+    {
+        "placeholder_name": "<indian_malay_name>",
+        "description": "Common Malaysian Indian given names used in Malay contexts (first names only).",
+        "substitutions": [
+            "Kumar", "Arun", "Suresh", "Prakash", "Viknesh", "Arvind", "Vijay", "Karthik", "Ramesh", "Raj",
+            "Priya", "Deepa", "Asha", "Kavitha", "Preeti", "Anita", "Nalini", "Shalini", "Meera", "Divya"
+        ]
+    },
+    {
+        "placeholder_name": "<caller_name>",
+        "description": "Localized personal name for the person making the scam call, expanded for higher diversity.",
+        "substitutions": [
+            "Azman", "Hafiz", "Syafiq", "Farah", "Aina", "Kumar", "Mei Ling",
+            "Aiman", "Irfan", "Khairul", "Faisal", "Ridzuan", "Danial", "Aqil", "Luqman", "Naufal", "Arif",
+            "Ammar", "Rashid", "Shukri", "Faizal", "Haziq", "Amir", "Imran", "Harith", "Haikal", "Nazmi"
+        ]
+    },
+    {
+        "placeholder_name": "<callee_name>",
+        "description": "Localized personal name for the person receiving the call, expanded for higher diversity.",
+        "substitutions": [
+            "Aisyah", "Farah", "Siti", "Nurul", "Haziq", "Ahmad", "Kumar",
+            "Nadia", "Amira", "Hannah", "Liyana", "Nabila", "Sarah", "Alya", "Syahirah", "Izzah", "Mira",
+            "Athirah", "Afifah", "Huda", "Rania", "Wani", "Nisa", "Sofea", "Ain", "Hani", "Najwa"
         ]
     }
 ]

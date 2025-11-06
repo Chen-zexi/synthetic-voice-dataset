@@ -1,7 +1,7 @@
 {
   "followup_turns": {
-    "num_turns_lower_limit": 20,
-    "num_turns_upper_limit": 24,
+    "num_turns_lower_limit": 38,
+    "num_turns_upper_limit": 45,
     "victim_awareness_levels": [
       "not",
       "not",
@@ -92,8 +92,8 @@
   "llm": {
     "provider": "openai",
     "model": "gpt-4o",
-    "max_concurrent_requests": 8,
-    "comment": "Reduced from 20 to 8 to stay under 800k TPM rate limit. Standard model parameters (ignored for reasoning models)",
+    "max_concurrent_requests": 40,
+    "comment": "Increased to 40 for Tier 4 API (10M TPM, 10K RPM). Standard model parameters (ignored for reasoning models)",
     "temperature": 1.0,
     "max_tokens": null,
     "top_p": 0.95,

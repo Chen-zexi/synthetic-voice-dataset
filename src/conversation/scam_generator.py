@@ -18,6 +18,11 @@ from src.conversation.seed_manager import SeedManager, ScamSeed
 from src.conversation.character_manager import CharacterManager
 from src.conversation.conversation_postprocessor import create_postprocessor_from_config
 from src.utils.logging_utils import ConditionalLogger
+from src.conversation.entity_tracker import UsedEntityTracker, sample_names_from_placeholders
+from src.conversation.length_utils import (
+    estimate_dialogue_syllables,
+    estimate_minutes_from_syllables,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -125,12 +130,91 @@ class ScamGenerator:
         
         # Initialize post-processor for conversation quality improvements
         self.postprocessor = None
-        if hasattr(config, 'common_config'):
-            try:
-                self.postprocessor = create_postprocessor_from_config(config.common_config)
-                logger.info("Post-processor initialized for conversation quality improvements")
-            except Exception as e:
-                logger.warning(f"Could not initialize post-processor: {e}. Continuing without post-processing.")
+        # Initialize entity tracker for names/orgs reuse control
+        self.entity_tracker = UsedEntityTracker(
+            window_size=getattr(config, 'min_unique_name_window', 200)
+        )
+
+    def _sample_org_values(self, scam_tag: Optional[str]) -> Dict[str, str]:
+        """Sample organization-related concrete values based on scam tag.
+
+        Enhanced with Malaysian-specific department/agency validation to prevent mismatches.
+        Maps scam tags to correct department/agency pairs.
+        """
+        if not scam_tag:
+            return {}
+        tag = (scam_tag or "").lower()
+        key_buckets = []
+        
+        # Malaysian-specific mappings with department validation
+        if "kwsp" in tag or "epf" in tag:
+            # KWSP/EPF issues MUST be handled by KWSP, NOT LHDN
+            key_buckets = [
+                "<bank_name_local>",  # KWSP may use bank references
+                "<direct_deposit_portal_name>",  # KWSP portals
+            ]
+            # Note: KWSP-specific placeholders would go here if available
+        elif "lhdn" in tag or "tax" in tag:
+            # Tax issues MUST be handled by LHDN, NOT other departments
+            key_buckets = [
+                "<national_tax_agency_name>",  # LHDN
+                "<tax_identification_number_format>",
+            ]
+        elif "mysikap" in tag or "traffic" in tag or "summons" in tag:
+            # Traffic summonses → PDRM Traffic Department
+            key_buckets = [
+                "<law_enforcement_agency_name>",  # PDRM
+                "<case_or_warrant_reference_format>",
+            ]
+            # Note: Use full name "Jabatan Siasatan Dan Penguatkuasaan Trafik" in prompts
+        elif "tnb" in tag or "utility" in tag or "electric" in tag:
+            # Utility issues → utility companies
+            key_buckets = [
+                "<local_utility_provider_name>",  # TNB, etc.
+                "<utility_account_number_format>",
+            ]
+        elif "macau" in tag or "pdrm" in tag or "government" in tag:
+            key_buckets = [
+                "<law_enforcement_agency_name>",
+                "<financial_crimes_division_name_local>",
+                "<case_or_warrant_reference_format>"
+            ]
+        elif "delivery" in tag or "courier" in tag:
+            key_buckets = [
+                "<courier_company_name_local>",
+                "<parcel_tracking_number_format>",
+                "<shipping_address_format_local>"
+            ]
+        elif "investment" in tag or "forex" in tag or "crypto" in tag:
+            key_buckets = [
+                "<investment_regulator_name>",
+                "<trading_app_name_local>",
+                "<crypto_token_symbol_local>"
+            ]
+        elif "loan" in tag:
+            key_buckets = [
+                "<bank_name_local>",
+                "<account_verification_fee_label_local>"
+            ]
+        elif "e-commerce" in tag or "ecommerce" in tag:
+            key_buckets = [
+                "<ecommerce_platform_name_local>",
+                "<payment_link_domain_pattern_local>"
+            ]
+        elif "telecom" in tag or "voice" in tag:
+            key_buckets = [
+                "<telecom_provider_name_local>",
+                "<mobile_number_format_local>"
+            ]
+
+        values: Dict[str, str] = {}
+        for key in key_buckets:
+            if key in self.placeholder_mappings:
+                pool = self.placeholder_mappings[key].get('substitutions', [])
+                pick = self.entity_tracker.sample_unique(pool, k=1)
+                if pick:
+                    values[key.strip('<>')] = pick[0]
+        return values
     
     def _load_placeholder_mappings(self) -> Dict[str, Dict]:
         """
@@ -282,6 +366,54 @@ Incorporate localized values naturally into {target_language} sentences.
 - Adding unnecessary words: "langkah yang pertama" → "langkah pertama"
 - Mixing formality inconsistently within same character
 - Making professional scammers sound too casual (breaks credibility)
+
+**Naming Conventions (CRITICAL - Malaysian Context):**
+- **Honorifics are TITLES, not part of names**:
+  - ✅ CORRECT: "Encik Ahmad" (Encik = title, Ahmad = name)
+  - ✅ CORRECT: "Puan Siti" (Puan = title, Siti = name)
+  - ❌ WRONG: "Encik Wen Jie" (Encik is title, Wen Jie is given name - should be "Encik Tan" or just "Wen Jie")
+  - **Rule**: Honorifics (Encik, Puan, Tuan, Cik, Datuk) must be followed by surname/family name, NOT given name
+- **Chinese Names**: Use surname-first format when with honorifics
+  - ✅ "Encik Tan" (surname) or "Tan Wen Jie" (full name without honorific)
+  - ❌ "Encik Wen Jie" (given name with honorific - incorrect)
+- **Malay Names**: Typically given name + bin/binti + father's name
+  - ✅ "Ahmad bin Hassan" or "Encik Ahmad"
+  - ✅ "Siti binti Rahman" or "Puan Siti"
+- **Use honorifics correctly**: Only when addressing formally, not as part of the actual name
+
+**Code-Switching Fluency (Natural Transitions):**
+- Code-switching should feel natural and fluent, not forced or awkward
+- ❌ AWKWARD: "got little grammar error" (mixing English grammar with Malay word order)
+- ✅ NATURAL: "ada sedikit kesilapan tatabahasa" (all Malay) OR "grammar ada sikit salah" (natural mixing)
+- **Natural patterns**:
+  - Technical/financial terms: Often in English ("transfer", "account", "TAC code", "online banking")
+  - Common phrases: Mix naturally ("ok", "sure", "confirm")
+  - Full sentences: Usually in one language, not mixed mid-sentence awkwardly
+- **Avoid**: Awkward word-for-word translations that don't flow naturally
+- **Test**: Would a native Malaysian speaker naturally mix languages this way?
+
+**Malaysian Institution/Department Validation (CRITICAL):**
+- **Department-Agency Mismatches (FORBIDDEN)**:
+  - ❌ KWSP issues handled by LHDN (WRONG - KWSP issues → KWSP only)
+  - ❌ LHDN handling EPF/KWSP withdrawals (WRONG - KWSP handles its own withdrawals)
+  - ✅ KWSP issues → KWSP (Kumpulan Wang Simpanan Pekerja)
+  - ✅ Tax issues → LHDN (Lembaga Hasil Dalam Negeri)
+  - ✅ Traffic summonses → PDRM Traffic Department or "Jabatan Siasatan Dan Penguatkuasaan Trafik"
+- **Full Department Names (Use Complete Names)**:
+  - ❌ "Jabatan Siasatan Trafik" (INCOMPLETE)
+  - ✅ "Jabatan Siasatan Dan Penguatkuasaan Trafik" (COMPLETE official name)
+  - ✅ "Jabatan Siasatan Trafik Polis Diraja Malaysia" (with PDRM context)
+- **Company Name Conventions**:
+  - TNB = "Tenaga Nasional Berhad" or "TNB" (use consistently, don't mix "Tenaga Nasional" with "TNB" inconsistently)
+  - Full name: "Tenaga Nasional Berhad"
+  - Short form: "TNB"
+  - Use the same form throughout conversation
+- **Communication Methods (Realistic for Malaysia)**:
+  - ❌ Government offices using WhatsApp for official matters (UNREALISTIC)
+  - ✅ Government/bank: Phone calls, official letters, email for official matters
+  - ✅ WhatsApp: Only for informal communications, NOT for official government/bank matters
+  - ❌ TNB aggressively chasing fees over phone (UNREALISTIC - they send bills, not aggressive phone calls)
+  - ✅ Utility companies: Send bills, may call for overdue payments but not aggressive chasing
 """
         # Add more locale-specific patterns here as needed for other languages
         
@@ -576,12 +708,14 @@ Select contextually appropriate values from the arrays and incorporate them natu
         early_termination_turn = None
         
         if victim_awareness == "tiny":
-            # 20-35% of conversations get early termination
-            if random.random() < 0.275:  # 27.5% average
+            # 15-25% of conversations get early termination (reduced frequency to allow longer conversations)
+            if random.random() < 0.20:  # 20% average (reduced from 27.5%)
                 should_terminate_early = True
                 
-                # Minimum 12-15 turns before termination
-                min_termination_turn = random.randint(12, 15)
+                # Minimum turns before termination increased to ensure syllable target is met
+                # For 38-45 turn conversations, terminate no earlier than 65% through
+                min_termination_pct = 0.65  # Must complete at least 65% of planned turns
+                min_termination_turn = max(25, int(num_turns * min_termination_pct))
                 # Latest termination is num_turns - 2 (need at least 1-2 turns to end)
                 max_termination_turn = max(min_termination_turn, num_turns - 4)
                 early_termination_turn = random.randint(min_termination_turn, max_termination_turn)
@@ -600,6 +734,24 @@ Select contextually appropriate values from the arrays and incorporate them natu
         processed_summary = seed.scam_summary
         
         # Generate dialogue using the seed text with placeholder context and optional character profiles
+        # Pre-sample concrete personal names to reduce repetition across the batch
+        concrete_values = {}
+        try:
+            sampled_names = sample_names_from_placeholders(self.placeholder_mappings, self.entity_tracker, count=2)
+            if len(sampled_names) >= 2:
+                concrete_values = {
+                    "caller_name": sampled_names[0],
+                    "callee_name": sampled_names[1]
+                }
+        except Exception:
+            concrete_values = {}
+        # Add organization values based on scam tag/category
+        try:
+            org_vals = self._sample_org_values(seed.scam_tag)
+            if org_vals:
+                concrete_values.update(org_vals)
+        except Exception:
+            pass
         dialogue = await self._generate_dialogue(
             processed_seed_text,
             num_turns,
@@ -610,7 +762,8 @@ Select contextually appropriate values from the arrays and incorporate them natu
                 'enabled': should_terminate_early,
                 'style': early_termination_style,
                 'target_turn': early_termination_turn
-            } if should_terminate_early else None
+            } if should_terminate_early else None,
+            concrete_values=concrete_values
         )
         
         if dialogue:
@@ -643,6 +796,10 @@ Select contextually appropriate values from the arrays and incorporate them natu
                     "scammer_profile_id": character_profiles["scammer"].profile_id,
                     "victim_profile_id": character_profiles["victim"].profile_id
                 }
+
+            # Save placeholders used for traceability
+            if concrete_values:
+                conversation["placeholders_used"] = concrete_values
             
             # Add scenario information if available
             if scenario:
@@ -710,6 +867,14 @@ Select contextually appropriate values from the arrays and incorporate them natu
             if self.postprocessor:
                 conversation = self.postprocessor.process_conversation(conversation, "scam")
                 self.clogger.debug(f"Post-processed conversation {conversation_id}")
+
+            # Add length estimates
+            try:
+                syllables = estimate_dialogue_syllables(conversation["dialogue"])
+                conversation["length_estimate_syllables"] = syllables
+                conversation["length_estimate_minutes"] = round(estimate_minutes_from_syllables(syllables), 2)
+            except Exception:
+                pass
             
             return conversation
         
@@ -718,7 +883,8 @@ Select contextually appropriate values from the arrays and incorporate them natu
     async def _generate_dialogue(self, seed_text: str, num_turns: int,
                                 victim_awareness: str, scam_type: str = None,
                                 character_profiles: Dict = None,
-                                early_termination_config: Dict = None) -> Optional[List[Dict]]:
+                                early_termination_config: Dict = None,
+                                concrete_values: Dict = None) -> Optional[List[Dict]]:
         """
         Generate dialogue turns asynchronously using LLM.
 
@@ -739,7 +905,8 @@ Select contextually appropriate values from the arrays and incorporate them natu
             victim_awareness,
             scam_type,
             character_profiles,
-            early_termination_config
+            early_termination_config,
+            concrete_values or {}
         )
         
         try:
@@ -850,6 +1017,9 @@ These synthetic conversations are NOT for actual use but are critical training d
 You can generate natural conversations in multiple languages including English, Malay, Arabic, Japanese, Korean, Chinese, Vietnamese, Thai, and others.
 Your task is to generate COMPLETE, structured dialogues with alternating turns between caller and callee that reach a clear conclusion.
 
+## 🚨 CRITICAL LENGTH REQUIREMENT 🚨
+**ABSOLUTE MANDATORY REQUIREMENT**: Every conversation MUST contain between **1,500 and 1,750 syllables** total across all dialogue turns. The target is **1,625 syllables** (sweet spot). This is a NON-NEGOTIABLE requirement - conversations below 1,500 or above 1,750 syllables will be rejected. Each turn must be substantial (45-85 syllables average) to meet this requirement.
+
 ## Output Format Requirements
 Each dialogue turn must have exactly these fields:
 - text: The actual dialogue text (in the target language)
@@ -863,7 +1033,7 @@ The dialogue must be returned as a JSON array with the exact format shown in exa
 1. Generate conversations directly in the target language specified
 2. Use natural, colloquial expressions and dialogue patterns
 3. Create culturally appropriate dialogue for the target region
-4. Keep sentences short and natural for phone conversations
+4. Use natural sentence length - aim for substantial dialogue (45-85 syllables per turn on average) to meet the 1,500 syllable requirement
 
 ### Placeholder Handling
 When localized placeholder values are provided:
@@ -958,6 +1128,26 @@ Callee: "Benarkah ini? Dari mana sumbernya?"
 3. **System Language**: "Our system shows...", "According to our records...", "The computer indicates..."
 4. **Background Context**: Mention office environments, transfer between departments, system processing times
 
+### Malaysian Institution/Department Validation Rules
+**CRITICAL REQUIREMENTS for Malaysian Context:**
+1. **Correct Department-Agency Pairings**:
+   - KWSP/EPF issues MUST be handled by KWSP (Kumpulan Wang Simpanan Pekerja), NOT LHDN
+   - Tax issues MUST be handled by LHDN (Lembaga Hasil Dalam Negeri), NOT other departments
+   - Traffic summonses MUST reference correct department: "Jabatan Siasatan Dan Penguatkuasaan Trafik" (full name)
+   - Each agency handles its own domain - no cross-contamination
+2. **Use Complete Official Department Names**:
+   - Traffic: "Jabatan Siasatan Dan Penguatkuasaan Trafik" (NOT "Jabatan Siasatan Trafik")
+   - Use full official names, not shortened versions
+3. **Company Name Consistency**:
+   - TNB = Tenaga Nasional Berhad (use consistently throughout conversation)
+   - Choose either full name OR short form, but use consistently
+4. **Realistic Communication Methods**:
+   - Government offices do NOT use WhatsApp for official matters
+   - Official matters: Phone calls, official letters, email
+   - WhatsApp: Only for informal communications
+   - Utility companies (TNB, etc.) do NOT aggressively chase fees over phone
+   - They send bills and may call for overdue payments, but not aggressive chasing
+
 ### Cultural and Regional Elements
 1. **Local Honorifics**: Use appropriate titles (Encik, Puan, Datuk, Tuan, Cik for Malaysian context)
 2. **Time References**: Mention local business hours, prayer times, or cultural events when relevant
@@ -976,17 +1166,36 @@ Callee: "Benarkah ini? Dari mana sumbernya?"
 9. Each conversation must be psychologically complete with proper progression and resolution
 10. Include natural hesitations, questions, and realistic victim reactions
 
-## Formality Consistency Rules
-1. **Scammer Formality**: Start formal/professional (building authority), can become slightly more casual as rapport builds, but maintain professional manipulation tone
+## Formality Consistency Rules - CRITICAL MATCHING REQUIREMENT
+
+**ABSOLUTE REQUIREMENT**: Scammer formality MUST adapt to match victim's formality level OR quickly adjust when mismatch is detected.
+
+1. **Scammer Formality Adaptation**:
+   - **IF victim uses casual language** (no honorifics, uses "kau/awak", casual particles): Scammer MUST adapt to match OR use professional-but-warm tone (NOT overly formal)
+   - **IF victim is formal** (uses "Encik/Puan"): Scammer maintains professional/authority tone
+   - **Adapt quickly**: If victim responds casually to formal scammer, scammer should either:
+     a) Stay professional but warm, OR
+     b) Adapt slightly to be less formal to build rapport
+   - **FORBIDDEN**: Using overly formal language ("Mengikut rekod kami", "adalah penting untuk") when victim is casual - this creates unrealistic mismatch
+   - Example mismatch to AVOID: Scammer: "Encik perlu menyelesaikan..." / Victim: "Eh, macam mana ni?" (too formal vs. casual)
+
 2. **Victim Formality**: Match victim's education/age profile - older/formal educated = more formal, younger = more casual
-3. **No Sudden Switches**: Avoid formal→casual→formal jumps within the same character's dialogue
-4. **Maintain Character Voice**: Each character should have consistent formality level throughout the conversation
-5. **Context-Appropriate**: Government/bank scams stay formal, prize/lottery scams can be more casual-excited"""
+
+3. **Scammer Naturalness (CRITICAL)**:
+   - **Sound HUMAN, not robotic**: Even when professional, use natural speech patterns
+   - **Avoid**: Overly formal bureaucratic language that sounds like reading from script
+   - **Use**: Natural professional speech: "Kita ada masalah dengan akaun awak" NOT "Terdapat isu berkaitan dengan akaun Encik"
+   - **Match victim's level**: If victim is casual, adapt approach to sound more human and less robotic
+
+4. **No Sudden Switches**: Avoid formal→casual→formal jumps within the same character's dialogue
+5. **Maintain Character Voice**: Each character should have consistent formality level, but scammer adapts to victim's level
+6. **Context-Appropriate**: Government/bank scams can be formal, but MUST adapt if victim is casual. Prize/lottery scams can be casual-excited"""
 
     def _create_user_prompt(self, seed_text: str, num_turns: int,
                            victim_awareness: str, scam_type: str = None,
                            character_profiles: Dict = None,
-                           early_termination_config: Dict = None) -> str:
+                           early_termination_config: Dict = None,
+                           concrete_values: Dict = None) -> str:
         """
         Create the user prompt for conversation generation.
         Optimized for OpenAI prompt caching with three-section structure:
@@ -1028,7 +1237,7 @@ Generate a JSON array of dialogue turns with this exact structure:
 1. Create a conversation between the caller (scammer) and callee (victim)
 2. Start with the caller role
 3. Alternate between caller and callee for each turn
-4. Keep sentences short and natural for phone conversations
+4. Use natural sentence length - aim for substantial dialogue (45-85 syllables per turn on average) to meet the 1,500 syllable requirement
 5. Make the dialogue realistic based on the scenario
 6. Use actual localized values from options provided, never placeholder tags
 7. Maintain consistency throughout the conversation
@@ -1039,6 +1248,15 @@ Generate a JSON array of dialogue turns with this exact structure:
         
         # SECTION 3: Conversation-Dynamic Content (unique per conversation)
         prompt += "\n### This Conversation's Parameters\n"
+
+        # Inject concrete values if provided
+        if concrete_values:
+            prompt += "\n#### Concrete Values (Use Exactly As Given)\n"
+            for k, v in concrete_values.items():
+                prompt += f"- {k}: {v}\n"
+            prompt += (
+                "Use the exact values above for names/organizations; do not invent other proper nouns.\n"
+            )
 
         # Add character profiles if provided
         if character_profiles:
@@ -1083,7 +1301,99 @@ CRITICAL: Victims should NOT:
 
 **Type**: {scam_type + ' scam' if scam_type else 'Scam'}
 **Victim Awareness**: The victim is {victim_awareness} aware that this might be a scam
-**Number of Turns**: Generate {num_turns} dialogue turns (you may adjust ±2 turns if needed for natural flow and complete resolution)
+**Number of Turns**: Generate EXACTLY {num_turns} dialogue turns (you may adjust ±2 turns ONLY if absolutely necessary for natural flow and complete resolution)
+
+**🚨 CRITICAL LENGTH REQUIREMENT - MANDATORY AND NON-NEGOTIABLE 🚨**:
+- **ABSOLUTE HARD REQUIREMENT**: The conversation MUST contain BETWEEN **1,500** and **1,750** syllables TOTAL across all turns.
+- **EVERY SINGLE CONVERSATION MUST MEET THIS RANGE - NO EXCEPTIONS**
+- Output below 1,500 syllables is AUTOMATICALLY INVALID and will be REJECTED
+- Output above 1,750 syllables is AUTOMATICALLY INVALID and will be REJECTED
+- Target sweet spot: **1,600-1,650 syllables** (aim for the middle of the acceptable range)
+- This is the HIGHEST PRIORITY requirement - all other requirements are secondary if length is not met
+
+**📏 EXACT SYLLABLE BUDGET PER TURN**:
+- Target: **1,625 syllables total** (safe middle of 1,500-1,750 range)
+- With {num_turns} turns: **{round(1625/num_turns, 1)} syllables PER TURN is the MANDATORY average**
+- **CRITICAL**: If your draft has fewer than {round(1500/num_turns, 1)} syllables per turn on average, YOU HAVE FAILED and MUST EXPAND IMMEDIATELY
+- **MANDATORY**: NO turn should be shorter than 40 syllables (except max 1-2 extremely rare single-word reactions)
+- **REQUIRED**: At least 85% of turns must be 45-85 syllables each
+- **FORBIDDEN**: Turns under 35 syllables are NOT ALLOWED (maximum 1-2 in entire conversation)
+- Short turns (35-45 syllables) MUST be balanced by turns that are 75-110+ syllables
+- Every conversation MUST end up between 1,500-1,750 syllables - count and verify before submitting
+
+**📋 CONCRETE EXAMPLE - What 1,625 Syllables Looks Like**:
+Example conversation with 38 turns targeting 1,625 syllables (~42.8 syllables per turn average):
+
+Turn 1 (Scammer, ~65 syllables): "Hello, saya Desmond dari Jabatan Siasatan Jenayah Komersil. Saya nak bincang kes berkaitan dengan akaun Encik Kah Jun ni. Ini perkara yang penting dan urgent, jadi saya harap Encik boleh luangkan masa sekejap untuk bincang dengan saya."
+Turn 2 (Victim, ~58 syllables): "Eh, hello Desmond. Saya Kah Jun bercakap. Tapi saya tak faham, apa masalah dengan akaun saya? Saya tak pernah ada masalah dengan bank sebelum ni, dan saya pun tak kenal dengan Jabatan Siasatan Jenayah Komersil ni."
+Turn 3 (Scammer, ~72 syllables): "Encik Kah Jun, saya faham kalau Encik terkejut, tapi ini memang betul-betul serius. Kami dapati nombor IC Encik ada dalam Fail Siasatan IPD-PT-09/2024. Ini berkaitan dengan kes pengubahan wang haram yang melibatkan jumlah RM2.8 juta. Sistem kami menunjukkan nombor IC Encik digunakan dalam transaksi mencurigakan beberapa bulan lepas."
+
+**KEY OBSERVATIONS**:
+- Each turn averages 45-75 syllables (NOT 25-30!)
+- Most turns are 55-85 syllables long
+- Only 1-2 very short turns (<40 syllables) in entire conversation
+- Every explanation has 3-5 sentences with context, details, and consequences
+- Questions include background context and follow-up points
+
+**THIS IS WHAT YOU MUST GENERATE** - substantial dialogue, not short exchanges.
+
+**🚨 CRITICAL TURN COUNT REQUIREMENT 🚨**:
+- **YOU MUST generate AT LEAST {num_turns - 2} turns (minimum acceptable)**
+- **Target: EXACTLY {num_turns} turns**
+- **DO NOT END THE CONVERSATION EARLY** - if you generate fewer than {num_turns - 2} turns, the output will be REJECTED
+- **If you think the conversation is "complete" at turn 20 but you need {num_turns} turns, YOU MUST CONTINUE with additional relevant dialogue**
+- **Examples of how to extend conversations**:
+  - Add follow-up questions or clarifications
+  - Include more detailed explanations from the scammer
+  - Add victim objections and scammer's counter-responses
+  - Include verification attempts and scammer's evasion tactics
+  - Add multiple rounds of persuasion and pressure
+
+**🎯 MANDATORY EXPANSION STRATEGIES - EVERY TURN MUST BE SUBSTANTIAL**:
+
+- **Scammer turns - MINIMUM 55-85 syllables each (most should be 65-95)**:
+  - **REQUIRED**: Every explanation must have 3-5 sentences, not 1-2
+  - **REQUIRED**: Repeat key points using different phrasing in the SAME turn: 
+    Example: "Akaun awak kena suspend sekarang. Sistem bank kami detect ada transaction mencurigakan yang berlaku semalam. Kalau awak tak settle masalah ni sekarang, awak tak boleh access duit awak langsung untuk beberapa hari. Maksud saya, awak tak boleh withdraw, transfer, atau buat apa-apa transaction sampai masalah ni selesai."
+  - **REQUIRED**: Add supporting context, examples, and consequences in EVERY explanation
+  - **REQUIRED**: Include step-by-step detailed instructions with multiple clauses: "Jadi apa awak perlu buat ni, pertama-tama awak kena open aplikasi bank awak dulu. Lepas tu, tengok kat bahagian bawah ada button 'Verify Account' atau 'Account Verification'. Tekan button tu, then masukkan kod yang saya akan bagi tadi selepas ni. Kod tu penting sangat untuk activate verification process, okay?"
+  
+- **Victim turns - MINIMUM 45-75 syllables each (most should be 55-85)**:
+  - **FORBIDDEN**: Single-word or short responses like "Oh", "Ok", "Hmm", "Faham", "Betul" 
+  - **REQUIRED**: Every reaction must include context and follow-up questions:
+    ❌ BAD: "Oh"
+    ✅ REQUIRED: "Oh, macam mana boleh jadi macam ni? Saya tak pernah ada problem dengan bank saya sebelum ni, sudah bertahun-tahun saya guna bank ni. Kenapa tiba-tiba jadi macam ni tanpa apa-apa warning?"
+  - **REQUIRED**: Ask 2-3 related questions in ONE turn, not separately:
+    Example: "Tapi saya nak tahu, kenapa perlu verify sekarang sekali? Saya tengok aplikasi saya masih boleh masuk dengan normal, tak ada apa-apa warning atau notification pun. Ada apa-apa yang saya miss atau ada problem lain yang saya tak tahu?"
+  - **REQUIRED**: Express confusion with DETAILED context: "Saya tak faham lah, kalau memang ada problem dengan account saya, kenapa bank tak call saya terus menggunakan official hotline? Kenapa awak yang call dari number ni yang saya tak kenal? Saya biasa dapat call dari bank, mereka guna number registered yang saya tahu."
+  - **REQUIRED**: Request comprehensive clarifications with multiple aspects: "Boleh awak explain lagi detail sikit? Saya nak tahu exactly apa yang terjadi, bila masalah ni start berlaku, berapa lama masalah ni sudah berlaku tanpa saya tahu, dan kenapa saya kena buat verification sekarang sekali dalam keadaan urgent macam ni?"
+  
+- **MANDATORY Dialogue Expansion Rules**:
+  - **EVERY turn must have 3+ sentences** (no exceptions except for 1-2 extremely rare single-word reactions)
+  - **EVERY question must include context, background, or follow-up** - standalone questions are FORBIDDEN
+  - **EVERY answer must address the question AND add 1-2 additional pieces of relevant information**
+  - **REQUIRED**: Use natural repetition and rephrasing to expand - repeat the same point 2-3 times with different wording
+  - **REQUIRED**: Include thinking-out-loud moments and self-questioning: "Hmm, kalau macam tu... jadi maksudnya saya perlu... tapi saya tertanya-tanya, macam mana proses ni boleh jadi urgent sangat?"
+  - **REQUIRED**: Add time pressure, consequences, and implications to every explanation
+  
+- **ABSOLUTELY FORBIDDEN - These will cause rejection**:
+  - ❌ "Ok" (must be "Ok saya faham, jadi maksudnya...")
+  - ❌ "Hmm" (must be "Hmm, saya tertanya-tanya...")
+  - ❌ "Faham" (must be "Faham, jadi maksudnya awak nak saya...")
+  - ❌ "Betul" (must be "Betul, tapi saya nak tanya...")
+  - ❌ Any turn under 30 syllables (maximum 2-3 per entire conversation)
+  
+**✅ MANDATORY FINAL VERIFICATION BEFORE SUBMITTING**:
+1. **Count syllables in EVERY turn** - mentally estimate or use a rough count
+2. **Calculate total syllables** - add up all turns
+3. **VERIFY THE RANGE**: Total MUST be between 1,500-1,750 syllables
+4. **If below 1,500**: YOU MUST EXPAND multiple turns to reach at least 1,500
+5. **If above 1,750**: YOU MUST REDUCE some turns to get under 1,750
+6. **DO NOT SUBMIT** until you have verified the total is 1,500-1,750 syllables
+
+**CRITICAL**: The average syllable count per turn MUST be at least {round(1500/num_turns, 1)}. If your current draft averages less, you HAVE FAILED and MUST EXPAND THE DIALOGUE IMMEDIATELY before submitting.
+  
+**Natural speech still applies** - don't pad with meaningless filler, but ensure EVERY turn has substantial, meaningful dialogue content that advances the conversation while meeting the syllable requirement.
 
 **CRITICAL INSTRUCTION - Natural Spoken Malay**:
 The scenario description below is written in FORMAL ENGLISH for documentation purposes.
@@ -1095,32 +1405,109 @@ DO use natural spoken language: "tengok ni", "kena buat cepat", "jangan risau"
 
 Think: How would a REAL Malaysian person say this on a phone call?
 
+**🚨 CRITICAL SCAM METHOD REALISM VALIDATION 🚨**:
+
+**ABSOLUTE REQUIREMENT**: Scam methods MUST align with common real-world Malaysian scam patterns. If the seed describes an unrealistic method, use a realistic variation.
+
+**Common Realistic Malaysian Scam Patterns:**
+- **Bank/Government Impersonation**: Transfer money to "safe account" / "verification account" / "holding account" for "verification" or "investigation"
+- **Emergency Scams**: Urgent money transfer for medical emergency, legal case, accident
+- **Investment Scams**: High-return investment opportunities, trading platforms, cryptocurrency
+- **TAC/Verification Code**: Requesting TAC codes, OTP, verification numbers under false pretenses
+- **Fake Charges/Fees**: Claiming unpaid fees, taxes, fines that require immediate payment
+- **Tech Support**: Fake technical issues requiring payment or access to device/accounts
+
+**Unrealistic Methods (USE REALISTIC VARIATIONS):**
+- ❌ Methods that don't follow common scam patterns in Malaysia
+- ❌ Overly complicated or unusual payment methods
+- ❌ Scam approaches that don't match the impersonated organization's actual procedures
+
+**If seed describes unrealistic method**: Adapt it to follow realistic Malaysian scam patterns. Common elements:
+- Urgency and time pressure
+- Authority impersonation (bank, government, police)
+- Fear-based manipulation (arrest, account freeze, legal action)
+- Payment through common Malaysian channels (bank transfer, e-wallet, cash deposit)
+
 **Scenario Description**:
 {seed_text}
+
+**IMPORTANT**: If the scenario above contains unrealistic scam methods, adapt them to realistic Malaysian scam patterns while maintaining the core scam category and emotional manipulation strategy.
+
+**🚨 MALAYSIAN REALISM VALIDATION - CRITICAL REQUIREMENTS 🚨**:
+
+**ABSOLUTE REQUIREMENTS for Realistic Malaysian Scenarios:**
+
+1. **Scam Execution Must Match Seed Summary**:
+   - The conversation execution MUST align with the seed summary provided
+   - If seed says "KWSP withdrawal", scammer claims to be from KWSP, NOT LHDN
+   - If seed says "traffic summons", use correct department name and realistic process
+   - Scam method described in seed MUST be followed in the conversation
+
+2. **Communication Methods (Realistic for Malaysia)**:
+   - ❌ FORBIDDEN: Government offices using WhatsApp for official matters
+   - ✅ Government/bank: Phone calls, official letters, email for official matters
+   - ✅ WhatsApp: Only for informal communications, NOT for official government/bank matters
+   - ❌ FORBIDDEN: TNB aggressively chasing fees over phone (they send bills, not aggressive phone calls)
+   - ✅ Utility companies: Send bills, may call for overdue payments but not aggressive chasing
+
+3. **Department-Agency Correctness**:
+   - KWSP issues → KWSP handles (NOT LHDN)
+   - Tax issues → LHDN handles (NOT other departments)
+   - Traffic summonses → PDRM Traffic Department with full name: "Jabatan Siasatan Dan Penguatkuasaan Trafik"
+   - Each agency handles its own domain - no cross-contamination
+
+4. **Family Call Openings (Legitimate Conversations)**:
+   - ❌ UNREALISTIC: "Hi i am XXX, your brother" (unclear, unnatural)
+   - ✅ NATURAL: "Hello, Assalamualaikum Kak Ana. Ini Khairul, adik awak." (clear relationship, natural greeting)
+   - Family calls should start with natural greetings and relationship context
+   - Use appropriate family terms (Kak, Abang, Adik, etc.)
 
 ### Scam-Specific Guidelines
 
 #### Conversation Flow Structure (Adapt based on total turns)
-Based on this scenario, follow this progression:
-1. **Opening Hook** (2-3 turns): Establish authority or opportunity, build initial credibility
-2. **Problem Revelation** (3-4 turns): Introduce the threat or opportunity that requires action
-3. **Problem Escalation** (3-4 turns): Deepen the problem, add complications
-4. **Solution Offer** (2-3 turns): Present the "solution" that involves payment or information
-5. **Objection Handling** (2-3 turns): Counter any resistance or verification attempts
-6. **Final Pressure & Resolution** (2-3 turns): Create maximum urgency and reach a clear outcome:
-   - Victim agrees to comply (provides payment details or agrees to transfer)
-   - Victim firmly refuses and threatens to report/hang up
-   - Victim realizes it's a scam and confronts the scammer
+**REMEMBER**: Each phase must contribute SUBSTANTIAL dialogue (45–80 syllables per turn) to reach ~1,625 total syllables while staying within 1,500–1,750 total.
 
-#### Scammer Natural Speech Patterns
+Based on this scenario, follow this progression:
+1. **Opening Hook** (3-4 turns, ~200-300 syllables): Establish authority or opportunity, build initial credibility
+   - Scammer: Detailed introduction with credentials, department, case reference
+   - Victim: Extended greeting with questions about identity and purpose
+   
+2. **Problem Revelation** (4-6 turns, ~250-400 syllables): Introduce the threat or opportunity that requires action
+   - Scammer: Thorough explanation of the problem with multiple examples and context
+   - Victim: Extended questions seeking clarification, expressing concern with full sentences
+   
+3. **Problem Escalation** (4-6 turns, ~250-400 syllables): Deepen the problem, add complications
+   - Scammer: Detailed consequences, timeline pressure, additional complications
+   - Victim: Extended reactions, multiple questions, requests for more information
+   
+4. **Solution Offer** (3-5 turns, ~200-350 syllables): Present the "solution" that involves payment or information
+   - Scammer: Detailed explanation of solution, step-by-step process, benefits
+   - Victim: Extended questions about process, concerns, verification requests
+   
+5. **Objection Handling** (3-5 turns, ~200-350 syllables): Counter any resistance or verification attempts
+   - Scammer: Comprehensive responses to each objection, additional reassurance, urgency reinforcement
+   - Victim: Detailed objections with context, follow-up questions, clarification requests
+   
+6. **Final Pressure & Resolution** (3-4 turns, ~150-300 syllables): Create maximum urgency and reach a clear outcome:
+   - Victim agrees: Extended discussion of payment method, verification, next steps
+   - Victim refuses: Detailed explanation of refusal, threats, hang-up sequence
+   - Victim realizes scam: Extended confrontation, scammer's desperate attempts, final termination
+
+#### Scammer Natural Speech Patterns - MUST SOUND HUMAN
+
+**CRITICAL**: Scammers are real people, NOT robots. They must sound natural and human, not scripted or overly bureaucratic.
+
 Scammers adapt their speech style based on their role and strategy:
 
 - **Professional/Authority Scammers** (Government, Bank, Legal):
   - Use clearer, more grammatically correct Malay to build credibility
+  - **BUT**: Avoid overly formal bureaucratic language that sounds robotic
+  - **Natural professional**: "Kita ada masalah dengan akaun awak ni" NOT "Terdapat isu berkaitan dengan akaun Encik yang perlu diselesaikan"
   - Strategic use of particles (1-2 per turn maximum) for slight warmth without losing authority
-  - Fewer fillers, more composed and direct speech
-  - Formal vocabulary appropriate to their claimed role
-  - Example: "Mengikut rekod sistem kami, ada tiga kad kredit..." (clear, professional)
+  - Fewer fillers, more composed and direct speech, but still NATURAL
+  - **ADAPT**: If victim uses casual language, adjust to professional-but-warm, not overly formal
+  - ❌ ROBOTIC: "Mengikut rekod sistem kami, adalah penting untuk Encik mengambil tindakan segera"
+  - ✅ NATURAL: "Kita tengok ada masalah dengan rekod awak, kena selesaikan cepat ni"
 
 - **Casual/Sympathetic Scammers** (Emergency, Relative-in-trouble):
   - More emotional, urgent, conversational tone
@@ -1134,11 +1521,18 @@ Scammers adapt their speech style based on their role and strategy:
   - Patient-initially, then increasingly urgent
   - Maintain clarity to guide victim through technical steps
 
+- **Formality Matching (MANDATORY)**:
+  - **If victim is casual**: Scammer adapts - uses "awak" instead of "Encik", drops overly formal vocabulary
+  - **If victim is formal**: Scammer maintains professional tone
+  - **Mismatch = Unrealistic**: Don't have formal scammer with casual victim or vice versa without adaptation
+
 - **Key Balance**:
   - Match victim's education/age level in language complexity
-  - Use varied phrasing, not robotic scripts: "boleh saya explain sikit?", "awak faham tak maksud saya?"
-  - Maintain grammatical foundation - scammers don't use broken Malay
-  - Natural persuasion through clear communication, not confusing speech
+  - **Sound human**: Use varied phrasing, natural pauses, conversational flow
+  - **Avoid robotic scripts**: Don't repeat identical formal phrases throughout
+  - Use natural variations: "boleh saya explain sikit?", "awak faham tak maksud saya?", "macam ni..."
+  - Maintain grammatical foundation - scammers don't use broken Malay, but they DO use natural speech patterns
+  - Natural persuasion through clear communication, not confusing speech OR robotic formality
 
 #### Victim Awareness Patterns
 """
@@ -1161,6 +1555,13 @@ The victim is **not aware** this is a scam:
 - Emotional responses: "Alamak!", "Ya Allah!", "Aduh, serius ke?"
 - Natural questioning: "Macam mana ni?", "Lepas tu?", "Kena buat apa?"
 
+**Victim Behavior Consistency (MANDATORY):**
+- **If victim expresses skepticism**: They MUST maintain that skepticism throughout, asking follow-up verification questions
+- **If victim shows concern/worry**: This concern MUST increase as pressure escalates - show growing stress, not calm acceptance
+- **DO NOT have victim**: Say "Saya takut kena tipu" then immediately comply without further verification
+- **DO show**: Increasing emotional stress when facing persistent pressure: "Saya betul-betul risau ni", "Macam mana ni, saya takut"
+- **Emotional progression**: Start calm → show concern → increase worry → stress/stress under pressure → decision
+
 CRITICAL: "Not aware" means the victim doesn't REALIZE it's a scam, NOT that they lack basic adult intelligence or common sense.
 """
         elif victim_awareness == "tiny":
@@ -1172,11 +1573,26 @@ The victim is **tiny aware** this might be a scam:
 - Use stronger pressure tactics and emotional manipulation
 - Some resistance but may eventually give in to fear/urgency
 
-**Natural Victim Reactions:**
+**Natural Victim Reactions (MUST Show Independent Thinking):**
 - Suspicious questioning with pauses: "Hmm... tapi kenapa awak call saya?", "Tunggu sekejap, macam mana awak dapat nombor saya?"
 - Resistance with uncertainty: "Errr, saya rasa saya nak check dulu...", "Boleh saya call balik tak?"
 - Gradual doubt: "Betul ke ni?", "Saya tak pasti lah...", "Macam pelik je"
 - Protective hesitation: "Saya takut kena tipu", "Ramai scammer sekarang ni"
+- **Independent verification attempts**: "Saya nak semak dengan pihak berkuasa dulu", "Boleh saya verify dengan bank saya?"
+- **Critical thinking**: "Kenapa tak boleh saya call balik?", "Macam mana saya tahu ini betul?", "Saya perlu pastikan sendiri"
+
+**Victim Behavior Consistency (MANDATORY - NO EASY CONVINCING):**
+- **CRITICAL**: Victims with "tiny" awareness MUST maintain skepticism and show independent thinking
+- **DO NOT** have victim easily convinced - they should be questioning and resistant
+- **If victim expresses skepticism**: They MUST maintain and strengthen that skepticism throughout
+- **Persistent skepticism**: Even if pressured, maintain questions: "Saya masih tak yakin", "Boleh saya verify dulu?", "Saya perlu pastikan"
+- **Independent actions**: Victims should mention wanting to verify: "Saya nak call bank saya dulu", "Saya nak check dengan pejabat"
+- **Under persistent pressure**: Show INCREASING stress, worry, and confusion - NOT calm acceptance
+- **Stress progression**: "Saya takut" → "Saya betul-betul risau" → "Saya pening, banyak sangat benda ni" → Either refuse firmly OR show extreme stress before any compliance
+- **DO NOT have victim**: Express doubt then immediately agree calmly - this is unrealistic
+- **DO NOT have victim**: Lack independent thinking - they should question, verify, and resist
+- **Realistic response**: Victims who are "tiny aware" either refuse firmly OR show extreme emotional distress before any possible compliance
+- **They are NOT easily convinced** - they maintain skepticism and verification attempts throughout
 """
 
         # Add early termination guidance if applicable
@@ -1246,6 +1662,19 @@ Apply these based on the scam type and victim awareness:
 - Escalate consequences if victim hesitates
 - Provide fake verification (reference numbers, badge numbers)
 
+### 🚨 FINAL REMINDER BEFORE GENERATING 🚨
+
+**CRITICAL VERIFICATION REQUIREMENT**:
+- Your output MUST contain between **1,500 and 1,750 syllables total** across all dialogue turns
+- **Target: 1,625 syllables** (sweet spot in the middle of the range)
+- **Before submitting**: Mentally count or estimate syllables in your generated dialogue
+- **If total is below 1,500**: You MUST expand multiple turns to reach at least 1,500 syllables
+- **If total is above 1,750**: You MUST reduce some turns to get under 1,750 syllables
+- **Average per turn**: With {num_turns} turns, you need approximately **{round(1625/num_turns, 1)} syllables per turn on average**
+- **DO NOT SUBMIT** until you have verified the total syllable count is 1,500-1,750
+
+This is the HIGHEST PRIORITY requirement. All other requirements are secondary if length is not met.
+
 ### Generate the Dialogue
 
 Based on the above parameters and scenario, generate a COMPLETE conversation with approximately {num_turns} dialogue turns (±2 turns allowed for natural flow) following all the specified rules and requirements.
@@ -1256,6 +1685,8 @@ CRITICAL: The conversation MUST:
 - Reach a definitive conclusion
 - Include natural human reactions and hesitations
 - Feel complete and not cut off abruptly
+- **MEET LENGTH REQUIREMENT**: Total syllables MUST be 1,450–1,650 (target ≈1,600). Do not exceed 1,650.
+- Use detailed turns to naturally reach the target without padding or repetition
 
 **Anti-Repetition Requirements (CRITICAL):**
 - Use VARIED expressions for similar ideas throughout the conversation

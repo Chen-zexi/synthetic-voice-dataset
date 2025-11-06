@@ -6,6 +6,10 @@ This script generates Malaysian (ms-my) scam or legitimate conversations and sav
 1. Default comprehensive JSON with all metadata in output/ms-my/{timestamp}/conversations/
 2. Individual conversation JSON files in scam_labeling/ or legit_labeling/ directories
 
+**NOTE: This is the preferred method for generating Malay (ms-my) conversations.**
+This script is specifically streamlined for Malay conversation generation with proper configuration
+loading, seed diversity management, and output formatting for labeling workflows.
+
 Usage:
     python generate_for_labeling.py --type scam --count 250
     python generate_for_labeling.py --type legit --count 250

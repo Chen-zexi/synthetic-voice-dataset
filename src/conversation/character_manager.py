@@ -388,6 +388,14 @@ class CharacterManager:
         # Create scenario with template parameters
         scenario_id = f"{seed_id}_{template_id}" if seed_id else template_id
         
+        # Override template num_turns with config range if available
+        # This allows config to control turn limits even when using templates
+        if self.num_turns_range and len(self.num_turns_range) == 2:
+            num_turns = random.randint(self.num_turns_range[0], self.num_turns_range[1])
+        else:
+            # Fallback to template value if config range not set
+            num_turns = template['num_turns']
+        
         return GenerationScenario(
             scenario_id=scenario_id,
             seed_tag=seed_tag,
@@ -395,7 +403,7 @@ class CharacterManager:
             victim_profile=victim_profile,
             locale=locale,
             victim_awareness=template['victim_awareness'],
-            num_turns=template['num_turns']
+            num_turns=num_turns
         )
     
     def get_scenarios_for_seed(self, seed_id: str, seed_tag: str, locale: str, count: int = 1) -> List[GenerationScenario]:
@@ -477,9 +485,14 @@ class CharacterManager:
                 # Template profile not available, select similar role
                 victim_profile = self.select_random_profile("victim", locale)
             
-            # Use template's awareness and turns with slight variation for diversity
+            # Use template's awareness, but override turns with config range if available
+            # This ensures config controls turn limits even when templates exist
             victim_awareness = inspiration_template['victim_awareness']
-            num_turns = inspiration_template['num_turns']
+            if self.num_turns_range and len(self.num_turns_range) == 2:
+                num_turns = random.randint(self.num_turns_range[0], self.num_turns_range[1])
+            else:
+                # Fallback to template value only if config range not available
+                num_turns = inspiration_template['num_turns']
             
             logger.debug(f"Generated scenario inspired by template {inspiration_template['template_id']}")
         else:

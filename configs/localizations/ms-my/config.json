@@ -65,7 +65,14 @@
       "subscription_renewal_notice",
       "product_feedback_survey",
       "account_security_verification",
-      "appointment_cancellation_notice"
+      "appointment_cancellation_notice",
+      "internet_service_inquiry",
+      "mobile_plan_upgrade",
+      "insurance_policy_review",
+      "government_permit_inquiry",
+      "immigration_document_followup",
+      "billing_dispute_resolution",
+      "technical_support_call"
     ]
   },
   "output": {
