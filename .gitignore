@@ -50,6 +50,8 @@ scam_labeling_new10k/
 legit_labeling/
 legit_labeling_new3k/
 batches_of_data/
+legit_10k_convos_LG/
+legit_10k_convos_LG_2nd/
 
 # OS
 .DS_Store
