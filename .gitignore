@@ -52,7 +52,9 @@ legit_labeling_new3k/
 batches_of_data/
 legit_10k_convos_LG/
 legit_10k_convos_LG_2nd/
-
+legit_labeling_extra_5k/
+legit_labeling_7k_final_batch/
+scam_labeling_3k_final_batch/
 # OS
 .DS_Store
 .DS_Store?

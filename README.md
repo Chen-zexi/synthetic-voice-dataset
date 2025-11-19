@@ -285,7 +285,14 @@ voice_scam_dataset_gen/
 │   ├── LABELING_GENERATION_README.md # Human labeling guide
 │   ├── VOICE_ENHANCEMENT_TESTING_GUIDE.md # Voice testing guide
 │   ├── API_COMPATIBILITY_FIX.md     # API compatibility fixes
+│   ├── MALAYSIAN_CONVERSATION_IMPROVEMENTS.md # Latest improvements for ms-my locale
 │   └── locale_road_map.md            # Locale implementation roadmap
+├── scripts/                      # Utility scripts
+│   ├── measure_diversity.py        # Diversity metrics analysis
+│   ├── audit_ms_my_batch.py         # Batch audit for ms-my conversations
+│   ├── process_gpt5_outputs.py     # GPT-5 output processing
+│   ├── compare_gpt5_models.py      # GPT-5 model comparison
+│   └── generate_scenarios.py       # Scenario generation utilities
 ├── archive/                      # Legacy language-specific scripts
 ├── output/                       # Generated outputs (gitignored)
 ├── scam_labeling/               # Individual scam files for labeling (gitignored)
@@ -549,6 +556,49 @@ The pipeline includes significant improvements to generate more natural, authent
 - **ElevenLabs API**: For text-to-speech synthesis
 - **Translation Services**: Google Translate (default), Argos Translate (offline), Qwen-MT (Alibaba Cloud)
 - **Optional**: Anthropic/Gemini APIs for alternative LLM providers
+
+## Quality Assessment & Analysis Tools
+
+The pipeline includes utility scripts for analyzing generated conversation quality and diversity:
+
+### Diversity Measurement Script
+
+The `scripts/measure_diversity.py` script calculates comprehensive diversity metrics for generated conversations:
+
+```bash
+# Analyze diversity for scam conversations
+python scripts/measure_diversity.py scam_labeling/
+
+# Analyze diversity for legit conversations
+python scripts/measure_diversity.py legit_labeling/
+
+# Analyze both types together
+python scripts/measure_diversity.py scam_labeling/ legit_labeling/
+```
+
+**Metrics Calculated:**
+- **Name Diversity**: Unique names, Shannon entropy, diversity score
+- **Institution Diversity**: Unique institutions, distribution analysis
+- **Conversation Type Diversity**: Distribution across scam types or legit categories
+- **Most Common Entities**: Top 10 most frequently used names/institutions
+
+**Output Format:**
+- Human-readable report to stdout
+- Optional JSON report (`--json` flag) for programmatic analysis
+
+### Batch Audit Script
+
+The `scripts/audit_ms_my_batch.py` script provides quick summaries of generated conversation batches:
+
+```bash
+# Audit a batch of conversations
+python scripts/audit_ms_my_batch.py /path/to/conversation/folder
+```
+
+**Metrics Provided:**
+- Top names and organizations (with counts and percentages)
+- Average syllable count and percentage meeting >=1,500 threshold
+- Average turn count and percentage meeting >=20 turns
 
 ## Human Labeling Support
 
